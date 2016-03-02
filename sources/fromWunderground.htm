@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Weather Undeground WUnderground.com Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../src/teechart-table.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Highs, Lows,
+    cityItems=["San Francisco","CA/San_Francisco",
+               "New York","NY/New_York",
+               "Girona","Spain/Girona",
+               "Tokyo","Japan/Tokyo"],
+    city=0;
+
+function draw() {
+
+  var chart=new Tee.Chart("highCanvas");
+  chart.title.text="Weather Forecast - High Temperatures";
+  Highs=chart.addSeries(new Tee.Bar());
+  Highs.marks.style="value";
+  chart.legend.position="bottom";
+
+  chart=new Tee.Chart("lowCanvas");
+  chart.title.text="Weather Forecast - Low Temperatures";
+  Lows=chart.addSeries(new Tee.Bar());
+  Lows.marks.style="value";
+  chart.legend.position="bottom";
+
+  addCities("cities",cityItems);
+
+  loadWeather(Highs, Lows, city);
+}
+
+function addCities(form,items) {
+  var f=document.getElementById(form), t=0, l=items.length, input, label;
+
+  while(t<l) {
+    input=document.createElement("input");
+    input.setAttribute("type","radio");
+    input.setAttribute("name","city");
+    input.setAttribute("value",t);
+    input.setAttribute("id","item"+t);
+
+    if (t==0)
+      input.defaultChecked=true;
+
+    input.onclick=function() {
+      city=this.value;
+      loadWeather(Highs, Lows, city);
+    }
+
+    f.appendChild(input);
+
+    label=document.createElement("label");
+    label.setAttribute("for","item"+t);
+    label.textContent=items[t];
+    f.appendChild(label);
+
+    t+=2;
+  }
+}
+
+function showError(status,text) {
+   document.getElementById('fail').textContent='Failed to load data: '+status.toFixed(0)+' '+text;
+}
+
+function loadWeather(highs, lows, city) {
+
+  city=parseInt(city);
+
+  Tee.doHttpRequest(this, "http://api.wunderground.com/api/04509e16bafe0a38/forecast10day/q/"+cityItems[city+1]+".json",
+
+     function(target, response) {
+
+       if (response==="") {
+         showError(0, "Empty response. Cross-origin not allowed.");
+         return;
+       }
+
+       var data=JSON.parse(response),
+           days=data.forecast.simpleforecast.forecastday,
+           day;
+
+           highs.data.values=[];
+           highs.data.labels=[];
+
+           lows.data.values=[];
+           lows.data.labels=[];
+
+           for (var t=0; t<days.length; t++) {
+              day=days[t];
+
+              highs.data.values.push(parseFloat(day.high.celsius));
+              highs.data.labels.push(day.date.weekday);
+
+              lows.data.values.push(parseFloat(day.low.celsius));
+              lows.data.labels.push(day.date.weekday);
+           }
+
+           highs.chart.footer.text=cityItems[city];
+           lows.chart.footer.text=cityItems[city];
+
+           highs.chart.draw();
+           lows.chart.draw();
+     },
+     function(status,text) { showError(status,text); });
+}
+
+</script>
+
+</head>
+
+<body onload="draw()">
+
+<span id="fail" style="color:red;"></SPAN>
+
+<form id="cities"></form><br/><br/>
+
+<canvas id="highCanvas" width="400" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
+<canvas id="lowCanvas" width="400" height="400"></canvas>
+
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>TeeChart 3D Charting for JavaScript Three.js WebGL&trade; Example</title>
+
+<style>
+#canvas1 { border: 4px solid #FF6666; border-radius:2px; }
+</style>
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+<!-- TeeChart and 3D --><script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-animations.js" type="text/javascript"></script>
+
+<!-- Slider control: -->
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+
+<!-- Maps: -->
+<script src="../../../src/teechart-maps.js" type="text/javascript"></script>
+
+<!-- Three.js -->
+
+<!--[if IE]>
+  <script src="http://iewebgl.com/scripts/webglhelper.js" type="text/javascript"></script>
+  <script src="threejs/ie/three.js" type="text/javascript"></script>
+<![endif]-->
+
+<![if !IE]>
+  <script src="threejs/three.min.js" type="text/javascript"></script>
+<![endif]>
+
+<!--
+<script type="text/javascript">
+window["gliEmbedDebug"]=true;
+</script>
+<script type="text/javascript" src="webgl_inspector/core/embed.js"></script>
+-->
+
+<script src="../../../src/teechart-3d.js" type="text/javascript"></script>
+
+<script src="threejs/stats.js" type="text/javascript"></script>
+
+<script src="threejs/Detector.js" type="text/javascript"></script>
+
+<script src="threejs/TrackballControls.js" type="text/javascript"></script>
+<script src="threejs/DragControls.js" type="text/javascript"></script>
+
+<script src="fonts/helvetiker_font/helvetiker_regular.typeface.js"></script>
+
+<!--
+<script type="text/javascript" src="http://benvanik.github.com/WebGL-Inspector/core/embed.js"></script>
+<script src="webgl_inspector/core/embed.js"></script>
+-->
+
+<script type="text/javascript">
+"use strict";
+
+var Chart1, three, pole, poleBase;
+
+function resizeCanvasToFit() {
+  var w = document.getElementById('wrap').clientWidth,
+      l = document.getElementById('divleft').clientWidth,
+      r = document.getElementById('divright').clientWidth,
+      w2 = w - l - r,
+      c = document.getElementById('canvas1');
+
+   w2 -= 40;
+
+   c.setAttribute('width', ""+w2+"px");
+   c.style.width=""+w2+"px";
+   c.width=w2;
+
+   var h2 = ( (3 * w2 / 4) | 0) - 60;
+   c.setAttribute('height', ""+h2+"px");
+   c.style.height=""+h2+"px";
+   c.height=h2;
+}
+
+function draw() {
+
+  three = new Tee.Three("canvas1");
+
+  Chart1 = new Tee.Chart(three);
+
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+                                                 // 2,7,1
+  var series1 = Chart1.addSeries(new Tee.Bar([5,3,2,7,1] , ["One", "Two", "Three", "Four", "Five" ]) );
+  series1.barStyle="cylinder";
+
+  var series2 = Chart1.addSeries(new Tee.Bar([6,2,4,3,7] , ["One", "Two", "Three", "Four", "Five" ]) );
+  series2.barStyle= series1.barStyle;
+
+  series1.horizAxis="both";
+  series1.vertAxis="both";
+
+  //series1.format.image.url = "textures/charcoal.png";
+
+  Chart1.axes.top.grid.visible=false;
+  Chart1.axes.right.grid.visible=false;
+
+  Chart1.axes.left.grid.format.stroke.dash=[3,1];
+
+//  Chart1.axes.each(function() { this.labels.format.font.fill="white"; });
+
+  Chart1.title.text="TeeChart for WebGL (tm)";
+  Chart1.title.format.font.style="28px Verdana";
+
+  Chart1.footer.text="Made with Three.js";
+
+  Chart1.walls.back.size=0.2;
+  Chart1.walls.back.format.transparency=0.2;
+
+  if (three.stats)
+    document.getElementById('divright').appendChild(three.stats.domElement);
+
+  if (three.scene) {
+    var poleRadius = 6;
+
+    pole = new THREE.Mesh( new THREE.CylinderGeometry(poleRadius,poleRadius,1, 32, 1, false ),
+                           new THREE.MeshPhongMaterial( { color: 0x999999 } ) );
+    three.scene.add(pole);
+
+    poleBase = new THREE.Mesh( new THREE.CylinderGeometry(40,40,5, 32, 1, false ),
+                               new THREE.MeshPhongMaterial( { color: 0x444444, specular: 0x555555 } ) );
+    three.scene.add(poleBase);
+  }
+
+  function relocateLegendPole() {
+
+    if (!three.scene) return;
+
+    pole.visible = Chart1.legend.visible && (Chart1.legend.itemsCount() > 0);
+    poleBase.visible = pole.visible;
+
+    var b = Chart1.legend.bounds,
+        x = b.x+b.width*0.5,
+        poleHeight = (Chart1.bounds.height - b.y - b.height);
+
+    pole.position.x = x - Chart1.bounds.width*0.5;
+    pole.position.y = (poleHeight - Chart1.bounds.height) *0.5;
+    pole.scale.y= poleHeight;
+
+    three.z= Chart1.legend.format.z + ( Chart1.legend.format.depth) * 0.5;
+    three.depth=0;
+    pole.position.z = three.zPos();
+
+    poleBase.position.z= pole.position.z;
+    poleBase.position.x = pole.position.x;
+    poleBase.position.y = (20 - Chart1.bounds.height) *0.5
+  }
+
+  Chart1.ondraw=function() { relocateLegendPole(); }
+
+  if (three.isEnabled()) {
+    Chart1.draw();
+
+    three.lights[0].target=Chart1.walls.visual;
+    three.lights[2].target=Chart1.walls.left.visual;
+
+    addLightSlider('ambient',three.ambientLight);
+    addLightSlider('light0',three.lights[0]);
+    addLightSlider('light1',three.lights[1]);
+    addLightSlider('light2',three.lights[2]);
+
+    if (three.camera instanceof THREE.PerspectiveCamera)
+       addCameraSlider();
+
+    addText3DSlider();
+  }
+  else
+  {
+    document.getElementById('enableGL').checked=false;
+
+    Detector.addGetWebGLMessage({ parent: document.getElementById('divright') });
+
+    document.getElementById('oldie').style.width="100px";
+
+    enableGL(false);
+  }
+
+  requestAnimationFrame( animate);
+
+  function animate() {
+    requestAnimationFrame( animate );
+
+    if (Chart1.ctx==three)
+       three.update();
+  }
+
+  refreshOptions();
+}
+
+function addText3DSlider() {
+  var s=Tee.SliderControl(document.getElementById('text3d'));
+
+  s.min=0;
+  s.max=100;
+  s.position=10*three.textDepth;
+  s.thumbSize=12;
+  s.chart.draw();
+
+  s.onChanging=function(slider,value) {
+    three.textDepth=value*0.1;
+    three.clearTextCache();
+    
+    Chart1.draw();
+
+    three.needsRender=true;
+    three.update();
+  }
+}
+
+function addCameraSlider() {
+  var s=Tee.SliderControl(document.getElementById('cameraFOV'));
+
+  s.min=0;
+  s.max=180;
+  s.position=three.camera.fov;
+  s.thumbSize=12;
+  s.chart.draw();
+
+  s.onChanging=function(slider,value) {
+    three.camera.fov=value;
+    three.camera.updateProjectionMatrix();
+    three.needsRender=true;
+    three.update();
+  }
+}
+
+function addLightSlider(canvas, light) {
+  var s=Tee.SliderControl(document.getElementById(canvas));
+
+  s.min=0;
+  s.max=255;
+  s.position=light.color.r * 255;
+  s.thumbSize=12;
+  s.chart.draw();
+
+  s.onChanging=function(slider,value) {
+    value /= 255;
+    light.color.setRGB(value,value,value);
+
+    three.needsRender=true;
+    three.update();
+  }
+}
+
+function testTorus() {
+
+  var geo, t, t1, t2;
+
+  t1=new Date();
+  for (t=0; t<100; t++)
+     geo= new THREE.TorusGeometry( 100, 45, 32, 90, 80 );
+
+  t2=new Date();
+  console.log('Old: ' + (t2-t1));
+
+  t1=new Date();
+  for (t=0; t<100; t++)
+     geo= new Tee.MyTorusGeometry( 100, 45, 32, 90, 80 );
+
+  t2=new Date();
+  console.log('New: ' + (t2-t1));
+}
+
+function changeSeries(style, chart) {
+  var s=chart.series, newS, old,
+      st = (typeof style === "string") ? eval("Tee." + style) : style;
+
+  for (var t=0; t<s.items.length; t++) {
+     old=s.items[t];
+     newS=new st();
+
+     newS.setChart(newS,chart);
+     newS.format.fill=old.format.fill;
+
+     if (old instanceof Tee.Surface) {
+       newS.addRandom(5);
+       old.data=null;
+     }
+     else
+     if (old instanceof Tee.Candle) {
+       newS.addRandom(5);
+       old.data=null;
+     }
+
+     if (newS instanceof Tee.Map) {
+       newS.setMap(new Tee.WorldMap());
+
+  	   newS.svg.values={};
+  	   for (var tt=0; tt<newS.items.length; tt++)
+           newS.svg.values[ newS.items[tt].item.id ] = Math.random()*1000;
+       newS.applyPalette();
+     }
+     else
+     if (newS instanceof Tee.Candle)
+       newS.addRandom(15);
+     else
+     if (newS instanceof Tee.Bubble)
+       newS.addRandom(5);
+     else
+     if (newS instanceof Tee.Surface)
+       newS.addRandom(50);
+     else
+     if (old.data)
+       newS.data=old.data;
+     else
+       newS.addRandom(5);
+
+     if (old.barStyle) newS.barStyle=old.barStyle;
+
+     if ( ! (newS instanceof Tee.Bubble))
+       if (newS.pointer)
+           newS.pointer.style="cube";
+
+     if (newS instanceof Tee.PointXY)
+        newS.colorEach="yes";
+     else
+     if (newS instanceof Tee.Polar)
+        newS.colorEach="yes";
+     else
+     if ( (newS instanceof Tee.Line) || (newS instanceof Tee.Area) ) {
+        newS.smooth = document.getElementById('lineSmooth').checked ? 0.5 : 0;
+        newS.pointer.visible = document.getElementById('linePointer').checked;
+
+        newS.pointer.width=24;
+        newS.pointer.height=24;
+        newS.pointer.style="sphere";
+        newS.pointer.colorEach="yes";
+     }
+
+     // Pending bug to fix, wrong 3D with Area + smooth:
+     if (newS instanceof Tee.Area )
+        newS.smooth = 0;
+
+     newS.horizAxis=old.horizAxis;
+     newS.vertAxis=old.vertAxis;
+
+     s.items[t]=newS;
+
+     if ( (newS instanceof Tee.Surface) || (newS instanceof Tee.Map) ) {
+       s.items=[newS];
+       break;
+     }
+  }
+
+  refreshOptions();
+
+  chart.draw();
+}
+
+function showDOM(id, show) {
+  document.getElementById(id).style.display = show ? 'inline':'none';
+}
+
+function refreshOptions() {
+  var s=Chart1.series, old;
+
+  if (s.items.length>0) {
+    old = s.items[0];
+
+    showDOM('barStyle', old instanceof Tee.CustomBar );
+
+    showDOM('areaOptions', (old instanceof Tee.CustomSeries) && (! (old instanceof Tee.Candle)));
+    
+    var isCust = (old instanceof Tee.Area) ||
+                 (old instanceof Tee.Line) ||
+                 (old instanceof Tee.Polar);
+
+    var isXY = (old instanceof Tee.PointXY);
+
+    if ((old instanceof Tee.Bubble) || (old instanceof Tee.Candle) )
+      isCust=false;
+
+    var enablePointer=isCust && (!isXY);
+
+    showDOM('checkPointer', enablePointer );
+
+    showDOM('pointerStyle', isCust );
+
+    if (enablePointer)
+      document.getElementById('checkPointer').checked = old.pointer.visible; 
+
+    var hasSmooth = ( (old instanceof Tee.Line) || (old instanceof Tee.Area) ) && (! (old instanceof Tee.PointXY))
+    showDOM('checkSmooth', hasSmooth );
+
+    showDOM('checkWire', old instanceof Tee.Surface);
+
+    showDOM('checkTube', old instanceof Tee.Donut);
+
+    var hasBevel = (old instanceof Tee.Pie) || (old instanceof Tee.Area);
+    showDOM('checkBevel', hasBevel);
+
+    if (hasBevel)
+      document.getElementById('checkBeveled').checked = old.format.beveled;
+
+    showDOM('checkMarks', (! (old instanceof Tee.Surface) ));
+    document.getElementById('showMarks').checked = old.marks.visible;
+
+    showDOM('candleOptions', old instanceof Tee.Candle);
+  }
+}
+
+function showLegendPole(show) {
+  if (pole) {
+     pole.visible=show;
+     poleBase.visible=show;
+  }
+}
+
+function enableGL(enable) {
+  three.setEnabled(enable, Chart1);
+
+  document.getElementById('gloptions').style.display = three.isEnabled() ? 'inline' : 'none';
+
+  if (three.stats)
+     three.stats.setVisible(enable);
+}
+
+function setSurfaceWire(wire) {
+  var s=Chart1.series.items[0];
+
+  if (s instanceof Tee.Surface) {
+    s.wireFrame=wire;
+    Chart1.draw();
+  }
+}
+
+function setSurfaceGrid(show) {
+  var s=Chart1.series.items[0];
+
+  if (s instanceof Tee.Surface) {
+    s.grid.visible=show;
+    Chart1.draw();
+  }
+}
+
+function setBeveled(beveled) {
+  Chart1.series.each(function(s) { s.format.beveled=beveled; });
+  Chart1.draw();
+}
+
+function setDonutTube(tube) {
+  Chart1.series.each(function(s) { if (s instanceof Tee.Donut) s.format.tube=tube; });
+  Chart1.draw();
+}
+
+function animation() {
+  var a = new Tee.Animation(Chart1, function(step) {
+    //series1.data.values[3] += 1;
+    Chart1.legend.format.transparency= step > 0.5 ? 2*(step-0.5) : 1-2*step;
+    Chart1.draw();
+  });
+
+  a.duration=2000;
+  a.animate();
+}
+
+function showSeries(index, show) {
+  var i = Chart1.series.items;
+  if (i.length>index) {
+    i[index].visible=show;
+    Chart1.draw();
+  }
+}
+
+function createDrag() {
+  var dragcontrols = new THREE.DragControls(three.camera,
+              //three.lights[0].__helper.lightSphere,
+              [Chart1.walls.left.visual],
+              three.renderer.domElement);
+
+  dragcontrols.onHit = function(hit) {
+     three.trackBall.enabled = !hit;
+  }
+}
+
+</script>
+</head>
+
+<body onload="draw()" style="font-family:Monospace">
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7504244-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+<div id="divleft" style="float:left;">
+
+<b>Chart Style:</b><br/>
+<form action="">
+  <input type="radio" name="series" id="area" value="Area" onchange="changeSeries(this.value, Chart1);"/><label for="area">Area</label><br/>
+  <input type="radio" name="series" id="bar" value="Bar" onchange="changeSeries(this.value, Chart1);" checked/><label for="bar">Bar</label><br/>
+  <input type="radio" name="series" id="bubble" value="Bubble" onchange="changeSeries(this.value, Chart1);"/><label for="bubble">Bubble</label><br/>
+  <input type="radio" name="series" id="candle" value="Candle" onchange="changeSeries(this.value, Chart1);"/><label for="candle">Candle</label><br/>
+  <input type="radio" name="series" id="donut" value="Donut" onchange="changeSeries(this.value, Chart1);"/><label for="donut">Donut</label><br/>
+  <input type="radio" name="series" id="horizbar" value="HorizBar" onchange="changeSeries(this.value, Chart1);"/><label for="horizbar">Horiz. Bar</label><br/>
+  <input type="radio" name="series" id="line" value="Line" onchange="changeSeries(this.value, Chart1);"/><label for="line">Line</label><br/>
+  <input type="radio" name="series" id="maps" value="Map" onchange="changeSeries(this.value, Chart1);"/><label for="map">Geo Map</label><br/>
+  <input type="radio" name="series" id="pie" value="Pie" onchange="changeSeries(this.value, Chart1);"/><label for="pie">Pie</label><br/>
+  <input type="radio" name="series" id="pointxy" value="PointXY" onchange="changeSeries(this.value, Chart1);"/><label for="pointxy">Point XY</label>
+  <br/>
+  <input type="radio" name="series" id="polar" value="Polar" onchange="changeSeries(this.value, Chart1);"/><label for="polar">Polar</label><br/>
+  <input type="radio" name="series" id="surface" value="Surface" onchange="changeSeries(this.value, Chart1);"/><label for="surface">Surface</label>
+  <br/>
+</form>
+
+<br/>
+<b>Show:</b><br/>
+<input type="checkbox" id="" onclick="three.toogle(Chart1.axes, this.checked);" checked>Axes
+<input type="checkbox" id="" onclick="var value=this.checked; Chart1.axes.each(function() { three.toogle(this.grid, value); });" checked>Grids
+<br/>
+<input type="checkbox" id="" onclick="three.toogle(Chart1.footer, this.checked);" checked>Footer<br/>
+<input type="checkbox" id="" onclick="showLegendPole(this.checked); three.toogle(Chart1.legend, this.checked);" checked>Legend<br/>
+<input type="checkbox" id="" onclick="three.toogle(Chart1.title, this.checked);" checked>Title<br/>
+<input type="checkbox" id="" onclick="three.toogle(Chart1.walls, this.checked);" checked>Walls<br/>
+<br/>
+<input type="checkbox" id="s1" onclick="showSeries(0, this.checked);" checked>Series 1<br/>
+<input type="checkbox" id="s2" onclick="showSeries(1, this.checked);" checked>Series 2<br/>
+
+<b>Options:</b><br/>
+
+<div id="checkMarks">
+<input type="checkbox" id="showMarks" onclick="var value=this.checked; Chart1.series.each(function(s) {s.marks.visible=value}); Chart1.draw();" checked><label for="showMarks">Marks</label>
+</div>
+<br/>
+
+<div id="candleOptions">
+Style:
+<select onchange="var value=this.value; Chart1.series.each(function(s) { s.pointer.style=value}); Chart1.draw();">
+  <option value="cube" selected>Cube</option>
+  <option value="cylinder">Cylinder</option>
+</select>
+<br/>
+</div>
+
+<div id="barStyle">
+Style:
+<select onchange="var value=this.value; Chart1.series.each(function(s) { s.barStyle=value}); Chart1.draw();">
+  <option value="bar">Bar</option>
+  <option value="cylinder" selected>Cylinder</option>
+  <option value="line">Line</option>
+  <option value="cone">Cone</option>
+</select>
+<br/>
+Stacked:
+<select onchange="value=this.value; Chart1.series.each(function(s) { s.stacked=value; }); Chart1.draw();">
+  <option value="side">Side</option>
+  <option value="no" selected>No</option>
+  <option value="yes">Yes</option>
+  <option value="100">100%</option>
+  <option value="sideAll">Side All</option>
+  <option value="self">Self</option>
+</select>
+<br/>
+</div>
+
+<div id="checkSmooth">
+<input type="checkbox" id="lineSmooth" onclick="var value=this.checked; Chart1.series.each(function(s) {s.smooth=value ? 0.5 : 0}); Chart1.draw();" checked><label for="lineSmooth">Smooth</label>
+<br/>
+</div>
+
+<div id="areaOptions">
+Stacked:
+<select onchange="value=this.value; Chart1.series.each(function(s) { s.stacked=value; }); Chart1.draw();">
+  <option value="no" selected>No</option>
+  <option value="yes">Yes</option>
+  <option value="100">100%</option>
+</select>
+<br/>
+</div>
+
+<div id="checkPointer">
+<input type="checkbox" id="linePointer" onclick="var value=this.checked; Chart1.series.each(function(s) { if (s.pointer) s.pointer.visible=value; }); Chart1.draw(); three.update()">Pointer
+<br/>
+</div>
+
+<div id="pointerStyle">
+Style:
+  <select onchange="var value=this.value; Chart1.series.each(function(s) { s.pointer.style=value}); Chart1.draw();">
+    <option value="cone">Cone</option>
+    <option value="cube" selected>Cube</option>
+    <option value="cylinder">Cylinder</option>
+    <option value="diamond">Diamond</option>
+    <option value="sphere">Sphere</option>
+    <option value="triangle">Triangle</option>
+    <option value="downtriangle">Triangle Down</option>
+  </select>
+<br/>
+</div>
+
+<div id="checkWire">
+<input type="checkbox" id="surfaceWire" onchange="setSurfaceWire(this.checked);"/><label for="surfaceWire">Wireframe</label>
+<br/>
+<input type="checkbox" id="surfaceGrid" onchange="setSurfaceGrid(this.checked);"/><label for="surfaceGrid">Grid</label>
+<br/>
+</div>
+
+<div id="checkBevel">
+<input type="checkbox" id="checkBeveled" onchange="setBeveled(this.checked);"/><label for="checkBeveled">Beveled</label>
+<br/>
+</div>
+
+<div id="checkTube">
+<input type="checkbox" id="donutTube" onchange="setDonutTube(this.checked);"/><label for="donutTube">Tube</label>
+<br/>
+</div>
+
+<br/>
+<button type="button" style="display:none" onclick="animation()">Animation</button>
+
+</div>
+
+<div id="divright" style="float:right">
+<input type="checkbox" id="enableGL" onclick="enableGL(this.checked);" checked>Enable Three.js WebGL&trade;
+<br/>
+<div id="gloptions">
+<br/>
+<span>
+<b>Lights:</b><br/>
+ <input type="checkbox" id="ambientVisible" onclick="three.ambientLight.visible=this.checked; three.needsRender=true; three.update();">Ambient<canvas id="ambient" width="100" height="20"></canvas><br/>
+ <input type="checkbox" id="" onclick="three.showLight(0,this.checked);" checked>Light 0<canvas id="light0" width="100" height="20"></canvas><br/>
+ <input type="checkbox" id="" onclick="three.showLight(1,this.checked);" checked>Light 1<canvas id="light1" width="100" height="20"></canvas><br/>
+ <input type="checkbox" id="" onclick="three.showLight(2,this.checked);" checked>Light 2<canvas id="light2" width="100" height="20"></canvas><br/>
+<br/>
+<b>Camera:</b><br/>
+<input type="checkbox" id="" onclick="three.setCamera(this.checked);" checked>Perspective<br/>
+FOV:<canvas id="cameraFOV" width="100" height="20"></canvas><br/>
+</span>
+Text 3D:<canvas id="text3d" width="100" height="20"></canvas><br/>
+<input type="checkbox" id="" onclick="three.floor.visible=this.checked; three.needsRender=true; three.update();" checked>Show Floor
+<br/>
+<input type="checkbox" id="" onclick="three.trackBall.enabled=this.checked;" checked>Mouse TrackBall
+<br/>
+<input type="checkbox" id="" onclick="three.wireframe=this.checked; Chart1.draw();">Wireframe
+<br/>
+<input type="checkbox" id="" onclick="three.setShowLights(this.checked); createDrag();">Show Lights
+<br/>
+<input type="checkbox" id="" onclick="three.setShowShadows(this.checked); Chart1.draw()">Shadows
+<br/>
+<button id="fullscreen" onclick="three.fullScreen()">Full Screen</button>
+<button id="" style="display:none" onclick="testTorus()">Test Torus speed</button>
+<br/>
+<input type="checkbox" id="" onclick="three.stats.setVisible(this.checked);" checked>Show Stats
+<br/>
+</div>
+</div>
+
+ <center>
+  <div id="wrap">
+
+    <canvas id="canvas1" style="background:#9F6677; margin:0" width="800" height="600"></canvas>
+
+<!--[if IE]>
+  <script id="WebGLCanvasCreationScript" type="text/javascript" style="width:100%;height:100%">
+    function OnGLCanvasCreated(canvasElement, elementId) {}
+    function OnGLCanvasFailed(canvasElement, elementId) {
+      document.getElementById('canvas1').style.display = 'none';
+    }
+    WebGLHelper.CreateGLCanvasInline('canvas1', OnGLCanvasCreated, OnGLCanvasFailed);
+  </script>
+<![endif]-->
+
+  </div>
+ </center>
+
+ <script type="text/javascript">resizeCanvasToFit();</script>
+</body>
+</html>

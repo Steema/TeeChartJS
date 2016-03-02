@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Line Series Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1;
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+  Chart1.addSeries(new Tee.Line()).addRandom(1000);
+
+  Chart1.axes.left.title.text="Y";
+
+  Chart1.series.items[0].marks.drawEvery=120;
+
+  Chart1.title.text="TeeChart for JavaScript";
+  Chart1.title.format.font.style="18px Verdana";
+
+  Chart1.title.format.font.gradient.visible=true;
+
+  Chart1.draw();
+}
+</script>
+</head>
+<body onload="draw()">
+
+<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
+<input type="checkbox" id="marks" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
+<br/>
+<input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
+<input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s){s.format.shadow.visible= document.getElementById('shadow').checked;}); Chart1.draw();" checked>Shadow
+<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked>Legend
+<input type="checkbox" id="logy" onclick="Chart1.axes.left.log=this.checked; Chart1.draw();">Logarithmic Y
+<input type="checkbox" id="logx" onclick="Chart1.axes.bottom.log=this.checked; Chart1.draw();">Logarithmic X
+
+<center>
+<br><canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+</center>
+</body>
+</html>

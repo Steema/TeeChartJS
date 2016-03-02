@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Clock</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-gauges.js" type="text/javascript"></script>
+<script src="teechart-gauge-templates.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var clock1, clock2, clock3;
+
+function makeClock() {
+  clock1=(new Tee.Clock('canvas1',1)).gauge;
+
+  clock1.format.font.style='28px Arial';
+  clock1.hand.size=12;
+  clock1.hand.back=8;
+  clock1.minutes.size=6;
+  clock1.minutes.back=8;
+  clock1.units.format.font.style='20px Tahoma';
+
+  clock2=(new Tee.Clock('canvas2',2)).gauge;
+
+  clock3=(new Tee.Clock('canvas3',3)).gauge;
+
+  clock1.tick();
+  clock2.tick();
+  clock3.tick();
+}
+</script>
+
+</head>
+<body onload="makeClock()">
+
+<input type="checkbox" name="romans" onclick="clock1.romans=this.checked; clock2.romans=this.checked; clock3.romans=this.checked;">Romans
+<input type="checkbox" name="seconds" onclick="clock1.seconds.visible=this.checked; clock2.seconds.visible=this.checked; clock3.seconds.visible=this.checked;" checked>Seconds
+<input type="checkbox" name="label" onclick="clock1.units.visible=this.checked; clock2.units.visible=this.checked; clock3.units.visible=this.checked;" checked>Text
+<input type="checkbox" name="ampm" onclick="clock1.ampm=this.checked; clock2.ampm=this.checked; clock3.ampm=this.checked;">AM/PM
+
+<br/>
+
+<canvas id="canvas1" width="400" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+
+<div>
+<canvas id="canvas2" width="200" height="200"></canvas>
+<canvas id="canvas3" width="200" height="200"></canvas>
+</div>
+
+</body>
+</html>

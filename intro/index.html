@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<meta name="Author" content="Steema Software" />
+<meta name="Generator" content="Steema" />
+<meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
+<meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, Three.js, WebGL, 3D, JS Chart, Data Visualization, Chart, Graph, Map, Surface, Heatmap, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
+
+<style type="text/css">
+html { height:100%; }
+body { font-family: tahoma; overflow-x:hidden; height:100%; margin:0px; background-color:#666666; }
+#header { position: fixed; margin:0; top:0px; width:100%; height:70px; background: -moz-linear-gradient(top,  #ccc,  #000); /* for Mozilla */
+          background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000)); /* for webkit browsers */ 
+		  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#000000'); /* for IE */
+          padding-left:10px; padding-top:10px; padding-right:10px; padding-bottom:0px; }
+#tree { width:156px; margin-top:80px; height:100%; position:fixed; overflow:auto; padding-left:0px; background-color:#747474; 
+         background: -moz-linear-gradient(top,  #000,  #000, #747474);
+         background: -webkit-gradient(linear, left top, left bottom, from(#000), to(#747474)); /* for webkit browsers */ 
+		 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#000000', endColorstr='#747474'); /* for IE */		 }
+#options { height:60; width:100%; padding-left:10px; padding-top:0px; margin-top:0px; left:157px; top:81px; position:absolute;  background-color:#000000; }
+#content_div { height:90%; width:100%; padding-top:0px; margin-top:0px; left:157px; top:141px; position:fixed; overflow:auto; }
+#frame1 { margin-top:0px; margin-left:0px; width:100%; height:100%; border:0; }
+.tableheader { width:100%; }
+img { border-width:0; }
+#titletext { color:white; font-size:16px;}
+</style>
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<link rel="stylesheet" href="css/darknessmod.css" />
+
+<title>TeeChart for JavaScript HTML5 Canvas, introductory demo of six basic chart types</title>
+
+<script>
+
+$(function() {
+$( "#menu" ).menu();
+$( "#theme" ).menu();
+$( "#palette" ).menu();
+});
+</script>
+
+<script type="text/javascript">
+
+function loadChart(chart) { 
+   document.getElementById("frame1").src=chart+".htm";
+   document.getElementById("description").innerHTML=document.getElementById(chart+"text").innerHTML;
+}
+
+var topTheme = "minimal";  //defaults
+var topPalette = "seaWash";
+
+function changeTheme(aTheme) {
+
+   top.frames['main'].changeTheme(aTheme);
+   
+   topTheme = aTheme;
+   
+   var selectors = document.getElementById("selectors");
+   var theme = document.getElementById("theme");
+   var palette = document.getElementById("palette");
+   
+   if (aTheme == "dark")
+   {
+     document.getElementById("options").style.backgroundColor = "#0C0C0C";
+
+	 selectors.style.backgroundColor = "#0C0C0C";
+	 selectors.style.color = "white";   
+	 theme.style.backgroundColor = "#747474";
+	 theme.style.color = "white";
+	 palette.style.backgroundColor = "#747474";
+	 palette.style.color = "white";
+
+	 //top.frames['main'] or parent.main
+	 parent.main.document.body.style.backgroundColor = "#0C0C0C";
+	 if (parent.main.a1 != null)
+	   parent.main.a1.format.font.fill = "white"; 
+	 if (parent.main.a2 != null)
+	   parent.main.a2.format.font.fill = "lightgray"; 
+
+   }
+   else
+   {
+     if ((aTheme == "minimal") || (aTheme == "excel"))
+	 {
+
+		 if (parent.main.a1 != null)
+		   parent.main.a1.format.font.fill = "rgba(124,124,184,0.9)";
+		 if (parent.main.a2 != null)
+		   parent.main.a2.format.font.fill = "rgba(124,124,184,0.9)";
+	 }
+	 else if (aTheme == "twilight") 
+	 {
+		 
+		 if (parent.main.a1 != null)
+		   parent.main.a1.format.font.fill = "white"; 
+		 if (parent.main.a2 != null)
+		   parent.main.a2.format.font.fill = "lightgray";
+	 }
+	 else
+	 {
+	   	 if (parent.main.a1 != null)
+	       parent.main.a1.format.font.fill = "rgba(0,0,0,0.6)"; 
+	     if (parent.main.a2 != null)
+	       parent.main.a2.format.font.fill = "rgba(0,0,0,0.6)";
+	 }
+	   
+     document.getElementById("options").style.backgroundColor = "#FFFFFF";
+
+	 parent.main.document.body.style.backgroundColor = "#FFFFFF";
+	 selectors.style.backgroundColor = "#FFFFFF";
+	 selectors.style.color = "black";   
+	 theme.style.backgroundColor = "#FFFFFF";
+	 theme.style.color = "black";
+	 palette.style.backgroundColor = "#FFFFFF";
+	 palette.style.color = "black";
+	 
+   }
+   
+   document.getElementById("palette").value = top.frames['main'].Chart1.paletteName;
+   
+   top.frames['main'].Chart1.draw();
+}
+
+function changePalette(palette) {
+
+  top.frames['main'].changePalette(palette);
+  topPalette = palette;
+  
+  top.frames['main'].Chart1.draw();
+}
+
+function init() {
+  document.getElementById("theme").value = "minimal";
+  document.getElementById("palette").value = "redRiver";
+  
+  document.getElementById("options").style.backgroundColor = "#FFFFFF";
+  selectors.style.backgroundColor = "#FFFFFF";
+  selectors.style.color = "black";   
+  theme.style.backgroundColor = "#FFFFFF";
+  theme.style.color = "black";
+  palette.style.backgroundColor = "#FFFFFF";
+  palette.style.color = "black";
+ 
+  setTimeout(function(){loadChart('lines');},1000);
+}
+
+</script>
+
+<style>
+  .ui-menu { width: 150px; }
+</style>
+</head>
+
+<body id="idxPage" link="#FFFFFF" vlink="#FDFDFD" alink="#FFFFFF" onload="init()">
+
+<!--<div id="fb-root"></div>-->
+<div id="header">
+<font color="#FFFFFF">
+<table width="98%"><tr><td><img src="TeeChartWhite190x44.png"></td>
+<td><font size="4">Demo of Several Basic Javascript Chart Types</font>
+<br><font size="2">For a more detailed look see the <a href="http://www.steema.com/files/public/teechart/html5/latest/demos/">reference demo</a> 
+that demonstrates further parameters and series types</font></td>
+<td align="right"><a href="http://www.steema.com"><img src="logo-steema-v3_116x60.png"></a></td></tr></table>
+
+</font>
+</div>
+
+<div id="tree">
+<font color="#FDFDFD">
+<ul id="menu" height="400" width="150" style="margin-left:0px;">
+<li><a href="#" onclick="loadChart('lines');return false;">Lines</a></li>
+<li><a href="#" onclick="loadChart('bars');return false;">Bars</a></li>
+<li><a href="#" onclick="loadChart('areas');return false;">Areas</a></li>
+<li><a href="#" onclick="loadChart('pie');return false;">Pie</a>
+<li><a href="#" onclick="loadChart('points');return false;">Points</a>
+	<!--<ul>
+	<li class="ui-state-disabled"><a href="#">subitem0</a></li>
+	<li><a href="#">subitem1</a></li>
+	<li><a href="#">subitem2</a></li>
+	</ul>-->
+</li>
+<li><a href="#" onclick="loadChart('gantt');return false;">Gantt</a>
+<li><a href="#" onclick="loadChart('scroller');return false;">Scroller</a></li>
+</ul>
+
+<font size="2"><div id="description" style="margin-top:40px; padding-left:12px; padding-right:12px;">TeeChart for Javascript supports 14 basic data-series types that may be combined as required. Display options include charts, maps and gauges.</div>
+</font></font>
+</div>
+
+<div id="linestext" style="visibility:hidden">Line series can include points. The Line width is configurable, may be smoothed and can include permanent mark-labels. This example uses mouseover hints to show point data.</div>
+<div id="barstext" style="visibility:hidden">Bar series may be vertical or horizontal. For financial applications a Volume visualisation is provided that combines very well with Candle (OHLC) data.</div>
+<div id="pointstext" style="visibility:hidden">This Point (scatter) chart shows data of an empirical nature. The line has been applied to show averages along the x range.</div>
+<div id="areastext" style="visibility:hidden">Areas may be transparent and can be smoothed and stacked.</div>
+<div id="pietext" style="visibility:hidden">Pie chart data may also be shown as a donut or as several concentric rings.</div>
+<div id="gantttext" style="visibility:hidden">Gantt bars may be used for project planning. The bars on this may be drag-moved and resized.</div>
+<div id="scrollertext" style="visibility:hidden">Large datasets may be navigated via the use of a scroller. Drag the slider on the bottom part of the chart to see different parts of the total data.</div>
+
+<div id="options" style="width:100; height:60px;">
+<!--<font size=2><font color="#747474">-->
+<table id="selectors" class="ui-widget ui-widget-content ui-corner-all" style="width:100; margin-top:10px;"><tr><td style="padding-left:15px;">Theme:</td>
+<td style="width:200; font-size:20px; color:#747474;">
+<select id="theme"  onchange="changeTheme(this.value);" style="background-color: #747474; width:220px;">
+  <option value="">Default</option>
+  <option value="dark">Dark</option>
+  <option value="daybreak">Daybreak</option>    
+  <option value="excel">Microsoft Excel (TM)</option>
+  <option value="minimal" selected>Minimal</option>  
+  <option value="twilight">Twilight</option>
+</SELECT></td><td style="padding-left:15px;">Palette:</td>
+<td style="width:200; font-size:20px; color:#747474;">
+<select id="palette"  onchange="changePalette(this.value);" style="background-color: #747474; width:220px;">
+  <option value="">Default</option>
+  <option value="cool">Cool</option> 
+  <option value="excel">Microsoft Excel (TM)</option>  
+  <option value="onBlack">On Black</option>
+  <option value="opera">Opera</option>
+  <option value="rainbow">Rainbow</option>
+  <option value="redRiver">Red River</option>
+  <option value="seaWash" selected>Sea Wash</option>
+  <option value="warm">Warm</option>  
+  <option value="windowsxp">Windows XP</option>  
+</SELECT></td></tr></table>
+<!--</font></font>-->
+</div>
+
+<div id="content_div">
+<!--location for iFrame-->
+<!--
+ <iframe id="frame1" name="main" src="basic/Basic.htm">
+   <p>Your browser does not support iframes.</p>
+ </iframe>
+-->
+</div>
+
+<script type="text/javascript">
+
+//<![CDATA[
+function get(id) { return document.getElementById(id); }
+
+function getWidth() {
+  if (self.innerHeight)
+     return self.innerWidth;
+  else
+  if (document.documentElement && document.documentElement.clientHeight)
+     return document.documentElement.clientWidth;
+  else
+  if (document.body)
+     return document.body.clientWidth;
+  else
+     return 0;
+}
+
+var isMobile=(getWidth()<400) || (document.height>document.width);
+
+if (isMobile) {
+  var tree=get("tree"),
+      content=get("content_div"),
+      header=get("header");
+
+  get("logo2").style.display='none';
+  get("w3logos").style.display='none';
+  get("logo3").style.display='none';
+
+  get("steema").align="center";
+
+  content.style.display='none';
+  tree.style.width=""+getWidth()+"px";
+
+  tree.style.height="1000px";
+  tree.style.position="";
+
+  document.body.style.height="";
+
+  d.config.target="";
+
+  tree.children[1].style.fontSize='20px';
+
+  var n, link, folder;
+
+  for (n=0; n<d.aNodes.length; n++) {
+    link=get('sd'+n.toFixed(0));
+    if (link) {
+      link.target="";
+      link.style.fontSize='20px';
+    }
+
+    folder=get('id'+n.toFixed(0));
+    if (folder) {
+      folder.style.height='36px';
+      folder.style.width='36px';
+    }
+
+    folder=get('jd'+n.toFixed(0));
+    if (folder) {
+      folder.style.height='36px';
+      folder.style.width='36px';
+    }
+  }
+}
+else
+{
+  var frame1 = document.createElement("iframe");
+  frame1.setAttribute('id','frame1');
+  frame1.setAttribute('name','main');
+  frame1.setAttribute("src", "welcome.htm");
+  frame1.setAttribute("webkitallowfullscreen","");
+  /*frame1.setAttribute("style", "position:absolute; left:0px; top:0px");
+  frame1.setAttribute('scrolling', 'no');*/
+  get('content_div').appendChild(frame1);
+}
+//]]>
+</script>
+</body>
+</html>

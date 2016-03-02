@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>TeeChart 3D Geographical Charting for JavaScript Three.js WebGL&trade; Example</title>
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-maps.js" type="text/javascript"></script>
+<script src="world_cities.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+"use strict";
+
+var Chart1, map, bubble;
+
+function draw() {
+
+  resizeCanvasToFit();
+
+  // Create Chart:
+  Chart1 = new Tee.Chart("canvas1");
+
+  // Set mouse-drag zoom to be "proportional":
+  Chart1.zoom.keepAspect = true;
+
+  // Enable zoom when dragging the mouse wheel:
+  Chart1.zoom.wheel.enabled=true;
+
+  Chart1.walls.visible=false;
+  Chart1.axes.visible=false;
+
+  // Add WorldMap series:
+  map = new Tee.Map();
+  map.setMap(new Tee.WorldMap());
+  map.format.stroke.fill="";
+  map.title = "World";
+  map.useColors = false;
+
+  Chart1.addSeries(map);
+
+  // Create Bubble series:
+  bubble = new Tee.Bubble(Chart1);
+  bubble.title="Some data";
+  bubble.pointer.format.stroke.fill="";
+
+  // Dont care if bubbles are painted outside chart space rectangle:
+  bubble.inflate=false;
+
+  Chart1.addSeries(bubble);
+
+  // Random value for each city:
+
+  addRandom(WorldCities);
+  addRandom(USACities);
+
+  Chart1.title.text="World Map and Bubbles";
+  Chart1.footer.text="Drag mouse and wheel to zoom and pan";
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+
+  Chart1.onzoom=function() { document.getElementById('resetZoom').style.display='block' }
+
+  Chart1.draw();
+}
+
+function addRandom(cities) {
+  for (var t=0; t<cities.length; t++) {
+     map.addLocation(bubble, cities[t].lat, cities[t].lon, cities[t].name);
+     bubble.data.radius.push(1+Math.random()*2);
+  }
+}
+
+function resizeCanvasToFit() {
+  var width = window.innerWidth,
+      w = width - document.getElementById('options').clientWidth,
+      c = document.getElementById('canvas1');
+
+  if (w < c.clientWidth ) {
+     w -= 60;
+
+     c.setAttribute('width', ""+w+"px");
+     c.style.width=""+w+"px";
+     c.width=w;
+
+     var height = window.innerHeight - 60,
+         h = Math.min(height, (3 * w / 4) );
+
+     c.setAttribute('height', ""+h+"px");
+     c.style.height=""+h+"px";
+     c.height=h;
+  }
+}
+
+</script>
+</head>
+
+<body onload="draw()">
+
+<div id="options" style="float:left;">
+<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label><br/>
+<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);"><label for="axes">Axes</label><br/>
+<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();"><label for="borders">Borders</label>
+<br/>
+<br/>
+<button type="button" id="resetZoom" style="display:none" onclick="Chart1.zoom.reset(); Chart1.draw(); this.style.display='none'">Reset</button>
+</div>
+
+<center><canvas id="canvas1" width="1600" height="1200"></canvas></center>
+
+</body>
+</html>

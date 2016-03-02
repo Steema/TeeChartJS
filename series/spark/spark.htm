@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart for JavaScript Spark Charts Example</title>
+
+<style type='text/css'>
+table {
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+table td, table th {
+    border: 1px solid black;
+}
+</style>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+function hideAxis(a) {
+  a.format.stroke.fill="";
+  a.labels.visible=false;
+  a.grid.visible=false;
+  a.ticks.visible=false;
+}
+
+function cleanChart(c) {
+  c.title.visible=false;
+  c.panel.transparent=true;
+  c.legend.visible=false;
+  c.walls.back.visible=false;
+
+  hideAxis(c.axes.left);
+  hideAxis(c.axes.bottom);
+}
+
+function draw() {
+
+  var c, chart, pie, bar, seriesBar, seriesPie, cursor;
+
+  for(c=1; c<=5; c++) {
+
+     // Lines
+
+     chart=new Tee.Chart("c"+c);
+     cleanChart(chart);
+
+     chart.addSeries(new Tee.Line()).addRandom(100);
+
+     cursor=chart.tools.add(new Tee.CursorTool(chart));
+     cursor.render="full";
+     cursor.direction="vertical";
+
+     chart.draw();
+
+     // Pie
+
+     pie=new Tee.Chart("p"+c);
+     cleanChart(pie);
+
+     seriesPie=pie.addSeries(new Tee.Pie());
+     seriesPie.addRandom(4);
+     seriesPie.marks.visible=false;
+
+     seriesPie.format.shadow.visible=false;
+     seriesPie.format.shadow.width=2;
+     seriesPie.format.shadow.height=2;
+
+     seriesPie.format.stroke.fill="";
+     seriesPie.format.gradient.visible=false;
+
+     pie.draw();
+
+     // Bars
+
+     bar=new Tee.Chart("b"+c);
+     cleanChart(bar);
+
+     seriesBar=bar.addSeries(new Tee.Bar());
+     seriesBar.addRandom(4);
+     seriesBar.format.stroke.fill="";
+     seriesBar.format.gradient.visible=false;
+     seriesBar.format.shadow.visible=false;
+     seriesBar.marks.visible=false;
+     
+     bar.draw();
+  }
+}
+</script>
+</head>
+
+<body onload="draw()">
+
+<table>
+<tr><th>Name</th><th>Performance</th><th>Energy</th></tr>
+
+<tr><td>Engine 0</td><td><canvas id="c1" width="200" height="30"></canvas></td><td><center><canvas id="p1" width="30" height="30"></canvas></center></td><td><center><canvas id="b1" width="30" height="30"></canvas></center></td></tr>
+<tr><td>Engine 1</td><td><canvas id="c2" width="200" height="30"></canvas></td><td><center><canvas id="p2" width="30" height="30"></canvas></center></td><td><center><canvas id="b2" width="30" height="30"></canvas></center></td></tr>
+<tr><td>Engine 2</td><td><canvas id="c3" width="200" height="30"></canvas></td><td><center><canvas id="p3" width="30" height="30"></canvas></center></td><td><center><canvas id="b3" width="30" height="30"></canvas></center></td></tr>
+<tr><td>Engine 3</td><td><canvas id="c4" width="200" height="30"></canvas></td><td><center><canvas id="p4" width="30" height="30"></canvas></center></td><td><center><canvas id="b4" width="30" height="30"></canvas></center></td></tr>
+<tr><td>Engine 4</td><td><canvas id="c5" width="200" height="30"></canvas></td><td><center><canvas id="p5" width="30" height="30"></canvas></center></td><td><center><canvas id="b5" width="30" height="30"></canvas></center></td></tr>
+</table>
+
+</body>
+</html>

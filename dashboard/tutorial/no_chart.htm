@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Tutorial</title>
+
+<style>
+#table1 { border-collapse: collapse; }
+#table1,th,td {
+  border: 2px solid darkgray;
+  padding: 2px;
+}
+#table1 th {
+  background-color: #00EE00;
+  color: black;
+}
+#table1 tbody,td {
+  background-color: green;
+  color: white;
+}
+</style>
+
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+<script src="tee-data-utils.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Temperatures=[
+      { year: 2011, values: [21,24,26,20,22,18,25,14,19,27,26,18] },
+      { year: 2012, values: [20,21,24,18,21,19,27,11,18,27,24,17] },
+      { year: 2013, values: [22,25,26,21,20,20,22,13,19,23,25,19] },
+      { year: 2014, values: [22,23,26,19,22,16,25,15,19,21,26,21] }
+    ];
+
+var Engine=new Tee.Data(),
+      Temps=Engine.addDataSet("Temperatures", Temperatures),
+        Years=Temps.addDimension("Years", "values", "year"),
+          Degree=Years.addMetric("Degrees");
+
+function query() {
+
+  // Show sum of temperatures by each Year:
+  var result=Engine.query(Years, Degree);
+  Engine.fillTable("table1", result, true);
+
+  document.getElementById("source").innerHTML=addNewLines(JSON.stringify(Temperatures));
+}
+
+function addNewLines(text) {
+  return text.replace(/\},/g, "},\n" );
+}
+</script>
+
+</head>
+
+<body onload="query()" style="font-family:Tahoma">
+ This example executes a query (without creating a chart), and output results are used to create the following HTML &lt;table&gt;:
+ <br/>
+ <br/>
+ <table id="table1" style="border-style:solid">
+ </table>
+ <br/>
+ The query is to sum all Degree values, grouped by Year:
+ <br/>
+ <br/>
+   <span style="background-color: cornsilk">
+     var result=Engine.query(Years, Degree);<br/>
+     Engine.fillTable("table1", result, true);
+   </span>
+ <br/>
+ <br/>
+ Source data: <br/><br/>
+ <textarea id="source" style="background-color: cornsilk" rows="5" cols="60"></textarea>
+</body>
+</html>

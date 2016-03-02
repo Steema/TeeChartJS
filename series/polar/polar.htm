@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Polar and Radar Series Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1;
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+
+  var polar1 = Chart1.addSeries(new Tee.Polar()),
+      polar2 = Chart1.addSeries(new Tee.Polar());
+
+  polar1.addRandom(20);
+  polar2.addRandom(6);
+
+  // optional degree (0 to 360) point positions:
+
+  polar2.data.x=[10,30,90,110,270,300];
+
+  polar1.pointer.style="ellipse";
+  polar2.pointer.style="ellipse";
+
+  // PENDING FEATURES:
+
+  //polar1.stacked="yes";
+  //polar2.stacked="yes";
+  //polar1.smooth=0.5;
+
+  polar1.format.transparency=0.2;
+  polar2.format.transparency=0.2;
+
+  // Cosmetics:
+
+  Chart1.title.text="Polar Chart";
+  Chart1.walls.back.format.gradient.visible=true;
+  
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+  Chart1.draw();
+
+  addSlider("rotation1", polar1);
+  addSlider("rotation2", polar2);
+
+  addSlider("axisrotation", Chart1.axes.bottom);
+}
+
+function addSlider(canvas, target) {
+  var s=Tee.SliderControl(canvas);
+
+  s.min=0;
+  s.max=360;
+  s.position=0;
+  s.thumbSize=16;
+
+  s.chart.draw();
+
+  s.onChanging=function(slider,value) {
+    target.rotation=value;
+    target.chart.draw();
+  }
+}
+
+</script>
+</head>
+
+<body onload="draw()">
+
+<div style="float:left">
+ <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
+ <input type="checkbox" id="marks1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
+ <input type="checkbox" id="fill1" onclick="Chart1.series.items[0].format.fill= this.checked ? Chart1.palette.get(0) : ''; Chart1.draw();" checked>Fill
+<br/>
+ <input type="checkbox" id="origin1" onclick="Chart1.series.items[0].useOrigin= this.checked; Chart1.draw();">Use Origin 0
+ <input type="checkbox" id="pointer1" onclick="Chart1.series.items[0].pointer.visible= this.checked; Chart1.draw();" checked>Pointers
+ <br/>
+ <canvas id="rotation1" width="200" height="30"></canvas>
+ <br/>
+ <br/>
+ <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= this.checked; Chart1.draw();" checked>Series2
+ <input type="checkbox" id="marks2" onclick="Chart1.series.items[1].marks.visible= this.checked; Chart1.draw();">Marks
+ <input type="checkbox" id="fill2" onclick="Chart1.series.items[1].format.fill= this.checked ? Chart1.palette.get(1) : ''; Chart1.draw();" checked>Fill
+ <br/>
+ <input type="checkbox" id="origin2" onclick="Chart1.series.items[1].useOrigin= this.checked; Chart1.draw();">Use Origin 0
+ <input type="checkbox" id="pointer2" onclick="Chart1.series.items[1].pointer.visible= this.checked; Chart1.draw();" checked>Pointers
+ <br/>
+ <canvas id="rotation2" width="200" height="30"></canvas>
+ <br/>
+ <br/>
+ <input type="checkbox" id="transp" onclick="Chart1.walls.back.visible=this.checked; Chart1.draw();" checked>Background
+ <input type="checkbox" id="gradient1" onclick="Chart1.walls.back.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
+ <br/>
+ <input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s){s.format.shadow.visible= document.getElementById('shadow').checked;}); Chart1.draw();">Shadows
+<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked>Legend
+ <br/>
+ <br/>
+ <input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked>Axes
+ <input type="checkbox" id="degrees" onclick="Chart1.series.items[0].notmandatory.visible=this.checked; Chart1.draw();" checked>Degrees
+ <input type="checkbox" id="griddegrees" onclick="Chart1.series.items[0].notmandatory.grid.visible=this.checked; Chart1.draw();" checked>Grid
+ <br/>
+ <input type="checkbox" id="values" onclick="Chart1.series.items[0].mandatoryAxis.visible=this.checked; Chart1.draw();" checked>Values
+ <input type="checkbox" id="gridvalues" onclick="Chart1.series.items[0].mandatoryAxis.grid.visible=this.checked; Chart1.draw();" checked>Grid
+ <br/>
+ <br/>
+ Axis rotation:
+ <br/>
+ <canvas id="axisrotation" width="200" height="30"></canvas>
+</div>
+
+<center>
+<br><canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+</center>
+</body>
+</html>

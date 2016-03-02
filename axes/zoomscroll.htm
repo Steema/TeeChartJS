@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Zoom and Scroll Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1;
+
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+  Chart1.addSeries(new Tee.Line()).addRandom(100);
+  Chart1.addSeries(new Tee.Line()).addRandom(100);
+
+  Chart1.axes.left.title.text="Y";
+  Chart1.title.text="Zoom and Scroll";
+
+  Chart1.zoom.wheel.enabled=true;
+  
+  Chart1.ondraw=function(chart) {
+     chart.ctx.font="italic 10px Arial";
+     chart.ctx.fillStyle="red";
+     chart.ctx.fillText("Powered by TeeChart", chart.canvas.width-90,10);
+  };
+
+  Chart1.draw();
+}
+</script>
+</head>
+
+<body onload="draw()">
+
+Default behavior is: </<BR>
+<ul>
+<li>Zoom by dragging left mouse button from top-left to right-bottom.</li>
+<li>Zoom can also be done by dragging the mouse wheel, if enabled.</li>
+<li>Reset zoom (unzoom) by dragging left mouse button from right-bottom to top-left.</li>
+<li>Scroll by dragging right mouse button.</li>
+</ul>
+
+<input type="checkbox" id="zoomenabled" onclick="Chart1.zoom.enabled= this.checked;" checked>Zoom enabled:
+<select id="zoomdir" onchange="Chart1.zoom.direction=this.value;">
+  <option value="both">Both</option>
+  <option value="horizontal">Horizontal</option>
+  <option value="vertical">Vertical</option>
+</select>
+<input type="checkbox" id="zoomwheel" onclick="Chart1.zoom.wheel.enabled= this.checked;" checked>Mouse Wheel
+<br/>
+
+<input type="checkbox" id="scrollenabled" onclick="Chart1.scroll.enabled= this.checked;" checked>Scroll enabled:
+<select id="scrolldir" onchange="Chart1.scroll.direction=this.value;">
+  <option value="both">Both</option>
+  <option value="horizontal">Horizontal</option>
+  <option value="vertical">Vertical</option>
+</select>
+
+<button type="button" onclick="Chart1.zoom.reset(); Chart1.draw();">Reset</button>
+<center>
+<br><canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+</center>
+</body>
+</html>

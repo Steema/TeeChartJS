@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Smooth Line Series Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1;
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+  Chart1.addSeries(new Tee.Line()).addRandom(10);
+
+  Chart1.series.items[0].smooth=1/2;
+
+  Chart1.title.text="Smooth Line";
+  Chart1.draw();
+}
+
+function setCorners(value) {
+  Chart1.legend.format.round.x=12;
+  Chart1.legend.format.round.y=12;
+
+  if (value=="all")
+    Chart1.legend.format.round.corners=null;
+  else
+  if (value=="top")
+    Chart1.legend.format.round.corners=[true,true,false,false];
+  else
+  if (value=="bottom")
+    Chart1.legend.format.round.corners=[false,false,true,true];
+  else
+  if (value=="left")
+    Chart1.legend.format.round.corners=[true,false,false,true];
+  else
+  if (value=="right")
+    Chart1.legend.format.round.corners=[false,true,true,false];
+  else
+  {
+    Chart1.legend.format.round.x=0;
+    Chart1.legend.format.round.y=0;
+  }
+
+  Chart1.draw();
+}
+
+</script>
+</head>
+<body onload="draw()">
+
+<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
+<input type="checkbox" id="pointer" name="series1" onclick="Chart1.series.items[0].pointer.visible= this.checked;  Chart1.draw();">Pointers
+&nbsp; Smooth Factor:
+<select id="factor"  onchange="Chart1.series.items[0].smooth = parseFloat(this.value); Chart1.draw();">
+  <option value="0">No</option>
+  <option value="0.2">1/5</option>
+  <option value="0.25">1/4</option>
+  <option value="0.333333333">1/3</option>
+  <option value="0.5" selected>1/2</option>
+  <option value="0.666666666" selected>2/3</option>
+</SELECT>
+&nbsp; Legend corners:
+<select id="corners"  onchange="setCorners(this.value);">
+  <option value="all" selected>All</option>
+  <option value="top">Top</option>
+  <option value="bottom">Bottom</option>
+  <option value="left">Left</option>
+  <option value="right">Right</option>
+  <option value="none">None</option>
+</SELECT>
+<br/>
+
+<center>
+<br><canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+</center>
+</body>
+</html>

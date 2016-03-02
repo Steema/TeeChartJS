@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>TeeChart Geographical Charting for JavaScript HTML5 Canvas Example</title>
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-maps.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+"use strict";
+
+var Chart1, map;
+
+function draw() {
+
+  resizeCanvasToFit();
+
+  // Create Chart:
+  Chart1 = new Tee.Chart("canvas1");
+
+  // Enable mouse wheel zoom:
+  Chart1.zoom.wheel.enabled=true;
+
+  // Add WorldMap series:
+  map = new Tee.Map();
+  Chart1.addSeries(map);
+
+  // Set "World" map and data:
+  changeMap('world');
+
+  Chart1.title.text="TeeChart HTML5 Canvas Maps";
+
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+
+  Chart1.draw();
+}
+
+function changeMap(value) {
+
+  if (value==='world') {
+     map.setMap(new Tee.WorldMap());
+     map.svg.values={ SE:1234, GB:600, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 }
+  }
+  else
+  if (value==='usa') {
+     map.setMap(new Tee.USAMap());
+     map.svg.values={ CA:1234, KY:600, NY:3822, IN:2102, AZ:1600, NV:3000, OH:1300, TX: 2700, FL:3300, NE:1510, MS:100 }
+  }
+  else
+  {
+    if (value==='europe')
+       map.setMap(new Tee.EuropeMap());
+    else
+       map.setMap(new Tee.Europe27Map());
+
+    map.svg.values={ SP:1234, GB:600, IT:3822, FI:2102, GR:1600, RU:3000, PT:1300, FR: 2700, DE:3300, NE:1510, DK:100 }
+  }
+
+  // Example:
+  // Set random value to each map polygon:
+
+  map.svg.values={};
+
+  for (var t=0; t<map.items.length; t++)
+     map.svg.values[ map.items[t].item.id ] = Math.random()*1000;
+
+  // Colorize items according to value:
+  map.applyPalette();
+
+  // Reset axes:
+  Chart1.axes.left.automatic=true;
+  Chart1.axes.bottom.automatic=true;
+}
+
+function resizeCanvasToFit() {
+  var width = window.innerWidth,
+      w = width - document.getElementById('options').clientWidth,
+      c = document.getElementById('canvas1');
+
+  if (w < c.clientWidth ) {
+     w -= 60;
+
+     c.setAttribute('width', ""+w+"px");
+     c.style.width=""+w+"px";
+     c.width=w;
+
+     var height = window.innerHeight - 60,
+         h = Math.min(height , (3 * w / 4) );
+
+     c.setAttribute('height', ""+h+"px");
+     c.style.height=""+h+"px";
+     c.height=h;
+  }
+}
+</script>
+</head>
+
+<body onload="draw()">
+
+<div id="options" style="float:left;">
+
+<b>Map:</b>
+
+<form action="">
+  <input type="radio" name="map" id="world" value="world" onchange="changeMap(this.value); Chart1.draw();" checked/><label for="world">World</label><br/>
+  <input type="radio" name="map" id="usa" value="usa" onchange="changeMap(this.value); Chart1.draw();"/><label for="usa">USA</label><br/>
+  <input type="radio" name="map" id="europe27" value="europe27" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe27">Europe 27</label><br/>
+  <input type="radio" name="map" id="europe" value="europe" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe">Europe</label><br/>
+</form>
+<br/>
+<br/>
+<input type="checkbox" id="walls" onclick="Chart1.walls.visible=this.checked; Chart1.draw();" checked><label for="walls">Walls</label>
+<br/>
+<input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked><label for="axes">Axes</label>
+<br/>
+<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();" checked><label for="borders">Borders</label>
+<br/>
+<input type="checkbox" id="transp" onclick="Chart1.panel.transparent=this.checked; Chart1.draw();"><label for="transp">Transparent</label>
+<br/>
+<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked><label for="legend">Legend</label>
+</div>
+
+ <center>
+  <canvas id="canvas1" width="1600" height="1200"></canvas>
+ </center>
+
+<span id='time'></span>
+</body>
+</html>

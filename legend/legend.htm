@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Legend Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1;
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+  Chart1.addSeries(new Tee.Area([7,5,1,3,4], ['A','B','C','D','F'])).stacked="yes";
+  Chart1.addSeries(new Tee.Area([3,2,9,1,0])).stacked="yes";
+
+  Chart1.panel.format.gradient.colors=["beige","orange"];
+  Chart1.panel.format.gradient.direction="bottomtop";
+
+  Chart1.panel.format.stroke.fill="";
+  
+  Chart1.title.text="Legend";
+  Chart1.title.format.font.style="48px Verdana";
+  Chart1.title.format.font.shadow.visible=true;
+  Chart1.title.format.font.gradient.visible=true;
+  Chart1.title.format.font.gradient.colors=["lime","white"];
+  Chart1.title.format.font.stroke.fill="green";
+
+  Chart1.draw();
+
+//  Chart1.legend.format.ellipse(50,50,100,200);
+}
+</script>
+</head>
+<body onload="draw()">
+
+<canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+
+<br/>
+<input type="checkbox" id="legend" onclick="Chart1.legend.visible= this.checked; Chart1.draw();" checked>Legend
+<br/>
+Legend style:
+<select id="legend_style" onchange="Chart1.legend.legendStyle= this.value; Chart1.draw();">
+  <option value="auto">Auto</option>
+  <option value="series">Series</option>
+  <option value="values">Values</option>
+</select>
+<br/>
+Text style:
+<select id="legend_textstyle" onchange="Chart1.legend.textStyle= this.value;
+               document.getElementById('legend_style').options[2].selected=true;
+               Chart1.legend.legendStyle='values'; Chart1.draw();">
+  <option value="auto" selected>Auto</option>
+  <option value="valuelabel">Value and Label</option>
+  <option value="label">Label</option>
+  <option value="value">Value</option>
+  <option value="index">Index</option>
+  <option value="labelvalue">Label and Value</option>
+  <option value="percent">Percent</option>
+  <option value="percentlabel">Percent and Label</option>
+  <option value="labelpercent">Label and Percent</option>
+</select>
+<br/>
+Position:
+<select id="legend_position" onchange="Chart1.legend.position= this.value; Chart1.draw();">
+  <option value="right">Right</option>
+  <option value="left">Left</option>
+  <option value="top">Top</option>
+  <option value="bottom">Bottom</option>
+</select>
+<br/>
+Padding:
+<select id="legend_padding" onchange="Chart1.legend.padding= this.value; Chart1.draw();">
+  <option value="1">1%</option>
+  <option value="5" selected>5%</option>
+  <option value="10">10%</option>
+  <option value="20">20%</option>
+  <option value="30">30%</option>
+</select>
+<br/>
+Transparency:
+<select id="legend_transp" onchange="Chart1.legend.format.transparency= parseFloat(this.value); Chart1.draw();">
+  <option value="0" selected>0%</option>
+  <option value="0.15">15%</option>
+  <option value="0.3">30%</option>
+  <option value="0.5">50%</option>
+  <option value="0.75">75%</option>
+  <option value="0.9">90%</option>
+  <option value="1">100%</option>
+</select>
+<br/>
+<input type="checkbox" id="symbols" onclick="Chart1.legend.symbol.visible= this.checked; Chart1.draw();" checked>Symbols
+<br/>
+<input type="checkbox" id="transp" onclick="Chart1.legend.transparent= this.checked; Chart1.draw();">Transparent
+<br/>
+<input type="checkbox" id="fontcolor" onclick="Chart1.legend.fontColor= this.checked; Chart1.draw();">Font Color
+<br/>
+<input type="checkbox" id="shadow" onclick="Chart1.legend.format.shadow.visible= this.checked; Chart1.draw();" checked>Shadow
+
+</body>
+</html>

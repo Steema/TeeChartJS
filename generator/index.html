@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>TeeChart for JavaScript HTML5 Canvas Generator</title>
+
+<link rel="stylesheet" href="../../jquery/css/ui-lightness/jquery-ui-1.8.17.custom.css">
+<script src="../../jquery/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="../../jquery/js/jquery-ui-1.8.17.custom.min.js" type="text/javascript"></script>
+<script src="../canvas/webgl/threejs/three.min.js" type="text/javascript"></script>
+<script src="../canvas/webgl/threejs/Detector.js" type="text/javascript"></script>
+<script src="../canvas/webgl/threejs/TrackballControls.js" type="text/javascript"></script>
+<script src="../canvas/webgl/fonts/helvetiker_font/helvetiker_regular.typeface.js"></script>
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../src/teechart-table.js" type="text/javascript"></script>
+<script src="../../src/teechart-3d.js" type="text/javascript"></script>
+
+<script src="../../src/teechart-editor.js" type="text/javascript"></script>
+<script src="../../src/farbtastic/farbtastic.js" type="text/javascript"></script>
+
+<script src="src/teechart-generator.js" type="text/javascript"></script>
+<script src="src/colorpicker.js" type="text/javascript"></script>
+
+
+<link href="src/styles.css" rel="stylesheet" type="text/css">
+
+<link href="src/themes.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+  #picker-wrapper {
+          width: 200px;
+          height: 200px;
+          position: relative;
+          float: right;
+    }
+    #slide-wrapper {
+      width: 20px;
+      height: 200px;
+      position: relative;
+      float: right;
+    }
+    #picker-indicator {
+      width: 3px;
+      height: 3px;
+      position: absolute;
+      border: 1px solid white;
+    }
+    #slide-indicator {
+      width: 80%;
+      height: 10px;
+      position: absolute;
+      border: 2px solid silver;
+    }
+</style>
+
+<style type="text/css">
+#tt {position:absolute; display:block;}
+#tttop {display:block; height:5px; overflow:hidden}
+#ttcont {display:block; padding:2px 12px 3px 7px; background:#666; color:#FFF; box-shadow:0 0 10px #000; border-radius:10px;}
+#ttbot {display:block; height:5px; overflow:hidden}
+</style>
+
+<style type="text/css">
+#accordion2 {margin:10px auto; border:1px solid #333; border-top:none}
+.accordion2 {font:12px Verdana,Arial; color:#333}
+.accordion2 dt {padding:4px 6px; font-weight:bold; cursor:pointer; background-color:#666; background-image:url(img/arrow_down.gif); background-position:right center; background-repeat:no-repeat; color:#fff; border-top:1px solid #333}
+.accordion2 dt:hover {background-color:#555}
+.accordion2 .open {background-color:#444; background-image:url(img/arrow_up.gif)}
+.accordion2 dd {overflow:hidden; background:#fff}
+.accordion2 span {display:block; border-top:none; padding:5px}
+.accordion2 div {display:inline; border-top:none; padding:0px}
+</style>
+
+<script type="text/javascript">
+
+var slider2,
+    accordion=function(){
+	var tm=sp=10;
+	function slider(n){this.nm=n; this.arr=[]}
+	slider.prototype.init=function(t,c,k){
+		var a,h,s,l,i; a=document.getElementById(t); this.sl=k?k:'';
+		h=a.getElementsByTagName('dt'); s=a.getElementsByTagName('dd'); this.l=h.length;
+		for(i=0;i<this.l;i++){var d=h[i]; this.arr[i]=d; d.onclick=new Function(this.nm+'.pro(this)'); if(c==i){d.className=this.sl}}
+		l=s.length;
+		for(i=0;i<l;i++){var d=s[i]; d.mh=d.offsetHeight; if(c!=i){d.style.height=0; d.style.display='none'}}
+	}
+	slider.prototype.pro=function(d){
+		for(var i=0;i<this.l;i++){
+			var h=this.arr[i], s=h.nextSibling; s=s.nodeType!=1?s.nextSibling:s; clearInterval(s.tm);
+			if(h==d&&s.style.display=='none'){s.style.display=''; su(s,1); h.className=this.sl}
+			else if(s.style.display==''){su(s,-1); h.className=''}
+		}
+	}
+	function su(c,f){c.tm=setInterval(function(){sl(c,f)},tm)}
+	function sl(c,f){
+		var h=c.offsetHeight, m=c.mh, d=f==1?m-h:h; c.style.height=h+(Math.ceil(d/sp)*f)+'px';
+		c.style.opacity=h/m; c.style.filter='alpha(opacity='+h*100/m+')';
+		if(f==1&&h>=m){clearInterval(c.tm)}else if(f!=1&&h==1){c.style.display='none'; clearInterval(c.tm)}
+	}
+	return{slider:slider}
+}();
+
+var Chart1, Three1, container, gripH, gripW, picker, tip;
+
+function colorToHex(c) {
+ var m = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/.exec(c);
+  return m ? '#' + (1 << 24 | m[1] << 16 | m[2] << 8 | m[3]).toString(16).substr(1) : c;
+}
+
+function usingPalette() {
+  var r=Chart1.legend.showValues();
+  if (!r) {
+    var s=Chart1.series.firstVisible();
+    if (s && s.isColorEach)
+      r=true;
+  }
+
+  return r;
+}
+
+function chooseColor(source,index) {
+  var c=document.getElementById('color');
+
+  this.updating=false;
+  this.index=index;
+  this.source=source;
+  _a=this;
+
+  if (!picker)
+    picker=ColorPicker(document.getElementById('slide'), document.getElementById('picker'),
+                function(hex, hsv, rgb, mousePicker, mouseSlide) {
+                    ColorPicker.positionIndicators(
+                        document.getElementById('slide-indicator'),
+                        document.getElementById('picker-indicator'),
+                        mouseSlide, mousePicker
+                    );
+
+                    if (!_a.updating) {
+                      if (usingPalette()) {
+                        Chart1.palette.colors[_a.index]=hex;
+                        Chart1.series.each(function(s) {
+                          if (s.isColorEach && s.palette.colors && s.palette.colors[_a.index])
+                            s.palette.colors[_a.index]=hex;
+                        });
+                      }
+                      else
+                        Chart1.series.items[_a.index].format.fill=hex;
+
+                      _a.source.style.backgroundColor=hex;
+                      c.style.display="none";
+                      Chart1.draw();
+                    }
+            });
+
+  this.updating=true;
+  var cc=colorToHex(source.style.backgroundColor);
+  picker.setHex(cc);
+  old=c.style.display;
+  c.style.display="block";
+  if (old!="block")
+    picker.setHex(cc);
+  this.updating=false;
+}
+
+function removeSeriesOrPoint(index) {
+  var s=Chart1.series.items[index];
+
+  if (confirm('Sure to delete series ' + s.title +' ?')) {
+    Chart1.removeSeries(s);
+
+    if (index==Table1.table.rows[0].cells.length-3) {
+      var c=Table1.table.rows[0].cells[index+1];
+      c.innerHTML+=addColButton();
+    }
+
+    for (var t=0; t<Table1.table.rows.length; t++)
+      Table1.table.rows[t].deleteCell(index+2);
+
+    Chart1.draw();
+  }
+}
+
+function checkCode(prefix,t) {
+  t=t-1;
+  var s= '<div style="float:left; clear:both;" id="'+prefix+t+'">'+
+         '<input id="ck'+prefix+'col'+t+'" type="checkbox" onclick="hideShow(this,'+t+');" checked>'+
+         '<div id="'+prefix+'col'+t+'" style="margin-top: 3px; cursor:pointer; float:right; width:12px; height:12px;" onclick="chooseColor(this,'+t+');"></div>';
+
+  return s+'<button class="buti" style="padding:0px 5px;" onclick="removeSeriesOrPoint('+t+');">-</button>'+ '</div>';
+}
+
+function addCol(header,caption) {
+  var tbl=document.getElementById('table1');
+  var l=tbl.rows.length;
+
+  for (var t=0; t<l; t++) {
+    var c=tbl.rows[t].cells.length;
+
+    tbl.rows[t].appendChild(document.createElement( t==header ? 'th' : 'td'));
+
+    var col=tbl.rows[t].cells[c];
+
+    if (t>0)
+      col.textContent= (t==header) ? caption : '0';
+
+    if (l>0)
+       col.onclick=tbl.rows[t].cells[c-1].onclick;
+  }
+
+  var r0=tbl.rows[0], l0=r0.cells.length-1;
+  r0.cells[l0].innerHTML=checkCode('s',l0-1);
+  r0.cells[l0].appendChild(r0.cells[l0-1].lastChild);
+
+  if (Table1.byCols) {
+    var ser=newSeries();
+
+    ser.title=caption;
+
+    for (var t=2; t<l; t++)
+      ser.data.values.push(0);
+  }
+  else
+  {
+    for (var t=0; t<Chart1.series.count(); t++)
+      Chart1.series.items[t].data.values.push(0);
+
+    document.getElementById('s'+(l0-2)).style.display="none";
+  }
+
+  Chart1.draw();
+}
+
+function clickedSeries(ser,index) {
+  var c=Table1.pointToCell(ser,index);
+  Table1.changeCell(c);
+}
+
+function newSeries() {
+  var s=eval(document.getElementById('chartstyle').value),
+      ser=Chart1.addSeries(new s());
+
+  ser.onclick=clickedSeries;
+  return ser;
+}
+
+function addRow() {
+  var tbl=document.getElementById('table1');
+      byCols=document.getElementById('bycols').checked;
+
+  var l=tbl.rows.length, last= l ? tbl.rows[l-1] : null;
+
+  var row = tbl.insertRow(l);
+
+  if (l>0) {
+
+    row.onmouseover=last.onmouseover;
+    row.onmouseout=last.onmouseout;
+
+    for (var t=0; t<last.cells.length; t++) {
+      row.insertCell(t);
+
+      var col=row.cells[t];
+      if (isNumeric(last.cells[t].textContent))
+         col.textContent='0';
+
+      var pr=tbl.rows[l-1].cells[t];
+      col.onclick=pr.onclick;
+    }
+
+    row.cells[0].innerHTML=checkCode('r',l-1);
+
+    if (byCols)
+      document.getElementById('r'+(l-2)).style.display="none";
+
+    if (byCols) {
+      for (var t=0; t<Chart1.series.count(); t++)
+        Chart1.series.items[t].data.values.push(0);
+    }
+    else
+    {
+      var ser=newSeries();
+
+      for (var t=2; t<last.cells.length; t++)
+        ser.data.values.push(0);
+    }
+
+    Chart1.draw();
+  }
+}
+
+function addColButton() {
+ return '<button class="buti" type="BUTTON" onclick="addCol(1,\'New\');">+</Button>';
+}
+
+function addTableCells(table) {
+ var tbl=document.getElementById('table1'),
+     r0=tbl.insertRow(0),
+     t, r=tbl.rows[1];
+
+ for (t=0; t<r.cells.length; t++) {
+   r0.insertCell(t);
+   if (t>0) {
+     if (t==r.cells.length-1)
+       r0.cells[t].innerHTML=checkCode('s',t)+addColButton();
+     else
+       r0.cells[t].innerHTML=checkCode('s',t);
+   }
+ }
+
+ for (t=0; t<tbl.rows.length; t++) {
+    var rt=tbl.rows[t];
+    rt.insertBefore(document.createElement(t==1 ? 'th' : 'td'),rt.cells[0]);
+
+    if (t>1)
+      rt.cells[0].innerHTML=checkCode('r',t-1);
+    else
+    if (t>0)
+      rt.cells[0].innerHTML='<button class="buti" type="BUTTON" onclick="addRow();">+</Button>';
+    else {
+      rt.cells[0].innerHTML='<img id="doedit" src="img/edit.png" title="Chart Editor" alt="Show chart editor">';
+      rt.cells[0].style.border='0';
+    }
+ }
+
+ r0.cells[1].appendChild(document.getElementById('chartstyle'));
+ r0.cells[1].style.border='0';
+}
+
+function draw() {
+  Three1=new Tee.Three("canvas");
+  Chart1=new Tee.Chart(Three1);
+
+  Three1.setEnabled(false, Chart1);
+
+  Chart1.title.text="TeeChart Generator";
+
+  Chart1.title.transparent=false;
+  Chart1.title.cursor="pointer";
+
+  Chart1.title.onclick=function(t) {
+     var s=prompt("Title",t.text);
+     if (s) {
+        t.text=s;
+        Chart1.draw();
+     }
+  };
+
+  Table1=new Tee.Table('table1',Chart1);
+  Table1.enableEditing(true);
+  Table1.enableRowHighlight('gold');
+  Table1.header=1;
+  Table1.firstCol=1;
+  Table1.byCols=document.getElementById('bycols').checked;
+
+  addTableCells("table1");
+
+  Chart1.legend.onhover=Table1.legendHover;
+  Chart1.onhover=Table1.hoverCell;
+
+  slider2=new accordion.slider("slider2");
+  slider2.init("slider2",0,"open");
+  refreshChart();
+
+  container=document.getElementById("container");
+  gripH=container.clientHeight-Chart1.canvas.height-4;
+  gripW=container.clientWidth-Chart1.canvas.width;
+
+  var editor=new ChartEditor("editor", Chart1);
+
+  $( "#editor" ).dialog({
+        autoOpen: false,
+        height: 400,
+        width: 450,
+        modal: false
+        });
+  $( "#doedit" )
+   .button()
+   .click(function() {
+   $( "#editor" ).dialog( "open" );
+  });  $( "#doedit2" )   .button()
+   .click(function() {
+   $( "#editor" ).dialog( "open" );
+  });  tips();}
+function refreshSize() {
+  document.getElementById('size').innerHTML=Chart1.bounds.width+' x '+Chart1.bounds.height;
+}
+
+function addClicks() {
+  for(var t=0; t<Chart1.series.count(); t++)
+    Chart1.series.items[t].onclick=clickedSeries;
+}
+
+function refreshChart() {
+
+  var st=document.getElementById('chartstyle').value;
+
+  Table1.byCols=document.getElementById('bycols').checked;
+
+  // Load data from html table1 to chart:
+
+  Chart1.fromTable('table1',
+              eval(st), // <-- optional series style
+              Table1.byCols,   // <-- by columns or by rows ?
+              1,  // <-- header row (-1 if no header)
+              1); // <-- labels row (-1 if no labels)
+
+  var canStack=(st=="Tee.Bar") || (st=="Tee.Area") || (st=="Tee.HorizBar") || (st=="Tee.Line") || (st=="Tee.PointXY") || (st=="Tee.HorizArea");
+  document.getElementById('stacked_div').style.display= canStack ? 'block' : 'none';
+
+  document.getElementById('marks').checked= Chart1.series.items[0].marks.visible;
+
+  var canSmooth=(st=="Tee.Line") || (st=="Tee.Area") || (st=="Tee.HorizArea");
+  document.getElementById('smooth_div').style.display= canSmooth ? 'block' : 'none';
+
+  var canPointers=(Chart1.series.count() > 0) && Chart1.series.items[0].pointer;
+  document.getElementById('pointer').checked=canPointers && Chart1.series.items[0].pointer.visible;
+  document.getElementById('pointer_div').style.display= canPointers ? 'block' : 'none';
+
+  enableAllCells();
+  
+  refreshColors();
+
+  if (canSmooth)
+    refreshSmooth();
+
+  if (canStack)
+     refreshStacked();
+
+  if (canPointers)
+     refreshPointer();
+
+  refreshSize();
+
+  addClicks();
+}
+
+function refreshColors() {
+  var t, tbl=Table1.table,
+      byCols=Table1.byCols;
+
+  for (t=2; t<tbl.rows.length; t++) {
+
+    var ser=byCols ? Chart1.series.firstVisible() : Chart1.series.items[t-2],
+        v=(!byCols) || (ser && ser.isColorEach);
+
+    document.getElementById('r'+(t-2)).style.display=v ? "inline" : "none";
+
+    if (v) {
+      var st=document.getElementById('rcol'+(t-2)).style;
+      st.backgroundColor= byCols ? ser.getFill(t-2) : ser.format.fill;
+      document.getElementById('ckrcol'+(t-2)).style.display=byCols ? "none" : "inline";
+    }
+  }
+
+  var r=tbl.rows[0];
+  for (t=2; t<r.cells.length; t++) {
+    document.getElementById('s'+(t-2)).style.display=byCols ? "inline" : "none";
+
+    if (byCols) {
+      var s=Chart1.series.items[t-2],
+          scol=document.getElementById('scol'+(t-2));
+
+      scol.style.backgroundColor=(s.isColorEach) ? "transparent" : s.format.fill;
+    }
+  }
+}
+
+function refreshLegend() {
+  var st=document.getElementById('legend').value, l=Chart1.legend;
+
+  l.visible=(st!="no");
+  if (l.visible)
+     l.position=st;
+
+  Chart1.draw();
+}
+
+function refreshStacked() {
+  Chart1.series.each(function(s) { s.stacked = document.getElementById('stacked').value; });
+  Chart1.draw();
+}
+
+function refreshSmooth() {
+  Chart1.series.each(function(s) { s.smooth=document.getElementById('smooth').checked ? 0.5 : 0; });
+  Chart1.draw();
+}
+
+function refreshPointer() {
+  Chart1.series.each(function(s) { s.pointer.visible=document.getElementById('pointer').checked; });
+  Chart1.draw();
+}
+
+function resized_div() {
+  if(!container) return;
+
+  var w=container.clientWidth-gripW, h=container.clientHeight-gripH-4;
+
+  if ((Chart1.canvas.width!=w) || (Chart1.canvas.height!=h)) {
+    Chart1.canvas.width=w;
+    Chart1.canvas.height=h;
+    Chart1.bounds.width=w;
+    Chart1.bounds.height=h;
+    Chart1.draw();
+
+    refreshSize();
+  }
+}
+
+function toImage(chart) {
+  var w=window.open('','',''), d=w.document;
+  d.write('<img src="'+chart.canvas.toDataURL()+'">');
+  d.close();
+  if (window.focus) w.focus();
+}
+
+function enableAllCells() {
+  var r, c, row;
+
+  for(r=1; r<Table1.table.rows.length; r++) {
+     row=Table1.table.rows[r];
+     for(c=1; c<row.cells.length; c++)
+        row.cells[c].className= '';
+  }
+}
+
+function hideShow(c,index) {
+  Chart1.series.items[index].visible=c.checked;
+
+  if (Table1.byCols) {
+    for(var t=1; t<Table1.table.rows.length; t++)
+      Table1.table.rows[t].cells[index+2].className= c.checked ? '' : 'disabled';
+  }
+  else
+  {
+    var r=Table1.table.rows[index+2];
+    for(var t=1; t<r.cells.length; t++)
+      r.cells[t].className= c.checked ? '' : 'disabled';
+  }
+
+  if (Chart1.legend.showValues()) {
+    var s=Chart1.series.firstVisible();
+    Chart1.legend.title.text=s ? s.title : "";
+  }
+  else
+    Chart1.legend.title.text="";
+
+  Chart1.draw();
+  refreshColors();
+}
+
+function tips() {
+  var t=document.getElementById('tips').checked;
+
+  if (t && (!tip)) {
+    tip=new Tee.ToolTip(Chart1);
+
+    //tip.autoHide=true;
+    //tip.autoRedraw=false;
+
+    Chart1.tools.add(tip);
+
+    /*
+    tip.onshow=function(tool,series,index) {
+        Tee.DOMTip.show('<strong>'+series.title+'</strong></br>'+series.data.labels[index]+': '+series.data.values[index].toFixed(2));
+    }
+
+    tip.onhide=function() {
+      Tee.DOMTip.hide();
+    }
+    tip.ongettext=function(tool,text) {      return "";    }    */  }
+
+  if (tip)
+    tip.enabled=t;
+
+}
+
+function animate() {
+  Three1.update();
+  requestAnimationFrame(animate);
+}
+
+function enableWebGL(enable) {
+  Three1.setEnabled(enable, Chart1);
+
+  if (Three1.isEnabled())
+     animate();
+}
+
+</script>
+</HEAD>
+
+<BODY style="font-family:Verdana; font-size:10pt" onload="draw()">
+
+<DIV style="float: left; margin-right:20px;">
+
+<button class="buti" type="BUTTON" onclick="scriptify(Chart1);">Generate !</button>
+<button class="buti" type="BUTTON" onclick="toImage(Chart1);">As PNG</button>
+<input type="checkbox" id="bycols" onclick="refreshChart();" checked>By Columns
+
+<select id="chartstyle" onchange="refreshChart();">
+  <option value="Tee.Bar">Bar</option>
+  <option value="Tee.HorizBar">Horiz. Bar</option>
+  <option value="Tee.Area">Area</option>
+  <option value="Tee.Line">Line</option>
+  <option value="Tee.PointXY">Point</option>
+  <option value="Tee.Pie">Pie</option>
+  <option value="Tee.Donut">Donut</option>
+  <option value="Tee.HorizArea">Horiz. Area</option>
+</select>
+</br>
+
+<table id="table1" class="sample">
+<tr><Th>Fruits</Th><th>Sugar</Th><Th>Fiber</Th></TR>
+<tr><TD>Apple</TD><td>5</TD><TD>1</TD></TR>
+<tr><TD>Kiwi</TD><td>2</TD><TD>4</TD></TR>
+<tr><TD>Banana</TD><td>1</TD><TD>7</TD></TR>
+</table>
+
+<div id="accordion2">
+  <dl class="accordion2" id="slider2">
+     <dt>Series</dt>
+      <dd>
+        <div id="stacked_div">
+        Stacked:
+        <select id="stacked" onchange="refreshStacked();">
+          <option value="no">No</option>
+          <option value="100">100%</option>
+          <option value="yes">Yes</option>
+          <option value="sideAll">Side All</option>
+          <option value="self">Self</option>
+        </select>
+        </div>
+        <input type="checkbox" id="marks" onclick="Chart1.series.each(function(s) { s.marks.visible=document.getElementById('marks').checked; }); Chart1.draw();" checked>Marks
+        <input type="checkbox" id="tips" onclick="tips();" checked>Tool tips
+        <div id="smooth_div">
+        <input type="checkbox" id="smooth" onclick="refreshSmooth();" checked>Smooth
+        </div>
+        <div id="pointer_div">
+        <input type="checkbox" id="pointer" onclick="refreshPointer();">Pointer
+        </div>
+      </dd>
+    <dt>Legend</dt>
+      <dd>
+        <div>
+                    Legend:
+                    <select id="legend" onchange="refreshLegend();">
+                      <option value="no">No</option>
+                      <option value="left">Left</option>
+                      <option value="right" selected>Right</option>
+                      <option value="top">Top</option>
+                      <option value="bottom">Bottom</option>
+                    </select>
+       </DIV>
+      </dd>
+    <dt>Chart</dt>
+      <dd>
+        <img id="doedit2" src="img/edit.png" title="Chart Editor" alt="Show chart editor">
+        <div id="chart_3d_div">
+        <input type="checkbox" id="useWebGL" onclick="enableWebGL(this.checked);">WebGL 3D
+        </div>
+      </dd>
+    </dl>
+</div>
+
+<div id="color" class="cp-default" style="display:none;">
+<div id="picker-wrapper">
+    <div id="picker"></div>
+    <div id="picker-indicator"></div>
+</div>
+<div id="slide-wrapper">
+    <div id="slide"></div>
+    <div id="slide-indicator"></div>
+</div>
+</div>
+
+</div>
+
+<div id="container" style="float:left; overflow:auto; resize:both;" onmousemove="resized_div()">
+ <canvas id="canvas" width="500" height="350">
+ This browser does not seem to support HTML5 Canvas.
+ </canvas>
+ </br>
+ Size: <span id="size"></span>
+</div>
+
+<div id="editor" title="Editing Chart1"></div>
+
+
+</body>
+</html>

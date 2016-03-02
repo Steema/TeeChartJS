@@ -1,0 +1,8 @@
+.teetable,table { border-collapse: collapse; border-bottom:1px solid darkgray; }
+.teetable,th,td { border-left:1px solid darkgray; border-right:1px solid darkgray; padding: 2px; }
+.teetable,th { background-color: green; color: white; }
+.teetable,tbody,td { background-color: cornsilk; color: black; }
+.teetable,.totals { background-color: gray; color: cornsilk; }
+
+.teeselected { font-weight:bold; }
+.teedataeditor { width:100%; border:0 }

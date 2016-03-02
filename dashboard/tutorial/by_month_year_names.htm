@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var MonthNames=[
+    { "month":1, "name":"Jan" },
+    { "month":2, "name":"Feb" },
+    { "month":3, "name":"Mar" },
+    { "month":4, "name":"Apr" },
+    { "month":5, "name":"May" },
+    { "month":6, "name":"Jun" },
+    { "month":7, "name":"Jul" },
+    { "month":8, "name":"Aug" },
+    { "month":9, "name":"Sep" },
+    { "month":10, "name":"Oct" },
+    { "month":11, "name":"Nov" },
+    { "month":12, "name":"Dec" }
+   ];
+
+   Temperatures=[
+      { year: 2011,
+        values: [
+           { month:1, value:21 },
+           { month:2, value:24 },
+           { month:3, value:26 },
+           { month:4, value:20 },
+           { month:5, value:22 },
+           { month:6, value:18 },
+           { month:7, value:25 },
+           { month:8, value:14 },
+           { month:9, value:19 },
+           { month:10, value:27 },
+           { month:11, value:26 },
+           { month:12, value:18 }
+        ]},
+      { year: 2012,
+        values: [
+           { month:1, value:20 },
+           { month:2, value:21 },
+           { month:3, value:24 },
+           { month:4, value:18 },
+           { month:5, value:21 },
+           { month:6, value:19 },
+           { month:7, value:27 },
+           { month:8, value:11 },
+           { month:9, value:18 },
+           { month:10, value:27 },
+           { month:11, value:24 },
+           { month:12, value:17 }
+        ]},
+      { year: 2013,
+        values: [
+           { month:1, value:22 },
+           { month:2, value:25 },
+           { month:3, value:26 },
+           { month:4, value:21 },
+           { month:5, value:20 },
+           { month:6, value:20 },
+           { month:7, value:22 },
+           { month:8, value:13 },
+           { month:9, value:19 },
+           { month:10, value:23 },
+           { month:11, value:25 },
+           { month:12, value:19 }
+        ]},
+      { year: 2014,
+        values: [
+           { month:1, value:22 },
+           { month:2, value:23 },
+           { month:3, value:26 },
+           { month:4, value:19 },
+           { month:5, value:22 },
+           { month:6, value:16 },
+           { month:7, value:25 },
+           { month:8, value:15 },
+           { month:9, value:19 },
+           { month:10, value:21 },
+           { month:11, value:26 },
+           { month:12, value:21 }
+        ]}
+      ];
+
+var Engine=new Tee.Data(),
+      Temps=Engine.addDataSet("Temperatures", Temperatures),
+        Years=Temps.addDimension("Years", "values", "year"),
+          Months=Years.addDimension("Month", "month"),
+          Degree=Years.addMetric("Degrees", "value"),
+
+      MonthsData=Engine.addDataSet("Months", MonthNames),
+        Names=MonthsData.addDimension("Months", null, "name");
+
+      Months.addLink("month", Names, "month");
+
+var Chart2;
+
+function draw() {
+
+    // Show sum of temperatures by each Year:
+
+    var Chart1=Engine.Chart("canvas1", Years.title);
+    Chart1.fill(Years, Degree);
+
+    Chart1.onclickseries=function(series, index) {
+      showMonthsOfYear( series, index );
+    }
+
+    // Show sum of temperatures of an specific Year (2012), month by month:
+
+    Chart2=Engine.Chart("canvas2", Years.title);
+    showMonthsOfYear( Chart1.series.items[0], 1 );
+
+    // Show average of temperatures of an specific Month (4 april):
+
+    var Chart3=Engine.Chart("canvas3", Months.title);
+    Years.selected=null;
+    Months.selected=[4];
+    Names.nulls=false; 
+    Degree.measure="average";
+    Chart3.fill(Names, Degree);
+
+    // Show sum of temperatures of an specific Month (4 april), Year by Year:
+
+    var Chart4=Engine.Chart("canvas4", Years.title);
+    Years.selected=null;
+    Months.selected=[4];
+    Degree.measure="sum";
+
+    Chart4.fill(Years, Degree);
+
+    document.getElementById("dataNames").value=addNewLines(JSON.stringify(MonthNames));
+    document.getElementById("dataTemps").value=addNewLines(JSON.stringify(Temperatures));
+}
+
+function showMonthsOfYear( series, index ) {
+
+    var year=series.data.code[index];
+
+    Chart2.title.text = "" + year + " " + Temps.title;
+
+    // Show sum of temperatures of an specific Year, Month by Month:
+
+    Years.selected=[year];
+    Months.selected=null;
+
+    Chart2.fill(Names, Degree, true);
+
+    // Set same color
+
+    var s2 = Chart2.series.items[0];
+    s2.colorEach="no";
+    s2.format.fill = series.getFill(index);
+    s2.format.gradient.colors=[ "white", "white" ];
+
+    Chart2.draw();
+}
+
+function addNewLines(text) {
+  return text.replace(/\},/g, "},\n" );
+}
+</script>
+
+</head>
+
+<body onload="draw()">
+  Click on Year bars to show monthly temperatures:
+  <br/>
+  <canvas id="canvas1" width="400" height="250"> </canvas>
+  <canvas id="canvas2" width="400" height="250"> </canvas>
+  <br/>
+  <canvas id="canvas3" width="400" height="250"> </canvas>
+  <canvas id="canvas4" width="400" height="250"> </canvas>
+
+  <br/>
+  Month Names:<br/>
+  <textarea id="dataNames" rows="12" cols="27"></textarea><br/>
+  Temperatures:<br/>
+  <textarea id="dataTemps" rows="50" cols="50"></textarea>
+
+</body>
+</html>

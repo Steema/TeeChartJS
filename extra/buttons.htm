@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Buttons Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Chart1, b1, b2;
+
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+  var series=Chart1.addSeries(new Tee.Line([5,3,2,7,1,6,4,5,1,0,10]) );
+
+  Chart1.axes.left.format.stroke.fill="green";
+  Chart1.axes.left.title.text="Left Axis";
+  Chart1.axes.bottom.title.text="Bottom Axis";
+
+  Chart1.title.text="Click on Buttons";
+  Chart1.title.format.font.style="18px Verdana";
+
+  series.format.stroke.fill="darkorange";
+  series.format.stroke.size=4;
+  series.pointer.visible=true;
+  series.hover.enabled=true;
+
+  Chart1.panel.format.stroke.fill="";
+  Chart1.panel.format.shadow.visible=true;
+
+  b1=new Tee.Annotation(Chart1);
+  b1.format.fill="black";
+  b1.format.stroke.color="lime";
+  b1.format.font.style="14px Tahoma";
+  b1.format.font.fill="beige";
+  b1.text="Button 1";
+  b1.position.x=50;
+  b1.position.y=50;
+  b1.onclick=function(button,x,y) { alert("Clicked button 1"); }
+  b1.cursor="pointer";
+
+  Chart1.tools.add(b1);
+
+  b2=new Tee.Annotation(Chart1);
+  b2.format.fill="orange";
+  b2.format.stroke.color="blue";
+  b2.format.font.style="18px Arial";
+  b2.format.font.fill="brown";
+
+  b2.text="Button 2";
+  b2.position.x=150;
+  b2.position.y=100;
+  b2.onclick=function(button,x,y) { alert("Clicked button 2"); }
+  b2.cursor="pointer";
+
+  Chart1.tools.add(b2);
+
+  // CheckBox to show or hide series pointers:
+
+  var check=new Tee.CheckBox(Chart1,"Pointers",series.pointer.visible);
+  check.position.x=40;
+  check.position.y=Chart1.bounds.height-30;
+  check.format.font.style="12px Arial";
+  check.format.font.fill="blue";
+
+  check.onchange=function(c) {
+      series.pointer.visible=c.checked;
+      Chart1.draw();
+  };
+
+  Chart1.tools.add(check);
+  
+  Chart1.draw();
+}
+
+</script>
+</head>
+<body onload="draw()">
+<br><canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+</body>
+</html>

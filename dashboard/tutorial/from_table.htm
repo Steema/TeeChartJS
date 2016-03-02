@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+<title>TeeChart JavaScript MultiDimensional Tutorial</title>
+
+<link rel="StyleSheet" href="tee-data-utils.css" type="text/css" />
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+<script src="tee-data-utils.js" type="text/javascript"></script>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+
+function query() {
+
+// Initialize the data engine:
+
+var Engine=new Tee.Data();
+
+  // Convert the "persons" <table> to JSON format:
+
+  var personsTable=document.getElementById("persons"),
+      personsJSON=Engine.tableToObject(personsTable);
+
+  // Add data, and define dimension and metric:
+
+  var Persons=Engine.addDataSet("Persons", personsJSON, "rows"),
+        Music=Persons.addDimension("Music", "Music"),
+        TV   =Persons.addMetric("TV hours/week", "TV hours/week");
+
+  // Create the chart, passing the canvas:
+
+  var Chart1=Engine.Chart("canvas", "Sum of hours per week watching TV, grouped by Music style.");
+  Chart1.panel.transparent=true;
+
+  // Show sum of watched TV hours by Music style:
+  Chart1.fill( Music, TV );
+}
+
+</script>
+
+</head>
+
+<body onload="query()">
+ This example uses an HTML &lt;table&gt; as a source dataset.  (View a more <a href="from_table_advanced.htm">advanced example.</a>)
+ <br/>
+ <br/>
+ The query is to sum all "watched TV hours" (the metric), grouped by "Music style" (the dimension):
+ <br/>
+ <br/>
+   <span style="background-color: cornsilk">
+     var Chart1=Engine.Chart("canvas");<br/>
+         Chart1.fill(Music, TV);
+   </span>
+ <br/>
+
+ <canvas id="canvas" width="900" height="400"></canvas>
+ <br/>
+
+<!-- SOURCE DATA IN HTML TABLE FORMAT.
+  This table is embedded here for convenience, to allow running this page from local file:// url,
+  and avoid cross-origin access restriction.
+  You can also use an external url like for example <iframe src='mytable.htm'>
+-->
+
+<input type="checkbox" onclick="document.getElementById('persons').style.display = this.checked ? 'inline' : 'none'"/>View source table data<br/>
+<br/>
+<table id="persons" class="teetable" style="display:none;">
+
+<thead>
+<tr><th>Person</th><th>Music</th><th>TV hours/week</th><th>Country</th><th>Color</th><th>Birth</th><th>Marital Status</th><th>Department</th><th>Company</th><th>Children</th><th>Savings</th><th>Year income</th><th>Mobile</th><th>Tablet</th><th>Notebook</th></tr>
+</thead>
+
+
+<tbody>
+<tr><td>Alden Gates</td><td>Jazz</td><td>54</td><td>Niue</td><td>indigo</td><td>10/11/1957</td><td>Married</td><td>Advertising</td><td>Adobe</td><td>3</td><td>31492</td><td>96077</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Maggie Carpenter</td><td>Jazz</td><td>0</td><td>Portugal</td><td>green</td><td>12/09/1970</td><td>Common-Law</td><td>Public Relations</td><td>Finale</td><td>1</td><td>23245</td><td>56275</td><td>Android</td><td>Surface</td><td>MacOS</td></tr>
+<tr><td>Louis Gilliam</td><td>Dance</td><td>42</td><td>Saint Lucia</td><td>yellow</td><td>11/12/1986</td><td>Married</td><td>Tech Support</td><td>Lavasoft</td><td>0</td><td>24503</td><td>78976</td><td>Windows Phone</td><td>Asus</td><td></td></tr>
+<tr><td>Yoshio Nolan</td><td>Soul</td><td>5</td><td>Cyprus</td><td>green</td><td>02/11/1994</td><td>Divorced</td><td>Public Relations</td><td>Finale</td><td>6</td><td>4122</td><td>64469</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Tamekah Hoffman</td><td>Reggae</td><td>36</td><td>Lesotho</td><td>blue</td><td>07/09/1990</td><td>Married</td><td>Advertising</td><td>Embarcadero</td><td>5</td><td>79977</td><td>92443</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Elizabeth Cherry</td><td>Soul</td><td>10</td><td>Niue</td><td>red</td><td>10/21/2003</td><td>Single</td><td>Customer Relations</td><td>Apple Systems</td><td>4</td><td>47123</td><td>38888</td><td>Android</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Raphael Burris</td><td>Country</td><td>11</td><td>Iraq</td><td>indigo</td><td>01/16/1984</td><td>Divorced</td><td>Public Relations</td><td>Lavasoft</td><td>5</td><td>43952</td><td>49852</td><td>iPhone</td><td></td><td>MacOS</td></tr>
+<tr><td>Cheyenne Greene</td><td>Jazz</td><td>39</td><td>South Georgia and The South Sandwich Islands</td><td>red</td><td>08/23/2006</td><td>Divorced</td><td>Media Relations</td><td>Chami</td><td>4</td><td>20937</td><td>83888</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Steel Bullock</td><td>Reggae</td><td>11</td><td>Gambia</td><td>orange</td><td>02/09/1991</td><td>Divorced</td><td>Research and Development</td><td>Adobe</td><td>6</td><td>25318</td><td>49475</td><td>iPhone</td><td>Nexus</td><td>Windows</td></tr>
+<tr><td>Carter Fitzgerald</td><td>Rock</td><td>11</td><td>Central African Republic</td><td>violet</td><td>09/30/1993</td><td>Common-Law</td><td>Sales and Marketing</td><td>Microsoft</td><td>1</td><td>97776</td><td>30279</td><td>Blackberry</td><td></td><td>Linux</td></tr>
+<tr><td>Piper Lancaster</td><td>Reggae</td><td>15</td><td>Faroe Islands</td><td>red</td><td>03/12/1957</td><td>Single</td><td>Human Resources</td><td>Adobe</td><td>4</td><td>98204</td><td>98803</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Summer Forbes</td><td>Dance</td><td>10</td><td>Timor-leste</td><td>yellow</td><td>12/21/1973</td><td>Married</td><td>Tech Support</td><td>Macromedia</td><td>6</td><td>67248</td><td>8588</td><td>Blackberry</td><td>Nexus</td><td></td></tr>
+<tr><td>Dieter Schwartz</td><td>Soul</td><td>55</td><td>Liechtenstein</td><td>indigo</td><td>03/18/1987</td><td>Single</td><td>Accounting</td><td>Cakewalk</td><td>4</td><td>38485</td><td>63167</td><td>Windows Phone</td><td></td><td>Windows</td></tr>
+<tr><td>Kameko Bailey</td><td>Country</td><td>19</td><td>Jamaica</td><td>violet</td><td>02/17/1980</td><td>Common-Law</td><td>Tech Support</td><td>Yahoo</td><td>0</td><td>29331</td><td>47717</td><td>iPhone</td><td>Asus</td><td></td></tr>
+<tr><td>Dana Moreno</td><td>Country</td><td>57</td><td>Cambodia</td><td>indigo</td><td>12/30/1987</td><td>Single</td><td>Finances</td><td>Macromedia</td><td>1</td><td>35517</td><td>99579</td><td>Android</td><td></td><td>ChromeOS</td></tr>
+<tr><td>Aristotle Shannon</td><td>Blues</td><td>37</td><td>Namibia</td><td>red</td><td>06/27/2005</td><td>Married</td><td>Asset Management</td><td>Macromedia</td><td>4</td><td>60088</td><td>48085</td><td>Android</td><td>Surface</td><td>FirefoxOS</td></tr>
+<tr><td>Quincy Mayo</td><td>Country</td><td>54</td><td>Switzerland</td><td>green</td><td>04/23/1958</td><td>Common-Law</td><td>Human Resources</td><td>Apple Systems</td><td>4</td><td>582</td><td>52143</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Mariko Gibbs</td><td>Country</td><td>59</td><td>Puerto Rico</td><td>violet</td><td>04/09/1987</td><td>Common-Law</td><td>Finances</td><td>Lavasoft</td><td>2</td><td>54590</td><td>19300</td><td>Blackberry</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Deanna Ford</td><td>Rock</td><td>17</td><td>United Arab Emirates</td><td>violet</td><td>11/02/1999</td><td>Common-Law</td><td>Sales and Marketing</td><td>Lycos</td><td>2</td><td>69841</td><td>14663</td><td>Blackberry</td><td></td><td>ChromeOS</td></tr>
+<tr><td>Haley Bass</td><td>Soul</td><td>2</td><td>Iraq</td><td>violet</td><td>02/22/1954</td><td>Divorced</td><td>Tech Support</td><td>Microsoft</td><td>5</td><td>89288</td><td>24452</td><td>iPhone</td><td>iPad</td><td>Windows</td></tr>
+<tr><td>Latifah Wolfe</td><td>Rock</td><td>28</td><td>Gibraltar</td><td>violet</td><td>02/24/2001</td><td>Common-Law</td><td>Legal Department</td><td>Lavasoft</td><td>3</td><td>98357</td><td>58429</td><td>Android</td><td>Surface</td><td></td></tr>
+<tr><td>Zeus Hughes</td><td>Funk</td><td>0</td><td>Sweden</td><td>orange</td><td>12/27/1981</td><td>Single</td><td>Quality Assurance</td><td>Microsoft</td><td>2</td><td>71237</td><td>89927</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Pandora Lloyd</td><td>Dance</td><td>13</td><td>Antigua and Barbuda</td><td>red</td><td>07/02/2003</td><td>Common-Law</td><td>Tech Support</td><td>Google</td><td>4</td><td>6586</td><td>6256</td><td>Windows Phone</td><td></td><td>Windows</td></tr>
+<tr><td>Josephine Alvarado</td><td>Dance</td><td>0</td><td>American Samoa</td><td>yellow</td><td>10/11/1955</td><td>Common-Law</td><td>Public Relations</td><td>Yahoo</td><td>5</td><td>611</td><td>5783</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Irma Guerrero</td><td>Blues</td><td>57</td><td>Cyprus</td><td>violet</td><td>09/16/1953</td><td>Single</td><td>Human Resources</td><td>Chami</td><td>4</td><td>93213</td><td>488</td><td>Blackberry</td><td>Asus</td><td></td></tr>
+<tr><td>Zelda Emerson</td><td>Dance</td><td>40</td><td>Tuvalu</td><td>green</td><td>08/28/1973</td><td>Single</td><td>Accounting</td><td>Embarcadero</td><td>0</td><td>47603</td><td>87237</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Ariana Sweet</td><td>Funk</td><td>51</td><td>Andorra</td><td>blue</td><td>05/22/1966</td><td>Divorced</td><td>Asset Management</td><td>Embarcadero</td><td>0</td><td>19803</td><td>65689</td><td>Blackberry</td><td>Asus</td><td></td></tr>
+<tr><td>Deborah Kirkland</td><td>Jazz</td><td>14</td><td>Israel</td><td>orange</td><td>09/08/1995</td><td>Common-Law</td><td>Asset Management</td><td>Apple Systems</td><td>2</td><td>70890</td><td>67828</td><td>iPhone</td><td></td><td>MacOS</td></tr>
+<tr><td>Francis Vaughan</td><td>Soul</td><td>38</td><td>Australia</td><td>blue</td><td>04/11/1955</td><td>Common-Law</td><td>Media Relations</td><td>Apple Systems</td><td>1</td><td>93401</td><td>44201</td><td>iPhone</td><td>Samsung</td><td></td></tr>
+<tr><td>Alana Robertson</td><td>Funk</td><td>35</td><td>Egypt</td><td>blue</td><td>10/18/1965</td><td>Married</td><td>Media Relations</td><td>Google</td><td>1</td><td>62454</td><td>83535</td><td>Android</td><td>Surface</td><td></td></tr>
+<tr><td>Nerea Bass</td><td>Country</td><td>41</td><td>Fiji</td><td>orange</td><td>07/06/1970</td><td>Divorced</td><td>Sales and Marketing</td><td>Microsoft</td><td>5</td><td>45759</td><td>38582</td><td>Android</td><td>Asus</td><td>Linux</td></tr>
+<tr><td>Oliver Mills</td><td>Blues</td><td>17</td><td>Bulgaria</td><td>violet</td><td>06/16/1974</td><td>Single</td><td>Asset Management</td><td>Yahoo</td><td>1</td><td>99814</td><td>20218</td><td>Android</td><td></td><td>ChromeOS</td></tr>
+<tr><td>Renee Lynch</td><td>Rock</td><td>46</td><td>Malta</td><td>green</td><td>09/17/1987</td><td>Common-Law</td><td>Tech Support</td><td>Microsoft</td><td>4</td><td>24181</td><td>68582</td><td>Android</td><td>iPad</td><td></td></tr>
+<tr><td>Jonas Casey</td><td>Rock</td><td>34</td><td>Equatorial Guinea</td><td>violet</td><td>04/14/1961</td><td>Married</td><td>Tech Support</td><td>Cakewalk</td><td>5</td><td>84813</td><td>94441</td><td>Windows Phone</td><td>iPad</td><td></td></tr>
+<tr><td>Kieran Welch</td><td>Jazz</td><td>11</td><td>China</td><td>blue</td><td>08/20/2009</td><td>Single</td><td>Human Resources</td><td>Finale</td><td>2</td><td>63008</td><td>13538</td><td>Blackberry</td><td></td><td>Linux</td></tr>
+<tr><td>Gregory Howell</td><td>Country</td><td>45</td><td>Gibraltar</td><td>yellow</td><td>07/01/2005</td><td>Divorced</td><td>Customer Relations</td><td>Chami</td><td>1</td><td>96179</td><td>81104</td><td>Android</td><td>Asus</td><td>ChromeOS</td></tr>
+<tr><td>Yardley Peterson</td><td>Country</td><td>26</td><td>Guadeloupe</td><td>yellow</td><td>07/29/1959</td><td>Single</td><td>Media Relations</td><td>Lavasoft</td><td>4</td><td>22020</td><td>50555</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Orson Vazquez</td><td>Reggae</td><td>26</td><td>Solomon Islands</td><td>orange</td><td>03/17/1993</td><td>Common-Law</td><td>Tech Support</td><td>Macromedia</td><td>3</td><td>3910</td><td>55838</td><td>Blackberry</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Gwendolyn Drake</td><td>Reggae</td><td>31</td><td>Mauritius</td><td>violet</td><td>01/18/2009</td><td>Single</td><td>Tech Support</td><td>Microsoft</td><td>5</td><td>68648</td><td>55462</td><td>Blackberry</td><td>Asus</td><td></td></tr>
+<tr><td>Ezra Guzman</td><td>Soul</td><td>37</td><td>Nigeria</td><td>violet</td><td>06/23/1987</td><td>Single</td><td>Payroll</td><td>Lycos</td><td>6</td><td>22405</td><td>39066</td><td>Android</td><td></td><td>MacOS</td></tr>
+<tr><td>Lisandra Bridges</td><td>Dance</td><td>54</td><td>Myanmar</td><td>blue</td><td>05/24/2001</td><td>Common-Law</td><td>Customer Relations</td><td>Altavista</td><td>4</td><td>92248</td><td>32619</td><td>Blackberry</td><td>Nexus</td><td></td></tr>
+<tr><td>Olga Molina</td><td>Country</td><td>14</td><td>Swaziland</td><td>violet</td><td>02/28/1952</td><td>Common-Law</td><td>Finances</td><td>Microsoft</td><td>0</td><td>73006</td><td>57738</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Roth Best</td><td>Country</td><td>25</td><td>Netherlands Antilles</td><td>blue</td><td>09/12/2012</td><td>Divorced</td><td>Legal Department</td><td>Altavista</td><td>3</td><td>52524</td><td>60935</td><td>Android</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Gwendolyn Myers</td><td>Country</td><td>0</td><td>Greece</td><td>orange</td><td>05/07/1990</td><td>Common-Law</td><td>Media Relations</td><td>Apple Systems</td><td>3</td><td>69375</td><td>2925</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Fuller Sherman</td><td>Country</td><td>50</td><td>Uzbekistan</td><td>green</td><td>10/01/1987</td><td>Married</td><td>Customer Service</td><td>Lycos</td><td>6</td><td>56576</td><td>30054</td><td>Windows Phone</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Curran Ayala</td><td>Rock</td><td>12</td><td>Bangladesh</td><td>indigo</td><td>05/25/2011</td><td>Common-Law</td><td>Media Relations</td><td>Microsoft</td><td>6</td><td>28016</td><td>87717</td><td>Windows Phone</td><td>Surface</td><td></td></tr>
+<tr><td>Nathaniel Griffin</td><td>Soul</td><td>17</td><td>Morocco</td><td>violet</td><td>09/26/1951</td><td>Divorced</td><td>Asset Management</td><td>Altavista</td><td>3</td><td>67773</td><td>9890</td><td>Android</td><td>iPad</td><td>MacOS</td></tr>
+<tr><td>Lois Hardy</td><td>Jazz</td><td>2</td><td>Djibouti</td><td>violet</td><td>10/13/2005</td><td>Common-Law</td><td>Quality Assurance</td><td>Adobe</td><td>3</td><td>67130</td><td>23117</td><td>Blackberry</td><td></td><td>Linux</td></tr>
+<tr><td>Gisela Hunter</td><td>Reggae</td><td>15</td><td>Tunisia</td><td>blue</td><td>10/17/1954</td><td>Married</td><td>Asset Management</td><td>Sibelius</td><td>3</td><td>23259</td><td>54376</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Brianna Guerra</td><td>Dance</td><td>60</td><td>Bahamas</td><td>yellow</td><td>05/20/1991</td><td>Common-Law</td><td>Advertising</td><td>Finale</td><td>1</td><td>85689</td><td>78023</td><td>iPhone</td><td>Nexus</td><td></td></tr>
+<tr><td>Aurora Crane</td><td>Jazz</td><td>20</td><td>Montserrat</td><td>violet</td><td>01/15/1954</td><td>Common-Law</td><td>Advertising</td><td>Embarcadero</td><td>5</td><td>80792</td><td>28695</td><td>iPhone</td><td>Samsung</td><td></td></tr>
+<tr><td>Eleanor Harmon</td><td>Jazz</td><td>31</td><td>Heard Island and Mcdonald Islands</td><td>green</td><td>04/28/1973</td><td>Common-Law</td><td>Research and Development</td><td>Google</td><td>4</td><td>59742</td><td>52686</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Shelly Bass</td><td>Blues</td><td>14</td><td>Bangladesh</td><td>orange</td><td>10/13/1982</td><td>Married</td><td>Accounting</td><td>Lavasoft</td><td>3</td><td>82262</td><td>98014</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Lucy Schwartz</td><td>Rock</td><td>54</td><td>Nigeria</td><td>indigo</td><td>10/19/1951</td><td>Single</td><td>Legal Department</td><td>Macromedia</td><td>4</td><td>50446</td><td>67886</td><td>Android</td><td>Nexus</td><td>ChromeOS</td></tr>
+<tr><td>Tanek Compton</td><td>Dance</td><td>54</td><td>Myanmar</td><td>orange</td><td>09/26/1969</td><td>Married</td><td>Media Relations</td><td>Cakewalk</td><td>3</td><td>33138</td><td>31320</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Mona Petty</td><td>Dance</td><td>51</td><td>Syrian Arab Republic</td><td>violet</td><td>12/28/1966</td><td>Divorced</td><td>Public Relations</td><td>Yahoo</td><td>0</td><td>39248</td><td>83548</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Henry Bonner</td><td>Soul</td><td>50</td><td>Ghana</td><td>blue</td><td>12/28/2002</td><td>Divorced</td><td>Quality Assurance</td><td>Cakewalk</td><td>3</td><td>34420</td><td>14430</td><td>iPhone</td><td></td><td>Windows</td></tr>
+<tr><td>Chava Webster</td><td>Rock</td><td>35</td><td>Georgia</td><td>green</td><td>08/28/1996</td><td>Single</td><td>Quality Assurance</td><td>Microsoft</td><td>4</td><td>87048</td><td>95292</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Otto Owens</td><td>Funk</td><td>50</td><td>Djibouti</td><td>indigo</td><td>12/23/1991</td><td>Married</td><td>Customer Service</td><td>Embarcadero</td><td>4</td><td>74209</td><td>22718</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Arden Sargent</td><td>Country</td><td>21</td><td>Fiji</td><td>blue</td><td>11/14/1976</td><td>Divorced</td><td>Customer Relations</td><td>Microsoft</td><td>2</td><td>60500</td><td>99003</td><td>Android</td><td>Samsung</td><td>Windows</td></tr>
+<tr><td>Shoshana Saunders</td><td>Rock</td><td>20</td><td>Kenya</td><td>red</td><td>10/18/1956</td><td>Divorced</td><td>Public Relations</td><td>Lycos</td><td>2</td><td>2874</td><td>63019</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Wendy Stanton</td><td>Rock</td><td>35</td><td>Nauru</td><td>violet</td><td>05/18/1975</td><td>Divorced</td><td>Tech Support</td><td>Lavasoft</td><td>2</td><td>85659</td><td>11050</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Dominic Shepherd</td><td>Soul</td><td>31</td><td>Guinea</td><td>yellow</td><td>10/12/1964</td><td>Single</td><td>Tech Support</td><td>Adobe</td><td>1</td><td>38500</td><td>58832</td><td>Windows Phone</td><td></td><td>Linux</td></tr>
+<tr><td>Moses Peters</td><td>Funk</td><td>35</td><td>Saint Lucia</td><td>blue</td><td>08/20/1968</td><td>Single</td><td>Media Relations</td><td>Lavasoft</td><td>6</td><td>19776</td><td>10542</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Sebastian Robinson</td><td>Soul</td><td>20</td><td>Solomon Islands</td><td>orange</td><td>08/06/2005</td><td>Single</td><td>Legal Department</td><td>Lavasoft</td><td>2</td><td>32508</td><td>30905</td><td>iPhone</td><td>Nexus</td><td>FirefoxOS</td></tr>
+<tr><td>Jescie Heath</td><td>Blues</td><td>22</td><td>Sweden</td><td>violet</td><td>08/10/1967</td><td>Married</td><td>Customer Service</td><td>Lavasoft</td><td>0</td><td>61586</td><td>8443</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Hector Schroeder</td><td>Reggae</td><td>49</td><td>Georgia</td><td>orange</td><td>11/22/2006</td><td>Single</td><td>Customer Relations</td><td>Apple Systems</td><td>6</td><td>60145</td><td>31527</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Madison Haynes</td><td>Blues</td><td>12</td><td>Mauritius</td><td>violet</td><td>09/17/1979</td><td>Common-Law</td><td>Customer Relations</td><td>Adobe</td><td>1</td><td>81781</td><td>17223</td><td>Blackberry</td><td>Surface</td><td>Linux</td></tr>
+<tr><td>Aristotle Richmond</td><td>Country</td><td>23</td><td>India</td><td>red</td><td>09/14/2004</td><td>Married</td><td>Tech Support</td><td>Adobe</td><td>0</td><td>69420</td><td>18019</td><td>iPhone</td><td>Samsung</td><td>MacOS</td></tr>
+<tr><td>Joelle Alvarado</td><td>Jazz</td><td>17</td><td>Georgia</td><td>green</td><td>11/08/1965</td><td>Divorced</td><td>Human Resources</td><td>Microsoft</td><td>6</td><td>2357</td><td>12080</td><td>Android</td><td></td><td>Linux</td></tr>
+<tr><td>Daniel Goodman</td><td>Country</td><td>14</td><td>British Indian Ocean Territory</td><td>red</td><td>06/01/2005</td><td>Single</td><td>Accounting</td><td>Apple Systems</td><td>0</td><td>80935</td><td>84529</td><td>Windows Phone</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Tara Gallagher</td><td>Country</td><td>29</td><td>Seychelles</td><td>red</td><td>08/27/2000</td><td>Married</td><td>Sales and Marketing</td><td>Lavasoft</td><td>6</td><td>36350</td><td>53378</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Morgan Todd</td><td>Blues</td><td>40</td><td>Argentina</td><td>violet</td><td>12/04/1959</td><td>Married</td><td>Legal Department</td><td>Lycos</td><td>6</td><td>77721</td><td>529</td><td>Windows Phone</td><td>Surface</td><td></td></tr>
+<tr><td>Ariel Hamilton</td><td>Dance</td><td>43</td><td>Benin</td><td>red</td><td>07/11/1976</td><td>Divorced</td><td>Payroll</td><td>Chami</td><td>4</td><td>26420</td><td>77939</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Hyatt Morin</td><td>Jazz</td><td>31</td><td>Romania</td><td>green</td><td>01/31/1968</td><td>Single</td><td>Quality Assurance</td><td>Sibelius</td><td>6</td><td>96831</td><td>66410</td><td>Blackberry</td><td></td><td>Windows</td></tr>
+<tr><td>Urielle Cook</td><td>Dance</td><td>32</td><td>Syrian Arab Republic</td><td>violet</td><td>07/24/1954</td><td>Common-Law</td><td>Advertising</td><td>Lavasoft</td><td>1</td><td>59458</td><td>67965</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Keiko Strong</td><td>Blues</td><td>2</td><td>Belgium</td><td>green</td><td>04/21/1989</td><td>Divorced</td><td>Legal Department</td><td>Lycos</td><td>2</td><td>26141</td><td>47905</td><td>Windows Phone</td><td>Nexus</td><td></td></tr>
+<tr><td>Hamish Savage</td><td>Jazz</td><td>17</td><td>Congo</td><td>indigo</td><td>05/19/1969</td><td>Divorced</td><td>Sales and Marketing</td><td>Cakewalk</td><td>5</td><td>48047</td><td>80235</td><td>iPhone</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Brock Hansen</td><td>Jazz</td><td>59</td><td>Belgium</td><td>orange</td><td>01/16/2001</td><td>Divorced</td><td>Legal Department</td><td>Finale</td><td>3</td><td>9068</td><td>43951</td><td>Android</td><td></td><td>Linux</td></tr>
+<tr><td>April House</td><td>Country</td><td>27</td><td>Viet Nam</td><td>blue</td><td>01/06/1983</td><td>Common-Law</td><td>Customer Relations</td><td>Embarcadero</td><td>2</td><td>14604</td><td>16206</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Veronica Goodwin</td><td>Country</td><td>28</td><td>Hungary</td><td>orange</td><td>06/28/1953</td><td>Married</td><td>Finances</td><td>Cakewalk</td><td>5</td><td>93681</td><td>41931</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Kirk Haney</td><td>Dance</td><td>53</td><td>Iceland</td><td>blue</td><td>06/15/1959</td><td>Common-Law</td><td>Media Relations</td><td>Google</td><td>3</td><td>71062</td><td>86554</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Libby Pratt</td><td>Dance</td><td>3</td><td>Montserrat</td><td>red</td><td>04/02/1985</td><td>Common-Law</td><td>Human Resources</td><td>Embarcadero</td><td>4</td><td>77383</td><td>81783</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Len Payne</td><td>Reggae</td><td>43</td><td>Switzerland</td><td>indigo</td><td>07/27/2012</td><td>Divorced</td><td>Public Relations</td><td>Altavista</td><td>6</td><td>16782</td><td>52263</td><td>Windows Phone</td><td>iPad</td><td></td></tr>
+<tr><td>Lacota Knox</td><td>Soul</td><td>26</td><td>Cuba</td><td>red</td><td>11/20/1958</td><td>Divorced</td><td>Customer Service</td><td>Microsoft</td><td>1</td><td>98937</td><td>16477</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Abel Nash</td><td>Dance</td><td>12</td><td>Finland</td><td>blue</td><td>05/29/1954</td><td>Common-Law</td><td>Payroll</td><td>Lavasoft</td><td>6</td><td>10041</td><td>86726</td><td>iPhone</td><td>Samsung</td><td>Linux</td></tr>
+<tr><td>Karina Perry</td><td>Country</td><td>18</td><td>United States Minor Outlying Islands</td><td>red</td><td>05/18/2009</td><td>Common-Law</td><td>Sales and Marketing</td><td>Microsoft</td><td>2</td><td>3368</td><td>80876</td><td>iPhone</td><td>Nexus</td><td>FirefoxOS</td></tr>
+<tr><td>Deirdre Vincent</td><td>Rock</td><td>18</td><td>Italy</td><td>yellow</td><td>03/30/1990</td><td>Married</td><td>Accounting</td><td>Apple Systems</td><td>2</td><td>94272</td><td>6223</td><td>iPhone</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Richard Giles</td><td>Rock</td><td>46</td><td>Viet Nam</td><td>yellow</td><td>08/20/1991</td><td>Common-Law</td><td>Advertising</td><td>Google</td><td>1</td><td>7423</td><td>22156</td><td>Android</td><td>Asus</td><td></td></tr>
+<tr><td>Grady Travis</td><td>Reggae</td><td>52</td><td>Armenia</td><td>orange</td><td>01/12/1976</td><td>Married</td><td>Quality Assurance</td><td>Apple Systems</td><td>3</td><td>11408</td><td>34483</td><td>Android</td><td></td><td>Windows</td></tr>
+<tr><td>Debra Ramos</td><td>Funk</td><td>60</td><td>Albania</td><td>blue</td><td>10/28/1955</td><td>Single</td><td>Finances</td><td>Embarcadero</td><td>4</td><td>39141</td><td>26058</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Beverly Nieves</td><td>Funk</td><td>55</td><td>Ghana</td><td>indigo</td><td>09/22/2003</td><td>Divorced</td><td>Advertising</td><td>Chami</td><td>2</td><td>15179</td><td>44959</td><td>Blackberry</td><td></td><td>MacOS</td></tr>
+<tr><td>Kennan Barnes</td><td>Jazz</td><td>10</td><td>Ghana</td><td>green</td><td>09/03/1959</td><td>Single</td><td>Finances</td><td>Chami</td><td>2</td><td>38026</td><td>74190</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Zoe Mcdaniel</td><td>Jazz</td><td>12</td><td>Netherlands</td><td>violet</td><td>06/12/2009</td><td>Common-Law</td><td>Asset Management</td><td>Apple Systems</td><td>0</td><td>54108</td><td>18215</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Joshua Carlson</td><td>Country</td><td>25</td><td>Western Sahara</td><td>blue</td><td>09/13/1982</td><td>Married</td><td>Finances</td><td>Macromedia</td><td>2</td><td>3081</td><td>2314</td><td>Blackberry</td><td></td><td>MacOS</td></tr>
+<tr><td>Nelle Maldonado</td><td>Funk</td><td>33</td><td>Gibraltar</td><td>yellow</td><td>11/19/1976</td><td>Common-Law</td><td>Legal Department</td><td>Sibelius</td><td>5</td><td>12368</td><td>42047</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Asher Wagner</td><td>Soul</td><td>27</td><td>Uganda</td><td>blue</td><td>08/11/1963</td><td>Single</td><td>Advertising</td><td>Sibelius</td><td>1</td><td>94758</td><td>42161</td><td>Blackberry</td><td></td><td>MacOS</td></tr>
+<tr><td>Galvin Jordan</td><td>Country</td><td>56</td><td>Tonga</td><td>green</td><td>12/10/2008</td><td>Divorced</td><td>Customer Service</td><td>Sibelius</td><td>4</td><td>76471</td><td>31899</td><td>Blackberry</td><td>iPad</td><td>FirefoxOS</td></tr>
+<tr><td>Daniel Le</td><td>Country</td><td>51</td><td>Grenada</td><td>violet</td><td>09/11/1976</td><td>Common-Law</td><td>Advertising</td><td>Macromedia</td><td>2</td><td>91163</td><td>40676</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Anastasia Navarro</td><td>Blues</td><td>44</td><td>Hungary</td><td>orange</td><td>07/01/1979</td><td>Single</td><td>Quality Assurance</td><td>Microsoft</td><td>6</td><td>9791</td><td>45220</td><td>iPhone</td><td>Samsung</td><td></td></tr>
+<tr><td>Gillian Moody</td><td>Funk</td><td>17</td><td>Montserrat</td><td>indigo</td><td>09/17/1960</td><td>Common-Law</td><td>Sales and Marketing</td><td>Lavasoft</td><td>2</td><td>76513</td><td>1388</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Porter Merrill</td><td>Country</td><td>6</td><td>Antarctica</td><td>blue</td><td>07/20/1976</td><td>Single</td><td>Media Relations</td><td>Macromedia</td><td>1</td><td>74009</td><td>22329</td><td>Android</td><td></td><td>Linux</td></tr>
+<tr><td>Madison Villarreal</td><td>Reggae</td><td>31</td><td>Vanuatu</td><td>red</td><td>10/12/1981</td><td>Single</td><td>Media Relations</td><td>Yahoo</td><td>1</td><td>18316</td><td>86902</td><td>Android</td><td>Samsung</td><td></td></tr>
+<tr><td>Rudyard Hurley</td><td>Rock</td><td>34</td><td>Central African Republic</td><td>red</td><td>08/04/1971</td><td>Married</td><td>Public Relations</td><td>Lavasoft</td><td>5</td><td>70452</td><td>99793</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Kiona Hudson</td><td>Soul</td><td>21</td><td>India</td><td>orange</td><td>02/11/1988</td><td>Single</td><td>Media Relations</td><td>Lycos</td><td>0</td><td>21913</td><td>30603</td><td>Blackberry</td><td>iPad</td><td></td></tr>
+<tr><td>Zane Decker</td><td>Jazz</td><td>18</td><td>Canada</td><td>yellow</td><td>11/24/1963</td><td>Married</td><td>Media Relations</td><td>Lycos</td><td>5</td><td>76383</td><td>83136</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Chanda Hall</td><td>Dance</td><td>40</td><td>Anguilla</td><td>indigo</td><td>12/22/1956</td><td>Divorced</td><td>Customer Service</td><td>Embarcadero</td><td>6</td><td>3867</td><td>43880</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Aaron Tucker</td><td>Country</td><td>3</td><td>Tunisia</td><td>red</td><td>10/23/1974</td><td>Divorced</td><td>Legal Department</td><td>Chami</td><td>0</td><td>17052</td><td>74706</td><td>iPhone</td><td>Samsung</td><td>FirefoxOS</td></tr>
+<tr><td>Jillian Stein</td><td>Blues</td><td>43</td><td>Saint Vincent and The Grenadines</td><td>yellow</td><td>05/13/1994</td><td>Divorced</td><td>Customer Relations</td><td>Lycos</td><td>3</td><td>15931</td><td>89294</td><td>Windows Phone</td><td></td><td>Windows</td></tr>
+<tr><td>Otto Fischer</td><td>Jazz</td><td>50</td><td>Antarctica</td><td>violet</td><td>02/08/1955</td><td>Married</td><td>Public Relations</td><td>Lycos</td><td>0</td><td>94370</td><td>72804</td><td>Windows Phone</td><td>Asus</td><td></td></tr>
+<tr><td>Mufutau Moses</td><td>Country</td><td>46</td><td>Timor-leste</td><td>blue</td><td>10/19/2008</td><td>Common-Law</td><td>Media Relations</td><td>Yahoo</td><td>0</td><td>13006</td><td>65737</td><td>Windows Phone</td><td></td><td>Windows</td></tr>
+<tr><td>Maya Carter</td><td>Country</td><td>17</td><td>Mauritius</td><td>green</td><td>03/13/1978</td><td>Common-Law</td><td>Accounting</td><td>Adobe</td><td>3</td><td>48292</td><td>51843</td><td>iPhone</td><td>Nexus</td><td>FirefoxOS</td></tr>
+<tr><td>Sheila Tran</td><td>Jazz</td><td>24</td><td>Solomon Islands</td><td>blue</td><td>12/12/1956</td><td>Married</td><td>Accounting</td><td>Cakewalk</td><td>0</td><td>27620</td><td>71524</td><td>Windows Phone</td><td>Nexus</td><td></td></tr>
+<tr><td>Merrill Randall</td><td>Soul</td><td>55</td><td>Cape Verde</td><td>blue</td><td>07/31/1994</td><td>Divorced</td><td>Public Relations</td><td>Finale</td><td>1</td><td>84361</td><td>49383</td><td>iPhone</td><td></td><td>Linux</td></tr>
+<tr><td>Alana Wilcox</td><td>Rock</td><td>12</td><td>Moldova</td><td>violet</td><td>12/05/2002</td><td>Single</td><td>Finances</td><td>Sibelius</td><td>0</td><td>34341</td><td>6285</td><td>Blackberry</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Thomas Williams</td><td>Rock</td><td>54</td><td>Maldives</td><td>green</td><td>12/23/1954</td><td>Married</td><td>Media Relations</td><td>Embarcadero</td><td>3</td><td>48949</td><td>61812</td><td>iPhone</td><td>Surface</td><td>FirefoxOS</td></tr>
+<tr><td>Scarlett Mcknight</td><td>Dance</td><td>51</td><td>Barbados</td><td>orange</td><td>05/13/2003</td><td>Common-Law</td><td>Media Relations</td><td>Cakewalk</td><td>6</td><td>82167</td><td>3396</td><td>Blackberry</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Emmanuel Bennett</td><td>Rock</td><td>0</td><td>South Georgia and The South Sandwich Islands</td><td>indigo</td><td>03/15/1997</td><td>Common-Law</td><td>Advertising</td><td>Adobe</td><td>2</td><td>99140</td><td>59730</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>May Rhodes</td><td>Dance</td><td>32</td><td>Heard Island and Mcdonald Islands</td><td>indigo</td><td>12/02/1979</td><td>Common-Law</td><td>Payroll</td><td>Google</td><td>3</td><td>81405</td><td>35072</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Illiana Morales</td><td>Blues</td><td>13</td><td>Albania</td><td>yellow</td><td>07/03/1959</td><td>Single</td><td>Customer Relations</td><td>Sibelius</td><td>0</td><td>59638</td><td>67512</td><td>Android</td><td>Asus</td><td>MacOS</td></tr>
+<tr><td>Nyssa Phelps</td><td>Dance</td><td>42</td><td>Jamaica</td><td>violet</td><td>01/04/2007</td><td>Single</td><td>Payroll</td><td>Apple Systems</td><td>0</td><td>32597</td><td>62773</td><td>Android</td><td>Samsung</td><td>Linux</td></tr>
+<tr><td>Steven Walters</td><td>Blues</td><td>44</td><td>Bolivia</td><td>orange</td><td>05/11/2012</td><td>Married</td><td>Media Relations</td><td>Adobe</td><td>6</td><td>75834</td><td>13730</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Sierra Wolf</td><td>Funk</td><td>46</td><td>South Georgia and The South Sandwich Islands</td><td>violet</td><td>04/04/1960</td><td>Divorced</td><td>Human Resources</td><td>Embarcadero</td><td>6</td><td>4148</td><td>38348</td><td>Android</td><td></td><td>Linux</td></tr>
+<tr><td>Thor Stanley</td><td>Dance</td><td>26</td><td>Ghana</td><td>blue</td><td>09/12/1984</td><td>Married</td><td>Human Resources</td><td>Sibelius</td><td>2</td><td>59798</td><td>46283</td><td>Windows Phone</td><td>Surface</td><td></td></tr>
+<tr><td>Wyoming Justice</td><td>Funk</td><td>60</td><td>Papua New Guinea</td><td>yellow</td><td>08/05/1993</td><td>Common-Law</td><td>Asset Management</td><td>Finale</td><td>1</td><td>54454</td><td>97688</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Brock Olsen</td><td>Dance</td><td>33</td><td>British Indian Ocean Territory</td><td>blue</td><td>03/15/1985</td><td>Single</td><td>Payroll</td><td>Adobe</td><td>6</td><td>44954</td><td>15072</td><td>iPhone</td><td></td><td>Linux</td></tr>
+<tr><td>April Barr</td><td>Reggae</td><td>50</td><td>Saint Kitts and Nevis</td><td>orange</td><td>06/22/1993</td><td>Single</td><td>Accounting</td><td>Sibelius</td><td>2</td><td>37057</td><td>70568</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Ferdinand Freeman</td><td>Dance</td><td>11</td><td>Nepal</td><td>red</td><td>03/12/1981</td><td>Married</td><td>Human Resources</td><td>Lavasoft</td><td>0</td><td>43568</td><td>41829</td><td>iPhone</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>India Finch</td><td>Reggae</td><td>15</td><td>Norfolk Island</td><td>red</td><td>10/25/1974</td><td>Single</td><td>Finances</td><td>Lycos</td><td>4</td><td>76321</td><td>27713</td><td>Windows Phone</td><td>Nexus</td><td>Windows</td></tr>
+<tr><td>Aiko Lynch</td><td>Reggae</td><td>48</td><td>Madagascar</td><td>yellow</td><td>12/09/1985</td><td>Common-Law</td><td>Tech Support</td><td>Macromedia</td><td>3</td><td>47430</td><td>48268</td><td>Windows Phone</td><td>Samsung</td><td></td></tr>
+<tr><td>Minerva Whitaker</td><td>Funk</td><td>53</td><td>Malta</td><td>blue</td><td>08/05/1984</td><td>Married</td><td>Accounting</td><td>Finale</td><td>6</td><td>1825</td><td>11483</td><td>iPhone</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Eaton Cobb</td><td>Reggae</td><td>44</td><td>Trinidad and Tobago</td><td>yellow</td><td>12/08/1996</td><td>Single</td><td>Quality Assurance</td><td>Cakewalk</td><td>2</td><td>96952</td><td>47781</td><td>Android</td><td>Samsung</td><td>FirefoxOS</td></tr>
+<tr><td>Danielle Reid</td><td>Soul</td><td>54</td><td>Philippines</td><td>blue</td><td>12/27/1996</td><td>Divorced</td><td>Finances</td><td>Yahoo</td><td>4</td><td>79744</td><td>2029</td><td>Blackberry</td><td>Asus</td><td></td></tr>
+<tr><td>MacKenzie Holder</td><td>Jazz</td><td>27</td><td>Solomon Islands</td><td>blue</td><td>08/25/1999</td><td>Divorced</td><td>Advertising</td><td>Microsoft</td><td>6</td><td>78975</td><td>97575</td><td>Blackberry</td><td></td><td>Linux</td></tr>
+<tr><td>Lane Wiley</td><td>Country</td><td>15</td><td>Nepal</td><td>green</td><td>02/19/1979</td><td>Common-Law</td><td>Tech Support</td><td>Sibelius</td><td>3</td><td>37207</td><td>90554</td><td>Windows Phone</td><td></td><td>MacOS</td></tr>
+<tr><td>Ryan Medina</td><td>Reggae</td><td>40</td><td>Uruguay</td><td>violet</td><td>11/02/1994</td><td>Common-Law</td><td>Legal Department</td><td>Google</td><td>3</td><td>90401</td><td>51880</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Deanna Suarez</td><td>Reggae</td><td>18</td><td>Barbados</td><td>orange</td><td>01/23/1957</td><td>Divorced</td><td>Tech Support</td><td>Macromedia</td><td>4</td><td>50567</td><td>59874</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Tad Weiss</td><td>Rock</td><td>41</td><td>Bangladesh</td><td>green</td><td>04/24/1968</td><td>Common-Law</td><td>Payroll</td><td>Yahoo</td><td>2</td><td>3765</td><td>24609</td><td>Android</td><td>Samsung</td><td></td></tr>
+<tr><td>Aimee Wise</td><td>Funk</td><td>5</td><td>Tanzania, United Republic of</td><td>violet</td><td>10/02/1966</td><td>Married</td><td>Accounting</td><td>Macromedia</td><td>1</td><td>3995</td><td>40312</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Matthew Wright</td><td>Jazz</td><td>53</td><td>Azerbaijan</td><td>yellow</td><td>10/25/1969</td><td>Married</td><td>Media Relations</td><td>Embarcadero</td><td>3</td><td>18942</td><td>99472</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Daniel Guerra</td><td>Dance</td><td>8</td><td>Vanuatu</td><td>green</td><td>01/09/1992</td><td>Common-Law</td><td>Sales and Marketing</td><td>Sibelius</td><td>3</td><td>84318</td><td>22241</td><td>iPhone</td><td>Nexus</td><td></td></tr>
+<tr><td>Hyacinth Carlson</td><td>Funk</td><td>1</td><td>Portugal</td><td>green</td><td>11/01/1970</td><td>Common-Law</td><td>Media Relations</td><td>Embarcadero</td><td>4</td><td>65783</td><td>9483</td><td>Blackberry</td><td>Surface</td><td>MacOS</td></tr>
+<tr><td>Quynn Logan</td><td>Jazz</td><td>43</td><td>Yemen</td><td>indigo</td><td>12/11/1996</td><td>Divorced</td><td>Media Relations</td><td>Yahoo</td><td>1</td><td>21910</td><td>31905</td><td>Android</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Iris Mclaughlin</td><td>Funk</td><td>16</td><td>American Samoa</td><td>indigo</td><td>11/13/1957</td><td>Common-Law</td><td>Human Resources</td><td>Finale</td><td>5</td><td>49237</td><td>57470</td><td>Blackberry</td><td>Surface</td><td>ChromeOS</td></tr>
+<tr><td>Tamekah Townsend</td><td>Soul</td><td>7</td><td>Ecuador</td><td>green</td><td>01/06/1972</td><td>Married</td><td>Research and Development</td><td>Altavista</td><td>4</td><td>62803</td><td>58040</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Jolie Lara</td><td>Country</td><td>19</td><td>Cyprus</td><td>indigo</td><td>07/12/1981</td><td>Single</td><td>Human Resources</td><td>Microsoft</td><td>2</td><td>60399</td><td>70441</td><td>Blackberry</td><td></td><td>ChromeOS</td></tr>
+<tr><td>Ethan Henderson</td><td>Reggae</td><td>60</td><td>Honduras</td><td>red</td><td>04/22/1990</td><td>Married</td><td>Public Relations</td><td>Macromedia</td><td>0</td><td>32956</td><td>42793</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Lael Lloyd</td><td>Funk</td><td>53</td><td>Trinidad and Tobago</td><td>blue</td><td>07/12/1990</td><td>Common-Law</td><td>Asset Management</td><td>Microsoft</td><td>4</td><td>59749</td><td>42525</td><td>Blackberry</td><td></td><td>MacOS</td></tr>
+<tr><td>Abraham Valenzuela</td><td>Country</td><td>33</td><td>Djibouti</td><td>indigo</td><td>05/23/1979</td><td>Common-Law</td><td>Accounting</td><td>Embarcadero</td><td>4</td><td>38796</td><td>49337</td><td>Android</td><td></td><td>Linux</td></tr>
+<tr><td>Hilda Chavez</td><td>Funk</td><td>27</td><td>Turkmenistan</td><td>violet</td><td>06/17/1960</td><td>Divorced</td><td>Advertising</td><td>Embarcadero</td><td>5</td><td>68166</td><td>15695</td><td>Blackberry</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>Tallulah Pena</td><td>Jazz</td><td>5</td><td>Colombia</td><td>orange</td><td>12/18/1973</td><td>Married</td><td>Advertising</td><td>Microsoft</td><td>0</td><td>96647</td><td>13863</td><td>Android</td><td></td><td>MacOS</td></tr>
+<tr><td>Angela Wells</td><td>Country</td><td>55</td><td>Taiwan, Province of China</td><td>blue</td><td>09/14/1968</td><td>Divorced</td><td>Asset Management</td><td>Google</td><td>5</td><td>20975</td><td>80097</td><td>Windows Phone</td><td>Nexus</td><td>Windows</td></tr>
+<tr><td>Emerald Buckner</td><td>Reggae</td><td>56</td><td>Burkina Faso</td><td>orange</td><td>07/08/2011</td><td>Divorced</td><td>Quality Assurance</td><td>Sibelius</td><td>6</td><td>41891</td><td>49904</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Imelda Trevino</td><td>Reggae</td><td>4</td><td>India</td><td>yellow</td><td>06/26/1966</td><td>Divorced</td><td>Customer Relations</td><td>Google</td><td>1</td><td>38692</td><td>88596</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Nissim Hess</td><td>Reggae</td><td>12</td><td>Chile</td><td>blue</td><td>06/20/2005</td><td>Single</td><td>Quality Assurance</td><td>Finale</td><td>4</td><td>33800</td><td>51855</td><td>Windows Phone</td><td></td><td>ChromeOS</td></tr>
+<tr><td>Maile Hines</td><td>Rock</td><td>49</td><td>Malawi</td><td>yellow</td><td>12/18/2000</td><td>Single</td><td>Customer Relations</td><td>Microsoft</td><td>5</td><td>7546</td><td>67402</td><td>iPhone</td><td>iPad</td><td></td></tr>
+<tr><td>Thaddeus Mathews</td><td>Dance</td><td>41</td><td>Eritrea</td><td>indigo</td><td>05/06/1996</td><td>Single</td><td>Human Resources</td><td>Macromedia</td><td>4</td><td>97564</td><td>68288</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Rhoda Conley</td><td>Country</td><td>18</td><td>Grenada</td><td>green</td><td>09/28/2001</td><td>Divorced</td><td>Public Relations</td><td>Embarcadero</td><td>6</td><td>89730</td><td>42910</td><td>Blackberry</td><td>Nexus</td><td></td></tr>
+<tr><td>Cade Taylor</td><td>Funk</td><td>35</td><td>Tokelau</td><td>blue</td><td>11/26/1980</td><td>Common-Law</td><td>Legal Department</td><td>Apple Systems</td><td>2</td><td>52195</td><td>10393</td><td>Blackberry</td><td>Samsung</td><td></td></tr>
+<tr><td>Oscar Curry</td><td>Soul</td><td>44</td><td>Burkina Faso</td><td>indigo</td><td>05/23/1994</td><td>Married</td><td>Accounting</td><td>Adobe</td><td>3</td><td>41112</td><td>60735</td><td>Windows Phone</td><td></td><td></td></tr>
+<tr><td>Sade Joyce</td><td>Reggae</td><td>36</td><td>Mauritius</td><td>blue</td><td>05/22/1986</td><td>Common-Law</td><td>Research and Development</td><td>Google</td><td>1</td><td>65324</td><td>6834</td><td>Android</td><td>Nexus</td><td>Linux</td></tr>
+<tr><td>Roanna Curry</td><td>Jazz</td><td>5</td><td>Bahamas</td><td>blue</td><td>01/25/1966</td><td>Divorced</td><td>Customer Service</td><td>Chami</td><td>1</td><td>88688</td><td>52057</td><td>iPhone</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Beatrice Rollins</td><td>Jazz</td><td>50</td><td>Djibouti</td><td>violet</td><td>07/24/1971</td><td>Divorced</td><td>Public Relations</td><td>Google</td><td>3</td><td>98638</td><td>59081</td><td>Android</td><td>Nexus</td><td>Linux</td></tr>
+<tr><td>Jessica Rios</td><td>Dance</td><td>0</td><td>Faroe Islands</td><td>violet</td><td>03/06/1956</td><td>Single</td><td>Legal Department</td><td>Lycos</td><td>3</td><td>57462</td><td>65795</td><td>Windows Phone</td><td>Surface</td><td>Windows</td></tr>
+<tr><td>Samantha Mcfadden</td><td>Rock</td><td>9</td><td>Zambia</td><td>yellow</td><td>06/20/1983</td><td>Single</td><td>Customer Relations</td><td>Microsoft</td><td>4</td><td>64811</td><td>36452</td><td>iPhone</td><td></td><td></td></tr>
+<tr><td>Hayley Mcgee</td><td>Jazz</td><td>51</td><td>Palestinian Territory, Occupied</td><td>blue</td><td>07/14/1993</td><td>Divorced</td><td>Sales and Marketing</td><td>Lycos</td><td>5</td><td>15174</td><td>52013</td><td>iPhone</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Victoria Tran</td><td>Blues</td><td>32</td><td>Saudi Arabia</td><td>blue</td><td>06/04/1958</td><td>Common-Law</td><td>Research and Development</td><td>Sibelius</td><td>4</td><td>53327</td><td>11279</td><td>iPhone</td><td>Asus</td><td></td></tr>
+<tr><td>Abbot Malone</td><td>Country</td><td>49</td><td>Japan</td><td>green</td><td>12/10/1993</td><td>Divorced</td><td>Research and Development</td><td>Yahoo</td><td>2</td><td>38001</td><td>62273</td><td>iPhone</td><td>Samsung</td><td></td></tr>
+<tr><td>Bryar Zimmerman</td><td>Dance</td><td>35</td><td>Antigua and Barbuda</td><td>orange</td><td>11/29/1990</td><td>Common-Law</td><td>Legal Department</td><td>Microsoft</td><td>2</td><td>89423</td><td>30644</td><td>Windows Phone</td><td>Nexus</td><td>Linux</td></tr>
+<tr><td>Hedley Chen</td><td>Rock</td><td>18</td><td>Swaziland</td><td>yellow</td><td>01/08/1971</td><td>Married</td><td>Accounting</td><td>Altavista</td><td>3</td><td>43178</td><td>56921</td><td>Android</td><td>iPad</td><td>Windows</td></tr>
+<tr><td>Burke Landry</td><td>Dance</td><td>46</td><td>Zambia</td><td>red</td><td>05/05/1959</td><td>Common-Law</td><td>Finances</td><td>Yahoo</td><td>6</td><td>60399</td><td>22787</td><td>Blackberry</td><td>Samsung</td><td></td></tr>
+<tr><td>Alea Pennington</td><td>Dance</td><td>19</td><td>Kenya</td><td>blue</td><td>05/17/2006</td><td>Married</td><td>Asset Management</td><td>Apple Systems</td><td>5</td><td>65572</td><td>25360</td><td>Windows Phone</td><td>Nexus</td><td></td></tr>
+<tr><td>Jescie Yang</td><td>Country</td><td>36</td><td>Palestinian Territory, Occupied</td><td>yellow</td><td>08/04/2002</td><td>Common-Law</td><td>Customer Relations</td><td>Chami</td><td>5</td><td>39088</td><td>42000</td><td>Android</td><td></td><td>MacOS</td></tr>
+<tr><td>Lacota Nolan</td><td>Country</td><td>4</td><td>Czech Republic</td><td>blue</td><td>01/18/1961</td><td>Single</td><td>Asset Management</td><td>Altavista</td><td>4</td><td>95549</td><td>15592</td><td>Windows Phone</td><td>Surface</td><td></td></tr>
+<tr><td>Roanna Harris</td><td>Reggae</td><td>60</td><td>Bahrain</td><td>green</td><td>03/05/1962</td><td>Common-Law</td><td>Advertising</td><td>Embarcadero</td><td>6</td><td>99421</td><td>15945</td><td>iPhone</td><td>iPad</td><td>Linux</td></tr>
+<tr><td>Penelope Mosley</td><td>Soul</td><td>19</td><td>Virgin Islands, U.S.</td><td>red</td><td>10/29/1972</td><td>Divorced</td><td>Payroll</td><td>Apple Systems</td><td>1</td><td>5959</td><td>73484</td><td>Blackberry</td><td></td><td>MacOS</td></tr>
+<tr><td>Chaney Contreras</td><td>Soul</td><td>37</td><td>Niger</td><td>red</td><td>10/17/2004</td><td>Common-Law</td><td>Public Relations</td><td>Yahoo</td><td>0</td><td>63206</td><td>85944</td><td>Android</td><td>iPad</td><td></td></tr>
+<tr><td>Knox Dorsey</td><td>Soul</td><td>53</td><td>Morocco</td><td>green</td><td>03/29/1959</td><td>Single</td><td>Human Resources</td><td>Finale</td><td>5</td><td>25775</td><td>39367</td><td>iPhone</td><td>Samsung</td><td>Windows</td></tr>
+<tr><td>Slade Stokes</td><td>Rock</td><td>39</td><td>Benin</td><td>orange</td><td>06/24/1965</td><td>Married</td><td>Asset Management</td><td>Adobe</td><td>3</td><td>33093</td><td>55580</td><td>Android</td><td>Samsung</td><td></td></tr>
+<tr><td>Dominique Ochoa</td><td>Country</td><td>16</td><td>Austria</td><td>indigo</td><td>05/04/1963</td><td>Single</td><td>Media Relations</td><td>Altavista</td><td>2</td><td>16957</td><td>98142</td><td>Android</td><td>Samsung</td><td></td></tr>
+<tr><td>Maxine Kane</td><td>Dance</td><td>45</td><td>Trinidad and Tobago</td><td>red</td><td>12/01/1996</td><td>Single</td><td>Accounting</td><td>Yahoo</td><td>2</td><td>79526</td><td>96356</td><td>Blackberry</td><td></td><td>ChromeOS</td></tr>
+<tr><td>Charde Carson</td><td>Dance</td><td>34</td><td>Falkland Islands (Malvinas)</td><td>red</td><td>04/19/1957</td><td>Single</td><td>Asset Management</td><td>Adobe</td><td>6</td><td>28605</td><td>38763</td><td>Windows Phone</td><td></td><td>Windows</td></tr>
+<tr><td>Phoebe Parker</td><td>Rock</td><td>56</td><td>Kiribati</td><td>yellow</td><td>03/29/1975</td><td>Married</td><td>Human Resources</td><td>Cakewalk</td><td>6</td><td>83540</td><td>3163</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Rhona Boyer</td><td>Soul</td><td>27</td><td>Central African Republic</td><td>green</td><td>03/04/1961</td><td>Common-Law</td><td>Finances</td><td>Lycos</td><td>6</td><td>48469</td><td>24651</td><td>Windows Phone</td><td>Surface</td><td>FirefoxOS</td></tr>
+<tr><td>Kim Daugherty</td><td>Soul</td><td>31</td><td>Botswana</td><td>green</td><td>08/09/2012</td><td>Single</td><td>Research and Development</td><td>Adobe</td><td>2</td><td>25929</td><td>31878</td><td>Windows Phone</td><td>Samsung</td><td></td></tr>
+<tr><td>Quentin Parker</td><td>Reggae</td><td>59</td><td>Mauritania</td><td>green</td><td>07/12/1964</td><td>Single</td><td>Human Resources</td><td>Adobe</td><td>4</td><td>17301</td><td>35536</td><td>iPhone</td><td></td><td>FirefoxOS</td></tr>
+<tr><td>Geraldine Ayers</td><td>Country</td><td>5</td><td>Yemen</td><td>green</td><td>06/28/1983</td><td>Divorced</td><td>Customer Relations</td><td>Yahoo</td><td>2</td><td>76031</td><td>21239</td><td>Blackberry</td><td></td><td>Linux</td></tr>
+<tr><td>Velma Bolton</td><td>Jazz</td><td>0</td><td>Pakistan</td><td>blue</td><td>03/08/1968</td><td>Single</td><td>Human Resources</td><td>Embarcadero</td><td>6</td><td>58607</td><td>83332</td><td>Windows Phone</td><td>Surface</td><td>FirefoxOS</td></tr>
+<tr><td>Karly Walker</td><td>Jazz</td><td>4</td><td>Norfolk Island</td><td>orange</td><td>01/12/2002</td><td>Common-Law</td><td>Research and Development</td><td>Lavasoft</td><td>4</td><td>37242</td><td>10391</td><td>Android</td><td>Asus</td><td></td></tr>
+<tr><td>Mannix Gomez</td><td>Reggae</td><td>24</td><td>American Samoa</td><td>orange</td><td>08/13/1998</td><td>Divorced</td><td>Research and Development</td><td>Altavista</td><td>5</td><td>56051</td><td>72483</td><td>Blackberry</td><td>Surface</td><td></td></tr>
+<tr><td>Brent Tyler</td><td>Jazz</td><td>59</td><td>Dominican Republic</td><td>indigo</td><td>03/13/2007</td><td>Common-Law</td><td>Legal Department</td><td>Adobe</td><td>3</td><td>64271</td><td>69925</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Dawn Albert</td><td>Country</td><td>25</td><td>Trinidad and Tobago</td><td>violet</td><td>03/25/2004</td><td>Common-Law</td><td>Finances</td><td>Altavista</td><td>5</td><td>22502</td><td>7688</td><td>Android</td><td></td><td>Windows</td></tr>
+<tr><td>Edan Williams</td><td>Funk</td><td>50</td><td>Marshall Islands</td><td>red</td><td>04/22/1968</td><td>Single</td><td>Accounting</td><td>Yahoo</td><td>5</td><td>28373</td><td>75579</td><td>iPhone</td><td>iPad</td><td>ChromeOS</td></tr>
+<tr><td>James Robertson</td><td>Rock</td><td>7</td><td>Virgin Islands, U.S.</td><td>indigo</td><td>06/07/1973</td><td>Divorced</td><td>Advertising</td><td>Macromedia</td><td>4</td><td>21721</td><td>64968</td><td>Blackberry</td><td></td><td></td></tr>
+<tr><td>Bradley Gentry</td><td>Jazz</td><td>1</td><td>Senegal</td><td>orange</td><td>11/21/1984</td><td>Common-Law</td><td>Tech Support</td><td>Apple Systems</td><td>1</td><td>2562</td><td>19958</td><td>Android</td><td>Asus</td><td></td></tr>
+<tr><td>Ila Brewer</td><td>Blues</td><td>12</td><td>Liberia</td><td>yellow</td><td>01/26/1968</td><td>Common-Law</td><td>Sales and Marketing</td><td>Lavasoft</td><td>5</td><td>88431</td><td>30247</td><td>Windows Phone</td><td>Nexus</td><td></td></tr>
+<tr><td>Kuame David</td><td>Jazz</td><td>5</td><td>Guinea</td><td>yellow</td><td>09/26/1964</td><td>Divorced</td><td>Legal Department</td><td>Google</td><td>4</td><td>42664</td><td>7877</td><td>Android</td><td>Nexus</td><td>FirefoxOS</td></tr>
+<tr><td>Steven Baker</td><td>Blues</td><td>59</td><td>Palau</td><td>violet</td><td>10/24/1987</td><td>Married</td><td>Sales and Marketing</td><td>Apple Systems</td><td>0</td><td>47510</td><td>10057</td><td>Android</td><td></td><td>Windows</td></tr>
+<tr><td>Margaret Hardy</td><td>Dance</td><td>31</td><td>Puerto Rico</td><td>yellow</td><td>12/06/1950</td><td>Divorced</td><td>Customer Service</td><td>Macromedia</td><td>4</td><td>27448</td><td>40902</td><td>Android</td><td></td><td></td></tr>
+<tr><td>Marcia Rivas</td><td>Country</td><td>45</td><td>Haiti</td><td>red</td><td>08/18/1951</td><td>Divorced</td><td>Research and Development</td><td>Lycos</td><td>1</td><td>37313</td><td>13359</td><td>iPhone</td><td>Samsung</td><td></td></tr>
+</tbody>
+
+</table>
+
+</body>
+</html>

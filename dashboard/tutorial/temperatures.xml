@@ -1,0 +1,59 @@
+<xml>
+  <year id="2011">
+    <values>21</values>
+    <values>24</values>
+    <values>26</values>
+    <values>20</values>
+    <values>22</values>
+    <values>18</values>
+    <values>25</values>
+    <values>14</values>
+    <values>19</values>
+    <values>27</values>
+    <values>26</values>
+    <values>18</values>
+  </year>
+  <year id="2012">
+    <values>20</values>
+    <values>21</values>
+    <values>24</values>
+    <values>18</values>
+    <values>21</values>
+    <values>19</values>
+    <values>27</values>
+    <values>11</values>
+    <values>18</values>
+    <values>27</values>
+    <values>24</values>
+    <values>17</values>
+  </year>
+  <year id="2013">
+    <values>22</values>
+    <values>25</values>
+    <values>26</values>
+    <values>21</values>
+    <values>20</values>
+    <values>20</values>
+    <values>22</values>
+    <values>13</values>
+    <values>19</values>
+    <values>23</values>
+    <values>25</values>
+    <values>19</values>
+  </year>
+  <year id="2014">
+    <values>22</values>
+    <values>23</values>
+    <values>26</values>
+    <values>19</values>
+    <values>22</values>
+    <values>16</values>
+    <values>25</values>
+    <values>15</values>
+    <values>19</values>
+    <values>21</values>
+    <values>26</values>
+    <values>21</values>
+  </year>
+</xml>
+

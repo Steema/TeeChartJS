@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript Color Grid Series Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-3d.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Chart1, grid;
+
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+
+  grid = Chart1.addSeries(new Tee.ColorGrid());
+
+  grid.horizAxis="both";
+  grid.vertAxis="both";
+
+  addSampleData(0);
+
+  Chart1.title.text="TeeChart Color Grid (Heatmap)";
+
+  Chart1.panel.transparent=true;
+  Chart1.axes.left.grid.centered=true;
+  Chart1.axes.bottom.grid.centered=true;
+
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+
+  Chart1.draw();
+}
+
+function addSampleData(index) {
+  if (index=="0") {
+    grid.data.values=[ [23,15,12, 8,39,50,34],
+                       [19, 7,31,23,12,40,27],
+                       [ 1,26,18,39,20, 6,11]
+                     ];
+                     
+    grid.dataChanged=true;
+  }
+  else
+  if (index=="1")
+     grid.addRandom(200);  // 200x200
+  else
+  if (index=="2")
+     grid.addRandom(400);  // 400x400
+  else
+     grid.addRandom(100,50);  // 100x50
+
+  grid.chart.zoom.reset();
+}
+
+</script>
+</head>
+<body onload="draw()">
+
+<div style="float:left;">
+
+<input type="checkbox" name="smooth" onclick="grid.smooth= this.checked; Chart1.draw();" checked>Smooth
+<input type="checkbox" name="smooth" onclick="grid.format.stroke.fill= this.checked ? 'black':''; Chart1.draw();">Grid
+<br/>
+
+<input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
+<br/>
+<input type="checkbox" name="grayscale" onclick="grid.palette.grayScale=this.checked; grid.dataChanged=true; Chart1.draw();">Gray Scale
+<br/>
+<input type="checkbox" name="invcolors" onclick="grid.palette.inverted=this.checked; grid.dataChanged=true; Chart1.draw();">Inverted Palette
+<br/>
+<input type="checkbox" name="invlegend" onclick="Chart1.legend.inverted=this.checked; Chart1.draw();">Inverted Legend
+
+<br/>
+<br/>
+<b>Axes:</b><br/>
+<input type="checkbox" name="invV" onclick="Chart1.axes.left.inverted= this.checked; Chart1.draw();">Inverted Vert.
+<br/>
+<input type="checkbox" name="invH" onclick="Chart1.axes.bottom.inverted= this.checked; Chart1.draw();">Inverted Horiz.
+<br/>
+<br/>
+<b>Sample data:</b><br/>
+<form action="">
+  <input type="radio" name="data" id="data0" value="0" onchange="addSampleData(this.value); Chart1.draw();" checked/><label for="data0">7x3</label><br/>
+  <input type="radio" name="data" id="data1" value="1" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data1">200x200</label><br/>
+  <input type="radio" name="data" id="data2" value="2" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data2">400x400</label><br/>
+  <input type="radio" name="data" id="data3" value="3" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data3">100x50</label><br/>
+</form>
+<br/>
+</div>
+
+<canvas id="canvas" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+
+</body>
+</html>

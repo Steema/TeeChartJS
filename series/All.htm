@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript All Series Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script src="../../src/teechart-gauges.js" type="text/javascript"></script>
+<script src="../gauges/teechart-gauge-templates.js" type="text/javascript"></script>
+
+<script src="../../src/date.format.js" type="text/javascript"></script>
+<script src="../../src/teechart-maps.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Chart1, Chart2, Chart3, Chart4, Chart5, Chart6, Chart7,
+    Chart8, Chart9, Chart10, Chart11, Chart12, Chart13, Chart14,
+    Chart15, Chart16, ClockChart, WorldMap;
+
+function draw() {
+  Chart1=new Tee.Chart("canvas1");
+  Chart1.addSeries(new Tee.Bar([5,3,2,7,1]) );
+  Chart1.addSeries(new Tee.Bar([4,4,8,2,9]) ).visible=false;
+
+  Chart1.series.items[0].format.shadow.visible=true;
+
+  Chart1.axes.left.format.stroke.fill="red";
+  Chart1.axes.bottom.title.text="Fruits";
+  Chart1.axes.left.title.text="Quantity";
+
+  Chart1.title.text="Bar";
+  Chart1.title.format.font.style="18px Verdana";
+  Chart1.title.format.font.shadow.visible=true;
+
+  Chart1.title.format.font.gradient.visible=true;
+
+  Chart2=new Tee.Chart("canvas2");
+  Chart2.addSeries(new Tee.Line([5,3,2,7,1]) );
+  Chart2.addSeries(new Tee.Line([4,4,8,2,9]) ).visible=false;
+
+  Chart2.axes.left.format.stroke.fill="red";
+  Chart2.axes.bottom.title.text="Fruits";
+  Chart2.axes.bottom.title.format.font.style="16px Verdana";
+  Chart2.axes.bottom.title.format.font.fill="red";
+  Chart2.axes.left.title.text="Quantity";
+
+  Chart2.title.text="Line";
+  Chart2.title.format.font.style="18px Verdana";
+
+  Chart3=new Tee.Chart("canvas3");
+  Chart3.addSeries(new Tee.Pie([5,3,2,7,1]) );
+
+  Chart3.series.items[0].format.shadow.visible=true;
+
+  Chart3.axes.left.format.stroke.fill="red";
+  Chart3.axes.bottom.title.text="Fruits";
+  Chart3.axes.left.title.text="Quantity";
+
+  Chart3.title.text="Pie";
+  Chart3.title.format.font.style="18px Verdana";
+
+  Chart4=new Tee.Chart("canvas4");
+  Chart4.addSeries(new Tee.Area([5,3,2,7,1]) ).format.gradient.visible=true;
+
+  Chart4.title.text="Area";
+
+  Chart4.series.items[0].marks.visible=true;
+
+  Chart4.title.format.font.style="18px Verdana";
+  Chart4.panel.format.gradient.direction="leftright";
+  Chart4.panel.format.gradient.colors=["beige","orange","khaki"];
+
+  Chart5=new Tee.Chart("canvas5");
+  Chart5.addSeries(new Tee.HorizBar([5,3,2,7,1]) );
+  Chart5.addSeries(new Tee.HorizBar([4,4,8,2,9]) ).visible=false;
+
+  Chart5.axes.bottom.format.stroke.fill="red";
+  Chart5.axes.left.title.text="Fruits";
+  Chart5.axes.bottom.title.text="Quantity";
+
+  Chart5.title.text="Horiz. Bar";
+  Chart5.title.format.font.style="18px Verdana";
+  Chart5.title.format.font.shadow.visible=true;
+
+  Chart5.title.format.font.gradient.visible=true;
+
+  Chart6=new Tee.Chart("canvas6");
+  Chart6.addSeries(new Tee.PointXY([5,3,2,7,1]) );
+
+  Chart6.axes.left.title.text="Fruits";
+  Chart6.axes.bottom.title.text="Quantity";
+
+  Chart6.title.text="XY Point";
+  Chart6.title.format.font.style="18px Verdana";
+  Chart6.title.format.font.shadow.visible=true;
+
+  Chart7=new Tee.Chart("canvas7");
+  Chart7.addSeries(new Tee.Donut([5,3,2,7,1]) );
+
+  Chart7.title.text="Donut";
+  Chart7.title.format.font.style="18px Verdana";
+  Chart7.title.format.font.shadow.visible=true;
+
+  Chart7.title.format.font.gradient.visible=true;
+
+  Chart8=new Tee.Chart("canvas8");
+  Chart8.addSeries(new Tee.Line([5,3,2,7,1]) ).smooth=0.5;
+
+  Chart8.title.text="Smooth Line";
+  Chart8.title.format.font.style="18px Verdana";
+  Chart8.title.format.font.shadow.visible=true;
+
+  Chart8.title.format.font.gradient.visible=true;
+
+  Chart9=new Tee.Chart("canvas9");
+  Chart9.addSeries(new Tee.Bubble([5,3,2,7,1]) ).data.radius=[0.6,2,1,2.6,1.3];
+  Chart9.title.text="Bubble";
+
+  Chart10=new Tee.Chart("canvas10");
+  Chart10.addSeries(new Tee.HorizArea([5,3,2,7,1]) ).data.radius=[0.6,2,1,2.6,1.3];
+  Chart10.title.text="Horiz. Area";
+
+  Chart11=new Tee.Chart("canvas11");
+  Chart11.addSeries(new Tee.Candle()).addRandom(20);
+  Chart11.title.text="Candle OHLC";
+
+  Chart12=new Tee.Chart("canvas12");
+  Chart12.addSeries(new Tee.Area([5,3,2,7,1]) ).smooth=0.5;
+
+  Chart12.title.text="Smooth Area";
+  Chart12.title.format.font.style="18px Verdana";
+  Chart12.title.format.font.shadow.visible=true;
+
+  Chart13=new Tee.Chart("canvas13");
+  Chart13.addSeries(new Tee.Volume()).addRandom(120);
+  Chart13.title.text="Volume";
+  Chart13.legend.visible=false;
+
+  Chart14=new Tee.Chart("canvas14");
+  Chart14.addSeries(new Tee.Gantt()).addRandom(10);
+  Chart14.title.text="Gantt";
+  Chart14.legend.visible=false;
+  Chart14.axes.left.grid.centered=true;
+
+  Chart15=new Tee.Chart("canvas15");
+  Chart15.addSeries(new Tee.CircularGauge()).value=30;
+  Chart15.title.text="Gauge";
+  Chart15.legend.visible=false;
+
+  Chart16=new Tee.Chart("canvas16");
+  Chart16.legend.transparent=true;
+  
+  var polar1 = Chart16.addSeries(new Tee.Polar());
+  polar1.addRandom(12);
+  polar1.pointer.style="ellipse";
+  polar1.pointer.setSize(8);
+
+  var polar2 = Chart16.addSeries(new Tee.Polar());
+  polar2.addRandom(7);
+  polar2.format.transparency=0.2;
+  polar2.pointer.style="ellipse";
+  polar2.pointer.setSize(8);
+
+  Chart16.title.text="Polar";
+
+  // Add tooltips to all charts:
+
+  var charts =[Chart1, Chart2, Chart3, Chart4, Chart5, Chart6, Chart7,
+               Chart8, Chart9, Chart10, Chart11, Chart12, Chart13, Chart14,
+               Chart15, Chart16],
+      tip;
+
+  for (var t=0; t<charts.length; t++) {
+    tip=new Tee.ToolTip(charts[t]);
+    charts[t].tools.add(tip);
+  }
+
+  ClockChart=new Tee.Clock("clockcanvas", 2);
+
+  WorldMap=new Tee.Chart("worldmap");
+  WorldMap.title.text="World Map";
+  
+  var map = new Tee.Map();
+  map.useColors=false;
+  map.setMap(new Tee.WorldMap());
+  WorldMap.addSeries(map);
+
+  // Draw all charts:
+
+  Chart1.draw();
+  Chart2.draw();
+  Chart3.draw();
+  Chart4.draw();
+  Chart5.draw();
+  Chart6.draw();
+  Chart7.draw();
+  Chart8.draw();
+  Chart9.draw();
+  Chart10.draw();
+  Chart11.draw();
+  Chart12.draw();
+  Chart13.draw();
+  Chart14.draw();
+  Chart15.draw();
+  Chart16.draw();
+
+  WorldMap.draw();
+
+  ClockChart.gauge.tick();  // start clock
+}
+</script>
+</head>
+<body onload="draw()">
+
+<center>
+<canvas id="canvas1" width="300" height="200">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+<canvas id="canvas2" width="300" height="200"></canvas>
+<canvas id="canvas3" width="300" height="200"></canvas>
+<canvas id="canvas4" width="300" height="200"></canvas>
+<canvas id="canvas5" width="300" height="200"></canvas>
+<canvas id="canvas6" width="300" height="200"></canvas>
+<canvas id="canvas7" width="300" height="200"></canvas>
+<canvas id="canvas8" width="300" height="200"></canvas>
+<canvas id="canvas9" width="300" height="200"></canvas>
+<canvas id="canvas10" width="300" height="200"></canvas>
+<canvas id="canvas11" width="300" height="200"></canvas>
+<canvas id="canvas12" width="300" height="200"></canvas>
+<canvas id="canvas13" width="300" height="200"></canvas>
+<canvas id="canvas14" width="300" height="200"></canvas>
+<canvas id="canvas15" width="300" height="200"></canvas>
+<canvas id="canvas16" width="300" height="200"></canvas>
+<canvas id="clockcanvas" width="300" height="200"></canvas>
+<canvas id="worldmap" width="500" height="300"></canvas>
+</center>
+<br/>
+<br/>
+</body>
+</html>

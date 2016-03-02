@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Export to Image Example</title>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script type="text/javascript">
+var Chart1;
+function draw() {
+  Chart1=new Tee.Chart();
+  Chart1.addSeries(new Tee.Line([5,3,2,7,1,6,4,5,1,0,10]) ).format.stroke.size=4;
+
+  Chart1.axes.left.format.stroke.fill="green";
+
+  Chart1.axes.left.title.text="Left Axis";
+  Chart1.axes.bottom.title.text="Bottom Axis";
+
+  Chart1.title.text="TeeChart for JavaScript";
+  Chart1.title.format.font.style="18px Verdana";
+
+  Chart1.series.items[0].format.stroke.fill="darkorange";
+  Chart1.series.items[0].pointer.visible=true;
+
+  Chart1.panel.format.stroke.fill="";
+  Chart1.panel.format.shadow.visible=true;
+
+  Chart1.draw();
+
+  Chart1.toImage('pngimage', 'image/png');
+  Chart1.toImage('jpgimage', 'image/jpeg');
+}
+</script>
+</head>
+
+<body onload="draw()">
+<p>This is a PNG image:</P><br/>
+<img id="pngimage">
+<br/>
+<p>This is a JPEG image:</P><br/>
+<img id="jpgimage">
+</body>
+</html>

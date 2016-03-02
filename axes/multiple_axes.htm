@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Multiple Axes</title>
+
+<style type="text/css">
+.teetip { padding:2px 12px 3px 7px; margin-left:5px; background:#444; color:#FFF }
+</style>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../src/teechart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Chart1, cursor, DISPLAY_RANGE=100;
+
+function draw() {
+
+  // Create a Chart1 using canvas1:
+
+  Chart1=new Tee.Chart("canvas1");
+
+  // Add four line series, with 200 random points each:
+
+  Chart1.addSeries(new Tee.Line()).addRandom(200);
+  Chart1.addSeries(new Tee.Candle()).addRandom(200);
+  Chart1.addSeries(new Tee.Area()).addRandom(200);
+  Chart1.addSeries(new Tee.Area()).addRandom(200);
+  Chart1.addSeries(new Tee.Line()).addRandom(200);
+
+  // Create additional axes:
+
+  var axis1=Chart1.axes.left;
+  var axis2=Chart1.axes.add(false,false);
+  var axis3=Chart1.axes.add(false,false);
+  var axis4=Chart1.axes.add(false,false);
+
+  // Setup axis positions as % percent:
+
+  axis1.start= 0; axis1.end=25;
+  axis2.start=25; axis2.end=40;
+  axis3.start=40; axis3.end=75;
+  axis4.start=75; axis4.end=100;
+
+  axis1.title.text="Axis 1";
+  axis2.title.text="Axis 2";
+  axis3.title.text="Axis 3";
+  axis4.title.text="Axis 4";
+
+  axis2.title.rotation=0;
+  
+  Chart1.axes.bottom.setMinMax(0,DISPLAY_RANGE);
+
+  // Set series with axes:
+
+  Chart1.series.items[1].vertAxis=axis2;
+  Chart1.series.items[2].vertAxis=axis3;
+  Chart1.series.items[3].vertAxis=axis4;
+  Chart1.series.items[4].vertAxis=axis3;
+
+  // Draw dividing lines between axes:
+
+  Chart1.ondraw=function() {
+    var c=Chart1.ctx,
+        x0=Chart1.chartRect.x, x1=Chart1.chartRect.getRight();
+
+    c.beginPath();
+
+    c.moveTo( x0, axis1.endPos );
+    c.lineTo( x1, axis1.endPos );
+
+    c.moveTo( x0, axis2.endPos );
+    c.lineTo( x1, axis2.endPos );
+
+    c.moveTo( x0, axis3.endPos );
+    c.lineTo( x1, axis3.endPos );
+
+    c.strokeStyle="green";
+    c.lineWidth=2;
+
+    c.stroke();
+  }
+
+  // Cursor tool
+
+  cursor=new Tee.CursorTool(Chart1);
+  cursor.direction="vertical";
+
+  // Do not use any vertical axis start and end pixel positions:
+  cursor.vertAxis=null;
+
+  // Cursor color:
+  cursor.format.stroke.fill="orange";
+
+  // Repaint full chart when moving the cursor:
+  cursor.render="full";
+
+  Chart1.tools.add(cursor);
+
+  // Set mouse zooming and vertical scroll:
+
+  Chart1.zoom.enabled=true;
+  Chart1.zoom.mouseButton=2;
+  Chart1.zoom.direction="horizontal";
+
+  Chart1.scroll.direction="horizontal";
+  Chart1.scroll.mouseButton=0;
+
+  Chart1.canvas.style.cursor="pointer";
+
+  // Cosmetics:
+
+  Chart1.title.text="Multiple Vertical Axes";
+  Chart1.legend.visible=false;
+
+  Chart1.axes.bottom.grid.visible=false;
+  Chart1.series.items[2].format.gradient.visible=true;
+
+  Chart1.panel.transparent=true;
+  Chart1.walls.back.format.fill="white";
+
+  Chart1.series.each(function(s) { s.format.shadow.visible=false; });
+
+  var a=Chart1.axes.items;
+  for(var ii=0; ii<a.length; ii++)
+    a[ii].grid.format.stroke.fill="lightgray";
+
+  // Tooltips:
+
+  var tip=new Tee.ToolTip(Chart1);
+  tip.autoHide=true;
+  tip.delay=3000;
+
+  Chart1.tools.add(tip);
+
+  tip.ongettext=function(tool, text, series, index) {
+    var t, s="", ser;
+
+    for(t=0;t<Chart1.series.count(); t++) {
+      if (t>0) s+="<br/>";
+      ser=Chart1.series.items[t];
+      s+=ser.title+': '+ser.data.values[index].toFixed(2);
+    }
+
+    return '<strong>#'+ index.toFixed(0) +'</strong><br/>'+s;
+  }
+
+  // Scroll past-limits indicators:
+
+  var o,x1;
+
+  var step=function(now) {
+    now=new Date().getTime();
+
+    o.draw();
+
+    if (((now-o.init)/250)<1) {
+      var c=o.ctx;
+      c.beginPath();
+      c.moveTo( x1, o.chartRect.y );
+      c.lineTo( x1, o.chartRect.getBottom() );
+      c.strokeStyle="rgba(255,0,0,0.5)";
+      c.lineWidth=10;
+      c.stroke();
+
+      requestAnimFrame(step, o);
+    }
+    else
+      o.init=null;
+  }
+
+
+  // Animate indicating scroll limits:
+
+  Chart1.hoverEdge=function(pos) {
+    o=this;
+    if (!o.init) {
+      x1=pos;
+      o.init=new Date().getTime();
+      requestAnimFrame(step, this);
+    }
+  }
+
+  // OnScroll, limit series start and ending points:
+
+  Chart1.onscroll=function() {
+    var a=Chart1.axes.bottom,
+        max=Chart1.series.items[0].count()-1;
+
+    if (a.minimum<0)  {
+      a.minimum=0;
+      a.maximum=DISPLAY_RANGE;
+      this.hoverEdge(this.chartRect.x);
+      this.scroll.done=false;
+    }
+
+    if (a.maximum>max) {
+      a.maximum=max;
+      a.minimum=max-DISPLAY_RANGE;
+      this.hoverEdge(this.chartRect.getRight());
+      this.scroll.done=false;
+    }
+  }
+
+  // After zoom reset, set again a portion of horizontal axis:
+
+  Chart1.zoom.onreset=function() {
+    Chart1.axes.bottom.setMinMax(0, DISPLAY_RANGE);
+  }
+
+  // Draw !
+
+  Chart1.draw();
+}
+
+</script>
+</head>
+<body onload="draw()">
+
+<input type="checkbox" id="follow" onclick="cursor.followMouse=this.checked;" checked>Cursor follows mouse
+<button type="button" onclick="Chart1.zoom.reset(); Chart1.axes.bottom.setMinMax(0,DISPLAY_RANGE); Chart1.draw();">Reset view</button>
+<br/>
+<canvas id="canvas1" width="700" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
+<br/>
+Drag chart to scroll. Right-button drag to zoom.
+</body>
+</html>

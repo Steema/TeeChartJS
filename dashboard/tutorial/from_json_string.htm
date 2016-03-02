@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+// JSON string format:
+var
+  Temperatures='{ "data": [21,24,26,20,22,18,25,14] }';
+
+var Engine=new Tee.Data(),
+      Temps=Engine.addJSON("Temperatures", Temperatures, "data"),
+        Degree=Temps.addMetric("Degrees");
+
+var Chart2;
+
+function draw() {
+    var Chart1=Engine.Chart("canvas1", Temps.title);
+
+    Chart1.setSeriesStyle(Tee.Area);
+    Chart1.onnewseries=function(chart, series) { series.format.gradient.visible=true; series.smooth=0.5; }
+    Chart1.fill(Temps, Degree);
+
+    Chart2=Engine.Chart("canvas2", 'Highest '+Temps.title);
+    Degree.measure="high";
+    Chart2.fill(null, Degree);
+}
+
+</script>
+
+</head>
+
+<body onload="draw()">
+Basic example using data as a JSON string. <br/>
+<br/>
+  <canvas id="canvas1" width="400" height="250"> </canvas>
+  <canvas id="canvas2" width="400" height="250"> </canvas>
+  <br/>
+    <select id="measure" onchange="Degree.measure=this.value; Chart2.fill(null, Degree);">
+      <option value="sum">Sum</option>
+      <option value="average">Average</option>
+      <option value="high" selected>High</option>
+      <option value="low">Low</option>
+      <option value="count">Count</option>
+    </select>
+
+</body>
+</html>

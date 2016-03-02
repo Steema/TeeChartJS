@@ -1,0 +1,688 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<meta property="og:title" content="Create charts with multiple-dimensions using JavaScript"/>
+<meta property="og:image" content="http://www.steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/docs/images/html5.png" />
+<meta property="og:description" content="TeeChart for JavaScript Data-mining" />
+<meta property="og:url" content="http://www.steema.com/teechart/html5"/>
+
+<meta name="Author" content="Steema Software" />
+<meta name="Generator" content="Steema" />
+<meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
+<meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, JS Chart, Data Visualization, Chart, Graph, Map, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
+
+<style type="text/css">
+.code {
+  background-color: #EEEEEE;
+  font-family: "Courier";
+  font-size: 14px;
+  width: 700px;
+}
+ul li {line-height:1.5em;}
+html { height:100%; }
+body { font-family:Georgia; height:100%; margin:0px; background-color:#FDFEED; }
+#header { margin:0; top:0px; width:100%; height:90px; background-color: #6B87AC; padding-bottom:10px; }
+#content { margin-left:10px; top:90px; }
+#footer { font-size:12px; }
+</style>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+<link rel="StyleSheet" href="tee-data-utils.css" type="text/css" />
+<script src="tee-data-utils.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<meta name="google-site-verification" content="GZvBxJGMSGzSUDnfKqE-KVltTDI5FB5b8cjN8VqRbR8" />
+
+<script type="text/javascript">
+"use strict";
+
+function showDemo() {
+  var engine = new Tee.Data(),
+      chart1 = engine.Chart("canvas1");
+
+  var friends =[ { name:'Jane',  sport:'Basketball', hours:14 },
+                 { name:'Frank', sport:'Football',   hours:21 },
+                 { name:'Anne',  sport:'Tennis',     hours:11 },
+                 { name:'John',  sport:'Football',   hours:15 },
+                 { name:'Paula', sport:'Basketball', hours:9 },
+                 { name:'Lisa',  sport:'Tennis',     hours:17 },
+                 { name:'Mark',  sport:'Football',   hours:7 }
+               ];
+
+  var data = engine.addDataSet("Friends", friends),
+        sport = data.addDimension("Sport", "sport"),
+           hours = data.addMetric("Hours", "hours");
+
+  chart1.panel.transparent=true;
+  chart1.title.visible=false;
+  
+  chart1.fill( sport, hours );
+
+  engine.objectToTable('data1', friends);
+  
+}
+</script>
+
+</head>
+
+<body onload="showDemo()">
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7504244-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<div id="header" style="background-color: navy; margin:0px; padding:2px;">
+ <img src="../../images/logo-steema-v3.png" alt="Steema Software logo picture"/>
+ <img src="../../images/html5.png" alt="TeeChart for HTML5 logo picture" style="margin:5px"/>
+</div>
+
+<div id="content">
+
+  <h1>Tee.Data</h1>
+  <h2>Multi-dimensional queries and charting with JavaScript.</h2>
+  v0.82 Beta, November 2012<br/>
+  <h3>Contents</h3>
+  <ul style="list-style: none;">
+  <li><a href="#introduction">1. Introduction</a>
+  <li><a href="#basicsteps">2. Basic steps</a>
+  <li><a href="#definingdims">3. Defining Dimensions</a>
+  <li><a href="#addingmetrics">4. Adding Metrics</a>
+  <li><a href="#createqueries">5. Creating Queries and Filling a Chart</a>
+  <li><a href="#linkingdims">6. Linking Dimensions and Datasets</a>
+  <li><a href="#addfeatures">7. Additional Features</a>
+  <li><a href="#examples">8. All Examples</a>
+  <li><a href="#testing">9. Unit Testing</a>
+  </ul>
+
+  <br/>
+  <br/>
+
+  <span style="font-size:1.6em">Data --> "Sum Hours by Sport" --> Chart</span>
+  <br/>
+  <br/>
+  <div>
+  <table id="data1" style="float:left"></table>
+  <canvas id="canvas1" width="400" height="200">(This browser does not support HTML5 Canvas)</canvas>
+  </div>
+
+  <a name="introduction"><h3>1. Introduction</h3></a>
+  Tee.Data is a lightweight javascript (teechart-data.js, 15KB minified) to
+  create pivot-tables and optionally chart results using
+  <a href="http://www.steema.com/teechart/html5">TeeChart HTML5</a> for JavaScript.
+
+  <br/><br/>
+  The client-side script runs on any browser and can also be used at server-side using <a href="http://nodejs.org">node.js</a> or any JScript machine like <a href="http://code.google.com/p/v8/">Google's V8</a>.
+  <br/>
+  <br/>
+  Input data can be any JavaScript object, or array, or a JSON string, or XML datasets, or
+  an html &lt;table&gt;, embedded in scripts or loaded from urls, or any of the above returned from a REST or Ajax server.<br/>
+  <br/>
+
+  Jump directly to <a href="#demos">demo examples</a>.
+
+  <a name="basicsteps"><h3>2. Basic steps</h3></a>
+  
+  Create a Tee.Data object: <br/>
+
+  <pre class="code">
+  var MyData = new Tee.Data();
+  </pre>
+
+  Then provide your own data, using the addDataSet function:<br/>
+
+  <pre class="code">
+  var Data = [ { id: 1, name: "Acme Inc" }, { id: 2, name: "Google" } ];
+  var Customers = MyData.addDataSet( "Customers", Data );
+  </pre>
+
+  For JSON data, call the addJSON function.<br/>
+  In this case the JSON string will be internally converted to a JavaScript object using the browser <a href="http://www.json.org/js.html">"JSON.parse"</a> method.<br/>
+
+  <pre class="code">
+  var customerData = "{ [ { 'id': 1, 'name': 'Acme Inc' },
+                          { 'id': 2, 'name': 'Google'   }  ] }";
+
+  var Customers = MyData.addJSON( "Customers", customerData );
+  </pre>
+
+  <br/>
+  XML datasets can be loaded with the following code:<br/>
+
+  <pre class="code">
+  var xml = MyData.loadXMLDoc( 'temperatures.xml' ),
+      Temps = MyData.addDataSet( 'Temperatures', xml );
+  </pre>
+  <br/>
+  Data contained in an html &lt;table&gt; elements can also be used, using a helper <span class="code">tableToObject</span> method.
+  (See <a href="from_table.htm">example</a>).
+  <br/>
+  <br/>
+  Multiple datasets are supported, and <a href="#links">links</a> between them can be optionally created.<br/>
+  <br/>
+
+  <a name="definingdims"><h3>3. Defining Dimensions</h3></a>
+
+  Queries are defined by Dimensions, Metrics and Filter selections, and the output can be optionally sorted.
+  <br/><br/>
+  After adding one or more datasets, you can define how is the data structured inside them.<br/>
+  A Dimension is an object or object property that will be used to group results, and a Metric is a property that
+  can be "aggregated" (summed, averaged, etc).
+  <br/>
+  <br/>
+  Like for example, if your data consists of "Products", "Sales amount" and "Units sold",
+  the dimension will be "Products" and the metrics will be "Sales amount" and "Units sold".
+  <br/><br/>
+  Any dimension can also have sub-dimensions to define hierarchies of data.
+  <br/><br/>
+  To define a dimension, use the <b>addDimension</b> method:<br/><br/>
+
+  <pre class="code">
+  var SalesData = MyData.addDataSet( "Sales",
+                    { "items": [
+                       { "product": 1, "amount": 123, "units": 45 },
+                       { "product": 2, "amount": 321, "units": 22 }, ...
+                      ]
+                    } );
+
+  var Products = SalesData.<b>addDimension</b>( "Products", "items", "product" );
+  </pre>
+
+  <br/>
+  The firsts parameter ("Products") is the dimension title, used to decorate the chart and output tables.<br/><br/>
+
+  If data is an array like in the above example, the second parameter ("items") is the property name that contains the array,
+  and the third parameter ("product") is the dimension items ID (identifier).<br/><br/>
+
+  <h4>Dimensions in grid-like data</h4>
+
+  When data is just an array of records (like a grid or table), dimensions can be defined calling the same <b>addDimension</b> method
+  without passing the third parameter:
+  <br/>
+
+  <pre class="code">
+  var Friends = MyData.addDataSet( "Friends",
+                 [
+                  { id: 1, name: 'Mike',  birth: '4/18/1994', gender: 'M' ... },
+                  { id: 2, name: 'Mary',  birth: '3/22/1980', gender: 'F' ... },
+                  { id: 3, name: 'Carol', birth: '11/6/2001', gender: 'F' ... },
+                  ...
+                 ]);
+
+  var ID     = MyData.addDimension( "People", "id" ),
+      Birth  = MyData.addDimension( "Birth Date", "birth" ),
+      Gender = MyData.addDimension( "Gender", "gender" );
+  </pre>
+
+  <h4>Adding sub-dimensions</h4>
+  If the data contains sub-arrays (arrays inside arrays), simply call the dimension addDimension function instead of the dataset one:<br/><br/>
+
+  <pre class="code">
+  var <b>Products</b> = SalesData.addDimension( "Products", "items", "product" ),
+         Store = <b>Products</b>.addDimension( "Store", "", "store" ),
+             ...
+  </pre>
+
+  <h4>Datetime dimensions</h4>
+
+  Dimensions are usually identified by string or numeric "ID" values, such as Product id, or Person FullName.
+  <br/>
+  Another important kind of dimensions are Datetime values.<br/>
+  <br/>
+  When a dimension is declared as Datetime, data can be aggregated and filtered using datetime intervals, like
+  for example "sum of sales grouped by sale date <b>month</b>", or "by weekday", etc.
+  <br/>
+  After adding a dimension, it can be marked as to contain datetime values in the following way:<br/>
+  <br/>
+
+  <pre class="code">
+  var People = CustomerData.addDimension( "Customers", "persons", "id" );
+      <b>BirthDate</b> = People.addDimension( "Birth Date", "", "birthDate" );
+
+      BirthDate.<b>datetime</b> = { month:true, year:true, decade:true, <b>selected</b>:'y' };
+  </pre>
+
+  The above "datetime" object values determine which kind of datetime aggregations are valid for that specific datetime values,
+  and the "selected" field determines how queries will use the BirthDate dimension to create groups.<br/>
+  In the above example, the "y" value means "group data by BirthDate Year".
+  <br/>
+
+  <h4>Including empty or null values</h4>
+
+  When executing a query, dimension items that have no output are included by default as "zero" values.<br/>
+  <br/>
+  Missing items can be included or not in query output, by setting the <b>nulls</b> property:
+  <br/>
+
+  <pre class="code">
+  var Products = SalesData.addDimension( "Products", "items", "product" );
+
+  // Do not show Products that have no data to measure:
+  Products.<b>nulls</b> = false;
+  </pre>
+
+  <a name="addingmetrics"><h3>4. Adding Metrics</h3></a>
+  Dimensions provide an "addMetric" function to specify which fields can be aggregated:<br/><br/>
+
+  <pre class="code">
+  var Products = SalesData.addDimension( "Products", "items", "product" ),
+        Amount = Products.<b>addMetric</b>( "Sales Amount", "amount" ),
+        Units  = Products.<b>addMetric</b>( "Units Sold", "units", "average" );
+  </pre>
+
+  <br/>
+  The first parameter is the metric title (used to decorate the chart), and the second parameter is
+  optional and defines the field inside the dimension, if any.<br/>
+  A third parameter is optional, and indicates the Metric "measure" that is "sum" by default.<br/>
+  Valid measure values are: "sum", "average", "high", "low" and "count".<br/> 
+  <br/>
+  Fields should be of type numeric to be valid when calculating sums and averages, but they can be of any type
+  when the metric "measure" is to "count" occurrences.<br/>
+  <br/>
+
+  <h4>Calculated Metrics</h4>
+  Metrics can also be declared as functions to return values that have no corresponding data.<br/>
+  <br/>
+  For example, the following metric defines "Fahrenheit" degrees that are calculated on-the-fly from
+  Celsius data:<br/>
+
+  <pre class="code">
+  var Fahrenheit  = Temperatures.addMetric( "Fahrenheit",
+                          <b>function</b>(data) {
+                             return 32 + ( data.celsius * 9/5 );
+                          });
+  </pre>
+
+
+  <a name="createqueries"><h3>5. Creating Queries and Filling a Chart</h3></a>
+
+  After you have defined the datasets and their dimensions and metrics, queries are executed with this code:<br/><br/>
+
+  <pre class="code">
+  var result = MyData.query(Products, Amount);
+  </pre>
+  <br/>
+
+  The first parameter is a dimension, and the second is a metric. The above query will return the sum of Amount grouped by Product.<br/>
+  To query multiple metrics, you can pass an array of metrics:<br/>
+  <br/>
+
+  <pre class="code">
+  var result = MyData.query( Products, [ Amount, Units ] );
+  </pre>
+  <br/>
+
+  The "result" object returns an array of results, and each item contains a sub-array of values.<br/>
+  Each value is an object that includes the result "value", the "code" and the "label" text.<br/>
+
+  <h4>Charting a query</h4>
+
+  Creating a chart and filling it with a query results:<br/>
+  <br/>
+
+  <pre class="code">
+  var Chart1 = MyData.Chart( "canvas1", "Product Sales" );
+
+  Chart1.fill( Products, Amount );
+  </pre>
+  <br/>
+
+  See demo: <a href="basic.htm">Basic simple example</a>
+
+  <br/>
+  <br/>
+  The first parameter "canvas1" is the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html">HTML5 canvas</a> element that will display the chart.<br/>
+  The second parameter is an optional chart title string.<br/>
+  <br/>
+
+  By default the "fill" function will add query results to the chart, and then it will just draw the chart to show it at the canvas.<br/>
+  You might want to set additional chart properties after the query is executed, and draw the chart afterwards.<br/>
+  In this case its better to fill the chart without redrawing it, to avoid painting it twice.<br/>
+  <br/>
+  The "fill" method accepts an additional optional parameter to do this:<br/>
+  <br/>
+
+  <pre class="code">
+  var Chart1 = MyData.Chart( "canvas1", "Product Sales" );
+
+  Chart1.fill( Products, Amount, true );  // &lt;-- "true" means "not repaint the chart"
+  Chart1.panel.transparent = true;
+  Chart1.draw(); // &lt;-- the chart is painted here
+  </pre>
+  <br/>
+
+  <h4>Different metrics</h4>
+
+  The default metric calculation is the <b>sum</b> of values, and its controlled with the "measure" property.<br/>
+  Available calculations are:<br/><br/>
+
+  <pre class="code">
+  var Amount = Products.addMetric( "Sales Amount", "amount" );
+
+  Amount.measure = "sum";  // &lt;-- by default
+  Amount.measure = "average";
+  Amount.measure = "high";
+  Amount.measure = "low";
+  Amount.measure = "count";
+  </pre>
+  <br/><br/>
+
+  <a id="links"></a>
+  <a name="linkingdims"><h3>6. Linking Dimensions and Datasets</h3></a>
+
+  To allow querying across multiple datasets, they need to be "linked".<br/>
+  Once they are linked, you can then use dimensions that belong to one dataset and metrics from another.<br/>
+  Linking is defined by calling a dimension "addLink" method, passing another dimension that is at another (or same) dataset.<br/>
+  <br/>
+
+  First dataset:
+  <pre class="code">
+  var Products = MyData.addDataSet( "Products",
+                        "{ 'items': [ { 'product':1,
+                                        'amount': 33 ... }, ...
+                                    ] }" ),
+         Sales = Products.addDimension( "Sales", "items", "product" );
+
+  var <b>Amounts</b> = Sales.addMetric( "Sales Amount", "amount" );
+  </pre>
+
+  Second dataset:
+  <pre class="code">
+  var Names = MyData.addDataSet( "Names", [ { code: 45, name: "Scissors" }, ... ] ),
+        <b>Codes</b> = Names.addDimension( "Codes", "", "name" );
+  </pre>
+
+  Linking the two datasets:
+  <pre class="code">
+  Sales.<b>addLink</b>( "product", Codes, "code" );
+  </pre>
+
+  Now we can chart the sum of "sales" (first dataset) by "product name" (second dataset):
+  <pre class="code">
+  Chart1.fill( <b>Codes</b>, <b>Amounts</b> );
+  </pre>
+
+  <br/>
+  Links can be specified using a single field or multiple fields:<br/>
+  <br/>
+
+  <pre class="code">
+  // Link the two datasets using multiple fields:
+  Dimension1.<b>addLink</b>( [ "field1", "field2" ] , Dimension2, [ "field3", "field4" ] );
+  </pre>
+
+  <br/>
+  Or using a custom <b>"search"</b> function that will called when the engine needs to access one dataset record from another dataset:<br/>
+  <br/>
+
+  <pre class="code">
+  var link1 = Dimension1.<b>addLink</b>( null , Dimension2, null );
+  link1.<b>search</b> = function( data1, data2 ) { return data1.field1 == data2.field2; };
+  </pre>
+  <br/>
+
+  To navigate from a Dimension to another Dimension that are located at different datasets,<br/>
+  dimensions have a method that returns an array of "links"
+  that configure a "chain of jumps",<br/> from one dimension dataset to other datasets until arriving at the other dimension.
+  <br/>
+  <br/>
+
+  <pre class="code">
+  var links = Dimension1.<b>getLinksTo</b>( Dimension2 );
+  </pre>
+
+  <br/>
+
+  <a name="addfeatures"><h3>7. Additional Features</h3></a>
+
+  <h4>Selecting dimension elements (filtering)</h4>
+
+  Before executing a query, you can select specific items of a dimension to restrict the output results.<br/>
+  For example if you have a Products dimension, the following code will consider only the selected products:<br/>
+  <br/>
+
+  <pre class="code">
+  Products.<b>selected</b> = [ productsData[3].id, productsData[5].id ];
+  Chart1.fill( Products, Sales );
+  </pre>
+  <br/>
+
+  Setting the "selected" property to "null" or empty array ( [] ) will clear the selection:<br/>
+  <pre class="code">
+  Products.<b>selected</b> = null;
+  </pre>
+  <br/>
+
+  Inverting the selection (to consider all values except the selected ones) is defined by setting
+  the <b>selectedInclude</b> property:<br/>
+
+  <pre class="code">
+  // Exclude selected product 123, and include all the rest:
+  Products.<b>selectedInclude</b> = false;
+  Products.selected = 123;
+  </pre>
+  <br/>
+
+  Selection applies to any dimension and to any dataset, not only to the dimension being queried: <br/>
+  <br/>
+
+  <pre class="code">
+  Products.selected = [ "23", "67", "89" ];   // filter one dimension
+  Countries.selected = "Australia";           // filter another dimension
+  Chart1.fill( Products, Sales );
+  </pre>
+  <br/>
+
+  Custom filtering can be done with a <b>"select"</b> function:<br/>
+
+  <pre class="code">
+  Products.<b>select</b>=function(data) {
+    return (data.product === 23) || (data.product === 45);
+  }
+  </pre>
+
+  <h4>Sorting output</h4>
+
+  Query results can be optionally sorted:<br/><br/>
+
+  <pre class="code">
+
+  // Sort by numeric values:
+  Chart1.sort.sortBy = "values";
+  Chart1.sort.order = "ascending";
+
+  // Or sort by text labels:
+  Chart1.sort.sortBy = "labels";
+
+  // Execute query, sort data, and repaint the chart:
+  Chart1.fill( Products, Sales);
+  </pre>
+
+  For bi-dimensional queries, the second dimension items can also be sorted by name:<br/>
+
+  <pre class="code">
+  Chart1.sort.series = "ascending";
+  </pre>
+  
+  <br/>
+
+  <h4>Configuring Chart options</h4>
+
+  Charts are fully customizable, either before or after queries are executed.<br/>
+  Tee.Data extends standard TeeChart with several new properties and methods:<br/>
+  <br/>
+
+  Before or after filling the chart, set the default series type:<br/>
+  <pre class="code">
+  Chart1.setSeriesStyle( Tee.HorizBar );  // default is "auto"
+  Chart1.fill( Products, Sales );
+  </pre>
+
+  Event to perform additional changes when the engine creates a new series:<br/>
+  <pre class="code">
+  Chart1.onnewseries=function(chart, series) { series.format.gradient.visible=true; }
+  </pre>
+
+  Drill-down when clicking a series item:<br/>
+  <pre class="code">
+  Chart1.onclickseries=function(series,index) {
+
+    // Filter dimension by the clicked series point id:
+    Products.selected = series.data.code[index];
+
+    // Fill another chart using a sub-dimension (drill-down):
+    Chart2.fill(Countries, Amount);
+  }
+  </pre>
+  <br/>
+
+  <h4>Meta-data</h4>
+
+  Unique Id's of a dimension can be obtained as an array of strings or numbers:<br/>
+
+  <pre class="code">
+  var productsIds = Products.getIds();
+  </pre>
+
+  Object values of a dimension can be obtained as an array:<br/>
+
+  <pre class="code">
+  var productsData = Products.getValues();
+  </pre>
+
+  Finding an object with an specific Id in a dimension:<br/>
+
+  <pre class="code">
+  var product123 = Products.get("123");
+  </pre>
+
+  Tee.Data instances include an array of datasets:<br/>
+
+  <pre class="code">
+  var dataset = MyData.datasets[3];
+  </pre>
+
+  DataSets have an array of dimensions:<br/>
+  <pre class="code">
+  var dim = MyData.datasets[3].dimensions[2];
+  </pre>
+
+  Dimensions have an array of metrics:<br/>
+  <pre class="code">
+  var metric = MyData.datasets[3].dimensions[2].metrics[0];
+  </pre>
+
+  Dimensions also have an array of "sub-dimensions":<br/>
+  <pre class="code">
+  var dim2 = MyData.datasets[3].dimensions[2].subdimensions[0];
+  </pre>
+
+  And an array of links:<br/>
+  <pre class="code">
+  var link1 = MyData.datasets[3].dimensions[2].links[3];
+  </pre>
+
+  <br/>
+  
+  <h4>Other utility functions</h4>
+
+  There are several functions included in another script ( "tee-data-utils.js" ), used by this tutorial demos.<br/>
+  <br/>
+
+  The <b>fillTable</b> function adds query results to an html &lt;table&gt; element:<br/>
+  
+  <pre class="code">
+  var result = MyData.query( Products, Amount );
+      MyData.<b>fillTable</b>( "table1", result[0], true );
+  </pre>
+
+  <br/>
+  The <b>tableToObject</b> function converts an html &lt;table&gt; to a JavaScript object to use it as a dataset:<br/>
+
+  <pre class="code">
+  var MyData = new Tee.Data(),
+      personsTable = document.getElementById( "table1" ),
+      Persons = MyData.addDataSet( "Persons", MyData.tableToObject(personsTable) );
+  </pre>
+
+  <a id="demos"></a>
+  <a name="examples"><h3>8. All Examples</h3></a>
+
+  <ul>
+  <li><a href="basic.htm">Basic minimal example</a> (A simple array of Temperatures)</li>
+
+  <li><a href="by_year.htm">Simple grouping</a> (Temperatures grouped by Year)</li>
+
+  <li><a href="from_json_string.htm">Data as JSON string</a> (With two measures)</li>
+
+  <li><a href="by_month_year_flat.htm">Two groups</a> (Temperatures grouped by Year and by Month)</li>
+
+  <li><a href="by_month_year.htm">Two groups</a> (Array of arrays, by Year and by Month)</li>
+
+  <li><a href="by_month_year_names.htm">Two linked DataSets</a> (Years and Month names)</li>
+  
+  <li><a href="no_chart.htm">Query and output results as HTML Table</a> (No Charts)</li>
+
+  <li><a href="from_xml.htm">Using XML data</a> (xml string or xml url)</li>
+
+  <li><a href="gauge_by_year.htm">Gauging Averages</a> (Using a Gauge chart)</li>
+
+  <li><a href="geo_series.htm">Output results to Geo Maps</a> (Map of USA States)</li>
+
+  <li><a href="from_table.htm">Use an HTML &lt;table&gt;</a> (A Table as a source dataset)  <a href="from_table_advanced.htm">Advanced example</a></li>
+
+  <li><a href="linking_datasets.htm">Link datasets</a> (Using multiple fields or a custom function)</li>
+
+  <li><a href="multiple_metrics.htm">More than one metric</a> (In a single query)</li>
+
+  <li><a href="data_editor.htm">Control panel to configure queries</li>
+
+  <li><a href="../productSales.htm">Product Sales (Dashboard)</a></li>
+
+  <li><a href="../demographics.htm">Demographics (Dashboard)</a></li>
+  </ul>
+
+  <a name="testing"><h3>9. Unit Testing</h3></a>
+
+  Automated testing is done using this scripted page: <a href="unit_tests.htm">Unit Tests</a>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+</div>
+
+<div id="footer" style="background-color:#EECCAA; padding:10px">
+Copyright(c) 2012 by Steema Software SL. All Rights Reserved.
+<a href="http://www.steema.com">www.steema.com</a>
+<br/>
+Licensed with commercial and non-commercial attributes, specifically:
+<a href="http://www.steema.com/licensing/html5">http://www.steema.com/licensing/html5</a>
+<br/>
+</div>
+
+</body>
+</html>

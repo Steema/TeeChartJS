@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<link rel="StyleSheet" href="tee-data-utils.css" type="text/css" />
+<script src="tee-data-utils.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var products=[
+    { "product": "Windows", "version": "Vista", "company": "Microsoft" },
+    { "product": "Windows", "version": "8", "company": "Microsoft" },
+    { "product": "Office", "version": "2013", "company": "Microsoft" },
+    { "product": "Office", "version": "2010", "company": "Microsoft" },
+    { "product": "RAD XE", "version": "3", "company": "Embarcadero" },
+    { "product": "Android", "version": "Jelly Bean", "company": "Google" },
+    { "product": "Android", "version": "Ice Cream Sandwich", "company": "Google" },
+    { "product": "Windows", "version": "XP", "company": "Microsoft" }
+   ];
+
+   users=[
+    { "quantity": 2300, "quantity2": 1400, "product": "Android", "version": "Ice Cream Sandwich", "continent": "America" },
+    { "quantity": 1320, "quantity2":  970, "product": "Android", "version": "Ice Cream Sandwich", "continent": "Europe" },
+    { "quantity":  670, "quantity2": 5600, "product": "Windows", "version": "XP", "continent": "Asia" },
+    { "quantity": 1090, "quantity2":  800, "product": "Windows", "version": "XP", "continent": "America" },
+    { "quantity":  870, "quantity2": 1200, "product": "Windows", "version": "XP", "continent": "Europe" },
+    { "quantity": 3100, "quantity2": 2100, "product": "Android", "version": "Jelly Bean", "continent": "Europe" },
+    { "quantity": 3800, "quantity2": 2700, "product": "Android", "version": "Jelly Bean", "continent": "America" },
+    { "quantity": 2630, "quantity2": 1800, "product": "Android", "version": "Jelly Bean", "continent": "Asia" },
+    { "quantity": 4214, "quantity2":  400, "product": "RAD XE", "version": "3", "continent": "Europe" },
+    { "quantity": 6784, "quantity2":   14, "product": "RAD XE", "version": "3", "continent": "America" },
+    { "quantity": 2789, "quantity2": 3400, "product": "RAD XE", "version": "3", "continent": "Asia" },
+    { "quantity":  321, "quantity2": 4900, "product": "Office", "version": "2013", "continent": "Europe" },
+    { "quantity":  456, "quantity2": 1000, "product": "Office", "version": "2013", "continent": "America" },
+    { "quantity":  123, "quantity2":  100, "product": "Office", "version": "2013", "continent": "Asia" }
+   ];
+
+var Engine=new Tee.Data(),
+      Products=Engine.addDataSet("Products", products),
+        Company=Products.addDimension("Company", "company"),
+
+      Users=Engine.addDataSet("Users", users),
+          Continent=Users.addDimension("Continent", "continent"),
+          Quantity =Users.addMetric("Quantity", "quantity");
+          Quantity2=Users.addMetric("Quantity 2", "quantity2");
+
+      Users.addLink( ["product","version"], Products, ["product","version"] );
+
+var Chart1, metric;
+
+function draw() {
+
+    metric = Quantity;
+    
+    // Show sum of Quantity by Company:
+
+    Chart1=Engine.Chart("canvas1", Quantity.title);
+    Chart1.fill(Company, metric);
+
+    // Add json data to tables:
+
+    Engine.objectToTable( "dataProducts", products);
+    Engine.objectToTable( "dataUsers", users);
+
+    // Fill select comboboxes with dimensions values:
+
+    Tee.fillFilter( "continents", Continent);
+    Tee.fillFilter( "companies", Company);
+}
+
+function selectContinent(continent) {
+  Continent.selected=continent==="" ? null : continent;
+  Chart1.fill(Company, metric);
+}
+
+function selectCompany(company) {
+  Company.selected=company==="" ? null : company;
+  Chart1.fill(Company, metric);
+}
+
+function selectMetric(value) {
+  metric = (value=='quantity') ? Quantity : Quantity2;
+  Chart1.fill(Company, metric);
+}
+
+</script>
+
+</head>
+
+<body onload="draw()">
+  This example shows how to link two dataset Dimensions using multiple fields:<br/>
+  <br/>
+  Products.addLink( ["product","version"], Users, ["product","version"] );
+  <br/>
+  <br/>
+  Filter selection works across linked dimensions too:
+    <select id="continents" onchange="selectContinent(this.value);"></select>
+    <select id="companies" onchange="selectCompany(this.value);"></select>
+
+    Metric:
+    <select id="metric" onchange="selectMetric(this.value);">
+      <option value="quantity" selected>Quantity</option>
+      <option value="quantity2">Quantity 2</option>
+    </select>
+    <br/>
+  <br/>
+  <canvas id="canvas1" width="700" height="250"> </canvas>
+
+  <br/>
+  <br/>
+  
+  <table id="dataProducts" class="teetable" style="float:left; margin-right:20px"/>
+  <table id="dataUsers" class="teetable"/>
+  
+  
+</body>
+</html>

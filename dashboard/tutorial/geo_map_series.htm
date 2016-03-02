@@ -1,0 +1,252 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script src="../../../src/teechart-maps.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<script src="tee-data-utils.js" type="text/javascript"></script>
+
+<style>
+.map polygon:hover { opacity:0.5; stroke:red }
+.map polygon { stroke:orange; stroke-width: 0.5px; cursor:pointer; }
+.teetip { background-color:orange !important; border:1px solid black;}
+}
+
+#usa.map polygon {
+  stroke: yellow;
+  stroke-width: 0.1px;
+  fill: silver;
+}
+</style>
+
+<script type="text/javascript">
+"use strict";
+
+var USAValues=[
+    { year: 2000,
+      values: { AL:17.0, AK:12.0, AZ:19.0, AR:15.0, CA:21.0, CO:12.0, CT:21.0, DE:21.0, DC:16.0, FL:19.0, GA:15.0, HI:13.0, ID:13.0, IL:14.0, IN:18.0,
+                IA:20.0, KS:16.0, KY:18.0, LA:21.0, ME:19.0, MD:14.0, MA:15.0, MI:16.0, MN:13.0, MS:15.0, MO:18.0, MT:14.0, NE:12.0, NV:19.0, NH:20.0,
+                NJ:13.0, NM:14.0, NY:15.0, NC:12.0, ND:12.0, OH:20.0, OK:21.0, OR:13.0, PA:15.0, RI:15.0, SC:17.0, SD:14.0, TN:19.0, TX:16.0, UT:18.0,
+                VT:12.0, VA:13.0, WA:16.0, WV:20.0, WI:19.0, WY:12.0 }
+    },
+    { year: 2001,
+      values: { AL:18.0, AK:15.0, AZ:13.0, AR:17.0, CA:17.0, CO:16.0, CT:13.0, DE:16.0, DC:21.0, FL:14.0, GA:16.0, HI:15.0, ID:20.0, IL:19.0, IN:14.0,
+                IA:15.0, KS:15.0, KY:14.0, LA:20.0, ME:20.0, MD:17.0, MA:16.0, MI:17.0, MN:20.0, MS:15.0, MO:20.0, MT:13.0, NE:16.0, NV:16.0, NH:18.0,
+                NJ:18.0, NM:19.0, NY:21.0, NC:16.0, ND:19.0, OH:13.0, OK:13.0, OR:18.0, PA:18.0, RI:21.0, SC:19.0, SD:21.0, TN:13.0, TX:12.0, UT:18.0,
+                VT:14.0, VA:21.0, WA:19.0, WV:21.0, WI:13.0, WY:11.0 }
+    },
+    { year: 2002,
+      values: { AL:14.0, AK:18.0, AZ:13.0, AR:20.0, CA:14.0, CO:13.0, CT:21.0, DE:14.0, DC:19.0, FL:20.0, GA:21.0, HI:18.0, ID:14.0, IL:21.0, IN:13.0,
+                IA:16.0, KS:17.0, KY:20.0, LA:19.0, ME:21.0, MD:15.0, MA:17.0, MI:16.0, MN:19.0, MS:16.0, MO:12.0, MT:18.0, NE:19.0, NV:17.0, NH:16.0,
+                NJ:12.0, NM:18.0, NY:14.0, NC:13.0, ND:15.0, OH:15.0, OK:12.0, OR:20.0, PA:15.0, RI:20.0, SC:15.0, SD:17.0, TN:16.0, TX:14.0, UT:17.0,
+                VT:19.0, VA:16.0, WA:20.0, WV:12.0, WI:20.0, WY:19.0 }
+    },
+    { year: 2003,
+      values: { AL:16.0, AK:14.0, AZ:12.0, AR:14.0, CA:16.0, CO:14.0, CT:15.0, DE:14.0, DC:13.0, FL:19.0, GA:15.0, HI:21.0, ID:12.0, IL:17.0, IN:21.0,
+                IA:20.0, KS:14.0, KY:14.0, LA:14.0, ME:13.0, MD:15.0, MA:15.0, MI:12.0, MN:17.0, MS:13.0, MO:21.0, MT:17.0, NE:14.0, NV:18.0, NH:16.0,
+                NJ:21.0, NM:19.0, NY:18.0, NC:16.0, ND:21.0, OH:14.0, OK:14.0, OR:20.0, PA:13.0, RI:21.0, SC:16.0, SD:15.0, TN:18.0, TX:17.0, UT:20.0,
+                VT:18.0, VA:12.0, WA:16.0, WV:19.0, WI:13.0, WY:16.0 }
+    },
+    { year: 2004,
+      values: { AL:14.0, AK:20.0, AZ:16.0, AR:18.0, CA:14.0, CO:14.0, CT:14.0, DE:18.0, DC:15.0, FL:18.0, GA:15.0, HI:13.0, ID:18.0, IL:14.0, IN:20.0,
+                IA:12.0, KS:18.0, KY:14.0, LA:14.0, ME:18.0, MD:19.0, MA:18.0, MI:16.0, MN:19.0, MS:19.0, MO:12.0, MT:19.0, NE:17.0, NV:20.0, NH:15.0,
+                NJ:21.0, NM:15.0, NY:19.0, NC:12.0, ND:12.0, OH:18.0, OK:13.0, OR:18.0, PA:17.0, RI:16.0, SC:20.0, SD:18.0, TN:17.0, TX:12.0, UT:13.0,
+                VT:18.0, VA:18.0, WA:12.0, WV:18.0, WI:18.0, WY:14.0 }
+    },
+    { year: 2005,
+      values: { AL:12.0, AK:19.0, AZ:16.0, AR:21.0, CA:18.0, CO:21.0, CT:21.0, DE:14.0, DC:20.0, FL:18.0, GA:13.0, HI:19.0, ID:20.0, IL:17.0, IN:12.0,
+                IA:17.0, KS:14.0, KY:16.0, LA:12.0, ME:12.0, MD:19.0, MA:19.0, MI:21.0, MN:17.0, MS:13.0, MO:17.0, MT:20.0, NE:12.0, NV:20.0, NH:19.0,
+                NJ:19.0, NM:21.0, NY:16.0, NC:19.0, ND:13.0, OH:12.0, OK:16.0, OR:15.0, PA:20.0, RI:13.0, SC:15.0, SD:18.0, TN:12.0, TX:18.0, UT:12.0,
+                VT:20.0, VA:12.0, WA:18.0, WV:12.0, WI:16.0, WY:18.0 }
+    },
+    { year: 2006,
+      values: { AL:17.0, AK:14.0, AZ:15.0, AR:12.0, CA:16.0, CO:20.0, CT:16.0, DE:12.0, DC:13.0, FL:20.0, GA:19.0, HI:12.0, ID:15.0, IL:18.0, IN:12.0,
+                IA:19.0, KS:16.0, KY:16.0, LA:19.0, ME:14.0, MD:16.0, MA:21.0, MI:12.0, MN:17.0, MS:12.0, MO:19.0, MT:18.0, NE:21.0, NV:12.0, NH:21.0,
+                NJ:12.0, NM:20.0, NY:15.0, NC:21.0, ND:19.0, OH:20.0, OK:14.0, OR:13.0, PA:19.0, RI:14.0, SC:16.0, SD:14.0, TN:14.0, TX:20.0, UT:12.0,
+                VT:15.0, VA:16.0, WA:18.0, WV:14.0, WI:20.0, WY:15.0 }
+    },
+    { year: 2007,
+      values: { AL:21.0, AK:19.0, AZ:21.0, AR:21.0, CA:19.0, CO:21.0, CT:12.0, DE:18.0, DC:21.0, FL:15.0, GA:20.0, HI:17.0, ID:15.0, IL:15.0, IN:16.0,
+                IA:16.0, KS:15.0, KY:12.0, LA:18.0, ME:13.0, MD:15.0, MA:16.0, MI:18.0, MN:12.0, MS:12.0, MO:15.0, MT:20.0, NE:20.0, NV:12.0, NH:20.0,
+                NJ:15.0, NM:21.0, NY:16.0, NC:16.0, ND:14.0, OH:19.0, OK:18.0, OR:19.0, PA:14.0, RI:20.0, SC:16.0, SD:17.0, TN:17.0, TX:13.0, UT:16.0,
+                VT:15.0, VA:18.0, WA:21.0, WV:14.0, WI:13.0, WY:14.0 }
+    },
+    { year: 2008,
+      values: { AL:18.0, AK:19.0, AZ:16.0, AR:18.0, CA:19.0, CO:19.0, CT:17.0, DE:17.0, DC:21.0, FL:13.0, GA:21.0, HI:14.0, ID:19.0, IL:13.0, IN:16.0,
+                IA:14.0, KS:17.0, KY:21.0, LA:18.0, ME:20.0, MD:15.0, MA:12.0, MI:21.0, MN:19.0, MS:14.0, MO:12.0, MT:14.0, NE:21.0, NV:21.0, NH:18.0,
+                NJ:16.0, NM:16.0, NY:16.0, NC:14.0, ND:15.0, OH:18.0, OK:19.0, OR:18.0, PA:20.0, RI:17.0, SC:18.0, SD:19.0, TN:21.0, TX:14.0, UT:15.0,
+                VT:12.0, VA:20.0, WA:19.0, WV:14.0, WI:13.0, WY:20.0 }
+    },
+    { year: 2009,
+      values: { AL:17.0, AK:17.0, AZ:15.0, AR:14.0, CA:14.0, CO:17.0, CT:18.0, DE:18.0, DC:21.0, FL:21.0, GA:16.0, HI:14.0, ID:13.0, IL:17.0, IN:13.0,
+                IA:21.0, KS:18.0, KY:18.0, LA:21.0, ME:14.0, MD:13.0, MA:16.0, MI:14.0, MN:17.0, MS:16.0, MO:12.0, MT:13.0, NE:12.0, NV:15.0, NH:17.0,
+                NJ:17.0, NM:21.0, NY:20.0, NC:12.0, ND:15.0, OH:15.0, OK:12.0, OR:12.0, PA:14.0, RI:18.0, SC:17.0, SD:12.0, TN:20.0, TX:17.0, UT:18.0,
+                VT:19.0, VA:13.0, WA:16.0, WV:15.0, WI:12.0, WY:12.0 }
+    },
+    { year: 2010,
+      values: { AL:19.0, AK:16.0, AZ:12.0, AR:15.0, CA:19.0, CO:21.0, CT:17.0, DE:12.0, DC:15.0, FL:21.0, GA:19.0, HI:16.0, ID:16.0, IL:13.0, IN:14.0,
+                IA:17.0, KS:19.0, KY:21.0, LA:21.0, ME:13.0, MD:14.0, MA:14.0, MI:18.0, MN:12.0, MS:20.0, MO:21.0, MT:17.0, NE:14.0, NV:17.0, NH:13.0,
+                NJ:14.0, NM:15.0, NY:21.0, NC:20.0, ND:17.0, OH:14.0, OK:16.0, OR:17.0, PA:16.0, RI:21.0, SC:15.0, SD:19.0, TN:19.0, TX:18.0, UT:15.0,
+                VT:19.0, VA:17.0, WA:13.0, WV:16.0, WI:23.0, WY:16.0 }
+    },
+    { year: 2011,
+      values: { AL:18.0, AK:13.0, AZ:17.0, AR:21.0, CA:16.0, CO:16.0, CT:21.0, DE:15.0, DC:13.0, FL:20.0, GA:20.0, HI:17.0, ID:20.0, IL:12.0, IN:14.0,
+                IA:17.0, KS:17.0, KY:16.0, LA:21.0, ME:14.0, MD:19.0, MA:12.0, MI:18.0, MN:18.0, MS:20.0, MO:13.0, MT:16.0, NE:12.0, NV:20.0, NH:18.0,
+                NJ:12.0, NM:20.0, NY:15.0, NC:20.0, ND:16.0, OH:19.0, OK:21.0, OR:18.0, PA:12.0, RI:19.0, SC:13.0, SD:15.0, TN:18.0, TX:17.0, UT:18.0,
+                VT:19.0, VA:21.0, WA:20.0, WV:14.0, WI:13.0, WY:17.0 }
+    },
+    { year: 2012,
+      values: { AL:12.0, AK:19.0, AZ:14.0, AR:20.0, CA:12.0, CO:21.0, CT:15.0, DE:12.0, DC:19.0, FL:21.0, GA:21.0, HI:12.0, ID:12.0, IL:21.0, IN:20.0,
+                IA:20.0, KS:17.0, KY:13.0, LA:19.0, ME:15.0, MD:18.0, MA:14.0, MI:19.0, MN:19.0, MS:12.0, MO:16.0, MT:17.0, NE:16.0, NV:19.0, NH:12.0,
+                NJ:13.0, NM:17.0, NY:16.0, NC:12.0, ND:14.0, OH:17.0, OK:16.0, OR:14.0, PA:15.0, RI:18.0, SC:19.0, SD:19.0, TN:19.0, TX:17.0, UT:18.0,
+                VT:13.0, VA:18.0, WA:15.0, WV:18.0, WI:17.0, WY:14.0 }
+    }
+  ];
+
+var Engine=new Tee.Data(),
+      Data=Engine.addDataSet("USA", USAValues),
+        Years=Data.addDimension("Years", "values", "year"),
+          States=Years.addDimension("USA States"),
+            Degree=States.addMetric("Degrees");
+
+var USAMap, USASeries, USASVG
+    //, Legend
+    ;
+
+// Query average of Temperatures (Degree) of a given Year, grouped by USA State:
+
+function fillMap(year) {
+    Years.selected=year;  // select a specific Year
+
+    // Query by States
+    var values = Engine.query(States, Degree, true), v=values[0].values,
+        USASeries=USAMap.addSeries(new Tee.Map()),
+        data = USASeries.data;
+
+    USASeries.setMap(USASVG);
+
+    // Clear map values
+    data.values=[];
+    data.labels=[];
+
+    // Set each State result value
+    for (var t=0; t<v.length; t++) {
+      data.values.push(v[t].value);
+      data.labels.push(v[t].id);
+      USASVG.values[v[t].id] = v[t].value;
+    }
+
+    // Tell the map to colorize according to values:
+    var palette = USASeries.applyPalette([ "#F0F0F0", "#C0C0C0", "#A0A0A0", "#808080", "#606060", "#404040" ]);
+
+    // Use the color palette to fill a <table> with mouse over:
+    //Legend = new Engine.MapLegend(palette, document.getElementById("legend"));
+
+    USAMap.draw();
+}
+
+function draw() {
+
+    // Show average of temperatures by each Year:
+    Degree.measure="average";
+
+    var Chart1=Engine.Chart("canvas1", Years.title);
+    Chart1.setSeriesStyle(Tee.Line);
+
+    Chart1.onnewseries=function(chart,series) { series.smooth=0.5; }
+
+    var years=Years.getIds(), old=0,
+        slider=Engine.slider(Chart1, years, 10,10,110,20);
+
+    Chart1.title.text=States.title + " " + years[old];
+    Chart1.fill(Years, Degree);
+
+    USAMap=Engine.Chart("usa", "USA States");
+    USASVG=new Tee.USAMap();
+
+    fillMap(USAValues[0].year);
+
+    //USASeries.addZoomButtons();
+
+    var Chart2=Engine.Chart("canvas2", States.title);
+    Chart2.setSeriesStyle(Tee.Area);
+    Chart2.animateChanges=true;
+
+    Chart2.onnewseries=function(chart,series) {
+       series.smooth=0.5;
+       series.origin=5;
+       series.useOrigin=true;
+       series.format.gradient.visible=true;
+    }
+
+    var selectedState="";
+    
+    USAMap.onhover=function(id) {
+       if (selectedState !== id) {
+           selectedState=id;
+
+           var old=Years.selected;
+           Years.selected=null;
+             States.selected=[id];
+               Chart2.fill(Years, Degree, true);
+             States.selected=null;
+           Years.selected=old;
+
+           Chart2.title.text=USASeries.data.labels[id];
+           Chart2.draw();
+
+           //Legend.highlight(USASeries.data.values[id], "2px solid orange");
+       }
+    }
+
+    USAMap.onhoverout=function(id) {
+      if (selectedState !== id) {
+        selectedState=id;
+        //Legend.highlight();
+      }
+    }
+
+    slider.onChanging=function(slider,value) {
+      value=value | 0;
+
+      if (value != old) {
+        old=value;
+        fillMap(years[old], true);
+        Chart1.title.text=States.title + " " + years[old];
+      }
+      return value;
+    }
+}
+
+</script>
+
+</head>
+
+<body onload="draw()">
+  <div style="float:left;">
+    <canvas id="canvas1" width="400" height="250"></canvas>
+    <canvas id="canvas2" width="500" height="250"></canvas>
+  </div>
+
+  <div style="float:left;">
+  Move mouse over USA map to show values for selected State:<br/>
+
+  <canvas id="usa" class="map" width="700" height="350"></canvas>
+  </div>
+  
+ <!--
+  <table style="position:absolute; left:580px; top:500px; font-size:12px; border: solid;" id="legend"></table>
+  -->
+
+</body>
+</html>

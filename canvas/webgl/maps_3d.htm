@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>TeeChart 3D Geographical Charting for JavaScript Three.js WebGL&trade; Example</title>
+
+<script src="threejs/three.min.js" type="text/javascript"></script>
+
+<script src="threejs/Detector.js" type="text/javascript"></script>
+<script src="threejs/TrackballControls.js" type="text/javascript"></script>
+<script src="fonts/helvetiker_font/helvetiker_regular.typeface.js"></script>
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-3d.js" type="text/javascript"></script>
+<script src="../../../src/teechart-maps.js" type="text/javascript"></script>
+<script src="../../series/maps/world_cities.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+"use strict";
+
+var Chart1, map, three, t1, t2, timing=false, geoSeries, citySeries;
+
+function draw() {
+
+  resizeCanvasToFit();
+
+  // Create 3D WebGL:
+  three  = new Tee.Three("canvas1");
+
+  if (three.floor)
+      three.floor.visible=false;
+
+  // For debug:
+  // three.__webgl=false;
+  
+  // Create Chart:
+  Chart1 = new Tee.Chart(three);
+
+  // Set mouse-drag zoom to be "proportional":
+  Chart1.zoom.keepAspect = true;
+
+  // Add WorldMap series:
+  map = new Tee.Map();
+
+  Chart1.addSeries(map);
+
+  changeMap('usa');
+
+  Chart1.title.text="TeeChart for WebGL (tm)";
+  Chart1.footer.text="Made with Three.js";
+
+  Chart1.walls.back.size=0.2;
+  //Chart1.walls.back.format.transparency=0.2;
+  Chart1.walls.back.format.fill="white";
+
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+
+  if (three.isEnabled()) {
+    Chart1.draw();
+    animate();
+  }
+  else
+  {
+    if (!Detector.webgl) Detector.addGetWebGLMessage();
+    three.setEnabled(false, Chart1);
+  }
+
+  document.getElementById('webgl').checked = three.isEnabled();
+  document.getElementById('webglopt').style.display = three.isEnabled() ? 'block':'none';
+}
+
+function animate() {
+  requestAnimationFrame( animate );
+
+  three.update();
+
+  if (three.isEnabled() && (!timing)) {
+      t2=new Date();
+
+      var tmp = document.getElementById('time');
+      tmp.innerText = 'Time: ' + (t2-t1);
+      tmp.textContent = tmp.innerText;
+      timing=true;
+  }
+}
+
+function changeMap(value) {
+
+  if (citySeries) {
+    Chart1.removeSeries(citySeries);
+    citySeries=null;
+  }
+
+  // Example, setting country values:
+
+  if (value==='world') {
+     map.setMap(new Tee.WorldMap());
+     map.svg.values={ SE:1234, GB:600, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 }
+  }
+  else
+  if (value==='usa') {
+     map.setMap(new Tee.USAMap());
+     map.svg.values={ CA:1234, KY:600, NY:3822, IN:2102, AZ:1600, NV:3000, OH:1300, TX: 2700, FL:3300, NE:1510, MS:100 }
+  }
+  else
+  if (value==='africa') {
+     map.setMap(new Tee.AfricaMap());
+     map.svg.values={ TZ:1234, NG:600, KE:3822, GA:2102, GN:1600, MR:3000, RE:1300, UG: 2700, DJ:3300, KM:1510, ZA:100 }
+  }
+  else
+  if (value==='asia') {
+     map.setMap(new Tee.AsiaMap());
+     map.svg.values={ AF:1234, BD:600, CN:3822, CX:2102, JP:1600, MY:3000, OM:1300, SA: 2700, LK:3300, TR:1510, TM:100 }
+  }
+  else
+  if (value==='samerica') {
+     map.setMap(new Tee.SouthAmericaMap());
+     map.svg.values={ CL:1234, VE:600, PE:3822, AR:2102, BO:1600, PY:3000, UY:1300, EC: 2700, CO:3300, BR:1510, GY:100 }
+  }
+  else
+  if (value==='australia') {
+     map.setMap(new Tee.AustraliaMap());
+     map.svg.values={ AU:1234, NZ:600, SB:3822, FJ:2102 }
+  }
+  else
+  {
+    if (value==='europe')
+       map.setMap(new Tee.EuropeMap());
+    else
+       map.setMap(new Tee.Europe27Map());
+
+    map.svg.values={ SP:1234, GB:600, IT:3822, FI:2102, GR:1600, RU:3000, PT:1300, FR: 2700, DE:3300, NE:1510, DK:100 }
+  }
+
+  map.title = value;
+
+  if (value==='usa') {
+    createCitySeries();
+    addCities(USACities);
+  }
+  else
+  if (value==='world') {
+    createCitySeries();
+    addCities(WorldCities);
+    addCities(USACities);
+  }
+
+  // Example:
+  // Set random value to each map polygon:
+
+  map.svg.values={};
+
+  for (var t=0; t<map.items.length; t++)
+     map.svg.values[ map.items[t].item.id ] = Math.random()*1000;
+
+  // When finished adding values, colorize items according:
+  map.applyPalette();
+
+  // Reset axes:
+  Chart1.axes.left.automatic=true;
+  Chart1.axes.bottom.automatic=true;
+
+  // Benchmark again:
+  t1=new Date();
+  timing=false;
+}
+
+function resizeCanvasToFit() {
+  var width = window.innerWidth,
+      w = width - document.getElementById('options').clientWidth,
+      c = document.getElementById('canvas1');
+
+  if (w < c.clientWidth ) {
+     w -= 60;
+
+     c.setAttribute('width', ""+w+"px");
+     c.style.width=""+w+"px";
+     c.width=w;
+
+     var height = window.innerHeight - 60,
+         h = Math.min(height, (3 * w / 4) );
+
+     c.setAttribute('height', ""+h+"px");
+     c.style.height=""+h+"px";
+     c.height=h;
+  }
+}
+
+function switchWebGL(value) {
+  three.setEnabled(value, Chart1);
+  document.getElementById('webglopt').style.display = value ? 'block':'none';
+
+  if (value)
+     animate();
+}
+
+// Show or hide Geo location using a PointXY sphere:
+
+function showLocation(show) {
+
+  if (show) {
+    if (navigator.geolocation)
+        navigator.geolocation.getCurrentPosition( function(position) {
+               if (geoSeries)
+                  geoSeries.visible=true;
+               else
+               {
+                 geoSeries= new Tee.PointXY(Chart1);
+                 geoSeries.pointer.style="sphere";
+                 geoSeries.format.fill="red";
+                 geoSeries.marks.style="label";
+                 Chart1.addSeries(geoSeries);
+               }
+
+               //var coord = map.geoCoord(position.coords.latitude, position.coords.longitude);
+               geoSeries.data.values= [ position.coords.latitude ];
+               geoSeries.data.x = [ position.coords.longitude ];
+               geoSeries.data.labels= [ "Your location:\n" + "Lat: "+position.coords.latitude.toFixed(2)+"\n"+
+                                        "Lon: "+ position.coords.longitude.toFixed(2) ];
+
+               Chart1.draw();
+
+               },
+               function(error) {
+                  alert("Cannot obtain location: "+error.message);
+               }
+        );
+  }
+  else
+  if (geoSeries) {
+     geoSeries.visible=false;
+     Chart1.draw();
+  }
+}
+
+function showCities(show) {
+  if (citySeries) {
+     citySeries.visible=show;
+     citySeries.chart.draw();
+  }
+}
+
+function createCitySeries() {
+  citySeries = new Tee.PointXY(Chart1);
+  citySeries.title = "Cities";
+
+  citySeries.visible = document.getElementById('cities').checked;
+
+  var data = citySeries.data;
+
+  citySeries.pointer.style="sphere";
+  citySeries.pointer.format.stroke.fill="";
+
+  citySeries.marks.style="label";
+
+  citySeries.beforeDraw=function() {
+    citySeries.format.z=map.format.z;
+  }
+
+  Chart1.addSeries(citySeries);
+}
+
+function addCities(cities) {
+  for (var t=0; t<cities.length; t++)
+    map.addLocation(citySeries, cities[t].lat, cities[t].lon, cities[t].name);
+}
+
+</script>
+</head>
+
+<body onload="draw()">
+
+<div id="options" style="float:left;">
+
+<b>Map:</b>
+
+<form action="">
+  <input type="radio" name="map" id="world" value="world" onchange="changeMap(this.value); Chart1.draw();"/><label for="world">World</label><br/>
+  <input type="radio" name="map" id="africa" value="africa" onchange="changeMap(this.value); Chart1.draw();"/><label for="africa">Africa</label><br/>
+  <input type="radio" name="map" id="asia" value="asia" onchange="changeMap(this.value); Chart1.draw();"/><label for="asia">Asia</label><br/>
+  <input type="radio" name="map" id="australia" value="australia" onchange="changeMap(this.value); Chart1.draw();"/><label for="australia">Australia</label><br/>
+  <input type="radio" name="map" id="europe27" value="europe27" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe27">Europe 27</label><br/>
+  <input type="radio" name="map" id="europe" value="europe" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe">Europe</label><br/>
+  <input type="radio" name="map" id="samerica" value="samerica" onchange="changeMap(this.value); Chart1.draw();"/><label for="samerica">South America</label><br/>
+  <input type="radio" name="map" id="usa" value="usa" onchange="changeMap(this.value); Chart1.draw();" checked/><label for="usa">USA States</label><br/>
+</form>
+<br/>
+<br/>
+<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);" checked><label for="walls">Walls</label>
+<br/>
+<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);" checked><label for="axes">Axes</label>
+<br/>
+<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();" checked><label for="borders">Borders</label>
+<br/>
+<input type="checkbox" id="geo" onclick="showLocation(this.checked);"><label for="geo">Geo Location</label>
+<br/>
+<input type="checkbox" id="cities" onclick="showCities(this.checked);" checked><label for="cities">Cities</label>
+<br/>
+<br/>
+<input type="checkbox" id="webgl" onclick="switchWebGL(this.checked);" checked><label for="webgl">Use WebGL&trade;</label>
+<br/>
+<br/>
+<div id="webglopt">
+<input type="checkbox" id="floor" onclick="three.floor.visible=this.checked; three.refresh();"><label for="floor">Floor</label>
+<br/>
+<br/>
+<b>Depth:</b>
+<br/>
+<input type="checkbox" id="flat" onclick="map.enableDepth=this.checked; Chart1.draw();"><label for="flat">Enable</label>
+<br/>
+<input type="checkbox" id="varDepth" onclick="map.variableDepth=this.checked; Chart1.draw();" checked><label for="varDepth">Variable</label>
+<br/>
+</div>
+
+</div>
+
+ <center>
+  <canvas id="canvas1" width="1600" height="1200"></canvas>
+ </center>
+
+<span id='time'></span>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting from XML data</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1;
+
+function draw() {
+
+var Engine=new Tee.Data(),
+      xml=Engine.loadXMLDoc('temperatures.xml'),
+        Temps=Engine.addDataSet("Temperatures", xml, "year"),
+          Years=Temps.addDimension("Years", "values", "id"),
+            Degree=Years.addMetric("Degrees");
+
+    // Show sum of temperatures by each Year:
+
+    Chart1=Engine.Chart("canvas1", Years.title);
+    Degree.measure="average";
+    Chart1.fill(Years, Degree);
+
+    // Show sum of temperatures of an specific Year (2012):
+
+    var Chart2=Engine.Chart("canvas2", Years.title);
+    Years.selected=Temps.object.year[1].id;
+    Chart2.fill(Years, Degree);
+}
+
+</script>
+
+</head>
+
+<body onload="draw()">
+Data in XML format, internally converted to JSON.<br/>
+
+  <canvas id="canvas1" width="400" height="250"> </canvas>
+  <canvas id="canvas2" width="400" height="250"> </canvas>
+
+  <br/>
+  
+    <select id="style" onchange="Chart1.setSeriesStyle(this.value)">
+      <option value="Tee.Bar" selected>Bar</option>
+      <option value="Tee.Pie">Pie</option>
+      <option value="Tee.Area">Area</option>
+      <option value="Tee.Line">Line</option>
+      <option value="Tee.PointXY">Point XY</option>
+    </select>
+
+</body>
+</html>

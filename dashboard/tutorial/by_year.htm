@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Temperatures=[
+      { year: 2011, values: [21,24,26,20,22,18,25,14,19,27,26,18] },
+      { year: 2012, values: [20,21,24,18,21,19,27,11,18,27,24,17] },
+      { year: 2013, values: [22,25,25,21,20,20,22,13,19,23,25,19] },
+      { year: 2014, values: [22,23,26,19,22,16,25,15,19,21,26,21] }
+      ];
+
+var Engine=new Tee.Data(),
+      Temps=Engine.addDataSet("Temperatures", Temperatures),
+        Years=Temps.addDimension("Years", "values", "year"),
+          Degree=Years.addMetric("Degrees");
+
+          Degree.measure="average";
+
+function draw() {
+
+    // Show sum of temperatures by each Year:
+
+    var Chart1=Engine.Chart("canvas1", Temps.title+" by Year");
+    Chart1.fill(Years, Degree);
+
+    // Show sum of temperaturs of an specific Year (2012):
+
+    var Chart2=Engine.Chart("canvas2");
+    Years.selected=Temperatures[0].year;
+    Chart2.fill(Years, Degree);
+
+    Chart1.onclickseries=function(series, index) {
+      Years.selected=series.data.code[index];
+      Chart2.fill(Years, Degree);
+
+      Chart2.series.items[0].palette.colors = [ series.getFill(index) ];
+      Chart2.draw();
+    }
+
+    document.getElementById("data").value=addNewLines(JSON.stringify(Temperatures));
+}
+
+function addNewLines(text) { return text.replace(/\},/g, "},\n" ); }
+
+</script>
+
+</head>
+
+<body onload="draw()">
+  Click on bars to show sum of clicked year:<br/>
+  <br/>
+  <canvas id="canvas1" width="400" height="250"> </canvas>
+  <canvas id="canvas2" width="400" height="250"> </canvas>
+
+  <br/>
+  Data:<br/>
+  <textarea id="data" rows="8" cols="47"></textarea>
+  <br/>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<meta property="og:title" content="Create charts with multiple-dimensions using JavaScript"/>
+<meta property="og:image" content="http://www.steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/docs/images/html5.png" />
+<meta property="og:description" content="TeeChart for JavaScript Data-mining" />
+<meta property="og:url" content="http://www.steema.com/teechart/html5"/>
+
+<meta name="Author" content="Steema Software" />
+<meta name="Generator" content="Steema" />
+<meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
+<meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, Three.js, WebGL, 3D, JS Chart, Data Visualization, Chart, Graph, Map, Surface, Heatmap, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
+
+<style type="text/css">
+html { height:100%; }
+body { font-family: tahoma; overflow-x:hidden; height:100%; margin:0px; background-color:#FDFEED; }
+#header { position: fixed; margin:0; top:0px; width:100%; height:80px; background-color: #6B87AC; padding-bottom:10px; }
+#tree { width:200px; margin-top:92px; height:86%; position:fixed; overflow:auto; padding-left:4px; background-color:beige; }
+#content_div { height:100%; }
+#frame1 { margin-top:92px; margin-left:220px; width:84%; height:85%; border:0; }
+.tableheader { width:100%; }
+img { border-width:0; }
+#titletext { color:white; font-size:16px;}
+</style>
+
+<link rel="StyleSheet" href="dtree.css" type="text/css" />
+<script type="text/javascript" src="dtree.js"></script>
+
+<title>TeeChart for JavaScript HTML5 Canvas and WebGL 3D, Live Examples</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-7504244-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ca_ES/all.js#xfbml=1&appId=19094609301";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="header">
+
+<!-- <a href="javascript:testAll();">Test All</a>-->
+
+    <table class="tableheader"><tr>
+    <td id="steema">
+      <a href="http://www.steema.com" title="Steema Software. Charting for Developers.">
+     <img src="images/logo-steema-v3.png" alt="Steema Software logo picture"/>
+     </a></td>
+    <td id="logo1">
+     <a href="http://www.steema.com/teechart/html5" title="TeeChart for JavaScript">
+     <img src="images/html5.png" alt="TeeChart for HTML5 logo"/></a></td>
+    <td id="logo2"><span id="titletext">TeeChart, a Cross-browser HTML5 Canvas Charting<br/>and Graphing Javascript library</span></td>
+    <td id="logo3"><a href="http://www.w3.org/html/logo/">
+     <img src="images/HTML5_Logo_64.png" width="64" height="64" alt="HTML5 Powered with Graphics, 3D &amp; Effects" title="HTML5 Powered with Graphics, 3D &amp; Effects"/>
+     </a></td>
+    <td id="w3logos">
+      <a href="http://validator.w3.org/check/referer">
+          <img style="width:88px;height:31px"
+              src="images/valid-html401-blue.png" alt="Valid HTML Markup!" title="Valid HTML Markup!"/>
+      </a>
+      <br/>
+      <a href="http://jigsaw.w3.org/css-validator/check/referer">
+          <img style="width:88px;height:31px" src="images/vcss-blue.gif" alt="Valid CSS3!" title="Valid CSS3!"/>
+      </a>
+
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="SteemaSoftware" data-related="steemasoftware" data-hashtags="TeeChart">Tweet</a>
+
+   <div class="fb-like" data-href="http://www.steema.com/teechart/html5"
+     data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-font="verdana">
+   </div>
+
+      </td>
+    </tr>
+    </table>
+</div>
+
+<div id="tree">
+  <script type="text/javascript" src="treeitems.js"></script>
+</div>
+
+<div id="content_div">
+
+
+<!--
+ <iframe id="frame1" name="main" src="basic/Basic.htm">
+   <p>Your browser does not support iframes.</p>
+ </iframe>
+-->
+
+</div>
+
+<script type="text/javascript">
+
+//<![CDATA[
+function get(id) { return document.getElementById(id); }
+
+function getWidth() {
+  if (self.innerHeight)
+     return self.innerWidth;
+  else
+  if (document.documentElement && document.documentElement.clientHeight)
+     return document.documentElement.clientWidth;
+  else
+  if (document.body)
+     return document.body.clientWidth;
+  else
+     return 0;
+}
+
+var isMobile=(getWidth()<400) || (document.height>document.width);
+
+if (isMobile) {
+  var tree=get("tree"),
+      content=get("content_div"),
+      header=get("header");
+
+  get("logo2").style.display='none';
+  get("w3logos").style.display='none';
+  get("logo3").style.display='none';
+
+  get("steema").align="center";
+
+  content.style.display='none';
+  tree.style.width=""+getWidth()+"px";
+
+  tree.style.height="1000px";
+  tree.style.position="";
+
+  document.body.style.height="";
+
+  d.config.target="";
+
+  tree.children[1].style.fontSize='20px';
+
+  var n, link, folder;
+
+  for (n=0; n<d.aNodes.length; n++) {
+    link=get('sd'+n.toFixed(0));
+    if (link) {
+      link.target="";
+      link.style.fontSize='20px';
+    }
+
+    folder=get('id'+n.toFixed(0));
+    if (folder) {
+      folder.style.height='36px';
+      folder.style.width='36px';
+    }
+
+    folder=get('jd'+n.toFixed(0));
+    if (folder) {
+      folder.style.height='36px';
+      folder.style.width='36px';
+    }
+  }
+}
+else
+{
+  var frame1 = document.createElement("iframe");
+  frame1.setAttribute('id','frame1');
+  frame1.setAttribute('name','main');
+  frame1.setAttribute("src", "basic/Basic.htm");
+  frame1.setAttribute("webkitallowfullscreen","");
+  get('content_div').appendChild(frame1);
+}
+
+function testAll() {
+  var n=0;
+  function change() {
+    var s=d.aNodes[n++].url;
+    if (s!="") main.location=s;
+    if (n<d.aNodes.length)
+      setTimeout(change,1000);
+  }
+  setTimeout(change,1000);
+}
+
+//]]>
+</script>
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
+
+</body>
+</html>

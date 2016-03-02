@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height:100%">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="../../../src/teechart.js"></script>
+<script type="text/javascript" src="../../../src/teechart-maps.js"></script>
+
+<title>TeeChart HTML5 Canvas Charting for JavaScript Geo World Map Example</title>
+
+<style>
+.map {
+  border-color:red;
+  border-style:solid;
+  border-width:3px;
+  border-radius:10px;
+  background-color:white;
+}
+
+.map polygon:hover { opacity:0.5; }
+.map polygon { stroke:orange; cursor:pointer; }
+.map .button:hover { opacity: 0.75; }
+}
+
+#usa.map polygon {
+  stroke: yellow;
+  fill: silver;
+}
+
+#world.map {
+  background-color:black;
+}
+
+#world.map polygon {
+  stroke: orange;
+  fill: white;
+  stroke-width: 0.1px;
+}
+</style>
+
+<script>
+"use strict";
+
+function fillMap(){
+  var flag=document.getElementById("flag");
+
+  var world=new Tee.WorldMap("world");
+
+  world.values={ SE:1234, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 }
+  world.applyPalette(["#EEEE90", "#DDDD90", "#CCCCA0", "#BBBBA0", "#AAAAA0", "#9999A0", "#8888A0"]);
+
+  world.onclick=function(id, item) {
+     showLabel(world, id);
+     flag.src="flags/"+id+".png";
+  }
+
+  world.addZoomButtons();
+
+  var usa=new Tee.USAMap("usa");
+
+  usa.values={ AR: 1234, CA: 2312, NY: 4578 }
+  usa.applyPalette(["red", "orange", "yellow", "green"]);
+
+  usa.addZoomButtons();
+  
+  usa.onclick=function(id, item) {
+     showLabel(usa, id);
+     flag.src="flags/US.png";
+  }
+
+  // Change a State color by code:
+  usa.find("WY").style.fill="lime";
+
+  //var a=<animate attributeName="fill" dur="5s" values="#ff8; #f88; #f8f; #88f; #8ff; #8f8" repeatCount="indefinite"/>
+  //var a=new Tee.Animation(function(f) { } );
+
+  function showLabel(map, id) {
+    var label=map.labels[id]+" ("+id+")",
+        value=(typeof map.values[id] === 'undefined') ? "" : map.values[id];
+
+    label+=" <span style='color:white'>"+value+'</p>';
+    document.getElementById("label").innerHTML = label;
+  }
+
+}
+</script>
+
+</head>
+
+<body style="height:100%; font-family:Tahoma; background-color:#BE4410" onload="fillMap();">
+
+<span style="font-size:28px">TeeChart HTML5 Maps</span>
+
+<div>
+   <img id="flag" style="width:auto; height:auto; vertical-align:middle" src="../../images/HTML5_Logo_64.png" alt="Country Flag"/>
+   <span id="label">&nbsp;</span>
+   <div style="clear: both"></div>
+</div>
+
+<svg id="world" class="map" width="65%" height="75%"/>
+<svg id="usa" class="map" width="30%" height="45%"/>
+
+</body>
+</html>

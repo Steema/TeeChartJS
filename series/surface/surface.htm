@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<title>TeeChart 3D Charting for JavaScript Surface series with Three.js and WebGL&trade; Example</title>
+
+<script src="../../canvas/webgl/threejs/three.min.js" type="text/javascript"></script>
+
+<script src="../../canvas/webgl/threejs/Detector.js" type="text/javascript"></script>
+<script src="../../canvas/webgl/threejs/TrackballControls.js" type="text/javascript"></script>
+<script src="../../canvas/webgl/fonts/helvetiker_font/helvetiker_regular.typeface.js"></script>
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-3d.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+"use strict";
+
+var three, Chart1, surface;
+
+function draw() {
+
+  // Create 3D WebGL context:
+  three  = new Tee.Three("canvas1");
+
+  // Create Chart:
+  Chart1 = new Tee.Chart(three);
+
+  Chart1.walls.visible=false;
+
+  // Create Surface:
+  surface = new Tee.Surface();
+
+  // Add Surface series to Chart:
+  Chart1.addSeries(surface);
+
+  // Add sample random data:
+  changeSurface("s3");
+
+  // Cosmetics:
+
+  Chart1.title.text="TeeChart Surface 3D";
+  Chart1.walls.back.size=0.2;
+  Chart1.walls.back.format.transparency=0.2;
+
+  // Valid webGL ?
+
+  if (three.isEnabled()) {
+    Chart1.draw();
+    animate();
+  }
+  else
+    Detector.addGetWebGLMessage(); // Show message (WebGL not available)
+
+  // Loop
+  function animate() {
+    three.update();
+    requestAnimationFrame( animate );
+  }
+}
+
+// Simple random data:
+function addRandom(rows,cols) {
+  var row;
+
+  surface.data.values=[];
+
+  for (var y=0; y<rows; y++) {
+    row=new Array(cols);
+    surface.data.values[y]=row;
+
+    for (var x=0; x<cols; x++)
+         row[x] = 500+ Math.cos(0.001*x*y)*(x*x-y*y);
+  }
+
+  surface.dataChanged=true; // <-- force recalculating pixel colors
+}
+
+function changeSurface(id) {
+  if (id==="s0") {
+    // Example, filling XYZ (grid of 7x3) data:
+    surface.data.values=[
+                        [23,15,12, 8,39,50,34],
+                        [19, 7,31,23,12,40,27],
+                        [ 1,26,18,39,20, 6,11]
+                      ];
+  }
+  else
+  if (id==="s1")
+    addRandom(10,100);
+  else
+  if (id==="s2")
+    addRandom(100,10);
+  else
+  if (id==="s3")
+    surface.addRandom(200,200);
+  else
+    surface.addRandom(500,500);
+
+}
+
+</script>
+</head>
+
+<body onload="draw()">
+
+<div style="float:left">
+<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label>
+<input type="checkbox" id="grid" onclick="surface.grid.visible=this.checked; Chart1.draw();"><label for="grid">Grid</label>
+<br/>
+<input type="checkbox" id="floor" onclick="three.floor.visible=this.checked; three.needsRender=true;" checked><label for="floor">Floor</label>
+<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);" checked><label for="axes">Axes</label>
+<br/>
+<br/>
+<b>Surface samples:</b>
+<br/>
+<br/>
+
+<form action="">
+  <input type="radio" name="surface" id="s0" value="s0" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s0">7x3</label><br/>
+  <input type="radio" name="surface" id="s1" value="s1" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s1">10x100</label><br/>
+  <input type="radio" name="surface" id="s2" value="s2" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s2">100x10</label><br/>
+  <input type="radio" name="surface" id="s3" value="s3" onchange="changeSurface(this.value); Chart1.draw();" checked/><label for="s3">200x200</label><br/>
+</form>
+<br/>
+
+</div>
+
+ <center>
+  <canvas id="canvas1" style="background:#666677" width="800" height="500"></canvas>
+  <br/>
+  <span>Drag mouse and wheel to rotate, pan and zoom.</span>
+ </center>
+
+</body>
+</html>

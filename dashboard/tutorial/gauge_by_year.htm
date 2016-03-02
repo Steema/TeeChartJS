@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>TeeChart JavaScript MultiDimensional Charting Gauges</title>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+
+<script src="../../../src/teechart-gauges.js" type="text/javascript"></script>
+<script src="../../../src/teechart-data.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+var Temperatures=[
+      { year: 2011, values: [21,24,26,20,22,18,25,14,19,27,26,18] },
+      { year: 2012, values: [20,21,24,18,21,19,27,11,18,27,24,17] },
+      { year: 2013, values: [22,25,25,21,20,20,22,13,19,23,25,19] },
+      { year: 2014, values: [22,23,26,19,22,16,25,15,19,21,26,21] }
+      ];
+
+var Engine=new Tee.Data(),
+      Temps=Engine.addDataSet("Temperatures", Temperatures),
+        Years=Temps.addDimension("Years", "values", "year"),
+          Degree=Years.addMetric("Degrees");
+
+function draw() {
+
+    // Show average of temperatures by each Year:
+    Degree.measure="average";
+
+    var Chart1=Engine.Chart("canvas1", Years.title);
+    Chart1.fill(Years, Degree);
+
+    var Gauge1=Engine.Chart("canvas2", "");
+    Gauge1.panel.transparent=true;
+
+    var gauge=Gauge1.addSeries(new Tee.CircularGauge());
+        gauge.min=20;
+        gauge.max=22;
+        gauge.decimals=1;
+        gauge.step=0.2;
+        gauge.units.format.font.style='18px bold serif';
+        gauge.drag.enabled=false;
+
+    Chart1.onclickseries=function(series, index) {
+      showGauge(series,index);
+    }
+
+    function showGauge(series,index) {
+
+      // Show sum of temperaturs of an specific clicked Year:
+      Years.selected=series.data.code[index];
+
+      gauge.units.text=series.data.labels[index];
+
+      var result=Engine.query(Years, Degree);
+      gauge.setValue(result[0].values[0].value);
+
+      gauge.hand.gradient.colors[0] = series.getFill(index);
+      
+      gauge.draw();
+    }
+
+    showGauge(Chart1.series.items[0], 0);
+}
+
+</script>
+
+</head>
+
+<body onload="draw()">
+  Click on bars to change gauge value: <br/>
+  <br/>
+  
+  <canvas id="canvas1" width="400" height="250"> </canvas>
+  <canvas id="canvas2" width="400" height="250"> </canvas>
+</body>
+</html>
