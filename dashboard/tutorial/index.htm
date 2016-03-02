@@ -37,7 +37,10 @@ body { font-family:Georgia; height:100%; margin:0px; background-color:#FDFEED; }
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../../src/teechart-data.js" type="text/javascript"></script>
 <link rel="StyleSheet" href="tee-data-utils.css" type="text/css" />
@@ -369,7 +372,8 @@ function showDemo() {
 
   Chart1.fill( Products, Amount, true );  // &lt;-- "true" means "not repaint the chart"
   Chart1.panel.transparent = true;
-  Chart1.draw(); // &lt;-- the chart is painted here
+  changeTheme(Chart1, "minimal");
+Chart1.draw(); // &lt;-- the chart is painted here
   </pre>
   <br/>
 

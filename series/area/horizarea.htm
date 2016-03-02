@@ -8,7 +8,10 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -25,21 +28,23 @@ function draw() {
 
   Chart1.title.text="Horizontal\nAreas";
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function setStacked(value) {
   Chart1.series.items[0].stacked= value;
   Chart1.series.items[1].stacked=Chart1.series.items[0].stacked;
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 </script>
 </head>
 <body onload="draw()">
 
 <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
-<input type="checkbox" id="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
-<input type="checkbox" id="series2" onclick="Chart1.series.items[1].visible= !Chart1.series.items[1].visible; Chart1.draw();">Series2
+<input type="checkbox" id="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
+<input type="checkbox" id="series2" onclick="Chart1.series.items[1].visible= this.checked; Chart1.draw();" checked>Series2
 &nbsp; Stacked:
 <select id="stacked"  onchange="setStacked(this.value)">Stacked:
   <option value="no">No</option>

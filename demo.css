@@ -1,0 +1,158 @@
+body{width: 100%; margin: 10px 0px 0px 0px; font-family: 'Segoe UI', Verdana, Arial; font-size: 10pt;}
+
+a:visited, a:link
+{
+    color: #4473BB;
+    text-decoration: none;
+}
+
+DIV#BANNER {
+     width: 100%;
+     margin: 0px 0px 0px 0px;
+     border-width: 0px;
+     border-bottom: 1px solid #999999;
+     padding: 0px 0px 0px 0px;
+     background-color: #808086;
+     height: 55px;
+     color: white;
+}
+
+DIV#BANNER H1 {
+     margin: 0px 0px 0px 0px;
+     border-width: 0px;
+     padding: 0 .4em .3em .4em;
+     font-weight:normal;
+     font-size: 14pt;
+     font-family: Calibri, 'Segoe UI', Verdana, Arial;
+     color: white;
+}
+
+
+DIV#HEADER {
+     margin: 0px 0px 0px 0px;
+     border-width: 0px;
+     padding: .4em .4em 0 .4em;
+     font-size: 14px;
+     font-style: italic;
+     font-family: Calibri,'Segoe UI', Verdana, Arial;
+     color: white;
+}
+
+DIV#FOOTER {
+     font-size: 100%;
+     font-style:italic;
+     border-top: 1px solid #999999;
+     margin-left: 0px;
+     margin-top: 1em;
+     margin-bottom: 1em;
+     width: 96%;
+}
+
+DIV#CONTENT {
+     margin-left: 20px;
+     margin-top: 1em;
+     margin-bottom: 1em;
+}
+
+H1 {
+  margin-bottom: .4em;
+  margin-top: 0em;
+  font-size: 120%;
+}
+
+H4 {
+  font-size: 100%;
+  margin-bottom: .4em;
+  margin-top: 1em;
+  margin-left: -18px;
+}
+
+H4.DTH4 {
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 110%;
+  font-weight: bold;
+  margin-left: -16px;
+  line-height: 18pt;
+}
+
+P {
+  margin: .5em 0em .5em 0em;
+}
+
+TABLE {
+     font-size: 100%;
+     border-collapse: collapse;
+     width: 93%;
+}
+
+DD {
+  font-size: 100%;
+  margin-bottom: 0.5em;
+  margin-top: 0em;
+  margin-left: 18px;
+}
+
+DL {
+  font-size: 100%;
+  margin-bottom: 0em;
+  margin-top: -3px;
+}
+
+TH {
+     background-color: #cccccc;
+     color: #000000;
+     font-weight: bolder;
+     padding: 5px;
+     border: 1px solid #999999;
+}
+
+TR {
+     background-color: #ffffff;
+     padding: 5px;
+     text-align: left;
+     border: 1px solid #999999;
+}
+
+TD {
+     border: 1px solid #999999;
+     padding: 5px;
+}
+
+PRE {
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+
+PRE.CODE {
+  font: Monospace, Courier New, Courier;
+  color: #000066;
+  font-size: 110%;
+  margin-left: 0px;
+  line-height: 10pt;
+}
+
+BLOCKQUOTE.dtBlock {
+  font: Monospace, Courier New, Courier;
+  color: #000066;
+  font-size: 100%;
+  margin-left: 20px;
+  margin-top: .10em;
+  margin-bottom: .5em;
+}
+
+.SYNTAX {
+     font: Monospace, Courier New, Courier;
+     letter-spacing: .1em;
+     background-color: #cccccc;
+     color: #000000;
+     font-size: 100%;
+     font-weight: bolder;
+     padding: 5px;
+     border: 1px solid #999999;
+     margin-left: 0px;
+     padding: 4px 8px;
+     margin-top: 1em;
+     margin-bottom: 1em;
+     width: 96%;
+}

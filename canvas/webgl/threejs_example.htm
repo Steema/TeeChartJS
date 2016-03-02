@@ -14,7 +14,10 @@
     <script src="../../../src/excanvas/excanvas_text.js"></script>
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
-<!-- TeeChart and 3D --><script src="../../../src/teechart.js" type="text/javascript"></script>
+<!-- TeeChart and 3D --><link rel="stylesheet" type="text/css" href="../../demo.css">
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-animations.js" type="text/javascript"></script>
 
 <!-- Slider control: -->
@@ -98,7 +101,7 @@ function draw() {
   series1.horizAxis="both";
   series1.vertAxis="both";
 
-  //series1.format.image.url = "textures/charcoal.png";
+  series1.format.image.url = "textures/charcoal.png";
 
   Chart1.axes.top.grid.visible=false;
   Chart1.axes.right.grid.visible=false;
@@ -157,7 +160,8 @@ function draw() {
   Chart1.ondraw=function() { relocateLegendPole(); }
 
   if (three.isEnabled()) {
-    Chart1.draw();
+    changeTheme(Chart1, "minimal");
+Chart1.draw();
 
     three.lights[0].target=Chart1.walls.visual;
     three.lights[2].target=Chart1.walls.left.visual;
@@ -208,7 +212,8 @@ function addText3DSlider() {
     three.textDepth=value*0.1;
     three.clearTextCache();
     
-    Chart1.draw();
+    changeTheme(Chart1, "minimal");
+Chart1.draw();
 
     three.needsRender=true;
     three.update();
@@ -428,7 +433,8 @@ function setSurfaceWire(wire) {
 
   if (s instanceof Tee.Surface) {
     s.wireFrame=wire;
-    Chart1.draw();
+    changeTheme(Chart1, "minimal");
+Chart1.draw();
   }
 }
 
@@ -437,25 +443,29 @@ function setSurfaceGrid(show) {
 
   if (s instanceof Tee.Surface) {
     s.grid.visible=show;
-    Chart1.draw();
+    changeTheme(Chart1, "minimal");
+Chart1.draw();
   }
 }
 
 function setBeveled(beveled) {
   Chart1.series.each(function(s) { s.format.beveled=beveled; });
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function setDonutTube(tube) {
   Chart1.series.each(function(s) { if (s instanceof Tee.Donut) s.format.tube=tube; });
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function animation() {
   var a = new Tee.Animation(Chart1, function(step) {
     //series1.data.values[3] += 1;
     Chart1.legend.format.transparency= step > 0.5 ? 2*(step-0.5) : 1-2*step;
-    Chart1.draw();
+    changeTheme(Chart1, "minimal");
+Chart1.draw();
   });
 
   a.duration=2000;
@@ -466,7 +476,8 @@ function showSeries(index, show) {
   var i = Chart1.series.items;
   if (i.length>index) {
     i[index].visible=show;
-    Chart1.draw();
+    changeTheme(Chart1, "minimal");
+Chart1.draw();
   }
 }
 
@@ -584,7 +595,8 @@ Stacked:
 </div>
 
 <div id="checkPointer">
-<input type="checkbox" id="linePointer" onclick="var value=this.checked; Chart1.series.each(function(s) { if (s.pointer) s.pointer.visible=value; }); Chart1.draw(); three.update()">Pointer
+<input type="checkbox" id="linePointer" onclick="var value=this.checked; Chart1.series.each(function(s) { if (s.pointer) s.pointer.visible=value; }); changeTheme(Chart1, "minimal");
+Chart1.draw(); three.update()">Pointer
 <br/>
 </div>
 

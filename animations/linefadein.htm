@@ -8,7 +8,10 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script src="../../src/teechart-animations.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -42,6 +45,7 @@ function draw() {
   Chart1.panel.format.stroke.fill="";
   Chart1.panel.format.shadow.visible=true;
 
+  changeTheme(Chart1, "minimal");
   Chart1.draw();
 
   Chart2=new Tee.Chart("canvas2");
@@ -53,6 +57,7 @@ function draw() {
   Chart2.title.text="Fade-in Horiz.Bar Animation";
   Chart2.series.items[0].format.stroke.fill="darkorange";
 
+  changeTheme(Chart2, "minimal"); 
   Chart2.draw();
 
   Chart3=new Tee.Chart("canvas3");
@@ -61,6 +66,7 @@ function draw() {
   Chart3.title.text="Fade-in Pie Animation";
   Chart3.series.items[0].format.stroke.fill="darkorange";
 
+  changeTheme(Chart3, "minimal");
   Chart3.draw();
 
   animation=new Tee.SeriesAnimation();

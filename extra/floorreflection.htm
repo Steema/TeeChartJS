@@ -8,7 +8,10 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -23,7 +26,8 @@ function animate() {
   var index=trunc(Math.random()*s.count());
   s.data.values[index] += ((Math.random()*50)-25);
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
   
   requestAnimFrame(animate);
 }
@@ -69,7 +73,8 @@ function draw() {
   Chart1.reflectionColor=[0,0,0];
   Chart1.ondraw=Chart1.drawReflection;
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 
   animate();
 }

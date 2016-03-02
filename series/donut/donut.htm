@@ -12,7 +12,11 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 var Chart1;
@@ -31,7 +35,8 @@ function draw() {
   Chart1.legend.title.text="Legend Title";
   Chart1.legend.title.format.font.fill="blue";
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 $(function() {
@@ -39,21 +44,24 @@ $(function() {
       value: 50,
       slide: function( event, ui ) {
          Chart1.series.items[0].donut=ui.value;
-         Chart1.draw();
+         changeTheme(Chart1, "minimal");
+Chart1.draw();
       }
   });
   $( "#rotation" ).slider( {
       max: 360,
       slide: function( event, ui ) {
          Chart1.series.items[0].rotation=ui.value;
-         Chart1.draw();
+         changeTheme(Chart1, "minimal");
+Chart1.draw();
       }
   });
   $( "#explode" ).slider( {
       value: 30,
       slide: function( event, ui ) {
          Chart1.series.items[0].explode[1]=ui.value;
-         Chart1.draw();
+         changeTheme(Chart1, "minimal");
+Chart1.draw();
       }
   });
 });

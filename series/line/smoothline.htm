@@ -8,7 +8,10 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -20,6 +23,10 @@ function draw() {
   Chart1.series.items[0].smooth=1/2;
 
   Chart1.title.text="Smooth Line";
+  changeTheme(Chart1, "minimal");
+  Chart1.legend.format.stroke.fill="black";
+  Chart1.legend.transparent=false;
+  Chart1.legend.visible=true;
   Chart1.draw();
 }
 

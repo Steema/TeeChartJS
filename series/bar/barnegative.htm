@@ -8,7 +8,11 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script type="text/javascript">
 var Chart1;
 function draw() {
@@ -27,6 +31,11 @@ function draw() {
 
   // Firefox/Mozilla/Gecko supported:
   Chart1.panel.format.stroke.dash=[5,10,2];
+  
+  changeTheme(Chart1, "minimal");
+  
+  Chart1.legend.format.stroke.fill = "white";
+  Chart1.legend.transparent=false;
   
   Chart1.draw();
 }

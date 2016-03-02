@@ -8,7 +8,10 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -37,13 +40,21 @@ function draw() {
 
   polar1.format.transparency=0.2;
   polar2.format.transparency=0.2;
-
+  
   // Cosmetics:
 
   Chart1.title.text="Polar Chart";
   Chart1.walls.back.format.gradient.visible=true;
   
+  Chart1.panel.format.gradient.colors=["rgba(255,255,255,1)","rgba(255,255,255,1)"];
+  Chart1.panel.format.gradient.visible=true;
+  Chart1.panel.format.shadow.visible=false;
+  Chart1.panel.format.stroke.fill="";
+  Chart1.panel.format.round.x=0;
+  Chart1.panel.format.round.y=0;  
+  
   Chart1.tools.add(new Tee.ToolTip(Chart1));
+  //
   Chart1.draw();
 
   addSlider("rotation1", polar1);
@@ -74,39 +85,57 @@ function addSlider(canvas, target) {
 <body onload="draw()">
 
 <div style="float:left">
- <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
+ <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; 
+Chart1.draw();" checked>Series1
  <input type="checkbox" id="marks1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
- <input type="checkbox" id="fill1" onclick="Chart1.series.items[0].format.fill= this.checked ? Chart1.palette.get(0) : ''; Chart1.draw();" checked>Fill
+ <input type="checkbox" id="fill1" onclick="Chart1.series.items[0].format.fill= this.checked ? Chart1.palette.get(0) : ''; 
+Chart1.draw();" checked>Fill
 <br/>
- <input type="checkbox" id="origin1" onclick="Chart1.series.items[0].useOrigin= this.checked; Chart1.draw();">Use Origin 0
- <input type="checkbox" id="pointer1" onclick="Chart1.series.items[0].pointer.visible= this.checked; Chart1.draw();" checked>Pointers
+ <input type="checkbox" id="origin1" onclick="Chart1.series.items[0].useOrigin= this.checked; 
+Chart1.draw();">Use Origin 0
+ <input type="checkbox" id="pointer1" onclick="Chart1.series.items[0].pointer.visible= this.checked; 
+Chart1.draw();" checked>Pointers
  <br/>
  <canvas id="rotation1" width="200" height="30"></canvas>
  <br/>
  <br/>
- <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= this.checked; Chart1.draw();" checked>Series2
- <input type="checkbox" id="marks2" onclick="Chart1.series.items[1].marks.visible= this.checked; Chart1.draw();">Marks
- <input type="checkbox" id="fill2" onclick="Chart1.series.items[1].format.fill= this.checked ? Chart1.palette.get(1) : ''; Chart1.draw();" checked>Fill
+ <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= this.checked; 
+Chart1.draw();" checked>Series2
+ <input type="checkbox" id="marks2" onclick="Chart1.series.items[1].marks.visible= this.checked; 
+Chart1.draw();">Marks
+ <input type="checkbox" id="fill2" onclick="Chart1.series.items[1].format.fill= this.checked ? Chart1.palette.get(1) : ''; 
+Chart1.draw();" checked>Fill
  <br/>
- <input type="checkbox" id="origin2" onclick="Chart1.series.items[1].useOrigin= this.checked; Chart1.draw();">Use Origin 0
- <input type="checkbox" id="pointer2" onclick="Chart1.series.items[1].pointer.visible= this.checked; Chart1.draw();" checked>Pointers
+ <input type="checkbox" id="origin2" onclick="Chart1.series.items[1].useOrigin= this.checked; 
+Chart1.draw();">Use Origin 0
+ <input type="checkbox" id="pointer2" onclick="Chart1.series.items[1].pointer.visible= this.checked; 
+Chart1.draw();" checked>Pointers
  <br/>
  <canvas id="rotation2" width="200" height="30"></canvas>
  <br/>
  <br/>
- <input type="checkbox" id="transp" onclick="Chart1.walls.back.visible=this.checked; Chart1.draw();" checked>Background
- <input type="checkbox" id="gradient1" onclick="Chart1.walls.back.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
+ <input type="checkbox" id="transp" onclick="Chart1.walls.back.visible=this.checked; 
+Chart1.draw();" checked>Background
+ <input type="checkbox" id="gradient1" onclick="Chart1.walls.back.format.gradient.visible= this.checked; 
+Chart1.draw();" checked>Gradient
  <br/>
- <input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s){s.format.shadow.visible= document.getElementById('shadow').checked;}); Chart1.draw();">Shadows
-<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked>Legend
+ <input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s){s.format.shadow.visible= document.getElementById('shadow').checked;}); 
+Chart1.draw();">Shadows
+<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; 
+Chart1.draw();" checked>Legend
  <br/>
  <br/>
- <input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked>Axes
- <input type="checkbox" id="degrees" onclick="Chart1.series.items[0].notmandatory.visible=this.checked; Chart1.draw();" checked>Degrees
- <input type="checkbox" id="griddegrees" onclick="Chart1.series.items[0].notmandatory.grid.visible=this.checked; Chart1.draw();" checked>Grid
+ <input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; 
+Chart1.draw();" checked>Axes
+ <input type="checkbox" id="degrees" onclick="Chart1.series.items[0].notmandatory.visible=this.checked; 
+Chart1.draw();" checked>Degrees
+ <input type="checkbox" id="griddegrees" onclick="Chart1.series.items[0].notmandatory.grid.visible=this.checked; 
+Chart1.draw();" checked>Grid
  <br/>
- <input type="checkbox" id="values" onclick="Chart1.series.items[0].mandatoryAxis.visible=this.checked; Chart1.draw();" checked>Values
- <input type="checkbox" id="gridvalues" onclick="Chart1.series.items[0].mandatoryAxis.grid.visible=this.checked; Chart1.draw();" checked>Grid
+ <input type="checkbox" id="values" onclick="Chart1.series.items[0].mandatoryAxis.visible=this.checked; 
+Chart1.draw();" checked>Values
+ <input type="checkbox" id="gridvalues" onclick="Chart1.series.items[0].mandatoryAxis.grid.visible=this.checked; 
+Chart1.draw();" checked>Grid
  <br/>
  <br/>
  Axis rotation:

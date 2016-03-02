@@ -8,7 +8,10 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../src/teechart-animations.js" type="text/javascript"></script>
 
@@ -38,7 +41,8 @@ function draw() {
   
   Chart1.panel.format.transparency=1;
   
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 
   axesFade=new Tee.FadeAnimation(Chart1);
   axesFade.fade={ axes:true, walls:true }

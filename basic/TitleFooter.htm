@@ -8,7 +8,10 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 var Chart1;
@@ -25,13 +28,15 @@ function draw() {
   Chart1.footer.format.font.style="18px Verdana";
   Chart1.footer.format.fill="black";
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function setRound(round) {
   Chart1.panel.format.round.x = round ? 10 : 0;
   Chart1.panel.format.round.y = round ? 10 : 0;
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 </script>

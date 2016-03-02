@@ -8,7 +8,9 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../src/teechart-data.js" type="text/javascript"></script>
 
@@ -62,7 +64,8 @@ function draw() {
       Continent.selected=oldCont;
       Chart1.setSeriesPalette(Chart1.series.items[0],Continent);
 
-      Chart1.draw();
+      changeTheme(Chart1, "minimal");
+Chart1.draw();
 
       showCountries();
 
@@ -93,7 +96,8 @@ function draw() {
 
   Chart1.fill(Continent, Population, true);
   Chart1.footer.text="Year "+ years[old];
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 
   Chart3=Engine.Chart("canvas4", "Population Trend");
   Chart3.panel.transparent=true;

@@ -8,7 +8,10 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../../src/teechart-data.js" type="text/javascript"></script>
 <script src="tee-data-utils.js" type="text/javascript"></script>
@@ -94,7 +97,8 @@ function addNewLines(text) {
 
 function setStack(value) {
   Chart1.series.each(function(s) { s.stacked = value; });
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 </script>
 

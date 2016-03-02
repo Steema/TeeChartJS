@@ -8,7 +8,10 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 
 <!-- teechart-extras script needed only to draw "smooth" areas: -->
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
@@ -32,13 +35,15 @@ function draw() {
   Chart1.title.format.font.gradient.colors=["lime","white"];
   Chart1.title.format.font.stroke.fill="green";
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function setStacked(value) {
   Chart1.series.items[0].stacked= value;
   Chart1.series.items[1].stacked=Chart1.series.items[0].stacked;
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function setGradients(visible) {
@@ -47,7 +52,8 @@ function setGradients(visible) {
 
   Chart1.series.items[1].format.gradient.colors=Tee.RainbowPalette();
   
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 </script>

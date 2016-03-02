@@ -8,7 +8,10 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script src="../../src/teechart-table.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -27,6 +30,7 @@ function draw() {
 
   Chart1.axes.bottom.title.text=bar.title;
 
+  changeTheme(Chart1, "minimal");
   Chart1.draw();
 
   // XY Data, multiple series:
@@ -51,6 +55,7 @@ function loadXYData(chart) {
      xyLine.loadJSON( { value: list[t] });
   }
 
+  changeTheme(chart, "minimal");
   chart.draw();
 }
 

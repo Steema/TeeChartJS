@@ -8,7 +8,11 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 var Chart1, Chart2;
@@ -30,6 +34,8 @@ function draw() {
   Chart1.panel.transparent=true;
   Chart2.panel.transparent=true;
 
+  changeTheme(Chart1, "minimal");
+  changeTheme(Chart2, "minimal");
   Chart1.draw();
   Chart2.draw();
 }

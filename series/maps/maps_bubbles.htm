@@ -7,7 +7,10 @@
 
 <title>TeeChart 3D Geographical Charting for JavaScript Three.js WebGL&trade; Example</title>
 
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-maps.js" type="text/javascript"></script>
 <script src="world_cities.js" type="text/javascript"></script>
 
@@ -62,7 +65,8 @@ function draw() {
 
   Chart1.onzoom=function() { document.getElementById('resetZoom').style.display='block' }
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function addRandom(cities) {
@@ -104,7 +108,8 @@ function resizeCanvasToFit() {
 <input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();"><label for="borders">Borders</label>
 <br/>
 <br/>
-<button type="button" id="resetZoom" style="display:none" onclick="Chart1.zoom.reset(); Chart1.draw(); this.style.display='none'">Reset</button>
+<button type="button" id="resetZoom" style="display:none" onclick="Chart1.zoom.reset(); changeTheme(Chart1, "minimal");
+Chart1.draw(); this.style.display='none'">Reset</button>
 </div>
 
 <center><canvas id="canvas1" width="1600" height="1200"></canvas></center>

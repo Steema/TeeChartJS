@@ -11,11 +11,16 @@
 <![endif]-->
 
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
 
 <!-- Syntax highlight -->
 <script src="../tools/syntax/sh_main.min.js" type="text/javascript"></script>
 <script src="../tools/syntax/sh_javascript.min.js" type="text/javascript"></script>
 <link href="../tools/syntax/sh_ide-eclipse.min.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" type="text/css" href="../demo.css">
 
 <script type="text/javascript">
 var Chart1;
@@ -27,7 +32,9 @@ function draw() {
   // Add two line series:
   Chart1.addSeries(new Tee.Line([5,3,2,null,7,1]) );
   Chart1.addSeries(new Tee.Line([4,4,null,8,2,9]) ).visible=true;
-
+  
+  changeTheme(Chart1, "minimal");
+  
   Chart1.series.items[0].format.stroke.size=3;
 
   Chart1.axes.left.format.stroke.fill="red";
@@ -42,13 +49,14 @@ function draw() {
   Chart1.series.items[0].treatNulls="skip";
   Chart1.series.items[1].treatNulls="skip";
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 
   sh_highlightDocument();
 }
 </script>
 </head>
-<body onload="draw()" style="font-family:Monospace">
+<body onload="draw()">
 
 <div style="float:left">
   <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
@@ -60,8 +68,6 @@ function draw() {
   <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
   <br/>
   <input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible= !Chart1.panel.format.gradient.visible; Chart1.draw();" checked>Gradient
-  <br/>
-  <input type="checkbox" name="legendshadow" onclick="Chart1.legend.format.shadow.visible= !Chart1.legend.format.shadow.visible; Chart1.draw();" checked>Legend Shadow
   <br/>
   <input type="checkbox" name="skipNulls" onclick="var skip=this.checked ? 'skip' : 'dontPaint'; Chart1.series.items[0].treatNulls=skip; Chart1.series.items[1].treatNulls=skip; Chart1.draw();" checked>Skip Nulls
 </div>
@@ -105,7 +111,8 @@ function draw() {
   Chart1.series.items[0].treatNulls="skip";
   Chart1.series.items[1].treatNulls="skip";
   
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 &lt;/script&gt;
 

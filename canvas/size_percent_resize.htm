@@ -8,7 +8,10 @@
     <script src="../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
+<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demos/theme.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 var Chart1;
@@ -18,7 +21,8 @@ function draw() {
   Chart1.addSeries(new Tee.Line([50,30,20,70,10,60,40,50,10,0,100]) ).format.stroke.size=4;
 
   resize();
-  //Chart1.draw();
+  //changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 function resize() {
@@ -30,7 +34,8 @@ function resize() {
   canvas.height = height*body.clientHeight/100;
   Chart1.bounds.width = canvas.width;
   Chart1.bounds.height = canvas.height;
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 </script>

@@ -8,7 +8,10 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
-<script src="../../../src/teechart.js" type="text/javascript"></SCRIPT>
+<link rel="stylesheet" type="text/css" href="../../demo.css">
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/date.format.js" type="text/javascript"></SCRIPT>
 
 <script type="text/javascript">
@@ -117,7 +120,8 @@ function draw() {
     Chart1.ctx.fillText("Total Range: "+days+" days",20,10);
   }
 
-  Chart1.draw();
+  changeTheme(Chart1, "minimal");
+Chart1.draw();
 }
 
 </script>
