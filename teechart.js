@@ -6294,7 +6294,7 @@ Tee.CustomBar=function(o,o2) {
       for(var t=0; t<len; t++)
       if (!this.isNull(t)) {
         this.calcStackPos(t,p);
-        this.calcBarBounds(p,bar,offset,originPos);
+        this.calcBarBounds(p,bar,offset,originPos instanceof Array? originPos[t]: originPos);
         var pointPainted = this.drawBar(bar, _styles ? _styles[t] : null);
 
         var isover=(hover && (this.over==t)),
@@ -6350,8 +6350,17 @@ Tee.CustomBar=function(o,o2) {
 
     this.calcBarOffset(range===0? nomand.axisSize : nomand.calcSize(range));
 
-    if (this.useOrigin)
-       originPos = mand.calc(this.origin);
+    if (this.useOrigin) {
+      if (this.origin instanceof Array) {
+         originPos = [];
+         for (var t=0; t<this.origin.length; t++) {
+             originPos[t] = mand.calc(this.origin[t]);
+         }
+      }
+      else {
+        originPos = mand.calc(this.origin);
+      }
+    }
     else
     if (this.yMandatory)
        originPos=mand.inverted ? mand.startPos : mand.endPos;
@@ -6376,7 +6385,7 @@ Tee.CustomBar=function(o,o2) {
     for(t=0; t<len; t++)
     if (!this.isNull(t)) {
         this.calcStackPos(t,p2);
-        this.calcBarBounds(p2,bar,offset,originPos);
+        this.calcBarBounds(p2,bar,offset,originPos instanceof Array? originPos[t]: originPos);
 
         if (bar.contains(p))
            return t;
@@ -6395,13 +6404,13 @@ Tee.CustomBar=function(o,o2) {
       (yMand) ? p.x=tmp : p.y=tmp;
     }
 
-    var inv=(this.useOrigin && (this.data.values[t] < this.origin));
+    var inv=(this.useOrigin && (this.data.values[t] < ((this.origin instanceof Array)? this.origin[t]: this.origin)));
     if (this.mandatoryAxis.inverted) inv=!inv;
 
     // Marks location
 
     if (m.location=="center") {
-      this.calcBarBounds(p,bar,offset,originPos);
+      this.calcBarBounds(p,bar,offset,originPos instanceof Array? originPos[t]: originPos);
 
       if (m.canDraw(p.x,p.y,t,inv)) {
         if (yMand)
@@ -6500,7 +6509,7 @@ Tee.Bar=function(o,o2) {
   }
 
   this.vertMargins=function(p) {
-    var m=this.marks, st=this.format.stroke, hasNeg=this.minYValue()<this.origin;
+    var m=this.marks, st=this.format.stroke, hasNeg=this.minYValue()<(this.origin instanceof Array? ArrayMin(this.origin): this.origin);
 
     if (m.visible && (m.location!=='center')) {
        p.y=m.arrow.length+m.format.textHeight("Wj")+m.margins.top+m.margins.bottom;
@@ -6520,7 +6529,7 @@ Tee.Bar=function(o,o2) {
 
   this.minYValue=function() {
     var res=this.parent.minYValue.call(this);
-    return this.useOrigin ? Math.min(this.origin, res) : res;
+    return this.useOrigin ? Math.min(this.origin instanceof Array? ArrayMin(this.origin): this.origin, res) : res;
   }
 
   this.maxYValue=function() {
