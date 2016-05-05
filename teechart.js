@@ -3544,40 +3544,56 @@ function Legend(chart)
 
       c.z=-0.01;
 
-      if (this.style==="rectangle") {
-        if (fhover)
-           f.stroke=fhover.stroke; // ??
+      switch (this.style) {
+        case "rectangle":
+          if (fhover)
+            f.stroke=fhover.stroke; // ??
 
-        if (this.chart.aspect.view3d) {
-          var r={x:x, y:y-this.height*0.5-1,width:this.width,height:this.height};
-
-          old=f.z;
-
-          var oldz=c.z;
+          if (this.chart.aspect.view3d) {
+            var r={x:x, y:y-this.height*0.5-1,width:this.width,height:this.height};
+  
+            old=f.z;
+  
+            var oldz=c.z;
+            
+            f.z=c.z-f.depth;
+  
+            f.cube(r);
+            f.draw(c,null,r);
+  
+            f.z=old;
+            c.z=oldz;
+          }
+          else
+            f.rectangle(x,y-this.height*0.5-1,this.width,this.height);
+          break;
+        case "triangle":
+          if (fhover)
+            f.stroke=fhover.stroke;
           
-          f.z=c.z-f.depth;
+          f.polygon([new Point(x+this.width*0.5,y-this.height*0.5),
+            new Point(x+this.width,y+this.height*0.5),
+            new Point(x,y+this.height*0.5)]);
 
-          f.cube(r);
-          f.draw(c,null,r);
-
-          f.z=old;
-          c.z=oldz;
-        }
-        else
-          f.rectangle(x,y-this.height*0.5-1,this.width,this.height);
-      }
-      else
-      {
-        c.beginPath();
-        c.moveTo(x,y);
-        c.lineTo(x+this.width,y);
-
-        if (fhover)
-            fhover.stroke.prepare();
-        else
-            f.stroke.prepare(f.fill);
-
-        c.stroke();
+          break;
+        case "ellipse":
+          if (fhover)
+            f.stroke=fhover.stroke;
+          
+          f.ellipse(x+this.width*0.5,y,this.width,this.height);
+          break;
+        default: //"line"
+          c.beginPath();
+          c.moveTo(x,y);
+          c.lineTo(x+this.width,y);
+  
+          if (fhover)
+              fhover.stroke.prepare();
+          else
+              f.stroke.prepare(f.fill);
+  
+          c.stroke();
+          break;
       }
 
       f.fill=old;
