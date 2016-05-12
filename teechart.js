@@ -4624,17 +4624,16 @@ Tee.Series=function(o,o2) {
      for (t=0; t<li.length; t++) {
        s=li[t];
 
-       if ((! sumAll) && (s==this)) break;
-       else
-       {
-         v=s.data.values;
+       if ((!sumAll) && (s == this)) break;
+       else if (s.stacked!="no") {
+         v = s.data.values;
 
-         if (s.visible && (s.constructor==this.constructor) && (v.length>index)) {
-           tmp=v[index];
+         if (s.visible && (s.constructor == this.constructor) && (v.length > index)) {
+           tmp = v[index];
 
            // Protect against undefined (NaN)
            if (tmp !== undefined)
-              res+= (sumAll && (tmp<0)) ? -tmp : tmp;
+             res += (sumAll && (tmp < 0)) ? -tmp : tmp;
          }
        }
      }
