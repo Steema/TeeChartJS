@@ -6317,6 +6317,9 @@ Tee.CustomBar=function(o,o2) {
             ff= isover ? this.hover : f;
 
         c.fillStyle=this.getFillStyle(bar, this.getFill(t, ff.fill==='' ? f : ff));
+        
+        if (!this.format.gradient.visible)
+          ff.fill=c.fillStyle;
 
         if (hover)
           ff.shadow.prepare(c);
