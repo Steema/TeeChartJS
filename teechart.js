@@ -267,7 +267,7 @@ function Margins() {
 Tee.Tool=function(chart) {
   this.chart=chart;
   this.active=true;
-}
+};
 
 /**
  * @constructor
@@ -313,7 +313,7 @@ Tee.Animation=function(target, onstep) {
 
     o.chart.draw();
     requestAnimFrame(this.step, this);
-  }
+  };
 
   this.animate=function(chart) {
     if (!this.running) {
@@ -324,12 +324,12 @@ Tee.Animation=function(target, onstep) {
       o=this;
       this._dostart();
     }
-  }
+  };
 
-  this.start=function() { if (this.onstart) this.onstart(); }
-  this.stop=function() { if (this.onstop) this.onstop(); }
+  this.start=function() { if (this.onstart) this.onstart(); };
+  this.stop=function() { if (this.onstop) this.onstop(); };
 
-  this.doStep=function(f) { if (onstep) onstep(f); }
+  this.doStep=function(f) { if (onstep) onstep(f); };
 
   this.step=function() {
     var now=new Date().getTime(),
@@ -368,7 +368,7 @@ Tee.Animation=function(target, onstep) {
       }
     }
   }
-}
+};
 
 Tee.Animation.prototype=new Tee.Tool();
 
@@ -415,11 +415,11 @@ function AnimateHover(duration,bounds,format) {
   }
 }
 
-Tee.Tool.prototype.mousedown=function() {}
-Tee.Tool.prototype.mousemove=function() {}
-Tee.Tool.prototype.mouseout=function() {}
-Tee.Tool.prototype.clicked=function() { return false; }
-Tee.Tool.prototype.draw=function() {}
+Tee.Tool.prototype.mousedown=function() {};
+Tee.Tool.prototype.mousemove=function() {};
+Tee.Tool.prototype.mouseout=function() {};
+Tee.Tool.prototype.clicked=function() { return false; };
+Tee.Tool.prototype.draw=function() {};
 
 /**
  * @constructor
@@ -440,14 +440,14 @@ function Gradient(chart) {
   this.colors=["white","silver"];
   this.direction="topbottom";
   this.stops=null;
-  this.offset={ x:0, y:0 }
+  this.offset={ x:0, y:0 };
 
  /**
   * @returns {CanvasGradient} Returns a canvas gradient
   */
   this.create=function(r,color) {
     return this.rect(r.x,r.y,r.width,r.height,color);
-  }
+  };
 
  /**
   * @returns {CanvasGradient} Returns a canvas gradient
@@ -505,7 +505,7 @@ Gradient.prototype.setEndColor=function(color) {
   if (color && (color!==""))
   for (var t=1, l=this.colors.length; t<l; t++)
      this.colors[t]=color;
-}
+};
 
 /**
  * @constructor
@@ -544,7 +544,7 @@ Shadow.prototype.set=function(s) {
   this.blur=s.blur;
   this.width=s.width;
   this.height=s.height;
-}
+};
 
 /**
  * @constructor
@@ -640,7 +640,7 @@ function Stroke(chart) {
     else
     if (this.chart.isChrome)
        c.webkitLineDash=this.dash;
-  }
+  };
 
   /*
    * @private
@@ -725,7 +725,7 @@ Font.prototype.getSize=function() {
   }
 
   return 20;
-}
+};
 
 Font.prototype.setSize=function(value) {
   var tmp="", s=this.style.split(" "), t;
@@ -733,7 +733,7 @@ Font.prototype.setSize=function(value) {
      (parseFloat(s[t])) ? tmp+=value.toString()+"px " : tmp+=s[t]+" ";
 
   this.style=tmp;
-}
+};
 
 Font.prototype.prepare=function() {
   var c=this.chart.ctx;
@@ -744,7 +744,7 @@ Font.prototype.prepare=function() {
 
   if (c.font!=this.style) // speed opt.
      c.font=this.style;
-}
+};
 
 /**
  * @private
@@ -754,7 +754,7 @@ Font.prototype.setChart=function(chart) {
   if (this._g) this._g.chart=chart;
   if (this._sh) this._sh.chart=chart;
   if (this._s) this._s.setChart(chart);
-}
+};
 
 /**
  * Draws a dashed line.
@@ -807,7 +807,7 @@ Tee.Format=function(chart)
 
   this.stroke=new Stroke(chart);
 
-  this.round={ x:0, y:0 }
+  this.round={ x:0, y:0 };
   this.transparency=0;
 
   this.font=new Font(chart);
@@ -889,7 +889,7 @@ Tee.Format=function(chart)
       ctx.lineTo(x,y);
 
     ctx.closePath();
-  }
+  };
 
  /**
   * @returns {Number} Returns the height in pixels of a given text using current font size and attributes.
@@ -904,14 +904,14 @@ Tee.Format=function(chart)
       //return s.offsetHeight;
 
       //return 20;
-  }
+  };
 
  /**
   * @returns {Number} Returns the width in pixels of a given text using current font size and attributes.
   */
   this.textWidth=function(text) {
     return this.chart.ctx.measureText(text).width;
-  }
+  };
 
   this.fillBack=function(c,getbounds,x,y,width,height) {
 	if (this.gradient.visible) {
@@ -923,7 +923,7 @@ Tee.Format=function(chart)
 	    c.fillStyle = this.fill;
 	    c.fill();
     }
-  }
+  };
 
   // (Firefox bottleneck)
 
@@ -973,7 +973,7 @@ Tee.Format=function(chart)
 
      if (this.transparency>0)
        c.globalAlpha=oldtransp;
-  }
+  };
 
   this.drawText=function(bounds,text) {
 
@@ -1011,7 +1011,7 @@ Tee.Format=function(chart)
     }
     else
       xy(text);
-  }
+  };
 
   this.rectangle=function(x,y,width,height) {
      if (this.transparency < 1)
@@ -1024,7 +1024,7 @@ Tee.Format=function(chart)
          this.draw(this.chart.ctx,null,x,y,width,height);
        }
      }
-  }
+  };
 
   // Returns "r" rectangle around points xy array.
 
@@ -1044,7 +1044,7 @@ Tee.Format=function(chart)
     }
 
     r.x=x0; r.y=y0; r.width=x1-x0; r.height=y1-y0;
-  }
+  };
 
   var tmp=new Rectangle();
 
@@ -1063,7 +1063,7 @@ Tee.Format=function(chart)
 
      this.draw(c,function() { _this.polygonBounds(points,tmp); return tmp; });
   }
-}
+};
 
 Tee.Format.prototype.ellipsePath=function(c, cx, cy, width, height) {
     /*
@@ -1091,13 +1091,13 @@ Tee.Format.prototype.ellipsePath=function(c, cx, cy, width, height) {
      //c.scale(height*0.5,width*0.5);
      c.restore();
    }
-}
+};
 
 Tee.Format.prototype.ellipse=function(cx,cy,width,height) {
   var c=this.chart.ctx;
   this.ellipsePath(c,cx,cy,width,height);
   this.draw(c,null,cx-width*0.5,cy-height*0.5,width,height);
-}
+};
 
 Tee.Format.prototype.sphere=function(cx,cy,width,height) {
 
@@ -1113,7 +1113,7 @@ Tee.Format.prototype.sphere=function(cx,cy,width,height) {
   }
   else
     this.ellipse(cx,cy,width,height);
-}
+};
 
 Tee.Format.prototype.cylinder=function(r, topradius, vertical, inverted) {
 
@@ -1123,7 +1123,7 @@ Tee.Format.prototype.cylinder=function(r, topradius, vertical, inverted) {
        ctx.z=this.z;
        ctx.image=this.image;
        ctx.cylinder(r, topradius, vertical, inverted);
-       return;
+
    }
   else
   if (topradius==1)
@@ -1141,7 +1141,7 @@ Tee.Format.prototype.cylinder=function(r, topradius, vertical, inverted) {
                     new Point(r.x,r.y),
                     new Point(r.x,r.y+h)]);
   }
-}
+};
 
 Tee.Format.prototype.cube=function(r) {
   var a=this.chart.aspect,
@@ -1187,7 +1187,7 @@ Tee.Format.prototype.cube=function(r) {
   this.rectPath(r.x+ax,r.y+ay,r.width,r.height);
 
   if (is3D) this.shadow.visible=old;
-}
+};
 
 Tee.Format.prototype.rectPath=function(x,y,width,height) {
   var c=this.chart.ctx;
@@ -1198,7 +1198,7 @@ Tee.Format.prototype.rectPath=function(x,y,width,height) {
     this.roundRect(c,x,y,width,height);
   else
     c.rect(x,y,width,height);
-}
+};
 
 
 /**
@@ -1211,7 +1211,7 @@ Tee.Format.prototype.setChart=function(chart) {
   this.font.setChart(chart);
   if (this._img) this._img.chart=chart;
   this.stroke.setChart(chart);
-}
+};
 
 /**
  * @constructor
@@ -1249,7 +1249,7 @@ Tee.Annotation=function(chart,text,x,y) {
   f.font.textAlign="center";
   f.font.baseLine="top";
   f.fill="beige";
-  f.round={ x:4, y:4 }
+  f.round={ x:4, y:4 };
   f.stroke.fill="silver";
   f.shadow.visible=true;
 
@@ -1263,7 +1263,7 @@ Tee.Annotation=function(chart,text,x,y) {
     this.position.y=y;
 
     this.resize();
-  }
+  };
 
   function isEmpty(str) {
     return (!str || 0 === str.length);
@@ -1271,7 +1271,7 @@ Tee.Annotation=function(chart,text,x,y) {
 
   this.shouldDraw=function() {
     return this.visible && (!isEmpty(this.text));
-  }
+  };
 
   this.resize=function() {
     if (isEmpty(this.text)) return;
@@ -1313,7 +1313,7 @@ Tee.Annotation=function(chart,text,x,y) {
       i.bounds.width=w-m.right;
 
     b.set(pos.x,pos.y,w,h);
-  }
+  };
 
   this.add=function(text) {
     var a=new Tee.Annotation(this.chart,text);
@@ -1321,7 +1321,7 @@ Tee.Annotation=function(chart,text,x,y) {
     this.items.push(a); //[this.items.length]=a;
     a.transparent=true;
     return a;
-  }
+  };
 
   this.doDraw=function() {
     if (!isEmpty(this.text)) {
@@ -1378,14 +1378,14 @@ Tee.Annotation=function(chart,text,x,y) {
 
     for(var t=0, i; i=this.items[t++];)
        i.doDraw();
-  }
+  };
 
  /**
   * @returns {Boolean} Returns if {@link Tee.Point} p is inside this Annotation bounds.
   */
   this.clicked=function(p) {
     return this.visible && b.contains(p); // (&& this.text!="")
-  }
+  };
 
   this.doMouseMove=function(p) {
     this.mouseinside=this.clicked(p);
@@ -1404,29 +1404,29 @@ Tee.Annotation=function(chart,text,x,y) {
     }
 
     this.wasinside=this.mouseinside;
-  }
+  };
 
   this.mousemove=function(p) {
     if (this.cursor && (this.cursor!="default"))
       this.doMouseMove(p);
-  }
+  };
 
   this.forceDraw=function() {
     this.resize();
     this.doDraw();
-  }
+  };
 
   this.setChart=function(chart) {
     this.chart=chart;
     this.format.setChart(chart);
   }
-}
+};
 
 Tee.Annotation.prototype=new Tee.Tool();
 
 Tee.Annotation.prototype.draw=function() {
   if (this.visible) this.forceDraw();
-}
+};
 
 /**
  * @constructor
@@ -1445,7 +1445,7 @@ Tee.DragTool=function(chart) {
   this.clicked=function() {
     ta.series=null;
     ta.index=-1;
-  }
+  };
 
   var p=new Point(0,0);
   
@@ -1476,7 +1476,7 @@ Tee.DragTool=function(chart) {
     }
 
     return ta.index!=-1;
-  }
+  };
   
   this.mousemove=function(p) {
     if (ta.index!=-1) {
@@ -1490,7 +1490,7 @@ Tee.DragTool=function(chart) {
       this.chart.draw();
     }
   }
-}
+};
 
 Tee.DragTool.prototype=new Tee.Tool();
 
@@ -1528,7 +1528,7 @@ Tee.CursorTool=function(chart) {
       if (h && ((d=="both") || (d=="horizontal"))) res=2;
     }
     return res;
-  }
+  };
 
   this.calcRect=function() {
     var cr=chart.chartRect, h=this.horizAxis, v=this.vertAxis;
@@ -1538,7 +1538,7 @@ Tee.CursorTool=function(chart) {
 
     r.y=v ? v.startPos : cr.y;
     r.height=v ? v.endPos-r.y : cr.height;
-  }
+  };
 
   var pp=new Point(0,0);
 
@@ -1546,9 +1546,9 @@ Tee.CursorTool=function(chart) {
     this.chart.calcMouse(p,pp);
     this.dragging= this.followMouse ? -1 : this.over(pp);
     return this.dragging>-1;
-  }
+  };
 
-  this.clicked=function() { this.dragging=-1; }
+  this.clicked=function() { this.dragging=-1; };
 
   this.mousemove=function(p) {
 
@@ -1598,7 +1598,7 @@ Tee.CursorTool=function(chart) {
     }
     else
        this.chart.newCursor="default";
-  }
+  };
 
   this.render="copy";
 
@@ -1613,7 +1613,7 @@ Tee.CursorTool=function(chart) {
       this.resetCopy();
       this.chart.draw();
     }
-  }
+  };
 
   this.resetCopy=function()
   {
@@ -1636,7 +1636,7 @@ Tee.CursorTool=function(chart) {
     else
     if (canvasCopy.parentNode)
       canvasCopy.parentNode.removeChild(canvasCopy);
-  }
+  };
 
   this.draw=function() {
 
@@ -1661,7 +1661,7 @@ Tee.CursorTool=function(chart) {
       else
         this.dodraw(ctxCopy);
     }
-  }
+  };
 
   this.dodraw=function(c) {
     var d=this.direction, both=d=="both", p;
@@ -1688,7 +1688,7 @@ Tee.CursorTool=function(chart) {
     this.format.stroke.prepare(this.format.stroke.fill, c);
     c.stroke();
   }
-}
+};
 
 Tee.CursorTool.prototype=new Tee.Tool();
 
@@ -1744,11 +1744,11 @@ Tee.ToolTip=function(chart) {
       this.currentIndex=-1;
       this.currentSeries=null;
     }
-  }
+  };
 
   var redraw=function(args) {
     if (args) args[0].hide();
-  }
+  };
 
   this.mousemove=function(p) {
 
@@ -1788,7 +1788,7 @@ Tee.ToolTip=function(chart) {
         }
       }
     }
-  }
+  };
 
   var o=null;
 
@@ -1859,7 +1859,7 @@ Tee.ToolTip=function(chart) {
           this.onshow(this,series,index);
     }
   }
-}
+};
 
 Tee.ToolTip.prototype=new Tee.Annotation();
 
@@ -1877,12 +1877,12 @@ function Tools(chart) {
   this.draw=function() {
     for(var t=0, s; s=this.items[t++];)
       if (s.active) s.draw();
-  }
+  };
 
   this.mousemove=function(p) {
     for(var t=0, s; s=this.items[t++];)
       if (s.active) s.mousemove(p);
-  }
+  };
 
   this.mousedown=function(event) {
     for(var t=0, s, done=false; s=this.items[t++];)
@@ -1891,12 +1891,12 @@ function Tools(chart) {
       }
 
     return done;
-  }
+  };
 
   this.mouseout=function() {
     for(var t=0, s; s=this.items[t++];)
       if (s.active) s.mouseout();
-  }
+  };
 
   this.clicked=function(p) {
     var l=this.items.length;
@@ -1911,7 +1911,7 @@ function Tools(chart) {
     }
 
     return done;
-  }
+  };
 
  /**
   * @returns {Tee.Tool} Returns the tool parameter.
@@ -1932,7 +1932,7 @@ Tee.RainbowPalette=function() { return ["#FF0000","#FF7F00","#FFFF00","#00FF00",
  */
 Tee.Palette=function(colors) {
   this.colors=colors;
-}
+};
 
 /**
  * @returns {String} Returns the index'th color in colors array (mod length
@@ -1941,7 +1941,7 @@ Tee.Palette=function(colors) {
  */
 Tee.Palette.prototype.get=function(index) {
   return this.colors[ (index==-1) ? 0 : index % this.colors.length];
-}
+};
 
 /**
  * @constructor
@@ -1976,7 +1976,7 @@ function Zoom(chart) {
   this.keepAspect=false;
 
   this.mouseButton=0;
-  this.wheel={ enabled:false, factor:1 }
+  this.wheel={ enabled:false, factor:1 };
 
   var f=this.format=new Tee.Format(chart);
   f.fill="rgba(255,255,255,0.5)";
@@ -2001,7 +2001,7 @@ function Zoom(chart) {
      }
      else
        this.old.y=pos.y-old.y;
-  }
+  };
 
   function check(z) {
     var c=z.chart.chartRect, d=z.direction, b=(d==="both");
@@ -2038,7 +2038,7 @@ function Zoom(chart) {
 
   this.draw=function() {
     f.rectangle(check(this));
-  }
+  };
 
   this.apply=function() {
 
@@ -2071,7 +2071,7 @@ function Zoom(chart) {
     }
 
     return false;
-  }
+  };
 
   this.reset=function() {
       this.chart.axes.each(function() { this.automatic=true; });
@@ -2179,7 +2179,7 @@ function Title(chart, fontColor) {
     if (r.height<0) r.height=0;
 
     p.x=0.5*(chart.canvas.width-b.width);
-  }
+  };
 
   this.tryDraw=function(top) {
    if (this.shouldDraw()) {
@@ -2248,7 +2248,7 @@ function Panel(chart)
   this.clear=function() {
     var b=chart.bounds;
     chart.ctx.clearRect(b.x,b.y,b.width,b.height);
-  }
+  };
 
   this.draw=function() {
     if (this.transparent || chart.__webgl)
@@ -2408,7 +2408,7 @@ function Axis(chart,horizontal,otherSide) {
       else
       if ((st=="mark") || (st=="text"))
          this._text=s;
-    }
+    };
 
 		
 		this.formatValueString=function(value)
@@ -2436,7 +2436,7 @@ function Axis(chart,horizontal,otherSide) {
 			}
 			else
 				return value.toFixed(this.decimals);
-		}
+		};
 
     /**
      * @returns {String} Returns the series label that corresponds to a given value, (or the value if no label exists).
@@ -2493,7 +2493,7 @@ function Axis(chart,horizontal,otherSide) {
       }
 
       return ""+s;
-    }
+    };
 		
    /**
     * @returns {Number} Returns the width in pixels of value converted to string.
@@ -2520,7 +2520,7 @@ function Axis(chart,horizontal,otherSide) {
     if (this.inverted) delta=-delta;
     this.minimum+=delta;
     this.maximum+=delta;
-  }
+  };
 
   if (horizontal)  {
     f.textAlign="center";
@@ -2712,12 +2712,12 @@ function Axis(chart,horizontal,otherSide) {
       //guarantee minimum spacing
       if (w < la.format.textHeight("Wj")) w = la.format.textHeight("Wj");
       return w;
-  }
+  };
 
   this.checkRange=function() {
 	  if ((this.maximum - this.minimum) < this.minAxisRange)
        this.maximum = this.minimum + this.minAxisRange;
-  }
+  };
 
   this.checkMinMax=function() {
     var s=this.chart.series, h=this.horizontal;
@@ -2728,7 +2728,7 @@ function Axis(chart,horizontal,otherSide) {
 	  
       this.checkRange();
     }
-  }
+  };
 
  /**
   * @returns {Number} Returns if any visible series has less than n values.
@@ -2788,7 +2788,7 @@ function Axis(chart,horizontal,otherSide) {
     if (this.log) range=Math.log(range);
 
     this.scale=this.axisSize/range;
-  }
+  };
 
   this.calcScale=function()
   {
@@ -2807,7 +2807,7 @@ function Axis(chart,horizontal,otherSide) {
 
     //var w=this.calc(this.minimum+this.increm)-this.startPos;
     //if (w<l) this.increm*=2;
-  }
+  };
 
  /**
   * @returns {Boolean} Returns the first visible series associated to this axis, or null if any.
@@ -2832,7 +2832,7 @@ function Axis(chart,horizontal,otherSide) {
     }
 
     return null;
-  }
+  };
 
   this.drawAxis=function() {
     var t=this,
@@ -2875,7 +2875,7 @@ function Axis(chart,horizontal,otherSide) {
       f.stroke.prepare();
       c.stroke();
     }
-  }
+  };
 
   this.drawGrids=function() {
     var c=this.chart.ctx, p, r=this.chart.chartRect,
@@ -2983,7 +2983,7 @@ function Axis(chart,horizontal,otherSide) {
     f.shadow.prepare(c);
 
     c.stroke();
-  }
+  };
 
   function truncFloat(n) { return n - n % 1; }
 
@@ -3005,7 +3005,7 @@ function Axis(chart,horizontal,otherSide) {
 
       return this.increm * ((this.minimum<=0) ? v : (1+v));
     }
-  }
+  };
 
   this.drawTicks=function(t,factor,mult) {
 
@@ -3061,7 +3061,7 @@ function Axis(chart,horizontal,otherSide) {
     c.z=t.z;
 
     c.stroke();
-  }
+  };
 
   this.drawTitle=function() {
     var l=this.labels, tmpX, tmpY,
@@ -3134,11 +3134,11 @@ function Axis(chart,horizontal,otherSide) {
 //      chart.ctx.rect(tmpX,tmpY,titleBounds.width,titleBounds.height);
 //      chart.ctx.stroke();
     }
-  }
+  };
 
   this.rotatedWidth = function(l, w) {
       return Math.abs(Math.sin(toRadians(l.rotation)) * w);
-  }
+  };
 
   this.drawLabel=function(value,r) {
     var l=this.labels, s=l.getLabel(value);
@@ -3183,7 +3183,7 @@ function Axis(chart,horizontal,otherSide) {
 
     if (l.rotation!==0)
       this.chart.ctx.restore();
-  }
+  };
 
   this.drawLabels=function() {
     var v=this.roundMin(), r=new Rectangle(), c=this.axisPos, l=this.labels;
@@ -3230,7 +3230,7 @@ function Axis(chart,horizontal,otherSide) {
       v += this.increm;
     }
 
-  }
+  };
 
  /**
   * @returns {Number} Returns the position in pixels for a given value, using the axis scales.
@@ -3253,7 +3253,7 @@ function Axis(chart,horizontal,otherSide) {
        return this.inverted ? this.endPos - p : this.startPos + p;
     else
        return this.inverted ? this.startPos + p : this.endPos - p;
-  }
+  };
 
  /**
   * @returns {Number} Returns the axis value for a given position in pixels.
@@ -3262,18 +3262,18 @@ function Axis(chart,horizontal,otherSide) {
     var i = this.horizontal;
     if (this.inverted) i=!i;
     return this.minimum + ((i ? (p-this.startPos) : (this.endPos-p)) /this.scale);
-  }
+  };
 
   this.fromSize=function(p) {
     return (p/this.scale);
-  }
+  };
 
  /**
   * @returns {Number} Returns the size in pixels of a given value, using the axis scales.
   */
   this.calcSize=function(value) {
     return Math.abs(this.calc(value)-this.calc(0));
-  }
+  };
 
  /**
   * @param {Number} p1 Position in pixels to be axis minimum.
@@ -3289,7 +3289,7 @@ function Axis(chart,horizontal,otherSide) {
     this.maximum=b;
 	
     this.checkRange();
-  }
+  };
   
   this.minAxisRange = 0.0000000001;
 
@@ -3348,13 +3348,13 @@ Axis.adjustRect=function() {
          (this.otherSide) ? b.width -=s : b.setLeft(b.x+s);
     }
   }
-}
+};
 
 Axis.prototype.setPos=function(a,b) {
   this.startPos=a+(this.start*b*0.01);
   this.endPos=a+(this.end*b*0.01);
   this.axisSize=this.endPos-this.startPos;
-}
+};
 
 /**
  * Axis rect calcs. Returns current ChartRect.
@@ -3413,7 +3413,7 @@ Axis.calcRect=function() {
     if (haswalls && w.left.visible) wallsize=w.left.size;
     this.axisPos= this.otherSide ? b.getRight() - v : b.x - wallsize + v;
   }
-}
+};
 
 Axis.draw=function() {
   if (this.visible && this.firstSeries) {
@@ -3436,7 +3436,7 @@ Axis.draw=function() {
     if (this.title.shouldDraw())
         this.drawTitle();
   }
-}
+};
 
 
 /**
@@ -3623,13 +3623,13 @@ function Legend(chart)
     var w=itemWidth+8, s=this.symbol;
     if (s.visible) w+=s.width+s.padding;
     return w;
-  }
+  };
 
   var titleHeight=0;
 
   this._space=function() {
     return this.bounds.y+titleHeight+(this.margin*chart.bounds.height*0.01);
-  }
+  };
 
  /**
   * @returns {Number} Returns the maximum number of vertical rows using the available height.
@@ -3638,7 +3638,7 @@ function Legend(chart)
     var h=this._space()+(this.itemHeight*0.5);
     if (!h) h=0;
     return trunc( (chart.bounds.getBottom()-h) / this.itemHeight);
-  }
+  };
 
   function seriesCount(legend) {
     var ss=chart.series;
@@ -3704,7 +3704,7 @@ function Legend(chart)
     }
 
     return result;
-  }
+  };
 
  /**
   * @returns {Boolean} Returns if legend shows series titles or a series values.
@@ -3712,7 +3712,7 @@ function Legend(chart)
   this.showValues=function() {
     var s=this.legendStyle;
     return (s=="values") || ((s=="auto") && (seriesCount(this)==1));
-  }
+  };
 
  /**
   * @returns {String} Returns the index'th legend text string.
@@ -3720,7 +3720,7 @@ function Legend(chart)
   this.itemText=function(series,index) {
     var res=series.legendText(index,this.textStyle,false,true);
     return this.ongettext ? this.ongettext(this,series,index,res) : res;
-  }
+  };
 
   this.calcItemPos=function(index, pos) {
     var i=this.itemHeight, b=this.bounds;
@@ -3736,7 +3736,7 @@ function Legend(chart)
       pos.x += this.innerOff + (1+(index % this.perRow)) * this.totalWidth();
       pos.y += (i * (trunc(index/this.perRow) + 0.25));
     }
-  }
+  };
 
   this.calcItemRect=function(index, r) {
     var i=this.itemHeight, b=this.bounds;
@@ -3754,7 +3754,7 @@ function Legend(chart)
       r.x += this.innerOff + ((index % this.perRow) * r.width);
       r.y += (i * (trunc(index/this.perRow) + 0.25));
     }
-  }
+  };
 
   var rMouse=new Rectangle();
 
@@ -3779,7 +3779,7 @@ function Legend(chart)
     }
 
     return false;
-  }
+  };
 
   this.mousemove=function(p) {
     var n=this.over;
@@ -3809,14 +3809,14 @@ function Legend(chart)
 
     if (this.onclick)
        this.chart.newCursor= (n===-1) ? "default" : "pointer";
-  }
+  };
 
   this.drawSymbol=function(series,index,itemPos) {
     var s=this.symbol;
 
     s.draw(series,index,itemPos.x-itemWidth - s.width-s.padding,
                                   itemPos.y+(this.itemHeight*0.4));
-  }
+  };
 
   var itemPos={x:0,y:0}, r=new Rectangle(), aligns;
   
@@ -3912,7 +3912,7 @@ function Legend(chart)
       this.dividing.prepare();
       c.stroke();
     }
-  }
+  };
 
  /**
   * @returns {Boolean} Returns if index'th series is visible and has been displayed at legend.
@@ -3925,7 +3925,7 @@ function Legend(chart)
     }
     else
       return false;
-  }
+  };
 
   this.draw=function() {
     var c=this.itemsCount(), len, t, ti=this.title, ctx=chart.ctx, old,
@@ -4004,7 +4004,7 @@ function Legend(chart)
       if (groups)
          ctx.endParent();
     }
-  }
+  };
 
   var itemWidth, itemWidths;
 
@@ -4051,7 +4051,7 @@ function Legend(chart)
     }
 
     itemWidth=itemWidths[0]+itemWidths[1];
-  }
+  };
 
  /**
   * @returns {Number} Returns the distance in pixels between legend and chart bounds.
@@ -4060,7 +4060,7 @@ function Legend(chart)
     // var p=this.padding, n = parseFloat( (p.indexOf("%") == -1) ? p : p.substring(0,p.length-1));
 
     return 0.01 * this.padding * (this.isVertical() ? r.width : r.height );
-  }
+  };
 
  /**
   * @returns {Boolean} Returns if legend orientation is vertical.
@@ -4068,7 +4068,7 @@ function Legend(chart)
   this.isVertical=function() {
     var p=this.position;
     return (p==="right") || (p==="left");
-  }
+  };
 
   this.calcrect=function() {
     var titleWidth=0, t=this.title, r=chart.chartRect, a=this.align, b=this.bounds,
@@ -4190,7 +4190,7 @@ function Marks(series,chart) {
     this.chart=chart;
     this.format.setChart(chart);
     arrow.setChart(chart);
-  }
+  };
 
   this.drawPolar=function(center,radius,angle,index) {
     var text=this.series.markText(index),
@@ -4235,7 +4235,7 @@ function Marks(series,chart) {
     c.stroke();
 
     this.draw();
-  }
+  };
 
   this.canDraw=function(x,y,index,inverted) {
     var s = this.series.markText(index);
@@ -4264,7 +4264,7 @@ function Marks(series,chart) {
     }
     else
       return false;
-  }
+  };
 
   this.drawMark=function(x,y,index,inverted) {
 
@@ -4419,7 +4419,7 @@ function ArrayMin(a){
  */
 Tee.Series=function(o,o2) {
   this.chart=null;
-  this.data={ values:[], labels:[], source:null }
+  this.data={ values:[], labels:[], source:null };
 
   this.yMandatory=true;
   this.horizAxis="bottom";
@@ -4484,7 +4484,7 @@ Tee.Series=function(o,o2) {
          }
       }
     }
-  }
+  };
 
   this.init(o,o2);
 
@@ -4497,25 +4497,25 @@ Tee.Series=function(o,o2) {
        return (this.isColorEach || (!f)) ? this.chart.palette.get(index) : f.fill;
     else
        return c;
-  }
+  };
 
  /**
   * @returns {boolean} Returns true when the index'th series value is null and should not be painted.
   */
-  this.isNull=function(index) { return this.data.values[index]===null; }
+  this.isNull=function(index) { return this.data.values[index]===null; };
 
  /**
   * @returns {CanvasGradient} Returns a canvas gradient using color, or color if gradient is not visible.
   */
   this.getFillStyle=function(r,color) {
     return f.gradient.visible ? f.gradient.create(r,color) : color;
-  }
+  };
 
   this.title="";
 
   this.titleText=function(index) {
     return this.title || "Series "+index.toString();
-  }
+  };
 
   this.refresh=function(failure) {
     if (this.data.source) {
@@ -4546,7 +4546,7 @@ Tee.Series=function(o,o2) {
       parseJSON(this,this.data.json);
       this.chart.draw();
     }
-  }
+  };
 
  /**
   * @returns {String} Returns the series index'th data label, or the value if no label exists at that index.
@@ -4558,7 +4558,7 @@ Tee.Series=function(o,o2) {
       s=this.valueText(index);
 
     return s;
-  }
+  };
 
  /**
   * @returns {String} Returns a percentual representation of the series index'th value, on total of series values.
@@ -4566,7 +4566,7 @@ Tee.Series=function(o,o2) {
   this.toPercent=function(index) {
     var v=this.data.values;
     return (100*Math.abs(v[index])/ArraySumAbs(v)).toFixed(this.decimals)+" %";
-  }
+  };
 
  /**
   * @returns {String} Returns the text string to show at series marks, for a given series point index.
@@ -4574,7 +4574,7 @@ Tee.Series=function(o,o2) {
   this.markText=function(index) {
     var m=this.marks, res=this.dataText(index,m.style,false);
     return m.ongettext ? m.ongettext(this,index,res) : res;
-  }
+  };
 
  /**
   * @returns {Boolean} Returns if series is associated to axis, either horizontal or vertical.
@@ -4584,7 +4584,7 @@ Tee.Series=function(o,o2) {
       return (this.horizAxis=="both") || (this._horizAxis==axis);
     else
       return (this.vertAxis=="both") || (this._vertAxis==axis);
-  }
+  };
 
   this.bounds=function(r) {
     var h=this._horizAxis, v=this._vertAxis;
@@ -4594,7 +4594,7 @@ Tee.Series=function(o,o2) {
 
     r.y=v.calc(this.maxYValue());
     r.height=v.calc(this.minYValue())-r.y;
-  }
+  };
 
   this.calcStack=function(index,p,value) {
     var sum=this.pointOrigin(index,false)+value, tmp, a=this.mandatoryAxis;
@@ -4613,7 +4613,7 @@ Tee.Series=function(o,o2) {
       p.x=p.y;
       p.y=tmp;
     }
-  }
+  };
 
  /**
   * @returns {Number} Returns the sum of all previous visible series index'th value, for stacking.
@@ -4639,10 +4639,10 @@ Tee.Series=function(o,o2) {
      }
 
      return res;
-  }
+  };
 
   this.doHover=function(index) {
-    var o=this.chart
+    var o=this.chart;
     if (index!=this.over) {
       if (o.onhover)
           o.onhover(this,index);
@@ -4653,7 +4653,7 @@ Tee.Series=function(o,o2) {
          window.requestAnimFrame(function() {o.draw()});
     }
   }
-}
+};
 
   /*
    * @private
@@ -4663,7 +4663,7 @@ Tee.Series=function(o,o2) {
     f.z=index/total;
     f.depth=1/total;
     this.marks.format.z = f.z + f.depth*0.5;
-  }
+  };
 
   /*
    * @private
@@ -4676,7 +4676,7 @@ Tee.Series=function(o,o2) {
     series.format.setChart(chart);
     series.marks.setChart(chart);
     series.hover.setChart(chart);
-  }
+  };
 
   Tee.Series.prototype.calc=function(index,p) {
     var d=this.data,
@@ -4685,7 +4685,7 @@ Tee.Series=function(o,o2) {
 
     p.x=this.yMandatory ? x : y;
     p.y=this.yMandatory ? y : x;
-  }
+  };
 
   Tee.Series.prototype.recalcAxes=function() {
     var a=this.chart.axes;
@@ -4702,12 +4702,12 @@ Tee.Series=function(o,o2) {
 
     this.mandatoryAxis = this.yMandatory ? this._vertAxis : this._horizAxis;
     this.notmandatory = this.yMandatory ? this._horizAxis : this._vertAxis;
-  }
+  };
 
   // Pending for solution (gauges.bounds) :
-  Tee.Series.prototype.getRect=function() { return new Rectangle(); }
+  Tee.Series.prototype.getRect=function() { return new Rectangle(); };
 
-  Tee.Series.prototype.clicked=function() { return -1; }
+  Tee.Series.prototype.clicked=function() { return -1; };
 
  /**
   * @returns {String} Returns the text string for a given series point index value.
@@ -4729,13 +4729,13 @@ Tee.Series=function(o,o2) {
       }
       else
         return "0";
-  }
+  };
 
   Tee.Series.prototype.labelOrTitle=function(index) {
     return this.data.labels[index] || this.title;
-  }
+  };
 
-  Tee.Series.prototype.mousedown=function() { return false; }
+  Tee.Series.prototype.mousedown=function() { return false; };
 
   Tee.Series.prototype.mousemove=function(p) {
     if (this.hover.enabled || (this.cursor!="default")) {
@@ -4767,14 +4767,14 @@ Tee.Series=function(o,o2) {
         }
       }
     }
-  }
+  };
 
-  Tee.Series.prototype.mouseout=function() {}
+  Tee.Series.prototype.mouseout=function() {};
 
   Tee.Series.prototype.markPos=function(t,p) {
     this.calc(t,p);
     return false;
-  }
+  };
 
   Tee.Series.prototype.drawMarks=function() {
     var len=this.data.values.length, p=new Point(), t, inv;
@@ -4784,17 +4784,17 @@ Tee.Series=function(o,o2) {
       inv=this.markPos(t,p);
       this.marks.drawMark(p.x,p.y,t,inv);
     }
-  }
+  };
 
-  Tee.Series.prototype.horizMargins=function() {}
-  Tee.Series.prototype.vertMargins=function() {}
+  Tee.Series.prototype.horizMargins=function() {};
+  Tee.Series.prototype.vertMargins=function() {};
 
  /**
   * @returns {Number} Returns the minimum value of series x values, or zero if no x values exist.
   */
   Tee.Series.prototype.minXValue=function() {
     return (this.data.x && (this.data.x.length>0)) ? ArrayMin(this.data.x) : 0;
-  }
+  };
 
  /**
   * @returns {Number} Returns the minimum value of series data values, or zero if no values exist.
@@ -4802,7 +4802,7 @@ Tee.Series=function(o,o2) {
   Tee.Series.prototype.minYValue=function() {
     var v=this.data.values;
     return v.length>0 ? ArrayMin(v) : 0;
-  }
+  };
 
  /**
   * @returns {Number} Returns the maximum value of series x values, or data length minus one, if no x values exist.
@@ -4814,7 +4814,7 @@ Tee.Series=function(o,o2) {
       var len=this.data.values.length;
       return len===0 ? 0 : len-1;
     }
-  }
+  };
 
  /**
   * @returns {Number} Returns the maximum value of series values, or zero if no values exist.
@@ -4844,11 +4844,11 @@ Tee.Series=function(o,o2) {
     }
     else
       return 0;
-  }
+  };
 
   Tee.Series.prototype.calcColorEach=function() {
     this.isColorEach=(this.colorEach=="yes");
-  }
+  };
 
  /**
   * @returns {Number} Returns the maximum of all series values, or sum of all stacked values.
@@ -4875,7 +4875,7 @@ Tee.Series=function(o,o2) {
         return res;
       }
     }
-  }
+  };
 
  /**
   * @returns {String} Returns the text string to show for a given series point index.
@@ -4901,7 +4901,7 @@ Tee.Series=function(o,o2) {
       return this.toPercent(index);
     else
     if (style=="percentlabel")
-      return calcRet(this.toPercent(index),l)
+      return calcRet(this.toPercent(index),l);
     else
     if ((style=="valuelabel") || (style=="auto"))
       return calcRet(this.valueText(index),l);
@@ -4919,7 +4919,7 @@ Tee.Series=function(o,o2) {
       return calcRet(l,this.toPercent(index));
     else
       return this.valueOrLabel(index);
-  }
+  };
 
  /**
   * @returns {String} Returns the text string to show for a given series point index.
@@ -4932,19 +4932,19 @@ Tee.Series=function(o,o2) {
  /**
   * @returns {Number} Returns the number of series data values.
   */
-  Tee.Series.prototype.count=function() { return this.data.values.length; }
+  Tee.Series.prototype.count=function() { return this.data.values.length; };
 
  /**
   * @returns {Number} Returns the number of items to show at legend.
   */
-  Tee.Series.prototype.legendCount=function() { return this.count(); }
+  Tee.Series.prototype.legendCount=function() { return this.count(); };
 
  /**
   * @returns {Color} Returns the color of index'th legend symbol.
   */
   Tee.Series.prototype.legendColor=function(index) {
      return this.isColorEach && (index!=-1) ? this.getFill(index) : this.format.fill;
-  }
+  };
 
   Tee.Series.prototype.addRandom=function(count, range, x) {
 
@@ -4970,7 +4970,7 @@ Tee.Series=function(o,o2) {
     }
 
     return this;
-  }
+  };
 
 /**
  * @returns {Array} Returns an array of series data indices sorted according to sortBy parameter.
@@ -4999,7 +4999,7 @@ Tee.Series.prototype.doSort=function(sortBy,ascending) {
 
     return sorted;
   }
-}
+};
 
 /**
  * @memberOf Tee.Chart
@@ -5016,7 +5016,7 @@ function SeriesList(chart)
  /**
   * @returns {Number} Returns the total number of series in chart, visible or not.
   */
-  this.count=function() { return this.items.length; }
+  this.count=function() { return this.items.length; };
 
  /**
   * @returns {Boolean} Returns if {@link Tee.Point} p parameter is over any series point.
@@ -5033,7 +5033,7 @@ function SeriesList(chart)
     });
 
     return done;
-  }
+  };
 
   this.mousedown=function(event) {
     for(var t=0, s, done=false; s=this.items[t++];)
@@ -5042,7 +5042,7 @@ function SeriesList(chart)
       }
 
     return done;
-  }
+  };
 
   this.mousemove=function(p) {
     for(var t=0, s; s=this.items[t++];)
@@ -5058,11 +5058,11 @@ function SeriesList(chart)
           s.mousemove(p);
     }
     */
-  }
+  };
 
   this.mouseout=function() {
     this.each(function(s) { if (s.visible) s.mouseout(); });
-  }
+  };
 
  /**
   * Counts how many visible series exist of the same class type.
@@ -5078,7 +5078,7 @@ function SeriesList(chart)
       }
     if (res) { res.total=r; res.index=(r-1-res.index); }
     return r;
-  }
+  };
 
   this.beforeDraw=function() {
     this.each(function(s) {
@@ -5087,7 +5087,7 @@ function SeriesList(chart)
 
       s.calcColorEach();
     });
-  }
+  };
 
  /**
   * @returns {Boolean} Returns if any visible series in chart needs axes to be represented.
@@ -5101,7 +5101,7 @@ function SeriesList(chart)
     }
 
     return false;
-  }
+  };
 
  /**
   * @returns {Tee.Series} Returns the first visible series in chart, or null if any.
@@ -5110,7 +5110,7 @@ function SeriesList(chart)
     for(var t=0, s; s=this.items[t++];)
       if (s.visible) return s;
     return null;
-  }
+  };
 
  /**
   * Calculates the maximum amount of vertical margins in pixels from all series.
@@ -5132,7 +5132,7 @@ function SeriesList(chart)
       }
     }
     return result;
-  }
+  };
 
  /**
   * Calculates the maximum amount of horizontal margins in pixels from all series
@@ -5155,7 +5155,7 @@ function SeriesList(chart)
       }
     }
     return result;
-  }
+  };
 
  /**
   * @returns {Number} Returns the minimum of all visible non-empty series associated to axis, minimum x values.
@@ -5167,7 +5167,7 @@ function SeriesList(chart)
       if (v<result) result=v;
     });
     return result;
-  }
+  };
 
  /**
   * @returns {Number} Returns the minimum of all visible series mininum data values.
@@ -5179,7 +5179,7 @@ function SeriesList(chart)
       if (v<result) result=v;
     });
     return result;
-  }
+  };
 
  /**
   * @returns {Number} Returns the maximum of all visible series maximum x values.
@@ -5191,7 +5191,7 @@ function SeriesList(chart)
       if (v>result) result=v;
     });
     return result;
-  }
+  };
 
  /**
   * @returns {Number} Returns the maximum of all visible series maximum data values.
@@ -5203,7 +5203,7 @@ function SeriesList(chart)
       if (v>result) result=v;
     });
     return result;
-  }
+  };
 
   function axisStrokeSize(axis) {
     if (axis.visible && axis.firstSeries) {
@@ -5311,7 +5311,7 @@ function SeriesList(chart)
 SeriesList.prototype.each=function(f) {
   var l=this.items.length, t=0;
   for(; t<l; t++) f(this.items[t]);
-}
+};
 
 SeriesList.prototype.eachAxis=function(axis, func) {
   var len=this.items.length, s;
@@ -5320,7 +5320,7 @@ SeriesList.prototype.eachAxis=function(axis, func) {
     if (s.visible && ((!axis) || s.associatedToAxis(axis)) && (s.__alwaysDraw || (s.count()>0)))
         func(s);
   }
-}
+};
 
 /**
  * @memberOf Tee.Chart
@@ -5488,7 +5488,7 @@ Tee.Chart=function(canvas,data,type)
       c.clip();
       //c.closePath();
     }
-  }
+  };
 
   var aspect=this.aspect;
   
@@ -5558,7 +5558,7 @@ Tee.Chart=function(canvas,data,type)
       if (groups)
           ctx.endParent();
     }
-  }
+  };
 
   var bf=this.walls.back.format;
   bf.fill="rgb(240,240,240)";
@@ -5632,7 +5632,7 @@ Tee.Chart=function(canvas,data,type)
         p.y-= element.offsetTop;
         element = element.offsetParent;
       } while (element);
-  }
+  };
 
   var pMove=new Point(0,0);
 
@@ -5712,7 +5712,7 @@ Tee.Chart=function(canvas,data,type)
 
       return true;
     }
-  }
+  };
 
   var p=new Point(0,0);
   
@@ -5765,7 +5765,7 @@ Tee.Chart=function(canvas,data,type)
     if (event.button==2)
        c.canvas.oncontextmenu=function() {
          return false;
-       }
+       };
 
 
     if (done)
@@ -5788,7 +5788,7 @@ Tee.Chart=function(canvas,data,type)
     }
 
     return !done;
-  }
+  };
 
   this.domouseup=function(event) {
     event=event || window.event;
@@ -5841,7 +5841,7 @@ Tee.Chart=function(canvas,data,type)
 
     if (target && target.releaseCapture)
         target.releaseCapture();
-  }
+  };
 
 
   /*
@@ -5909,7 +5909,7 @@ Tee.Chart=function(canvas,data,type)
            event.preventDefault();
       }
     }
-  }
+  };
 
   if (c.addEventListener)
       c.addEventListener('DOMMouseScroll', this._doWheel, false);
@@ -5924,7 +5924,7 @@ Tee.Chart=function(canvas,data,type)
 
     this.chart.series.mouseout();
     this.chart.tools.mouseout();
-  }
+  };
 
   /**
    * @returns {Tee.Series} Returns the series parameter
@@ -5945,13 +5945,13 @@ Tee.Chart=function(canvas,data,type)
       series.format.fill=this.palette.get(n);
 
     return series;
-  }
+  };
 
   this.removeSeries=function(series) {
     var li=this.series.items, n=li.indexOf(series);
     if (li!=-1)
        li.splice(n,1);
-  }
+  };
 
   c.chart=this;
 
@@ -5974,7 +5974,7 @@ Tee.Chart=function(canvas,data,type)
    */
   this.getSeries=function(index) {
     return this.series.items[index];
-  }
+  };
 
   /**
    * Main Chart draw method. Repaints all chart contents.
@@ -6075,7 +6075,7 @@ Tee.Chart=function(canvas,data,type)
        this.zoom.draw();
 
    if (this.ondraw) this.ondraw(this);
-  }
+  };
 
   /**
    * Paints chart to image parameter, as PNG or JPEG picture made from canvas.
@@ -6088,7 +6088,7 @@ Tee.Chart=function(canvas,data,type)
     if (i)
       i.src= (format!=="") ? this.canvas.toDataURL(format, quality) : this.canvas.toDataURL();
   }
-}
+};
 
 /**
  * @constructor
@@ -6194,7 +6194,7 @@ Tee.CustomBar=function(o,o2) {
 			return true;
 		}
 		else return false;
-  }
+  };
 
  /**
   * @returns {Number} Returns the number of visible Tee.CustomBar series that are displayed before this series.
@@ -6213,7 +6213,7 @@ Tee.CustomBar=function(o,o2) {
     }
 
     return res;
-  }
+  };
 
   var offset=new Point(),originPos,bar=new Rectangle(),
       visibleBar={total:0, index:0};
@@ -6248,7 +6248,7 @@ Tee.CustomBar=function(o,o2) {
 
 	if (this.stacked!="no")
       offset.x+=(this.offset*barSize*0.01) + (barSize-offset.y)*0.5;
-  }
+  };
 
   this.calcStackPos=function(t,p) {
     var v, tmp, a;
@@ -6277,7 +6277,7 @@ Tee.CustomBar=function(o,o2) {
            p.y=tmp;
       }
     }
-  }
+  };
   
   var hasPaintedOver = false;
 
@@ -6355,12 +6355,12 @@ Tee.CustomBar=function(o,o2) {
 		}
       }
     }
-  }
+  };
 
   this.calcColorEach=function() {
     this.chart.series.visibleCount(this,Tee.CustomBar,visibleBar);
     this.isColorEach=(this.colorEach=="yes") || ((this.colorEach=="auto") && (visibleBar.total==1));
-  }
+  };
 
   this.initOffsets=function() {
     var nomand = this.notmandatory, mand = this.mandatoryAxis,
@@ -6389,7 +6389,7 @@ Tee.CustomBar=function(o,o2) {
 
     this.isStacked=(st!=="no") && (st!=="sideAll") && (st!=='side');
     this.isStack100=st==="100";
-  }
+  };
 
  /**
   * @returns {Number} Returns the index of series bar that contains {@link Tee.Point} p parameter.
@@ -6410,7 +6410,7 @@ Tee.CustomBar=function(o,o2) {
     }
 
     return -1;
-  }
+  };
 
   this.markPos=function(t,p) {
     var yMand=this.yMandatory, op=offset.x+(offset.y*0.5), m=this.marks;
@@ -6455,7 +6455,7 @@ Tee.CustomBar=function(o,o2) {
     }
 
     return inv;
-  }
+  };
 
   /*
   this.drawMarks=function() {
@@ -6473,7 +6473,7 @@ Tee.CustomBar=function(o,o2) {
   this.labelOrTitle=function(index) {
     var s=this.title, l=this.data.labels[index];
     return visibleBar.total>1 ? (s || l ) : this.parent.labelOrTitle(index);
-  }
+  };
 
   this.initZ=function(index,total) {
     var s, f=this.format;
@@ -6501,7 +6501,7 @@ Tee.CustomBar=function(o,o2) {
     this.marks.format.z = f.z + f.depth*0.5;
   }
 
-}
+};
 
 Tee.CustomBar.prototype=new Tee.Series();
 Tee.CustomBar.prototype.parent=Tee.Series.prototype;
@@ -6518,13 +6518,13 @@ Tee.Bar=function(o,o2) {
 
   this.calc=function(index,p) {
     (this.isStacked) ? this.calcStack(index,p,this.data.values[index]) : this.parent.calc.call(this,index,p);
-  }
+  };
 
   this.horizMargins=function(p) {
     this.initOffsets();
     p.x=this._margin;
     p.y=this._margin;
-  }
+  };
 
   this.vertMargins=function(p) {
     var m=this.marks, st=this.format.stroke, hasNeg=this.minYValue()<(this.origin instanceof Array? ArrayMin(this.origin): this.origin);
@@ -6539,16 +6539,16 @@ Tee.Bar=function(o,o2) {
 
     if (hasNeg)
        p.x=p.y;
-  }
+  };
 
   this.maxXValue=function() {
     return (this.stacked==="sideAll") ? this.countAll()-1 : this.parent.maxXValue.call(this);
-  }
+  };
 
   this.minYValue=function() {
     var res=this.parent.minYValue.call(this);
     return this.useOrigin ? Math.min(this.origin instanceof Array? ArrayMin(this.origin): this.origin, res) : res;
-  }
+  };
 
   this.maxYValue=function() {
     if ((this.stacked==="sideAll") || (this.stacked==="side")) {
@@ -6566,7 +6566,7 @@ Tee.Bar=function(o,o2) {
     }
     else
        return this.stackMaxValue();
-  }
+  };
 
   this.calcBarBounds=function(p,bar,offset,originPos) {
     bar.x=p.x+offset.x;
@@ -6588,7 +6588,7 @@ Tee.Bar=function(o,o2) {
       bar.height=-bar.height;
     }
   }
-}
+};
 
 Tee.Bar.prototype=new Tee.CustomBar();
 Tee.Bar.prototype.parent=Tee.CustomBar.prototype;
@@ -6623,7 +6623,7 @@ Tee.HorizBar=function(o,o2) {
      }
     }
     return res;
-  }
+  };
 
   this.horizMargins=function(p) {
     var m=this.marks, st=this.format.stroke, hasNeg=this.minXValue()<this.origin;
@@ -6638,30 +6638,30 @@ Tee.HorizBar=function(o,o2) {
 
     if (hasNeg)
        p.x=p.y;
-  }
+  };
 
   this.vertMargins=function(p) {
     this.initOffsets();
     p.x+=this._margin;
     p.y+=this._margin;
-  }
+  };
 
   this.maxYValue=function() {
     return (this.stacked=="sideAll") ? this.countAll()-1 : this.parent.maxXValue.call(this);
-  }
+  };
 
   this.minYValue=function() {
     return (this.stacked=="sideAll") ? 0 : this.parent.minXValue.call(this);
-  }
+  };
 
   this.minXValue=function() {
     var res=this.parent.minYValue.call(this);
     return this.useOrigin ? Math.min(this.origin, res) : res;
-  }
+  };
 
   this.maxXValue=function() {
     return this.stackMaxValue();
-  }
+  };
 
   this.calcBarBounds=function(p,bar,offset,originPos) {
     bar.y=(p.y+offset.x);
@@ -6683,7 +6683,7 @@ Tee.HorizBar=function(o,o2) {
       bar.width=-bar.width;
     }
   }
-}
+};
 
 Tee.HorizBar.prototype=new Tee.CustomBar();
 Tee.HorizBar.prototype.parent=Tee.CustomBar.prototype;
@@ -6735,7 +6735,7 @@ Tee.CustomSeries=function(o,o2) {
     this.setChart=function(chart) {
       this.chart=chart;
       this.format.setChart(chart);
-    }
+    };
 
     this.chart=chart;
 	
@@ -6869,7 +6869,7 @@ Tee.CustomSeries=function(o,o2) {
 
       if (this.transform)
         c.restore();
-    }
+    };
 
     this.setSize=function(size) {
        this.width=size;
@@ -6884,15 +6884,15 @@ Tee.CustomSeries=function(o,o2) {
 
   this.maxYValue=function() {
     return this.stackMaxValue();
-  }
+  };
 
   this.calc=function(index,p) {
     (this.isStacked) ? this.calcStack(index,p,this.data.values[index]) : Tee.Series.prototype.calc.call(this,index,p);
-  }
+  };
 
   this.calcColorEach=function() {
     this.isColorEach=(this.colorEach=="yes") || this.pointer.colorEach;
-  }
+  };
 
   this.initZ=function(index,total) {
     var s, f=this.format;
@@ -6918,7 +6918,7 @@ Tee.CustomSeries=function(o,o2) {
 
     this.marks.z = f.z + f.depth*0.5;
   }
-}
+};
 
 Tee.CustomSeries.prototype=new Tee.Series();
 
@@ -6957,7 +6957,7 @@ Tee.CustomSeries.prototype.drawPointers=function() {
 
   if (isEach)
     f.fill=old;
-}
+};
 
 /**
  * @private
@@ -6966,7 +6966,7 @@ Tee.CustomSeries.prototype.setChart=function(series,chart) {
     var tmp=Tee.Series.prototype.setChart;
     tmp(series,chart);
     series.pointer.setChart(chart);
-}
+};
 
 /**
  * @returns {Number} Returns the index of the series point that contains p {@link Tee.Point} parameter.
@@ -7023,21 +7023,21 @@ Tee.CustomSeries.prototype.clicked=function(p) {
   }
 
   return -1;
-}
+};
 
 Tee.CustomSeries.prototype.horizMargins=function(p) {
   var po=this.pointer, s=po.format.stroke;
   if ((po.visible) && (po.inflateMargins))
     p.x=p.y=( (s.fill!=="") ? s.size : 0 ) + 1+(po.width*0.5);
-}
+};
 
 Tee.CustomSeries.prototype.vertMargins=function(p) {
   var po=this.pointer, s=po.format.stroke;
   if ((po.visible) && (po.inflateMargins))
     p.x=p.y=( (s.fill!=="") ? s.size : 0 ) + 1+(po.height*0.5);
-}
+};
 
-Tee.CustomSeries.prototype.getSize=function() {}
+Tee.CustomSeries.prototype.getSize=function() {};
 
 /**
  * @constructor
@@ -7154,7 +7154,7 @@ Tee.Line=function(o,o2) {
 
     if (s!=='')
        c.stroke();
-  }
+  };
 
   this.draw=function() {
     var len=this.data.values.length;
@@ -7170,7 +7170,7 @@ Tee.Line=function(o,o2) {
          this.drawPointers();
     }
   }
-}
+};
 
 Tee.Line.prototype=new Tee.CustomSeries();
 
@@ -7184,7 +7184,7 @@ Tee.PointXY=function(o,o2) {
   this.hover.enabled=true;
   this.pointer.visible=true;
   this.drawLine=false;
-}
+};
 
 Tee.PointXY.prototype=new Tee.Line();
 
@@ -7214,7 +7214,7 @@ Tee.Series.prototype.cellRect=function(r,act,series) {
   }
 
   return r;
-}
+};
 
 /**
  * @constructor
@@ -7256,7 +7256,7 @@ Tee.Pie=function(o,o2) {
   */
   this.getValue=function(index) {
     return this.data.values[index];
-  }
+  };
 
   this.calcCenter=function(t,radius,mid,center) {
     if (this.explode) {
@@ -7267,7 +7267,7 @@ Tee.Pie=function(o,o2) {
         center.y+=(v*Math.sin(mid));
       }
     }
-  }
+  };
 
   this.clicked=function(p) {
     var c=this.chart.ctx, len=this.data.values.length, t, index;
@@ -7291,7 +7291,7 @@ Tee.Pie=function(o,o2) {
     }
 
     return -1;
-  }
+  };
 
   var total, piex, piey, radius, donutRadius,
       center={x:0,y:0}, sorted, angle, endAngle, hoverang;
@@ -7306,7 +7306,7 @@ Tee.Pie=function(o,o2) {
     c.x=center.x;
     c.y=center.y;
     return radius;
-  }
+  };
 
   this.slice=function(c,index) {
     var p=new Point();
@@ -7349,11 +7349,11 @@ Tee.Pie=function(o,o2) {
       hoverang=angle;
 
     angle=endAngle;
-  }
+  };
 
   this.fill=function(i) {
     return this.getFillStyle(this.chart.chartRect,this.getFill(i));
-  }
+  };
 
   this.slices=function(shadow) {
     var c=this.chart.ctx, len=this.data.values.length, t, index;
@@ -7388,7 +7388,7 @@ Tee.Pie=function(o,o2) {
         }
       }
     }
-  }
+  };
 
   var r=new Rectangle();
 
@@ -7441,7 +7441,7 @@ Tee.Pie=function(o,o2) {
         }
       }
     }
-  }
+  };
 
   this.drawMarks=function() {
     var endAngle=Math.PI*this.rotation/180.0, angle=endAngle, mid,
@@ -7464,7 +7464,7 @@ Tee.Pie=function(o,o2) {
       }
     }
   }
-}
+};
 
 Tee.Pie.prototype=new Tee.Series();
 
@@ -7624,38 +7624,38 @@ Tee.Area=function(o,o2) {
       if (this.pointer.visible)
          this.drawPointers();
     }
-  }
+  };
 
   this.minYValue=function() {
     var v=this.yMandatory ? Tee.Series.prototype.minYValue.call(this) : Tee.Series.prototype.minXValue.call(this);
     return this.yMandatory ? this.useOrigin ? Math.min(v,this.origin) : v : v;
-  }
+  };
 
   this.minXValue=function() {
     var v=this.yMandatory ? Tee.Series.prototype.minXValue.call(this) : Tee.Series.prototype.minYValue.call(this);
     return this.yMandatory ? v : this.useOrigin ? Math.min(v,this.origin) : v;
-  }
+  };
 
   this.maxYValue=function() {
     var v = this.yMandatory ? this.stackMaxValue() : Tee.Series.prototype.maxXValue.call(this);
     return this.yMandatory ? this.useOrigin ? Math.max(v,this.origin) : v : v;
-  }
+  };
 
   this.maxXValue=function() {
     var v = this.yMandatory ? Tee.Series.prototype.maxXValue.call(this) : this.stackMaxValue();
     return this.yMandatory ? v : this.useOrigin ? Math.max(v,this.origin) : v;
-  }
+  };
 
   this.vertMargins=function(p) {
     if (this.yMandatory && (f.stroke.fill!==""))
       p.y+=f.stroke.size+2;
-  }
+  };
 
   this.horizMargins=function(p) {
     if ((!this.yMandatory) && (f.stroke.fill!==""))
       p.y+=f.stroke.size+2;
   }
-}
+};
 
 Tee.Area.prototype=new Tee.CustomSeries();
 
@@ -7667,7 +7667,7 @@ Tee.Area.prototype=new Tee.CustomSeries();
 Tee.HorizArea=function(o,o2) {
   Tee.Area.call(this,o,o2);
   this.yMandatory=false;
-}
+};
 Tee.HorizArea.prototype=new Tee.Area;
 
 /**
@@ -7679,7 +7679,7 @@ Tee.HorizArea.prototype=new Tee.Area;
 Tee.Donut=function(o,o2) {
   Tee.Pie.call(this,o,o2);
   this.donut=50;
-}
+};
 
 Tee.Donut.prototype=new Tee.Pie();
 
@@ -7738,7 +7738,7 @@ Tee.Gantt=function(o,o2) {
         d.end[t]=new Date(year, month, day+Math.random()*10);
       }
     }
-  }
+  };
 
   this.bounds=function(index,r) {
     if (this.isNull(index))
@@ -7752,7 +7752,7 @@ Tee.Gantt=function(o,o2) {
 
       return true;
     }
-  }
+  };
 
   this.add=function(pos, label, start, end) {
     var d=this.data;
@@ -7760,7 +7760,7 @@ Tee.Gantt=function(o,o2) {
     d.x.push(pos);
     d.start.push(start);
     d.end.push(end);
-  }
+  };
 
   this.clicked=function(p) {
     var len=this.data.values.length, t;
@@ -7769,7 +7769,7 @@ Tee.Gantt=function(o,o2) {
         if (this.bounds(t,r) && r.contains(p)) return t;
 
     return -1;
-  }
+  };
 
   this.draw=function() {
     var len=this.data.values.length, t, ff,
@@ -7786,29 +7786,29 @@ Tee.Gantt=function(o,o2) {
       }
 
     hover.fill=oldFill;
-  }
+  };
 
   this.horizMargins=function(p) {
     p.x=this.margin.x;
     p.y=this.margin.y;
-  }
+  };
 
   this.minYValue=function() {
     return this.parent.minXValue.call(this)-0.5;
-  }
+  };
 
   this.maxYValue=function() {
     return this.parent.maxXValue.call(this)+0.5;
-  }
+  };
 
   this.minXValue=function() {
     return ArrayMin(this.data.start);
-  }
+  };
 
   this.maxXValue=function() {
     return ArrayMax(this.data.end);
   }
-}
+};
 
 Tee.Gantt.prototype=new Tee.Series();
 Tee.Gantt.prototype.parent=Tee.Series.prototype;
@@ -7854,12 +7854,12 @@ Tee.Bubble=function(o,o2) {
       }
     }
   }
-}
+};
 
 Tee.Bubble.prototype.initZ=function() {
   this.parent.prototype.initZ.call(this);
   this.format.marks.z = this.format.z -1;
-}
+};
 
 Tee.Bubble.prototype=new Tee.PointXY();
 
@@ -7867,7 +7867,7 @@ Tee.Bubble.prototype.getSize=function(index) {
   var s=(this.data.radius) ? this._vertAxis.calcSize(this.data.radius[index]) : 0;
   this.pointer.width=s;
   this.pointer.height=s;
-}
+};
 
 Tee.Bubble.prototype.horizMargins=function(p) {
 
@@ -7876,13 +7876,13 @@ Tee.Bubble.prototype.horizMargins=function(p) {
     var res=1+(this.pointer.width*0.5), s=this.pointer.format.stroke;
     if (s.fill!=="") res+=s.size;
     return res;
-  }
+  };
 
   if (this.pointer.visible && this.inflate) {
     p.x=this.calcWidth(0);
     p.y=this.calcWidth(this.count()-1);
   }
-}
+};
 
 Tee.Bubble.prototype.vertMargins=function(p) {
 
@@ -7891,7 +7891,7 @@ Tee.Bubble.prototype.vertMargins=function(p) {
     var res=1+(this.pointer.height*0.5), s=this.pointer.format.stroke;
     if (s.fill!=="") res+=s.size;
     return res;
-  }
+  };
 
   if (this.pointer.visible && this.inflate) {
 
@@ -7915,7 +7915,7 @@ Tee.Bubble.prototype.vertMargins=function(p) {
       p.y=this.calcHeight(lowIndex);
     }
   }
-}
+};
 
 /**
  * @constructor
@@ -7932,7 +7932,7 @@ Tee.Volume=function(o,o2) {
   f.shadow.visible=false;
   f.gradient.visible=false;
   f.stroke.fill="";
-}
+};
 Tee.Volume.prototype=new Tee.Bar;
 
 /**
@@ -7967,7 +7967,7 @@ Tee.Candle=function(o,o2) {
     var tmp=Tee.PointXY.prototype.setChart;
     tmp(series,chart);
     lo.setChart(chart);
-  }
+  };
 
   this.draw=function() {
     var d=this.data, len=d.values.length, t, p=new Point(),
@@ -8050,15 +8050,15 @@ Tee.Candle=function(o,o2) {
         c.stroke();
       }
     }
-  }
+  };
 
   this.minYValue=function() {
     return this.data.low.length>0 ? ArrayMin(this.data.low) : 0;
-  }
+  };
 
   this.maxYValue=function() {
     return this.data.high.length>0 ? ArrayMax(this.data.high) : 0;
-  }
+  };
 
   this.addRandom=function(count) {
     var d=this.data;
@@ -8080,7 +8080,7 @@ Tee.Candle=function(o,o2) {
       }
     }
   }
-}
+};
 
 Tee.Candle.prototype=new Tee.PointXY();
 
@@ -8102,9 +8102,9 @@ Tee.Candle.prototype.clicked=function(p) {
   }
 
   return -1;
-}
+};
 
-Tee.Candle.prototype.vertMargins=function() {}
+Tee.Candle.prototype.vertMargins=function() {};
 
 
 /**
@@ -8145,7 +8145,7 @@ Tee.Polar=function(o,o2) {
 
     p.x=center.x+Math.cos(angle) * rad;
     p.y=center.y+Math.sin(angle) * rad;
-  }
+  };
 
   function tryDrawAxis(axis, px, py) {
     if (axis.visible) {
@@ -8287,7 +8287,7 @@ Tee.Polar=function(o,o2) {
       tryDrawAxis(mand,center.x,center.y);
       tryDrawAxis(nomand,center.y,center.x);
     }
-  }
+  };
 
   this.draw=function() {
     calcCenter(this.chart.chartRect, this.notmandatory);
@@ -8326,18 +8326,18 @@ Tee.Polar=function(o,o2) {
       if (this.pointer.visible)
           this.drawPointers();
     }
-  }
+  };
 
   this.minYValue=function() {
     var v=Tee.Series.prototype.minYValue.call(this);
     return this.useOrigin ? Math.min(v,this.origin) : v;
-  }
+  };
 
   this.maxYValue=function() {
     var v = this.stackMaxValue();
     return this.useOrigin ? Math.max(v,this.origin) : v;
   }
-}
+};
 
 Tee.Polar.prototype=new Tee.CustomSeries;
 
@@ -8386,18 +8386,18 @@ Tee.PaletteSeries=function(o,o2) {
          rgb[c]={ r: tmp[0], g: tmp[1], b: tmp[2], a: tmp[3] || 0 };
       }
     }
-  }
+  };
 
   this.getColor=function(value) {
     var colorIndex = ( (numcolors-1) * ( (value-this._min)/this._range) | 0);
     return rgb[ palette.inverted ? numcolors-1-colorIndex : colorIndex];
-  }
+  };
 
   /**
    * @returns {Number} Returns the number of items to show at legend.
    */
   this.legendCount=function() { return this.palette.colors ? this.palette.colors.length : 0; }
-}
+};
 
 Tee.PaletteSeries.prototype=new Tee.Series;
 
@@ -8416,7 +8416,7 @@ Tee.PaletteSeries.prototype.legendColor=function(index) {
   }
   else
     return c ? c[ i ? index : this.legendCount()-index-1] : this.format.fill;
-}
+};
 
 /**
 * @returns {String} Returns the palette value of index'th legend symbol.
@@ -8424,7 +8424,7 @@ Tee.PaletteSeries.prototype.legendColor=function(index) {
 Tee.PaletteSeries.prototype.legendText=function(index /*,style,title,asArray*/ ) {
   index= -1 + this.legendCount() - index;
   return (this._min + (index* this._range/(this.palette.colors.length-1) )).toFixed(this.decimals);
-}
+};
 
 // This script made by:
 // Michael Leigeber
