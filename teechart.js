@@ -5886,7 +5886,13 @@ Tee.Chart=function(canvas,data,type)
 
     var c=this.chart;
 
-    if (!c.zoom.wheel.enabled) return;
+    if (!c.zoom.wheel.enabled) {
+      for(var t=0, s; s=c.tools.items[t++];)
+        if ((s instanceof Tee.ToolTip) && (s.active))
+          s.hide();
+
+      return;
+    }
 
     event=event || window.event;
 
@@ -5908,6 +5914,10 @@ Tee.Chart=function(canvas,data,type)
         if (event.preventDefault)
            event.preventDefault();
       }
+
+      for(var t=0, s; s=c.tools.items[t++];)
+        if ((s instanceof Tee.ToolTip) && (s.active))
+          s.mousemove(p);
     }
   }
 
