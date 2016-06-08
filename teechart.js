@@ -3382,7 +3382,7 @@ Axis.calcRect=function() {
   this.calcAxisScale();
   
   //specific case: check for non-std sideAll scaling
-  if ((this.chart.series.count > 0) && (this.chart.series.items[0] instanceof Tee.Bar) 
+  if ((this.chart.series.items.length > 0) && (this.chart.series.items[0] instanceof Tee.Bar) 
 	                                && (this.chart.series.items[0].notmandatory == this) 
                                     && (this.chart.series.items[0].stacked == "sideAll"))
   {
