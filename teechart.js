@@ -3380,6 +3380,18 @@ Axis.calcRect=function() {
   }
 
   this.calcAxisScale();
+  
+  //specific case: check for non-std sideAll scaling
+  if ((this.chart.series.count > 0) && (this.chart.series.items[0] instanceof Tee.Bar) 
+	                                && (this.chart.series.items[0].notmandatory == this) 
+                                    && (this.chart.series.items[0].stacked == "sideAll"))
+  {
+     if (this.automatic) {
+		this.chart.series.items[0].notmandatory.minimum = -0.5;
+		this.chart.series.items[0].notmandatory.maximum = this.chart.series.items[0].countAll(false)-0.5;
+	 }
+	  
+  }
 
   // Calculate axis margins:
   if (this.automatic) {
@@ -6376,7 +6388,10 @@ Tee.CustomBar=function(o,o2) {
     var nomand = this.notmandatory, mand = this.mandatoryAxis,
         range=this.yMandatory ? this.maxXValue()-this.minXValue() : this.maxYValue()-this.minYValue();
 
-    this.calcBarOffset(range===0? nomand.axisSize : nomand.calcSize(range));
+	if (this.stacked=="sideAll")	
+	  this.calcBarOffset(nomand.axisSize);
+	else
+      this.calcBarOffset(range===0? nomand.axisSize : nomand.calcSize(range));
 
     if (this.useOrigin) {
       if (this.origin instanceof Array) {
