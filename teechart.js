@@ -2400,10 +2400,30 @@ function Axis(chart,horizontal,otherSide) {
       var st=this.labelStyle, s=axis.firstSeries;
 
       this._text=null;
+	  this._textlabels=null;
 
       if (st=="auto") {
         if ((s.data.labels.length>0) && s.associatedToAxis(axis) && (axis.horizontal==s.notmandatory.horizontal))
-           this._text=s;
+		{
+ 		  this._text=s;
+	    
+		    if ((this.chart.series.items.length > 1) && (this.chart.series.items[0] instanceof Tee.Bar) 
+                                    && (this.chart.series.items[0].stacked == "sideAll")){
+				
+				var li=chart.series.items, t, tt, ser;
+				this._textlabels=this._text.data.labels;
+				for(t=1; ser=li[t++];){
+					 if (ser.visible && ser.associatedToAxis(axis)) {
+					   for(tt=0; tt < ser.data.values.length; tt++){  
+					     this._textlabels.push(ser.data.labels[tt]);
+					   }
+					 }
+			    }
+
+           if (s === undefined)
+              s="";
+           }
+		}
       }
       else
       if ((st=="mark") || (st=="text"))
@@ -2449,20 +2469,28 @@ function Axis(chart,horizontal,otherSide) {
          data=this._text.data;
 
          if (data.x) v=data.x.indexOf(v);
+		 
+		 var li=chart.series.items, t, ser;
 
-         s= data.labels[v];
+		 //specific case: check for non-std sideAll labelling
+		 if ((li.length > 0) && (li[0] instanceof Tee.Bar) 
+								&& (li[0].stacked == "sideAll")) {
+		   s= data.labels[value];
+		 }
+		 else {		   
+			s= data.labels[v];
+		 }
 
          // Last resort, try to find labels from any series in axis:
 
          if (!s) {
-           var li=chart.series.items, t, ser;
-           for(t=0; ser=li[t++];)
-           if (ser!=this._text) {
-             if (ser.visible && ser.associatedToAxis(axis)) {
-               s=ser.data.labels[v];
-               if (s) break;
-             }
-           }
+		   for(t=0; ser=li[t++];)
+		   if (ser!=this._text) {
+			 if (ser.visible && ser.associatedToAxis(axis)) {
+			   s=ser.data.labels[v];
+			   if (s) break;
+			 }
+			   }
 
            if (s === undefined)
               s="";
@@ -6251,7 +6279,7 @@ Tee.CustomBar=function(o,o2) {
     var tmpLen, len= all ? this.countAll() : this.data.values.length;
 
     if (len>1)
-       barSize /= (len-1);
+       barSize /= (len);
 
     if (this.stacked=="no") {
       barSize /= visibleBar.total;
