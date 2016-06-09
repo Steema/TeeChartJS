@@ -400,7 +400,7 @@ Tee.Table=function(table,chart) {
 
     if (c.legend.showValues()) {
         var s=c.series.firstVisible();
-      	pos=2+c.series.items.indexOf(s);
+        pos=2+c.series.items.indexOf(s);
         bycols=!bycols;
     }
 
