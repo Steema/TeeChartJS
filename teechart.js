@@ -3408,24 +3408,29 @@ Axis.calcRect=function() {
   }
 
   this.calcAxisScale();
-  
+
+  var tmp=this.chart.series;
+
   //specific case: check for non-std sideAll scaling
-  if ((this.chart.series.items.length > 0) && (this.chart.series.items[0] instanceof Tee.Bar) 
-                                  && (this.chart.series.items[0].notmandatory == this) 
-                                    && (this.chart.series.items[0].stacked == "sideAll"))
-  {
-     if (this.automatic) {
-    this.chart.series.items[0].notmandatory.minimum = -0.5;
-    this.chart.series.items[0].notmandatory.maximum = this.chart.series.items[0].countAll(false)-0.5;
-   }
-    
+  if (tmp.items.length > 0) {
+    if (this.automatic) {
+      var s=tmp.items[0];
+
+      if ( (s instanceof Tee.Bar) &&
+           (s.notmandatory == this) &&
+           (s.stacked == "sideAll") )
+      {
+         s.notmandatory.minimum = -0.5;
+         s.notmandatory.maximum = s.countAll(false)-0.5;
+      }
+    }
   }
 
   // Calculate axis margins:
   if (this.automatic) {
     var s=this.chart.series, m = h ? s.horizMargins() : s.vertMargins(),
         hasX=(m.x>0), hasY=(m.y>0);
-   
+
     if (hasX)
        this.minimum-=this.fromSize(m.x);
 
