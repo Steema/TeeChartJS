@@ -579,14 +579,14 @@ function ChartImage(chart) {
     else
     if (chart.ctx.drawImage){ // Threejs check
        if (this.repeat == 'repeat'){
-	     var pattern = chart.ctx.createPattern(this.image, 'repeat');
+       var pattern = chart.ctx.createPattern(this.image, 'repeat');
          chart.ctx.fillStyle = pattern;
          chart.ctx.fillRect(x,y,width,height);
-	   }
-	   else{
+     }
+     else{
          chart.ctx.drawImage(this.image, x,y,width,height);
-	   }
-	}
+     }
+  }
   }
 }
 
@@ -914,14 +914,14 @@ Tee.Format=function(chart)
   }
 
   this.fillBack=function(c,getbounds,x,y,width,height) {
-	if (this.gradient.visible) {
-	   c.fillStyle = (getbounds) ? this.gradient.create(getbounds()) : this.gradient.rect(x,y,width,height);
-	   c.fill();
+  if (this.gradient.visible) {
+     c.fillStyle = (getbounds) ? this.gradient.create(getbounds()) : this.gradient.rect(x,y,width,height);
+     c.fill();
     }
     else
-	  if (this.fill!=="") {
-	    c.fillStyle = this.fill;
-	    c.fill();
+    if (this.fill!=="") {
+      c.fillStyle = this.fill;
+      c.fill();
     }
   }
 
@@ -943,14 +943,14 @@ Tee.Format=function(chart)
      }
 
      this.shadow.prepare(c);
-	 
+   
      if (i && i.visible && (i.url!=="")) {
        c.save();
        c.clip();
-	   
-	   if (i.backFill == true) {
+     
+     if (i.backFill == true) {
          this.fillBack(c,getbounds,x,y,width,height);   
-	   }
+     }
 
        if (getbounds) {
          var r=getbounds();
@@ -1017,7 +1017,7 @@ Tee.Format=function(chart)
      if (this.transparency < 1)
      {
        if (typeof(x)==='object')
-	      this.rectangle(x.x,x.y,x.width,x.height);
+        this.rectangle(x.x,x.y,x.width,x.height);
        else
        {
          this.rectPath(x,y,width,height);
@@ -1481,7 +1481,7 @@ Tee.DragTool=function(chart) {
   this.mousemove=function(p) {
     if (ta.index!=-1) {
       var s=ta.series, tmp=s.mandatoryAxis.fromPos( s.yMandatory ? p.y : p.x );
-	  
+    
       if (this.onchanging) tmp=this.onchanging(this,tmp);
 
       s.data.values[ta.index]=tmp;
@@ -1573,7 +1573,7 @@ Tee.CursorTool=function(chart) {
 
             if (canvasCopy)
               if (this.render=="copy")
-			    this.chart.ctx.drawImage(canvasCopy,0,0);
+          this.chart.ctx.drawImage(canvasCopy,0,0);
               else
               {
                  var b=chart.bounds;
@@ -1654,7 +1654,7 @@ Tee.CursorTool=function(chart) {
       {
         //var b=chart.bounds;
         //ctxCopy.clearRect(b.x,b.y,b.width,b.height);
-	    ctxCopy.drawImage(chart.canvas,0,0);
+      ctxCopy.drawImage(chart.canvas,0,0);
 
         this.dodraw(this.chart.ctx);
       }
@@ -2381,7 +2381,7 @@ function Axis(chart,horizontal,otherSide) {
     this.chart=chart;
     this.format=new Tee.Format(chart);
     this.decimals=2;
-		this.fixedDecimals = false;
+    this.fixedDecimals = false;
     this.padding=4;
     this.separation=10; // %
     this.visible=true;
@@ -2400,63 +2400,63 @@ function Axis(chart,horizontal,otherSide) {
       var st=this.labelStyle, s=axis.firstSeries;
 
       this._text=null;
-	  this._textlabels=null;
+    this._textlabels=null;
 
       if (st=="auto") {
         if ((s.data.labels.length>0) && s.associatedToAxis(axis) && (axis.horizontal==s.notmandatory.horizontal))
-		{
- 		  this._text=s;
-	    
-		    if ((this.chart.series.items.length > 1) && (this.chart.series.items[0] instanceof Tee.Bar) 
+    {
+       this._text=s;
+      
+        if ((this.chart.series.items.length > 1) && (this.chart.series.items[0] instanceof Tee.Bar) 
                                     && (this.chart.series.items[0].stacked == "sideAll")){
-				
-				var li=chart.series.items, t, tt, ser;
-				this._textlabels=this._text.data.labels;
-				for(t=1; ser=li[t++];){
-					 if (ser.visible && ser.associatedToAxis(axis)) {
-					   for(tt=0; tt < ser.data.values.length; tt++){  
-					     this._textlabels.push(ser.data.labels[tt]);
-					   }
-					 }
-			    }
+        
+        var li=chart.series.items, t, tt, ser;
+        this._textlabels=this._text.data.labels;
+        for(t=1; ser=li[t++];){
+           if (ser.visible && ser.associatedToAxis(axis)) {
+             for(tt=0; tt < ser.data.values.length; tt++){  
+               this._textlabels.push(ser.data.labels[tt]);
+             }
+           }
+          }
 
            if (s === undefined)
               s="";
            }
-		}
+    }
       }
       else
       if ((st=="mark") || (st=="text"))
          this._text=s;
     }
 
-		
-		this.formatValueString=function(value)
-		{
-			if (this.valueFormat){
-				var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1); 
-				
-				var AmountWithCommas = (value * 1).toLocaleString();
-				var arParts = String(AmountWithCommas).split(DecimalSeparator);
-				var intPart = arParts[0];
-				
-				var padding = "";
-				if (this.decimals > 0)
-					for (var i=0; i<this.decimals; i++) {
-						padding = padding + "0";    
-					}
-				
-				var decPart = (arParts.length > 1 ? arParts[1] : '');
-				decPart = (decPart + padding).substr(0,this.decimals);
-				
-				if (decPart.length > 0)
-					return intPart + DecimalSeparator + decPart;
-				else
-					return intPart;
-			}
-			else
-				return value.toFixed(this.decimals);
-		}
+    
+    this.formatValueString=function(value)
+    {
+      if (this.valueFormat){
+        var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1); 
+        
+        var AmountWithCommas = (value * 1).toLocaleString();
+        var arParts = String(AmountWithCommas).split(DecimalSeparator);
+        var intPart = arParts[0];
+        
+        var padding = "";
+        if (this.decimals > 0)
+          for (var i=0; i<this.decimals; i++) {
+            padding = padding + "0";    
+          }
+        
+        var decPart = (arParts.length > 1 ? arParts[1] : '');
+        decPart = (decPart + padding).substr(0,this.decimals);
+        
+        if (decPart.length > 0)
+          return intPart + DecimalSeparator + decPart;
+        else
+          return intPart;
+      }
+      else
+        return value.toFixed(this.decimals);
+    }
 
     /**
      * @returns {String} Returns the series label that corresponds to a given value, (or the value if no label exists).
@@ -2469,28 +2469,28 @@ function Axis(chart,horizontal,otherSide) {
          data=this._text.data;
 
          if (data.x) v=data.x.indexOf(v);
-		 
-		 var li=chart.series.items, t, ser;
+     
+     var li=chart.series.items, t, ser;
 
-		 //specific case: check for non-std sideAll labelling
-		 if ((li.length > 0) && (li[0] instanceof Tee.Bar) 
-								&& (li[0].stacked == "sideAll")) {
-		   s= data.labels[value];
-		 }
-		 else {		   
-			s= data.labels[v];
-		 }
+     //specific case: check for non-std sideAll labelling
+     if ((li.length > 0) && (li[0] instanceof Tee.Bar) 
+                && (li[0].stacked == "sideAll")) {
+       s= data.labels[value];
+     }
+     else {       
+      s= data.labels[v];
+     }
 
          // Last resort, try to find labels from any series in axis:
 
          if (!s) {
-		   for(t=0; ser=li[t++];)
-		   if (ser!=this._text) {
-			 if (ser.visible && ser.associatedToAxis(axis)) {
-			   s=ser.data.labels[v];
-			   if (s) break;
-			 }
-			   }
+       for(t=0; ser=li[t++];)
+       if (ser!=this._text) {
+       if (ser.visible && ser.associatedToAxis(axis)) {
+         s=ser.data.labels[v];
+         if (s) break;
+       }
+         }
 
            if (s === undefined)
               s="";
@@ -2505,14 +2505,14 @@ function Axis(chart,horizontal,otherSide) {
       }
       else
       {
-		  if (this.fixedDecimals)
-			  s = this.formatValueString(value);
-		  else if (this.valueFormat) {
-		    s=value.toFixed(v==value ? 0 : this.decimals);
+      if (this.fixedDecimals)
+        s = this.formatValueString(value);
+      else if (this.valueFormat) {
+        s=value.toFixed(v==value ? 0 : this.decimals);
             s = (s*1).toLocaleString(); //B558
-          }			
+          }      
       else
-        s=value.toFixed(v==value ? 0 : this.decimals);		  
+        s=value.toFixed(v==value ? 0 : this.decimals);      
       }
 
       if (this.ongetlabel) {
@@ -2522,16 +2522,16 @@ function Axis(chart,horizontal,otherSide) {
 
       return ""+s;
     }
-		
+    
    /**
     * @returns {Number} Returns the width in pixels of value converted to string.
     */
     this.width=function(value) {
-	  var oldFixDec = this.fixedDecimals; //check widest label when sizing 
-	  this.fixedDecimals = true;
+    var oldFixDec = this.fixedDecimals; //check widest label when sizing 
+    this.fixedDecimals = true;
       var tmpWidth = this.format.textWidth(this.getLabel(value));
-	  this.fixedDecimals = oldFixDec;
-	  return tmpWidth;
+    this.fixedDecimals = oldFixDec;
+    return tmpWidth;
     }
 
   }
@@ -2743,7 +2743,7 @@ function Axis(chart,horizontal,otherSide) {
   }
 
   this.checkRange=function() {
-	  if ((this.maximum - this.minimum) < this.minAxisRange)
+    if ((this.maximum - this.minimum) < this.minAxisRange)
        this.maximum = this.minimum + this.minAxisRange;
   }
 
@@ -2753,7 +2753,7 @@ function Axis(chart,horizontal,otherSide) {
     if (this.automatic) {
       this.minimum= h ? s.minXValue(this) : s.minYValue(this);
       this.maximum= h ? s.maxXValue(this) : s.maxYValue(this);
-	  
+    
       this.checkRange();
     }
   }
@@ -3137,7 +3137,7 @@ function Axis(chart,horizontal,otherSide) {
        if (this.ticks.visible) tmpX += this.ticks.length;
 
        if (l.visible) {
-		 var w = l.maxWidth;
+     var w = l.maxWidth;
          if (l.alternate) w*=2;
          tmpX += w;
        }
@@ -3231,7 +3231,7 @@ function Axis(chart,horizontal,otherSide) {
     var oldc=c;
 
     r.height=l.format.textHeight("Wj");
-		
+    
     var alter = l.alternate,
     w = alter ? (this.horizontal ? -this.minmaxLabelWidth(true) : this.minmaxLabelWidth(true)) : 0, p;
 
@@ -3315,7 +3315,7 @@ function Axis(chart,horizontal,otherSide) {
 
     this.minimum=a;
     this.maximum=b;
-	
+  
     this.checkRange();
   }
   
@@ -3323,10 +3323,10 @@ function Axis(chart,horizontal,otherSide) {
 
   this.setMinMax=function(min,max) {
     this.automatic=false;
-	
+  
     this.minimum=min;
     this.maximum=max;
-	
+  
     this.checkRange();
   }
 }
@@ -3411,20 +3411,20 @@ Axis.calcRect=function() {
   
   //specific case: check for non-std sideAll scaling
   if ((this.chart.series.items.length > 0) && (this.chart.series.items[0] instanceof Tee.Bar) 
-	                                && (this.chart.series.items[0].notmandatory == this) 
+                                  && (this.chart.series.items[0].notmandatory == this) 
                                     && (this.chart.series.items[0].stacked == "sideAll"))
   {
      if (this.automatic) {
-		this.chart.series.items[0].notmandatory.minimum = -0.5;
-		this.chart.series.items[0].notmandatory.maximum = this.chart.series.items[0].countAll(false)-0.5;
-	 }
-	  
+    this.chart.series.items[0].notmandatory.minimum = -0.5;
+    this.chart.series.items[0].notmandatory.maximum = this.chart.series.items[0].countAll(false)-0.5;
+   }
+    
   }
 
   // Calculate axis margins:
   if (this.automatic) {
     var s=this.chart.series, m = h ? s.horizMargins() : s.vertMargins(),
-		    hasX=(m.x>0), hasY=(m.y>0);
+        hasX=(m.x>0), hasY=(m.y>0);
    
     if (hasX)
        this.minimum-=this.fromSize(m.x);
@@ -3706,7 +3706,7 @@ function Legend(chart)
         for(t=0; t<ss.items.length; t++)
           if (!ss.items[t].legend.visible)
             result--;
-	  }
+    }
       else
       if (result==1)
         result=ss.firstVisible().legendCount();
@@ -3977,8 +3977,8 @@ function Legend(chart)
       var groups=ctx.beginParent;
       this.visual = groups ? ctx.beginParent() : null;
 
-			f.cube(this.bounds); //avoids first Legend item being dropped from format in WebGL transparent Legends
-			
+      f.cube(this.bounds); //avoids first Legend item being dropped from format in WebGL transparent Legends
+      
       if (!this.transparent) {
         f.draw(ctx, null, this.bounds);
       }
@@ -3998,7 +3998,7 @@ function Legend(chart)
 
       r.width=itemWidth;
       r.height=this.itemHeight;
-			
+      
       if (this.showValues()) {
 
         var s=chart.series.firstVisible(), order=0;
@@ -4394,7 +4394,7 @@ if (!('map' in Array.prototype)) {
     for (var i= 0, n= this.length; i<n; i++)
       if (i in this)
         other[i]= mapper.call(that, this[i], i, this);
-		
+    
     return other;
   };
 }
@@ -4408,7 +4408,7 @@ if (!('filter' in Array.prototype)) {
     return other;
   };
 }
-	
+  
 /**
 * removes nulls that Math.max/min.apply doesn't handle correctly
 */
@@ -5300,8 +5300,8 @@ function SeriesList(chart)
             }
 
             s.visual = groups ? c.beginParent() : null;
-			
-			if (s.onbeforedraw) s.onbeforedraw(s);
+      
+      if (s.onbeforedraw) s.onbeforedraw(s);
 
             s.draw();
 
@@ -5654,7 +5654,7 @@ Tee.Chart=function(canvas,data,type)
    */
   this.calcMouse=function(e,p) {
 
-	p.x = e.clientX;
+  p.x = e.clientX;
     p.y = e.clientY;
 
     var element = this.canvas, r;
@@ -5736,7 +5736,7 @@ Tee.Chart=function(canvas,data,type)
       c.series.mousemove(pMove);
       c.legend.mousemove(pMove);
       c.title.mousemove(pMove);
-	  if (c.mousemove) c.mousemove(pMove);
+    if (c.mousemove) c.mousemove(pMove);
 
       var s=this.chart.canvas.style;
 
@@ -5796,8 +5796,8 @@ Tee.Chart=function(canvas,data,type)
          if (!done)
            done=c.legend.mousedown(event);
        }
-	   if (!done)
-	     if (c.mousedown) done=c.mousedown(event);
+     if (!done)
+       if (c.mousedown) done=c.mousedown(event);
 
        c.canvas.oncontextmenu=null;
     }
@@ -5858,8 +5858,8 @@ Tee.Chart=function(canvas,data,type)
                  c.title.onclick(c.title);
            }
         }
-		if (!done)
-	     if (c.mouseup) done=c.mouseup(event);
+    if (!done)
+       if (c.mouseup) done=c.mouseup(event);
       }
     }
 
@@ -6182,68 +6182,68 @@ Tee.CustomBar=function(o,o2) {
 
   this.drawBar=function(r, barStyle) {
   
-		var old = f.depth, oldz=f.z, ctx=this.chart.ctx;
+    var old = f.depth, oldz=f.z, ctx=this.chart.ctx;
 
-		if (!barStyle) barStyle=this.barStyle;
+    if (!barStyle) barStyle=this.barStyle;
 
-		f.depth = ( 0.5*Math.min( this.yMandatory ? r.width : r.height, 200) ) / 100;  // 200=Three.totalDepth !!
+    f.depth = ( 0.5*Math.min( this.yMandatory ? r.width : r.height, 200) ) / 100;  // 200=Three.totalDepth !!
 
-	    if ((r.width > 0) && (r.height>0)) {
-			if (this.stacked !== 'side')
-			  f.z=f.z+0.5*(1-f.depth);
+      if ((r.width > 0) && (r.height>0)) {
+      if (this.stacked !== 'side')
+        f.z=f.z+0.5*(1-f.depth);
 
-			if (barStyle==="bar") {
-			   f.cube(r);
-			}
-			else
-			if (barStyle==="line") {
-			   var pos;
+      if (barStyle==="bar") {
+         f.cube(r);
+      }
+      else
+      if (barStyle==="line") {
+         var pos;
 
-			   ctx.beginPath();
-			   ctx.z=f.z+f.depth*0.5;
+         ctx.beginPath();
+         ctx.z=f.z+f.depth*0.5;
 
-			   if (this.yMandatory) {
-				 pos=r.x+0.5*r.width;
+         if (this.yMandatory) {
+         pos=r.x+0.5*r.width;
 
-				 ctx.moveTo(pos,r.y);
-				 ctx.lineTo(pos,r.y+r.height);
+         ctx.moveTo(pos,r.y);
+         ctx.lineTo(pos,r.y+r.height);
 
-				 //f.rectPath(pos,r.y,1,r.height);
-			   }
-			   else
-			   {
-				 pos=r.y+0.5*r.height;
+         //f.rectPath(pos,r.y,1,r.height);
+         }
+         else
+         {
+         pos=r.y+0.5*r.height;
 
-				 ctx.moveTo(r.x,pos);
-				 ctx.lineTo(r.x+r.width, pos);
+         ctx.moveTo(r.x,pos);
+         ctx.lineTo(r.x+r.width, pos);
 
-				 //f.rectPath(r.x,pos,r.width,1);
-			   }
-			}
-			else
-			if (barStyle==="cylinder")
-			   f.cylinder(r, 1, this.yMandatory);
-			else
-			if (barStyle==="cone")
-			   f.cylinder(r, 0, this.yMandatory);
-			else
-			if ((barStyle==="ellipsoid") && this.chart.__webgl) {
-			   ctx.depth=f.depth;
-			   ctx.z=f.z;
-			   ctx.image=this.image;
-			   ctx.ellipsoid(r, this.yMandatory);
-			}
-			else {
-			   f.z += 0.5*f.depth;
-			   f.ellipsePath(this.chart.ctx, r.x+(r.width*0.5),r.y+(r.height*0.5), r.width,r.height);
-			}
+         //f.rectPath(r.x,pos,r.width,1);
+         }
+      }
+      else
+      if (barStyle==="cylinder")
+         f.cylinder(r, 1, this.yMandatory);
+      else
+      if (barStyle==="cone")
+         f.cylinder(r, 0, this.yMandatory);
+      else
+      if ((barStyle==="ellipsoid") && this.chart.__webgl) {
+         ctx.depth=f.depth;
+         ctx.z=f.z;
+         ctx.image=this.image;
+         ctx.ellipsoid(r, this.yMandatory);
+      }
+      else {
+         f.z += 0.5*f.depth;
+         f.ellipsePath(this.chart.ctx, r.x+(r.width*0.5),r.y+(r.height*0.5), r.width,r.height);
+      }
 
-			f.depth = old;
-			f.z = oldz;
-			  
-			return true;
-		}
-		else return false;
+      f.depth = old;
+      f.z = oldz;
+        
+      return true;
+    }
+    else return false;
   }
 
  /**
@@ -6283,7 +6283,7 @@ Tee.CustomBar=function(o,o2) {
 
     if (this.stacked=="no") {
       barSize /= visibleBar.total;
-	  offset.x=(barSize*this.barSize*0.01) * ((visibleBar.total==1) ? -0.5 : (visibleBar.index -(visibleBar.total*0.5))) ;
+    offset.x=(barSize*this.barSize*0.01) * ((visibleBar.total==1) ? -0.5 : (visibleBar.index -(visibleBar.total*0.5))) ;
       tmpLen=visibleBar.total;
     }
     else
@@ -6296,7 +6296,7 @@ Tee.CustomBar=function(o,o2) {
 
     this._margin=(0.5*tmpLen*offset.y)+this.sideMargins*(tmpLen*(barSize-offset.y))*0.005;
 
-	if (this.stacked!="no")
+  if (this.stacked!="no")
       offset.x+=(this.offset*barSize*0.01) + (barSize-offset.y)*0.5;
   }
 
@@ -6348,14 +6348,14 @@ Tee.CustomBar=function(o,o2) {
           isLine=(this.barStyle==='line'),
           _styles=this.data.styles;
 
-	  if ((hover) && (this.format.image.url!=null))
-	  {
-	    this.hover.image.url = this.format.image.url;
-		this.hover.image.repeat = this.format.image.repeat;
-		this.hover.image.backFill = this.format.image.backFill;
-	  }
+    if ((hover) && (this.format.image.url!=null))
+    {
+      this.hover.image.url = this.format.image.url;
+    this.hover.image.repeat = this.format.image.repeat;
+    this.hover.image.backFill = this.format.image.backFill;
+    }
 
-			f.z = 0; //B407 init
+      f.z = 0; //B407 init
       for(var t=0; t<len; t++)
       if (!this.isNull(t)) {
         this.calcStackPos(t,p);
@@ -6372,19 +6372,19 @@ Tee.CustomBar=function(o,o2) {
 
         if (hover)
           ff.shadow.prepare(c);
-		
-		if (isover) {
-			if ((this.format.image.url!=null) && (!hasPaintedOver)) //prevent fill flicker for first hover
-			{ 
-			  hasPaintedOver = true;
-			  f.draw(c,null,bar);
-			}
-			else 
-			  c.fill();
-		}
-		
-		if (pointPainted)
-		{
+    
+    if (isover) {
+      if ((this.format.image.url!=null) && (!hasPaintedOver)) //prevent fill flicker for first hover
+      { 
+        hasPaintedOver = true;
+        f.draw(c,null,bar);
+      }
+      else 
+        c.fill();
+    }
+    
+    if (pointPainted)
+    {
             ff.draw(c,null,bar);
 
             if (isLine || (ff.stroke.fill!=="")) {
@@ -6402,7 +6402,7 @@ Tee.CustomBar=function(o,o2) {
               if (ff.shadow.visible)
                  c.shadowColor = ff.shadow.color;
             }
-		}
+    }
       }
     }
   }
@@ -6416,9 +6416,9 @@ Tee.CustomBar=function(o,o2) {
     var nomand = this.notmandatory, mand = this.mandatoryAxis,
         range=this.yMandatory ? this.maxXValue()-this.minXValue() : this.maxYValue()-this.minYValue();
 
-	if (this.stacked=="sideAll")	
-	  this.calcBarOffset(nomand.axisSize);
-	else
+  if (this.stacked=="sideAll")  
+    this.calcBarOffset(nomand.axisSize);
+  else
       this.calcBarOffset(range===0? nomand.axisSize : nomand.calcSize(range));
 
     if (this.useOrigin) {
@@ -6791,8 +6791,8 @@ Tee.CustomSeries=function(o,o2) {
     }
 
     this.chart=chart;
-	
-	this.inflateMargins = true;
+  
+  this.inflateMargins = true;
 
     /*
      * Visual properties to paint pointers
@@ -8504,7 +8504,7 @@ var top = 3,
       tt.setAttribute('id','teetip1');
 
       tt.className='teetip';
-	  
+    
       tt.setAttribute("style", domStyle);
 
       document.body.appendChild(tt);
