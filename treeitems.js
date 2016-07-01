@@ -48,6 +48,7 @@ var ax=d.add(t++,0,'Axes','axes/allaxes.htm');
     d.add(t++,ax,'Synchronize','axes/synchro_many_charts.htm');
     d.add(t++,ax,'Multiple Axes','axes/multiple_axes.htm');
     d.add(t++,ax,'Custom Labels','axes/customlabels.htm');
+	d.add(t++,ax,'Coded zoom','axes/zoompercent.htm');
 d.add(t++,0,'Legend','legend/legend.htm');
 var mo=d.add(t++,0,'Mouse and Touch','axes/zoomscroll.htm');
     d.add(t++,mo,'Series onClick','series/seriesonclick.htm');
