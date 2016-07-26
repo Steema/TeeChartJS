@@ -79,6 +79,7 @@ var dash=d.add(t++,0,'Dashboards','');
     d.add(t++,dash,'Multi-Dim Tutorial','dashboard/tutorial/index.htm');
     d.add(t++,dash,'Demographics','dashboard/demographics.htm');
     d.add(t++,dash,'Product Sales','dashboard/productSales.htm');
+    d.add(t++,dash,'Geo mapping','dashboard/geo_series.htm');		
 var webgl=d.add(t++,0,'WebGL&trade; 3D','canvas/webgl/index.html');
     d.add(t++,webgl,'Basic 3D','canvas/webgl/basic_3d.htm');
     d.add(t++,webgl,'Advanced','canvas/webgl/threejs_example.htm');
