@@ -194,6 +194,7 @@ function draw() {
        series.origin=5;
        series.useOrigin=true;
        series.format.gradient.visible=true;
+	   series.format.stroke.fill="white";
     }
 	
 	var selectedState="";
@@ -210,6 +211,7 @@ function draw() {
            Years.selected=old;
 
            Chart2.title.text=USAMap.labels[id];
+
            Chart2.draw();
 
            Legend.highlight(USAMap.values[id], "2px solid orange");
@@ -241,7 +243,7 @@ function draw() {
 
 <body onload="draw()">
 
-<table style="position:relative; left:5px; top:5px; border:1px solid black; width:1000px"><tr style="border:0px solid white;"><td style="font-size:16px border:0px solid white;" colspan=2>TeeChart Geo Mapping example: USA - Average Temperatures Degrees Celsius</td></tr>
+<table style="position:relative; left:5px; top:5px; border:0px solid black; width:1000px"><tr style="border:0px solid white;"><td style="font-size:16px border:0px solid white;" colspan=2>TeeChart Geo Mapping example: USA - Average Temperatures Degrees Celsius</td></tr>
 <tr style="border:0px solid white;"><td style="border:0px solid white;" colspan=2>&nbsp;</td></tr>
 
 <tr style="border:0px solid white;"><td style="border:0px solid white;">
