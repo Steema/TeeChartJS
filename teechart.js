@@ -77,9 +77,13 @@ if (!('indexOf' in Array.prototype)) {
  * @property {Number} x The horizontal coordinate.
  * @property {Number} y The vertical coordinate.
  */
-function Point(x,y) {
+Tee.Point = function(x,y) {
   this.x=x;
   this.y=y;
+}
+
+function Point(x,y) {
+   return new Tee.Point(x, y);
 }
 
 function pointInLine(p,p1,p2,tolerance) {
@@ -138,9 +142,120 @@ function pointInLine(p,p1,p2,tolerance) {
  * @property {Number} width Amount of rectangle width.
  * @property {Number} height Amount of rectangle height.
  */
+Tee.Rectangle = function(x,y,width,height)
+{
+  this.x=x;
+  this.y=y;
+  this.width=width;
+  this.height=height;  
+    
+/**
+ * Sets Rectangle properties.
+ * @memberOf Tee.Rectangle
+ * @param {Number} x The position of left side of rectangle.
+ * @param {Number} y The position of top side of rectangle.
+ * @param {Number} width Amount of rectangle width.
+ * @param {Number} height Amount of rectangle height.
+ */
+  this.set = function(x,y,width,height)
+  {
+    this.x=x;
+    this.y=y;
+    this.width=width;
+    this.height=height; 
+  }
+  
+/**
+ * Sets Rectangle properties from rectangle r parameter.
+ * @public
+ * @memberOf Tee.Rectangle
+ * @param {Tee.Rectangle} r The Rectangle instance to copy values from.
+ */
+  this.setFrom = function(r)
+  {
+    this.x=r.x;
+    this.y=r.y;
+    this.width=r.width;
+    this.height=r.height;
+  }
+  
+/**
+ * @returns {Number} Returns the position in pixels of the right side of the
+ * rectangle.
+ */
+  this.getRight = function()
+  {
+    return this.x+this.width;
+  }
+  
+/**
+ * @returns {Number} Returns the position in pixels of the bottom side of the
+ * rectangle.
+ */
+  this.getBottom = function()
+  {
+    return this.y+this.height; 
+  }
+  
+/**
+ * @param {Number} value Defines the position of top side of rectangle.
+ */
+  this.setTop = function(value)
+  {
+    this.height -= (value-this.y);
+    this.y=value;  
+  }
+  
+/**
+ * @param {Number} value Defines the position of bottom side of rectangle.
+ */
+  this.setBottom=function(value) 
+  {
+    this.height = value - this.y;
+  };
+  
+/**
+ * @param {Number} value Defines the position of left side of rectangle.
+ */
+  this.setLeft=function(value) 
+  {
+    this.width -= (value-this.x);
+    this.x=value;
+  };
+  
+/**
+ * @param {Number} value Defines the position of right side of rectangle.
+ */
+  this.setRight=function(value) 
+  {
+    this.width = value - this.x;
+  };
+  
+ /**
+ * @returns {Boolean} Returns if {@link Tee.Point} p is inside the rectangle.
+ * @param {Tee.Point} p XY position to test.
+ */
+  this.contains=function(p) 
+  {
+    return (p.x>=this.x) && (p.x<=(this.x+this.width)) &&
+         (p.y>=this.y) && (p.y<=(this.y+this.height));
+  };
+  
+/**
+ *
+ * @param {Number} x Horizontal pixels.
+ * @param {Number} y Vertical pixels.
+ */
+  this.offset=function(x,y) 
+  {
+    this.x+=x;
+    this.y+=y;
+  };
+}
+
 function Rectangle(x,y,width,height)
 {
-  this.set(x,y,width,height);
+   return new Tee.Rectangle(x,y,width,height);
 }
 
 /**
@@ -151,12 +266,12 @@ function Rectangle(x,y,width,height)
  * @param {Number} width Amount of rectangle width.
  * @param {Number} height Amount of rectangle height.
  */
-Rectangle.prototype.set=function(x,y,width,height) {
+/*Rectangle.prototype.set=function(x,y,width,height) {
   this.x=x;
   this.y=y;
   this.width=width;
   this.height=height;
-};
+};*/
 
 /**
  * Sets Rectangle properties from rectangle r parameter.
@@ -164,73 +279,73 @@ Rectangle.prototype.set=function(x,y,width,height) {
  * @memberOf Tee.Rectangle
  * @param {Tee.Rectangle} r The Rectangle instance to copy values from.
  */
-Rectangle.prototype.setFrom=function(r) {
+/*Rectangle.prototype.setFrom=function(r) {
   this.x=r.x;
   this.y=r.y;
   this.width=r.width;
   this.height=r.height;
-};
+};*/
 
 /**
  * @returns {Number} Returns the position in pixels of the right side of the
  * rectangle.
  */
-Rectangle.prototype.getRight=function() { return this.x+this.width; };
+//Rectangle.prototype.getRight=function() { return this.x+this.width; };
 
 /**
  * @returns {Number} Returns the position in pixels of the bottom side of the
  * rectangle.
  */
-Rectangle.prototype.getBottom=function() { return this.y+this.height; };
+//Rectangle.prototype.getBottom=function() { return this.y+this.height; };
 
 /**
  * @param {Number} value Defines the position of top side of rectangle.
  */
-Rectangle.prototype.setTop=function(value) {
+/*Rectangle.prototype.setTop=function(value) {
   this.height -= (value-this.y);
   this.y=value;
-};
+};*/
 
 /**
  * @param {Number} value Defines the position of bottom side of rectangle.
  */
-Rectangle.prototype.setBottom=function(value) {
+/*Rectangle.prototype.setBottom=function(value) {
   this.height = value - this.y;
-};
+};*/
 
 /**
  * @param {Number} value Defines the position of left side of rectangle.
  */
-Rectangle.prototype.setLeft=function(value) {
+/*Rectangle.prototype.setLeft=function(value) {
   this.width -= (value-this.x);
   this.x=value;
-};
+};*/
 
 /**
  * @param {Number} value Defines the position of right side of rectangle.
  */
-Rectangle.prototype.setRight=function(value) {
+/*Rectangle.prototype.setRight=function(value) {
   this.width = value - this.x;
-};
+};*/
 
 /**
  * @returns {Boolean} Returns if {@link Tee.Point} p is inside the rectangle.
  * @param {Tee.Point} p XY position to test.
  */
-Rectangle.prototype.contains=function(p) {
+/*Rectangle.prototype.contains=function(p) {
   return (p.x>=this.x) && (p.x<=(this.x+this.width)) &&
          (p.y>=this.y) && (p.y<=(this.y+this.height));
-};
+};*/
 
 /**
  *
  * @param {Number} x Horizontal pixels.
  * @param {Number} y Vertical pixels.
  */
-Rectangle.prototype.offset=function(x,y) {
+/*Rectangle.prototype.offset=function(x,y) {
   this.x+=x;
   this.y+=y;
-};
+};*/
 
 /**
  * @memberOf Tee
