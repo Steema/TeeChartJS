@@ -371,15 +371,13 @@ function minimalTheme(c) {
   applyPalette(c,"seaWash");
   
   if (c.series.items.length > 0) {
-	  for (var i = 0; i < c.series.items.length; i++)
-	  {
-			c.series.items[i].format.fill=c.palette.get(i);
-			if (c.series.items[i].pointer != null)
-			{
-				c.series.items[i].pointer.format.fill=c.palette.get(i);
-				c.series.items[i].pointer.format.stroke.fill = backBlendColor;
-			}
-	  }
+      for (var i = 0; i < c.series.items.length; i++) {
+          c.series.items[i].format.fill=c.palette.get(i);
+          if ((c.series.items[i].pointer != null) && (c.series.items[i].pointer.format != null)) {
+              c.series.items[i].pointer.format.fill=c.palette.get(i);
+              c.series.items[i].pointer.format.stroke.fill = backBlendColor;
+          }
+      }
   }
   
   //axes
@@ -666,7 +664,7 @@ function applyPalette(c,paletteName) {
 	  for (var i = 0; i < c.series.items.length; i++)
 	  {
 		c.series.items[i].format.fill=c.palette.get(i);
-		if (c.series.items[i].pointer != null)
+		if ((c.series.items[i].pointer != null) && (c.series.items[i].pointer.format != null))
 		{
 		  c.series.items[i].pointer.format.fill=c.palette.get(i);
 		}
