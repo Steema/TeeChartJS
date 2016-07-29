@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">              
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <br>
+              <div class="menu_section">
+                <h3>Themes Intro</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-bar-chart"></i> Series <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a target="frame1" onclick="openSample('intro/lines', true);">Lines</a></li>
+                      <li><a target="frame1" onclick="openSample('intro/bars', true);">Bars</a></li>
+                      <li><a target="frame1" onclick="openSample('intro/areas', true);">Areas</a></li>
+                      <li><a target="frame1" onclick="openSample('intro/pie', true);">Pie</a></li>
+                      <li><a target="frame1" onclick="openSample('intro/points', true);">Points</a></li>
+                      <li><a target="frame1" onclick="openSample('intro/gantt', true);">Gantt</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-columns"></i> DashBoards <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a target="frame1" onclick="openSample('intro/scroller', true);">Scroller</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="menu_section">
+                <h3>Reference Demo</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-bar-chart"></i> Series <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a target="frame1" onclick="openSample('series/All');">All</a></li>
+                      <li><a>Line<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/line/line');">Line</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/line/smoothline');">Smooth Line</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/line/stackedline');">Stacked Lines</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/line/linepoint');">Line and Point</a></li>
+                          </ul>
+                      </li>
+                      <li><a target="frame1" onclick="openSample('series/line/point');">Point XY</a></li>
+                      <li><a>Area<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/area/area');">Area</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/area/horizarea');">Horizontal Area</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/area/smootharea');">Smooth Areas</a></li>
+                          </ul>
+                      </li>
+                      <li><a>Bar<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/bar/bar');">Bar</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/bar/barnegative');">Negative values</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/bar/volume');">Volume</a></li>
+                          </ul>
+                      </li>
+                      <li><a target="frame1" onclick="openSample('series/bar/horizbar');">Horiz. Bar</a></li>
+                      <li><a>Pie<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/pie/pie');">Pie</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/pie/multipie');">Multiple Pie</a></li>
+                          </ul>
+                      </li>
+                      <li><a>Donut<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/donut/donut');">Donut</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/donut/multidonut');">Multiple Donut</a></li>
+                          </ul>
+                      </li>
+                      <li><a target="frame1" onclick="openSample('series/bubble/bubble');">Bubble</a></li>
+                      <li><a target="frame1" onclick="openSample('series/candle/candle');">Candle OHLC</a></li>
+                      <li><a target="frame1" onclick="openSample('series/gantt/gantt');">Gantt</a></li>
+                      <li><a>Gauge<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('gauges/gauges');">Gauge</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('gauges/gauge_gallery');">Gauge Gallery</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('gauges/clocks');">Clocks</a></li>
+                          </ul>
+                      </li>
+                      <li><a target="frame1" onclick="openSample('series/spark/spark');">Spark</a></li>
+                      <li><a>World Maps<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/maps/worldmap');">World Maps</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/maps/canvas_maps');">Canvas Maps</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/maps/maps_bubbles');">Bubble Maps</a></li>
+                          </ul>
+                      </li>
+                      <li><a>Polar / Radar<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/polar/polar');">Polar</a></li>
+                              <li class="sub_menu"><a target="frame1" onclick="openSample('series/polar/polar_bar');">Polar Bar</a></li>
+                          </ul>
+                      </li>
+                      <li><a target="frame1" onclick="openSample('series/colorgrid/colorgrid');">Color Grid</a></li>
+                      <li><a target="frame1" onclick="openSample('series/surface/surface');">Surface 3D</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-arrows"></i> Axes <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a target="frame1" onclick="openSample('axes/allaxes');">Axes</a></li>
+                      <li><a target="frame1" onclick="openSample('axes/centeraxes');">Centered axes</a></li>
+                      <li><a target="frame1" onclick="openSample('axes/gridbands');">Grid Bands</a></li>
+                      <li><a target="frame1" onclick="openSample('axes/synchro_many_charts');">Synchronize</a></li>
+                      <li><a target="frame1" onclick="openSample('axes/multiple_axes');">Multiple Axes</a></li>
+                      <li><a target="frame1" onclick="openSample('axes/customlabels');">Custom Labels</a></li>
+                      <li><a target="frame1" onclick="openSample('axes/zoompercent');">Coded zoom</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-list-ul"></i> Legend <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a target="frame1" onclick="openSample('legend/legend');">Legend</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-hand-pointer-o"></i> Interactivity <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('axes/zoomscroll');">Mouse and Touch</a>
+                        <li><a target="frame1" onclick="openSample('series/seriesonclick');">Series onClick</a>
+                        </li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-forward"></i> Animations <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('animations/linefadein');">Series</a></li>
+                        <li><a target="frame1" onclick="openSample('animations/sequence');">Sequence</a></li>
+                        <li><a target="frame1" onclick="openSample('animations/css3_animations');">CSS3 Transitions</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-database"></i> Data Sources <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('sources/fromarray');">From Array</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/FromText');">From Text</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/FromTable');">From Table</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/FromURL');">From URL</a></li>
+                        <li><a target="frame1" onclick="openSample('series/datasource');">From Series</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/fromxml');">From XML</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/fromjson');">From JSON</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/realtime');">Realtime</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/fromtypedarray');">From Typed Array</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/datetime');">DateTime data</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/fromYahooFinance');">Yahoo Finance</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/fromWUnderground');">Weather Underground</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/battery');">Battery Level</a></li>
+                        <li><a target="frame1" onclick="openSample('sources/parse_com');">Parse.com objects</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-picture-o"></i> Images <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('basic/BackImage');">From Array</a></li>
+                        <li><a target="frame1" onclick="openSample('export/ToPNG');">To PNG and JPEG</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-pencil-square-o"></i> Editors <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('editor/ChartEditor');">Chart Editor</a></li>
+                        <li><a target="frame1" onclick="openSample('editor/modaleditor');">Modal Editor</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-columns"></i> Dashboards <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('dashboard/tutorial/index');">Multi-Dim Tutorial</a></li>
+                        <li><a target="frame1" onclick="openSample('dashboard/demographics');">Demographics</a></li>
+                        <li><a target="frame1" onclick="openSample('dashboard/productSales');">Product Sales</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-object-ungroup"></i> 3D <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('canvas/webgl/basic_3d');">Basic 3D</a></li>
+                        <li><a target="frame1" onclick="openSample('canvas/webgl/threejs_example');">Advanced</a></li>
+                        <li><a target="frame1" onclick="openSample('canvas/webgl/maps_3d');">Maps 3D</a></li>
+                        <li><a target="frame1" onclick="openSample('canvas/webgl/index');">WebGL&trade; 3D</a></li>
+                    </ul>
+                  </li>
+                  <li class="hide"><a><i class="fa fa-cog"></i> Chart Generator <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('generator/index');">Chart Generator</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-area-chart"></i> Other <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('extra/annotations');">Annotations</a></li>
+                        <li><a target="frame1" onclick="openSample('extra/buttons');">Buttons</a></li>
+                        <li><a target="frame1" onclick="openSample('extra/ToolTips');">Tool tips</a></li>
+                        <li><a target="frame1" onclick="openSample('extra/domToolTips');">CSS Tool tips</a></li>
+                        <li><a target="frame1" onclick="openSample('extra/domToolTips_SubChart');">Tips with Charts</a></li>
+                        <li><a>Cursor Tool<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('extra/CursorTool');">Cursor Tool</a></li>
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('extra/CursorTool_Interpolate');">Cursor Tool Interpolate</a></li>
+                          </ul>
+                        </li>
+                        <li><a target="frame1" onclick="openSample('extra/floorreflection');">Floor reflection</a></li>
+                        <li><a>Panel<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('basic/PanelShadow');">Panel</a></li>
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('basic/Transparent');">Transparent</a></li>
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('basic/canvasalign');">Full page align</a></li>
+                          </ul>
+                        </li>
+                        <li><a target="frame1" onclick="openSample('basic/TitleFooter');">Title and Footer</a></li>
+                        <li><a target="frame1" onclick="openSample('extra/slider');">Slider</a></li>
+                        <li><a>Series Scroller<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('extra/scroller');">Series Scroller</a></li>
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('extra/scroller_datetime');">Datetime Scroller</a></li>
+                          </ul>
+                        </li>
+                        <li><a>Canvas<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('canvas/custom_paint');">Custom Painting</a></li>
+                            <li class="sub_menu"><a target="frame1" onclick="openSample('canvas/size_percent_resize');">Percent Size and Auto Resize</a></li>
+                          </ul>
+                        </li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-cog"></i> Plugins <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('plugins/plugins');">List of Plugins</a></li>
+                        <li><a target="frame1" onclick="openSample('plugins/jquery/teechart_jquery');">JQuery TeeChart</a></li>
+                        <li class="hide"><a target="frame1" onclick="openSample('http://steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/demos/2012.09.30.1/client">Embarcadero HTML5 Builder</a></li>
+                        <li><a target="frame1" onclick="openSample('plugins/typescript/index');">Microsoft TypeScript</a></li>
+                        <li><a target="frame1" onclick="openSample('http://www.nuget.org/packages/TeeChart">Microsoft Visual Studio</a></li>
+                        <li><a target="frame1" onclick="openSample('https://npmjs.org/package/TeeChart">Node.js package</a></li>
+                        <li><a target="frame1" onclick="openSample('extra/google_gadget');">Google Gadget</a></li>
+                        <li><a target="frame1" onclick="openSample('http://steema.us/wp">WordPress</a></li>
+                        <li><a target="frame1" onclick="openSample('http://steema.us/drupal">Drupal</a></li>
+                        <li><a target="frame1" onclick="openSample('http://steema.us/joomla25">Joomla</a></li>
+                        <li><a target="frame1" onclick="openSample('http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart">Smart Mobile Studio</a></li>
+                        <li><a target="frame1" onclick="openSample('canvas/webgl/index');">Three.js WebGL 3D</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-cogs"></i> Unit Tests <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a target="frame1" onclick="openSample('tests/index');">Unit Tests</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <!-- /sidebar menu -->
+          </div>
+        </div>
+            
+        <!-- Custom Theme Scripts -->
+        <script src="menu/custom.min.js"></script>
+    </body>
+</html>
