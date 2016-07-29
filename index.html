@@ -23,11 +23,12 @@
             html { height:100%; }
             body { font-family: tahoma; overflow-x:hidden; height:100%; width:100%; margin:0px; background-color:#FFFFFF;}
             #options { position: absolute; margin-left: 240px; height:60px; width: 100%; display: none;}
+            #selectors { margin-top: 20px; }
             #content_div { position: fixed; left:240px; right: -30px; height: 100%; }
             #frame1 { width:100%; height:100%; border:0;}
-            #selectors { margin-top: 20px; }
             img { border-width:0; }
             #titletext { color:white; font-size:16px;}
+            #sample_btn { position: fixed; bottom: 0px; left: 50%; }
         </style>
 
         <script src="3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
@@ -111,23 +112,31 @@
                         </iframe>
                     </div>
                 </div>
+
+                <button id="sample_btn" type="button" class="btn btn-success" onclick="openSample();">See in a new tab</button>
             </div>
         </div>
 
         <script type="text/javascript">
 
             function openSample(url, withThemeOptions) {
-                var frame = get("frame1");
-                frame.setAttribute("src", url + ".htm");
+                if (url) {
+                    var frame = get("frame1");
+                    frame.setAttribute("src", url + ".htm");
 
-                var options = get("options");
-                var content = get("content_div");
-                if (withThemeOptions) {
-                    options.style.display = "block";
-                    content.setAttribute("style", "top: 60px");
-                } else {
-                    options.style.display = "none";
-                    content.setAttribute("style", "top: 0px");
+                    var options = get("options");
+                    var content = get("content_div");
+                    if (withThemeOptions) {
+                        options.style.display = "block";
+                        content.setAttribute("style", "top: 60px");
+                    } else {
+                        options.style.display = "none";
+                        content.setAttribute("style", "top: 0px");
+                    }
+                }
+                else {
+                    var frame = get("frame1");
+                    window.open(frame.getAttribute("src"));
                 }
             }
 
