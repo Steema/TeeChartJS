@@ -33,14 +33,13 @@ function draw() {
   Chart1.addSeries(new Tee.Line([5,3,2,null,7,1]) );
   Chart1.addSeries(new Tee.Line([4,4,null,8,2,9]) ).visible=true;
   
+  changeTheme(Chart1, "minimal");
+  
   Chart1.series.items[0].format.stroke.size=3;
 
-  Chart1.axes.left.format.stroke.fill="red";
-
   Chart1.title.text="TeeChart for JavaScript";
-  Chart1.title.format.font.style="18px Verdana";
 
-  Chart1.series.items[0].title="Blue";
+  Chart1.series.items[0].title="Red";
   Chart1.series.items[1].title="Orange";
 
   // Null values, skip by default:
@@ -48,7 +47,8 @@ function draw() {
   Chart1.series.items[1].treatNulls="skip";
 
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+  
+  Chart1.draw();
 
   sh_highlightDocument();
 }
@@ -65,7 +65,7 @@ Chart1.draw();
   <br/>
   <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
   <br/>
-  <input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible= !Chart1.panel.format.gradient.visible; Chart1.draw();" checked>Gradient
+  <input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible=this.checked; Chart1.draw();">Gradient
   <br/>
   <input type="checkbox" name="skipNulls" onclick="var skip=this.checked ? 'skip' : 'dontPaint'; Chart1.series.items[0].treatNulls=skip; Chart1.series.items[1].treatNulls=skip; Chart1.draw();" checked>Skip Nulls
 </div>
@@ -97,12 +97,9 @@ function draw() {
 
   Chart1.series.items[0].format.stroke.size=3;
 
-  Chart1.axes.left.format.stroke.fill="red";
-
   Chart1.title.text="TeeChart for JavaScript";
-  Chart1.title.format.font.style="18px Verdana";
 
-  Chart1.series.items[0].title="Blue";
+  Chart1.series.items[0].title="Red";
   Chart1.series.items[1].title="Orange";
 
   // Null values, skip by default:
@@ -110,19 +107,17 @@ function draw() {
   Chart1.series.items[1].treatNulls="skip";
   
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+
+  Chart1.draw();
 }
 &lt;/script&gt;
-
-// Call the draw() function, for example at body onload event:
 </pre>
 
 <br/>
-<pre>
+<pre class="sh_javascript">
+// Call the draw() function, for example at body onload event:
 &lt;body onload="draw()"&gt;
 &lt;canvas id="canvas" width="600" height="400"&gt;&lt;/canvas&gt;
-<br/>
-<br/>
 </pre>
 
 <br/>
