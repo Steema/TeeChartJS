@@ -113,25 +113,30 @@
                     </div>
                 </div>
 
-                <button id="sample_btn" type="button" class="btn btn-success" onclick="openSample();">See in a new tab</button>
+                <button id="sample_btn" type="button" class="btn btn-success" onclick="openSample();">Open in a new tab</button>
             </div>
         </div>
 
         <script type="text/javascript">
 
-            function openSample(url, withThemeOptions) {
+            function openSample(url, button, withThemeOptions) {
                 if (url) {
-                    var frame = get("frame1");
-                    frame.setAttribute("src", url + ".htm");
+                    if (button === 0) {
+                        var frame = get("frame1");
+                        frame.setAttribute("src", url + ".htm");
 
-                    var options = get("options");
-                    var content = get("content_div");
-                    if (withThemeOptions) {
-                        options.style.display = "block";
-                        content.setAttribute("style", "top: 60px");
-                    } else {
-                        options.style.display = "none";
-                        content.setAttribute("style", "top: 0px");
+                        var options = get("options");
+                        var content = get("content_div");
+                        if (withThemeOptions) {
+                            options.style.display = "block";
+                            content.setAttribute("style", "top: 60px");
+                        } else {
+                            options.style.display = "none";
+                            content.setAttribute("style", "top: 0px");
+                        }
+                    }
+                    else if (button === 1) {
+                        window.open(url + ".htm");
                     }
                 }
                 else {
