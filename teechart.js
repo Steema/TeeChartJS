@@ -2548,29 +2548,15 @@ function Axis(chart,horizontal,otherSide) {
     
     this.formatValueString=function(value)
     {
-      if (this.valueFormat){
-        var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1); 
+	  var fixed = this.fixedDecimals ? value.toFixed(this.decimals) : value.toFixed(0);
+	  var localeVal = value.toLocaleString(this.chart.language);
         
-        var AmountWithCommas = (value * 1).toLocaleString();
-        var arParts = String(AmountWithCommas).split(DecimalSeparator);
-        var intPart = arParts[0];
-        
-        var padding = "";
-        if (this.decimals > 0)
-          for (var i=0; i<this.decimals; i++) {
-            padding = padding + "0";    
+	  if (fixed.indexOf(".")!=-1) {
+		var n = 1.1; n = n.toLocaleString(this.chart.language).substring(1, 2);
+	    var fractions = fixed.substring(fixed.indexOf(".")+1); //zero based idx
+		return localeVal.substring(0,localeVal.indexOf(n) == -1 ? localeVal.length : localeVal.indexOf(n))+n+fractions;
           }
-        
-        var decPart = (arParts.length > 1 ? arParts[1] : '');
-        decPart = (decPart + padding).substr(0,this.decimals);
-        
-        if (decPart.length > 0)
-          return intPart + DecimalSeparator + decPart;
-        else
-          return intPart;
-      }
-      else
-        return value.toFixed(this.decimals);
+	  else return value;
     }
 
     /**
@@ -2619,16 +2605,7 @@ function Axis(chart,horizontal,otherSide) {
             s=new Date(value).toDateString(); // fallback
       }
       else
-      {
-      if (this.fixedDecimals)
         s = this.formatValueString(value);
-      else if (this.valueFormat) {
-        s=value.toFixed(v==value ? 0 : this.decimals);
-            s = (s*1).toLocaleString(); //B558
-          }      
-      else
-        s=value.toFixed(v==value ? 0 : this.decimals);      
-      }
 
       if (this.ongetlabel) {
         s=this.ongetlabel(value,s);
@@ -4868,6 +4845,19 @@ Tee.Series=function(o,o2) {
   Tee.Series.prototype.getRect=function() { return new Rectangle(); }
 
   Tee.Series.prototype.clicked=function() { return -1; }
+  
+  Tee.Series.prototype.fixedFloatToLocal=function(value, decimals) {
+  
+	  var fixed = value.toFixed(decimals);
+	  var localeVal = value.toLocaleString(this.chart.language);
+	  
+	  if (fixed.indexOf(".")!=-1) {
+		var n = 1.1; n = n.toLocaleString(this.chart.language).substring(1, 2);
+	    var fractions = fixed.substring(fixed.indexOf(".")+1); //zero based idx
+		return localeVal.substring(0,localeVal.indexOf(n) == -1 ? localeVal.length : localeVal.indexOf(n))+n+fractions;
+	  }
+	  else return value;
+  }  
 
  /**
   * @returns {String} Returns the text string for a given series point index value.
@@ -4880,12 +4870,12 @@ Tee.Series=function(o,o2) {
           return d.format ? d.format(this.dateFormat) : d.toString();
         else
         if (this.valueFormat)
-          return d.toLocaleString();
+          return d.toLocaleString(this.chart.language);
         else
         if (trunc(d)==d)
-          return d.toFixed(0);
+          return this.fixedFloatToLocal(d,0);
         else
-          return d.toFixed(this.decimals);
+          return this.fixedFloatToLocal(d,this.decimals);
       }
       else
         return "0";
@@ -5577,6 +5567,7 @@ Tee.Chart=function(canvas,data,type)
    */
   this.isMozilla=(typeof window !== 'undefined') && window.mozRequestAnimationFrame;
 
+  this.language = window.navigator.userLanguage || window.navigator.language;
 
   if (canvas) {
     if ((typeof HTMLCanvasElement!=="undefined") && (canvas instanceof HTMLCanvasElement))
