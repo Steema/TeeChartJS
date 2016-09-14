@@ -1114,7 +1114,7 @@ Tee.Format=function(chart)
     if ((a=="right") || (a=="end"))
        x+=bounds.width;
 
-    var rows=text.split("\n"), l=rows.length;
+    var rows=(text+"").split("\n"), l=rows.length;
 
     if (l>1) {
         var h=this.textHeight(rows[0]);
