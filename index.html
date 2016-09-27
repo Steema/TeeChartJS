@@ -1,207 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
 
-<meta property="og:title" content="Create charts with multiple-dimensions using JavaScript"/>
-<meta property="og:image" content="http://www.steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/docs/images/html5.png" />
-<meta property="og:description" content="TeeChart for JavaScript Data-mining" />
-<meta property="og:url" content="http://www.steema.com/teechart/html5"/>
+        <meta property="og:title" content="Create charts with multiple-dimensions using JavaScript"/>
+        <meta property="og:image" content="http://www.steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/docs/images/html5.png" />
+        <meta property="og:description" content="TeeChart for JavaScript Data-mining" />
+        <meta property="og:url" content="http://www.steema.com/teechart/html5"/>
 
-<meta name="Author" content="Steema Software" />
-<meta name="Generator" content="Steema" />
-<meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
-<meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, Three.js, WebGL, 3D, JS Chart, Data Visualization, Chart, Graph, Map, Surface, Heatmap, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
+        <meta name="Author" content="Steema Software" />
+        <meta name="Generator" content="Steema" />
+        <meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
+        <meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, Three.js, WebGL, 3D, JS Chart, Data Visualization, Chart, Graph, Map, Surface, Heatmap, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
 
-<style type="text/css">
-html { height:100%; }
-body { font-family: tahoma; overflow-x:hidden; height:100%; margin:0px; background-color:#FFFFFF; }
-#header { position: fixed; margin:0; top:0px; width:100%; height:80px; background-color: #6B87AC; padding-bottom:10px; }
-#tree { width:200px; margin-top:92px; height:86%; position:fixed; overflow:auto; padding-left:4px; background-color:white; }
-#content_div { height:100%; }
-#frame1 { margin-top:92px; margin-left:220px; width:84%; height:85%; border:0; }
-.tableheader { width:100%; }
-img { border-width:0; }
-#titletext { color:white; font-size:16px;}
-</style>
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="favicon.ico">
 
-<link rel="StyleSheet" href="dtree.css" type="text/css" />
-<script type="text/javascript" src="dtree.js"></script>
+        <style type="text/css">
+            html { height:100%; }
+            body { font-family: tahoma; overflow-x:hidden; height:100%; width:100%; margin:0px; background-color:#FFFFFF;}
+            #options { position: absolute; margin-left: 240px; height:60px; width: 100%; display: none;}
+            #selectors { margin-top: 20px; }
+            #content_div { position: fixed; left:240px; right: -30px; height: 100%; }
+            #frame1 { width:100%; height:100%; border:0;}
+            img { border-width:0; }
+            #titletext { color:white; font-size:16px;}
+            #sample_btn { position: fixed; bottom: 0px; left: 50%; }
+        </style>
 
-<title>TeeChart for JavaScript HTML5 Canvas and WebGL 3D, Live Examples</title>
-</head>
+        <script src="3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+        <link href="3rd_party/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link href="menu/custom.css" rel="stylesheet">
+        <script src="menu/sidemenu.js"></script>
 
-<body>
+        <title>TeeChart for JavaScript HTML5 Canvas and WebGL 3D, Live Examples</title>
+    </head>
 
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-7504244-1']);
-  _gaq.push(['_trackPageview']);
+    <body class="nav-md">
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-7504244-1']);
+            _gaq.push(['_trackPageview']);
 
-</script>
+            (function () {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/ca_ES/all.js#xfbml=1&appId=19094609301";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+        </script>
 
-<div id="header">
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/ca_ES/all.js#xfbml=1&appId=19094609301";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
 
-<!-- <a href="javascript:testAll();">Test All</a>-->
+        <div class="container body">
+            <div class="main_container">      
+                <!-- load menus -->
+                <div class="include" data-include="menu/sidemenu"></div>
 
-    <table class="tableheader"><tr>
-    <td id="steema">
-      <a href="http://www.steema.com" title="Steema Software. Charting for Developers.">
-     <img src="images/logo-steema-v3.png" alt="Steema Software logo picture"/>
-     </a></td>
-    <td id="logo1">
-     <a href="http://www.steema.com/teechart/html5" title="TeeChart for JavaScript">
-     <img src="images/html5.png" alt="TeeChart for HTML5 logo"/></a></td>
-    <td id="logo2"><span id="titletext">TeeChart, a Cross-browser HTML5 Canvas Charting<br/>and Graphing Javascript library</span></td>
-    <td id="logo3"><a href="http://www.w3.org/html/logo/">
-     <img src="images/HTML5_Logo_64.png" width="64" height="64" alt="HTML5 Powered with Graphics, 3D &amp; Effects" title="HTML5 Powered with Graphics, 3D &amp; Effects"/>
-     </a></td>
-    <td id="w3logos">
-      <a href="http://validator.w3.org/check/referer">
-          <img style="width:88px;height:31px"
-              src="images/valid-html401-blue.png" alt="Valid HTML Markup!" title="Valid HTML Markup!"/>
-      </a>
-      <br/>
-      <a href="http://jigsaw.w3.org/css-validator/check/referer">
-          <img style="width:88px;height:31px" src="images/vcss-blue.gif" alt="Valid CSS3!" title="Valid CSS3!"/>
-      </a>
+                <!--options-->
+                <div id="options">
+                    <table id="selectors">
+                        <tr>
+                            <td style="padding-left:15px; padding-right: 5px;">Theme:</td>
+                            <td>
+                                <select id="theme"  onchange="changeTheme(this.value);">
+                                    <option value="">Default</option>
+                                    <option value="dark">Dark</option>
+                                    <option value="daybreak">Daybreak</option>    
+                                    <option value="excel">Microsoft Excel (TM)</option>
+                                    <option value="minimal" selected>Minimal</option>  
+                                    <option value="twilight">Twilight</option>
+                                </SELECT></td>
+                            <td style="padding-left:15px; padding-right: 5px;">Palette:</td>
+                            <td>
+                                <select id="palette"  onchange="changePalette(this.value);">
+                                    <option value="">Default</option>
+                                    <option value="cool">Cool</option> 
+                                    <option value="excel">Microsoft Excel (TM)</option>  
+                                    <option value="onBlack">On Black</option>
+                                    <option value="opera">Opera</option>
+                                    <option value="rainbow">Rainbow</option>
+                                    <option value="redRiver">Red River</option>
+                                    <option value="seaWash" selected>Sea Wash</option>
+                                    <option value="warm">Warm</option>  
+                                    <option value="windowsxp">Windows XP</option>  
+                                </SELECT></td></tr></table>
+                </div>
 
-      <a href="https://twitter.com/share" class="twitter-share-button" data-via="SteemaSoftware" data-related="steemasoftware" data-hashtags="TeeChart">Tweet</a>
+                <!-- page content -->
+                <div class="right_col" role="main">
+                    <div id="content_div">
+                        <iframe id="frame1" name="main" src="basic/Basic.htm">
+                            <p>Your browser does not support iframes.</p>
+                        </iframe>
+                    </div>
+                </div>
 
-   <div class="fb-like" data-href="http://www.steema.com/teechart/html5"
-     data-send="false" data-layout="box_count" data-width="450" data-show-faces="false" data-font="verdana">
-   </div>
+                <button id="sample_btn" type="button" class="btn btn-success" onclick="openSample();">Open in a new tab</button>
+            </div>
+        </div>
 
-      </td>
-    </tr>
-    </table>
-</div>
+        <script type="text/javascript">
 
-<div id="tree">
-  <script type="text/javascript" src="treeitems.js"></script>
-</div>
+            function openSample(url, button, withThemeOptions) {
+                if (url) {
+                    if (button === 0) {
+                        var frame = get("frame1");
+                        frame.setAttribute("src", url + ".htm");
 
-<div id="content_div">
+                        var options = get("options");
+                        var content = get("content_div");
+                        if (withThemeOptions) {
+                            options.style.display = "block";
+                            content.setAttribute("style", "top: 60px");
+                        } else {
+                            options.style.display = "none";
+                            content.setAttribute("style", "top: 0px");
+                        }
+                    }
+                    else if (button === 1) {
+                        window.open(url + ".htm");
+                    }
+                }
+                else {
+                    var frame = get("frame1");
+                    window.open(frame.getAttribute("src"));
+                }
+            }
 
+            var topTheme = "minimal";  //defaults
+            var topPalette = "seaWash";
 
-<!--
- <iframe id="frame1" name="main" src="basic/Basic.htm">
-   <p>Your browser does not support iframes.</p>
- </iframe>
--->
+            function changeTheme(aTheme) {
+                top.frames['main'].changeTheme(aTheme);
+                topTheme = aTheme;
 
-</div>
+                var selectors = document.getElementById("selectors");
+                var theme = document.getElementById("theme");
+                var palette = document.getElementById("palette");
 
-<script type="text/javascript">
+                if (aTheme == "dark") {
+                    document.getElementById("options").style.backgroundColor = "#0C0C0C";
 
-//<![CDATA[
-function get(id) { return document.getElementById(id); }
+                    selectors.style.backgroundColor = "#0C0C0C";
+                    selectors.style.color = "white";
+                    theme.style.backgroundColor = "#747474";
+                    theme.style.color = "white";
+                    palette.style.backgroundColor = "#747474";
+                    palette.style.color = "white";
 
-function getWidth() {
-  if (self.innerHeight)
-     return self.innerWidth;
-  else
-  if (document.documentElement && document.documentElement.clientHeight)
-     return document.documentElement.clientWidth;
-  else
-  if (document.body)
-     return document.body.clientWidth;
-  else
-     return 0;
-}
+                    //top.frames['main'] or parent.main
+                    parent.main.document.body.style.backgroundColor = "#0C0C0C";
 
-var isMobile=(getWidth()<400) || (document.height>document.width);
+                    if (parent.main.a1 != null)
+                        parent.main.a1.format.font.fill = "white";
 
-if (isMobile) {
-  var tree=get("tree"),
-      content=get("content_div"),
-      header=get("header");
+                    if (parent.main.a2 != null)
+                        parent.main.a2.format.font.fill = "lightgray";
+                } else {
+                    if ((aTheme == "minimal") || (aTheme == "excel")) {
+                        if (parent.main.a1 != null)
+                            parent.main.a1.format.font.fill = "rgba(124,124,184,0.9)";
 
-  get("logo2").style.display='none';
-  get("w3logos").style.display='none';
-  get("logo3").style.display='none';
+                        if (parent.main.a2 != null)
+                            parent.main.a2.format.font.fill = "rgba(124,124,184,0.9)";
+                    } else if (aTheme == "twilight") {
+                        if (parent.main.a1 != null)
+                            parent.main.a1.format.font.fill = "white";
 
-  get("steema").align="center";
+                        if (parent.main.a2 != null)
+                            parent.main.a2.format.font.fill = "lightgray";
+                    } else {
+                        if (parent.main.a1 != null)
+                            parent.main.a1.format.font.fill = "rgba(0,0,0,0.6)";
 
-  content.style.display='none';
-  tree.style.width=""+getWidth()+"px";
+                        if (parent.main.a2 != null)
+                            parent.main.a2.format.font.fill = "rgba(0,0,0,0.6)";
+                    }
 
-  tree.style.height="1000px";
-  tree.style.position="";
+                    document.getElementById("options").style.backgroundColor = "#FFFFFF";
 
-  document.body.style.height="";
+                    parent.main.document.body.style.backgroundColor = "#FFFFFF";
+                    selectors.style.backgroundColor = "#FFFFFF";
+                    selectors.style.color = "black";
+                    theme.style.backgroundColor = "#FFFFFF";
+                    theme.style.color = "black";
+                    palette.style.backgroundColor = "#FFFFFF";
+                    palette.style.color = "black";
+                }
 
-  d.config.target="";
+                document.getElementById("palette").value = top.frames['main'].Chart1.paletteName;
 
-  tree.children[1].style.fontSize='20px';
+                top.frames['main'].Chart1.draw();
+            }
 
-  var n, link, folder;
+            function changePalette(palette) {
+                top.frames['main'].changePalette(palette);
+                topPalette = palette;
 
-  for (n=0; n<d.aNodes.length; n++) {
-    link=get('sd'+n.toFixed(0));
-    if (link) {
-      link.target="";
-      link.style.fontSize='20px';
-    }
+                top.frames['main'].Chart1.draw();
+            }
 
-    folder=get('id'+n.toFixed(0));
-    if (folder) {
-      folder.style.height='36px';
-      folder.style.width='36px';
-    }
+            function get(id) {
+                return document.getElementById(id);
+            }
 
-    folder=get('jd'+n.toFixed(0));
-    if (folder) {
-      folder.style.height='36px';
-      folder.style.width='36px';
-    }
-  }
-}
-else
-{
-  var frame1 = document.createElement("iframe");
-  frame1.setAttribute('id','frame1');
-  frame1.setAttribute('name','main');
-  frame1.setAttribute("src", "basic/Basic.htm");
-  frame1.setAttribute("webkitallowfullscreen","");
-  get('content_div').appendChild(frame1);
-}
+            function getWidth() {
+                if (self.innerHeight)
+                    return self.innerWidth;
+                else
+                if (document.documentElement && document.documentElement.clientHeight)
+                    return document.documentElement.clientWidth;
+                else
+                if (document.body)
+                    return document.body.clientWidth;
+                else
+                    return 0;
+            }
 
-function testAll() {
-  var n=0;
-  function change() {
-    var s=d.aNodes[n++].url;
-    if (s!="") main.location=s;
-    if (n<d.aNodes.length)
-      setTimeout(change,1000);
-  }
-  setTimeout(change,1000);
-}
+            function testAll() {
+                var n = 0;
+                function change() {
+                    var s = d.aNodes[n++].url;
+                    if (s !== "")
+                        main.location = s;
+                    if (n < d.aNodes.length)
+                        setTimeout(change, 1000);
+                }
+                setTimeout(change, 1000);
+            }
+        </script>
 
-//]]>
-</script>
-
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-
-
-</body>
+        <script>!function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (!d.getElementById(id)) {
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "http://platform.twitter.com/widgets.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }
+            }(document, "script", "twitter-wjs");</script>
+    </body>
 </html>
