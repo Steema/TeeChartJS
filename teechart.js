@@ -2,7 +2,7 @@
  * @preserve TeeChart(tm) for JavaScript(tm)
  * @fileOverview TeeChart for JavaScript(tm)
  * v1.8 April 2015
- * Copyright(c) 2012-2015 by Steema Software SL. All Rights Reserved.
+ * Copyright(c) 2012-2016 by Steema Software SL. All Rights Reserved.
  * http://www.steema.com
  *
  * Licensed with commercial and non-commercial attributes,
@@ -1617,6 +1617,7 @@ Tee.DragTool.prototype=new Tee.Tool();
  * @property {String} direction Determines if the cursor will be displayed as "vertical", "horizontal" or "both".
  * @property {Tee.Format} format Properties to control the cursor lines stroke appearance.
  * @property {Tee.Point} size The size of cursor, {x:0, y:0} means lines will cover full axes bounds.
+ * @property {boolean} followMouse When true the cursor follows mouse movement over the chart.
  */
 Tee.CursorTool=function(chart) {
   Tee.Tool.call(this,chart);
@@ -5532,8 +5533,8 @@ function Axes(chart)
  * Chart1.draw();
  * @constructor
  * @class The main Chart class
- * @param {String|HTMLCanvasElement} [canvas] Optional canvas id or <a href="http://www.w3.org/TR/html5/the-canvas-element.html">element</a>.
- * @property {HTMLCanvasElement} canvas The <a href="http://www.w3.org/TR/html5/the-canvas-element.html">canvas</a> where this chart will paint to.
+ * @param {String|HTMLCanvasElement} [canvas] Optional canvas id or <a href="https://www.w3.org/wiki/HTML/Elements/canvas">element</a>.
+ * @property {HTMLCanvasElement} canvas The <a href="https://www.w3.org/wiki/HTML/Elements/canvas">canvas</a> where this chart will paint to.
  * @property {Tee.Rectangle} bounds The rectangle where this chart will be painted inside canvas.
  * @property {Tee.Palette} palette The list of colors to use as default colors for series and points.
  * @property {Tee.Chart.Aspect} aspect Contains properties related to 3D and graphics parameters.
@@ -6261,6 +6262,7 @@ Tee.Chart=function(canvas,data,type)
  * @property {Number} [barSize=70] Defines the percent size of bars on available space.
  * @property {Number} [offset=0] Defines the percent bar size to offset each bar.
  * @property {String} [barStyle="bar"] Which shape to draw ("bar", "ellipse", "line").
+ * @property {Boolean} [stacked="no"] Use "no", "yes", "100", "sideAll", "self", "side" to define stack behaviour with other BarSeries.
  */
 Tee.CustomBar=function(o,o2) {
 
