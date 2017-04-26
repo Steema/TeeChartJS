@@ -4874,9 +4874,9 @@ Tee.Series=function(o,o2) {
           return d.toLocaleString(this.chart.language);
         else
         if (trunc(d)==d)
-          return this.fixedFloatToLocal(d,0);
+          return this.fixedFloatToLocal(d,0).toString();
         else
-          return this.fixedFloatToLocal(d,this.decimals);
+          return this.fixedFloatToLocal(d,this.decimals).toString();
       }
       else
         return "0";
