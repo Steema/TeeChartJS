@@ -1,7 +1,7 @@
 // -------------------------------------------------------------
 // TeeChart(tm) for JavaScript(tm)
-// v1.4 - December 2012
-// Copyright(c) 2012 by Steema Software SL. All Rights Reserved.
+// v1.9 - April 2017
+// Copyright(c) 2012-2017 by Steema Software SL. All Rights Reserved.
 // www.steema.com
 //
 // JavaScript is a trademark of Oracle Corporation.
@@ -400,7 +400,7 @@ Tee.Table=function(table,chart) {
 
     if (c.legend.showValues()) {
         var s=c.series.firstVisible();
-      	pos=2+c.series.items.indexOf(s);
+        pos=2+c.series.items.indexOf(s);
         bycols=!bycols;
     }
 
