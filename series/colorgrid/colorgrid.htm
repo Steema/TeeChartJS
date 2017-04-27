@@ -33,6 +33,11 @@ function draw() {
   Chart1.panel.transparent=true;
   Chart1.axes.left.grid.centered=true;
   Chart1.axes.bottom.grid.centered=true;
+  
+  Chart1.axes.left.labels.fixedDecimals=true;
+  Chart1.axes.left.labels.decimals = 2;
+  Chart1.axes.right.labels.fixedDecimals=true;
+  Chart1.axes.right.labels.decimals = 2;
 
   Chart1.tools.add(new Tee.ToolTip(Chart1));
 
