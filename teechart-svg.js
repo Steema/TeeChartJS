@@ -1,7 +1,7 @@
 // -------------------------------------------------------------
 // TeeChart(tm) for JavaScript(tm)
-// v1.4 - December 2012
-// Copyright(c) 2012 by Steema Software SL. All Rights Reserved.
+// v1.9 - April 2017
+// Copyright(c) 2012-2017 by Steema Software SL. All Rights Reserved.
 // www.steema.com
 //
 // JavaScript is a trademark of Oracle Corporation.
