@@ -1346,7 +1346,7 @@ Tee.Annotation=function(chart,text,x,y) {
 
   /**
    * @property {Tee.Point} position Top-left coordinates of annotation rectangle.
-  `* @default x:10, y:10
+   * @default x:10, y:10
    */
   this.position=new Point(x || 10, y || 10);
 
@@ -2881,12 +2881,9 @@ function Axis(chart,horizontal,otherSide) {
   */
   function nextStep(value) {
     if (! isFinite(value)) return 1;
-    else
-    if (value>=10) return 10*nextStep(0.1*value);
-    else
-    if (value<1) return 0.1*nextStep(value*10);
-    else
-      return (value<2) ? 2 : (value<5) ? 5 : 10;
+    else if (value>=10) return 10*nextStep(0.1*value);
+    else if (value<1) return 0.1*nextStep(value*10);
+    else return (value<2) ? 2 : (value<5) ? 5 : 10;
   }
 
  /**
@@ -5873,7 +5870,14 @@ Tee.Chart=function(canvas,data,type)
     var done=false, c=this.chart;
 
     c.calcMouse(event.touches ? event.touches[0] : event,p);
+	    var inRect=c.series.anyUsesAxes() && c.chartRect.contains(p);
 
+	    doubleTap(c);
+    	if(c.zoom.enabled){
+    		twoFingersZoom(c,c.zoom);
+    	}    
+    
+    
     var inRect=c.series.anyUsesAxes() && c.chartRect.contains(p);
 
     if (event.touches) {
@@ -5881,8 +5885,9 @@ Tee.Chart=function(canvas,data,type)
       // two-finger pinch to zoom, one finger to scroll
 
       if (event.touches.length>1) {
-        c.zoom.active=c.zoom.enabled && inRect;
-        if (c.zoom.active) c.scroll.active=false;
+       // c.zoom.active=c.zoom.enabled && inRect;
+    	  //if (c.zoom.active)
+    	  c.scroll.active=false;
       }
       else {
         c.scroll.active=c.scroll.enabled && inRect;
@@ -8722,4 +8727,133 @@ var top = 3,
 }();
 
 }).call(this);
+
+
+
+/*TOUCH FUNCTIONS*/
+/**
+ * Double tap function reset the axes of the chart if canvas is double tapped.
+ */
+function doubleTap(chart){
+	var canvas=chart.canvas;
+	var timeout;
+	var lastTap = 0;
+	canvas.addEventListener('touchend', function(e) {
+	    var currentTime = new Date().getTime();
+	    var tapLength = currentTime - lastTap;
+	    clearTimeout(timeout);
+	    if (tapLength < 600 && tapLength > 100) {
+	    	chart.zoom.reset();
+	    	chart.draw();
+	    } 
+	    else {
+	    	timeout = setTimeout(function() {
+	        	clearTimeout(timeout);
+	        }, 600);
+	    }
+	    lastTap = currentTime;
+	    e.preventDefault();
+	});
+	
+}
+
+/**
+ * Zoom the axes of the chart changing the min and the max value when two fingers are touching and moving in the canvas.
+ */
+
+function twoFingersZoom(chart,zoom){
+	
+	var canvas = chart.canvas;
+	var timer;
+	var maxDistX=0, minDistX=0, maxDistY=0, minDistY=0;
+	var newMinDistX=0, newMaxDistX=0, newMinDistY=0, newMaxDistY=0;
+	var oldMinDistX=0, oldMaxDistX=0, oldMinDistY=0, oldMaxDistY=0;
+	var touches = [];
+	var touchedMoreThanOnceStart;
+	var pMinX, pMinY, pMaxX, pMaxY;
+	var iniMinX, iniMinY, iniMaxX, iniMaxY;
+	touchedMoreThanOnceStart=false;
+	timer = setInterval(touchZoom, 100);
+
+	function touchZoom() {
+		var len = touches.length;
+		if(len>1){
+			var tmp=0;
+			var touch1 = touches[0];
+			var touch2 = touches[1];
+			if(!touchedMoreThanOnceStart){
+
+				iniMinX=touch1.pageX;
+				iniMaxX=touch2.pageX;
+				iniMinY=touch1.pageY;
+				iniMaxY=touch2.pageY;
+				
+				if(iniMinX>iniMaxX){
+					tmp=iniMinX;iniMinX=iniMaxX;iniMaxX=tmp;
+				}
+				if(iniMinY>iniMaxY){
+					tmp=iniMinY;iniMinY=iniMaxY;iniMaxY=tmp;
+				}
+				
+				touchedMoreThanOnceStart = true;
+			}
+			else{
+				pMinX=touch1.pageX;
+				pMaxX=touch2.pageX;
+				pMinY=touch1.pageY;
+				pMaxY=touch2.pageY;
+				if(pMinX>pMaxX){
+					tmp=pMinX;pMinX=pMaxX;pMaxX=tmp;
+				}
+				if(pMinY>pMaxY){
+					tmp=pMinY;pMinY=pMaxY;pMaxY=tmp;
+				}
+
+				newMinDistX = pMinX - iniMinX;
+				newMinDistY = pMinY - iniMinY;
+				newMaxDistX = pMaxX - iniMaxX;
+				newMaxDistY = pMaxY - iniMaxY;
+
+				minDistX=oldMinDistX-newMinDistX;
+				minDistY=oldMinDistY-newMinDistY;
+				maxDistX=oldMaxDistX-newMaxDistX;
+				maxDistY=oldMaxDistY-newMaxDistY;
+
+				oldMinDistX=newMinDistX;
+				oldMinDistY=newMinDistY;
+				oldMaxDistX=newMaxDistX;
+				oldMaxDistY=newMaxDistY;
+				
+				
+			}
+			if(zoom.direction=="both"||zoom.direction=="horizontal"){
+				drawMinMaxBottom(chart.axes.bottom.startPos+minDistX,chart.axes.bottom.endPos+maxDistX);
+			}
+			if(zoom.direction=="both"||zoom.direction=="vertical"){
+				drawMinMaxLeft(chart.axes.left.startPos+minDistY,chart.axes.left.endPos+maxDistY);
+			}
+		
+		}
+	}
+
+	canvas.addEventListener('touchend', function() {
+		if(touchedMoreThanOnceStart){
+			touchedMoreThanOnceStart=false;
+		}
+		clearInterval(timer);
+	});
+	canvas.addEventListener('touchmove', function(event) {
+		event.preventDefault();
+		touches = event.touches;
+	});
+
+	function drawMinMaxBottom(min, max){
+		chart.axes.bottom.calcMinMax(min,max);
+		chart.draw();
+	}
+	function drawMinMaxLeft(min, max){
+		chart.axes.left.calcMinMax(min,max);
+		chart.draw();
+	}
+}
 
