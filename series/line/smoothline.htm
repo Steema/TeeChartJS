@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Smooth Line Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -60,33 +61,49 @@ function setCorners(value) {
 </script>
 </head>
 <body onload="draw()">
-
-<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
-<input type="checkbox" id="pointer" name="series1" onclick="Chart1.series.items[0].pointer.visible= this.checked;  Chart1.draw();">Pointers
-&nbsp; Smooth Factor:
-<select id="factor"  onchange="Chart1.series.items[0].smooth = parseFloat(this.value); Chart1.draw();">
-  <option value="0">No</option>
-  <option value="0.2">1/5</option>
-  <option value="0.25">1/4</option>
-  <option value="0.333333333">1/3</option>
-  <option value="0.5" selected>1/2</option>
-  <option value="0.666666666" selected>2/3</option>
-</SELECT>
-&nbsp; Legend corners:
-<select id="corners"  onchange="setCorners(this.value);">
-  <option value="all" selected>All</option>
-  <option value="top">Top</option>
-  <option value="bottom">Bottom</option>
-  <option value="left">Left</option>
-  <option value="right">Right</option>
-  <option value="none">None</option>
-</SELECT>
-<br/>
-
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
+				<input type="checkbox" id="pointer" name="series1" onclick="Chart1.series.items[0].pointer.visible= this.checked;  Chart1.draw();">Pointers
+				&nbsp; Smooth Factor:
+				<select id="factor"  onchange="Chart1.series.items[0].smooth = parseFloat(this.value); Chart1.draw();">
+				  <option value="0">No</option>
+				  <option value="0.2">1/5</option>
+				  <option value="0.25">1/4</option>
+				  <option value="0.333333333">1/3</option>
+				  <option value="0.5" selected>1/2</option>
+				  <option value="0.666666666" selected>2/3</option>
+				</SELECT>
+				&nbsp; Legend corners:
+				<select id="corners"  onchange="setCorners(this.value);">
+				  <option value="all" selected>All</option>
+				  <option value="top">Top</option>
+				  <option value="bottom">Bottom</option>
+				  <option value="left">Left</option>
+				  <option value="right">Right</option>
+				  <option value="none">None</option>
+				</SELECT>
+				<br/>
+				
+				<center>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("smoothline.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

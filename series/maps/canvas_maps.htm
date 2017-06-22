@@ -40,6 +40,7 @@ function draw() {
   Chart1.tools.add(new Tee.ToolTip(Chart1));
 
   changeTheme(Chart1, "minimal");
+  
 Chart1.draw();
 }
 
@@ -104,34 +105,51 @@ function resizeCanvasToFit() {
 </head>
 
 <body onload="draw()">
-
-<div id="options" style="float:left;">
-
-<b>Map:</b>
-
-<form action="">
-  <input type="radio" name="map" id="world" value="world" onchange="changeMap(this.value); Chart1.draw();" checked/><label for="world">World</label><br/>
-  <input type="radio" name="map" id="usa" value="usa" onchange="changeMap(this.value); Chart1.draw();"/><label for="usa">USA</label><br/>
-  <input type="radio" name="map" id="europe27" value="europe27" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe27">Europe 27</label><br/>
-  <input type="radio" name="map" id="europe" value="europe" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe">Europe</label><br/>
-</form>
-<br/>
-<br/>
-<input type="checkbox" id="walls" onclick="Chart1.walls.visible=this.checked; Chart1.draw();" checked><label for="walls">Walls</label>
-<br/>
-<input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked><label for="axes">Axes</label>
-<br/>
-<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();" checked><label for="borders">Borders</label>
-<br/>
-<input type="checkbox" id="transp" onclick="Chart1.panel.transparent=this.checked; Chart1.draw();"><label for="transp">Transparent</label>
-<br/>
-<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked><label for="legend">Legend</label>
-</div>
-
- <center>
-  <canvas id="canvas1" width="1600" height="1200"></canvas>
- </center>
-
-<span id='time'></span>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				
+				<div id="options" style="float:left;">
+				
+				<b>Map:</b>
+				
+				<form action="">
+				  <input type="radio" name="map" id="world" value="world" onchange="changeMap(this.value); Chart1.draw();" checked/><label for="world">World</label><br/>
+				  <input type="radio" name="map" id="usa" value="usa" onchange="changeMap(this.value); Chart1.draw();"/><label for="usa">USA</label><br/>
+				  <input type="radio" name="map" id="europe27" value="europe27" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe27">Europe 27</label><br/>
+				  <input type="radio" name="map" id="europe" value="europe" onchange="changeMap(this.value); Chart1.draw();"/><label for="europe">Europe</label><br/>
+				</form>
+				<br/>
+				<br/>
+				<input type="checkbox" id="walls" onclick="Chart1.walls.visible=this.checked; Chart1.draw();" checked><label for="walls">Walls</label>
+				<br/>
+				<input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked><label for="axes">Axes</label>
+				<br/>
+				<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();" checked><label for="borders">Borders</label>
+				<br/>
+				<input type="checkbox" id="transp" onclick="Chart1.panel.transparent=this.checked; Chart1.draw();"><label for="transp">Transparent</label>
+				<br/>
+				<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked><label for="legend">Legend</label>
+				</div>
+				
+				 <center>
+				  <canvas id="canvas1" width="1600" height="1200"></canvas>
+				 </center>
+				
+				<span id='time'></span>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("canvas_maps.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

@@ -110,34 +110,51 @@ function changeSurface(id) {
 </head>
 
 <body onload="draw()">
-
-<div style="float:left">
-<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label>
-<input type="checkbox" id="grid" onclick="surface.grid.visible=this.checked; Chart1.draw();"><label for="grid">Grid</label>
-<br/>
-<input type="checkbox" id="floor" onclick="three.floor.visible=this.checked; three.needsRender=true;" checked><label for="floor">Floor</label>
-<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);" checked><label for="axes">Axes</label>
-<br/>
-<br/>
-<b>Surface samples:</b>
-<br/>
-<br/>
-
-<form action="">
-  <input type="radio" name="surface" id="s0" value="s0" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s0">7x3</label><br/>
-  <input type="radio" name="surface" id="s1" value="s1" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s1">10x100</label><br/>
-  <input type="radio" name="surface" id="s2" value="s2" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s2">100x10</label><br/>
-  <input type="radio" name="surface" id="s3" value="s3" onchange="changeSurface(this.value); Chart1.draw();" checked/><label for="s3">200x200</label><br/>
-</form>
-<br/>
-
-</div>
-
- <center>
-  <canvas id="canvas1" style="background:#666677" width="800" height="500"></canvas>
-  <br/>
-  <span>Drag mouse and wheel to rotate, pan and zoom.</span>
- </center>
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left">
+				<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label>
+				<input type="checkbox" id="grid" onclick="surface.grid.visible=this.checked; Chart1.draw();"><label for="grid">Grid</label>
+				<br/>
+				<input type="checkbox" id="floor" onclick="three.floor.visible=this.checked; three.needsRender=true;" checked><label for="floor">Floor</label>
+				<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);" checked><label for="axes">Axes</label>
+				<br/>
+				<br/>
+				<b>Surface samples:</b>
+				<br/>
+				<br/>
+				
+				<form action="">
+				  <input type="radio" name="surface" id="s0" value="s0" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s0">7x3</label><br/>
+				  <input type="radio" name="surface" id="s1" value="s1" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s1">10x100</label><br/>
+				  <input type="radio" name="surface" id="s2" value="s2" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s2">100x10</label><br/>
+				  <input type="radio" name="surface" id="s3" value="s3" onchange="changeSurface(this.value); Chart1.draw();" checked/><label for="s3">200x200</label><br/>
+				</form>
+				<br/>
+				
+				</div>
+				
+				 <center>
+				  <canvas id="canvas1" style="background:#666677" width="800" height="500"></canvas>
+				  <br/>
+				  <span>Drag mouse and wheel to rotate, pan and zoom.</span>
+				 </center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("surface.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

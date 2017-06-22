@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Point XY Scatter Series Example</title>
 
+<meta charset="UTF-8"/>
 <link type="text/css" href="../../jquery/css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="../../jquery/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../../jquery/js/jquery-ui-1.8.17.custom.min.js"></script>
@@ -84,31 +85,48 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
-
-<input type="checkbox" name="legend" onclick="Chart1.legend.visible= this.checked; Chart1.draw();" checked>Legend
-<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
-<br/>
-<input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
-<input type="checkbox" name="legendshadow" onclick="Chart1.legend.format.shadow.visible= this.checked; Chart1.draw();">Legend Shadow
-<input type="checkbox" id="legendpos" onclick='setLegendPos(this.checked);'>Legend at top
-<input type="checkbox" id="marks" name="series1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
-<div id="w" style="width:100px; float:left"></div>
-<div id="h" style="width:100px"></div>
-<br/>
-Pointer Style:<br/>
-<select id="pointer_style" onchange="Chart1.series.items[0].pointer.style=this.value; Chart1.draw();">
-  <option value="rectangle">Rectangle</option>
-  <option value="ellipse" selected>Ellipse</option>
-  <option value="triangle">Triangle</option>
-  <option value="diamond">Diamond</option>
-  <option value="downtriangle">Down Triangle</option>
-</select>
-<br/>
-
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<input type="checkbox" name="legend" onclick="Chart1.legend.visible= this.checked; Chart1.draw();" checked>Legend
+				<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Series1
+				<br/>
+				<input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
+				<input type="checkbox" name="legendshadow" onclick="Chart1.legend.format.shadow.visible= this.checked; Chart1.draw();">Legend Shadow
+				<input type="checkbox" id="legendpos" onclick='setLegendPos(this.checked);'>Legend at top
+				<input type="checkbox" id="marks" name="series1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
+				<div id="w" style="width:100px; float:left"></div>
+				<div id="h" style="width:100px"></div>
+				<br/>
+				Pointer Style:<br/>
+				<select id="pointer_style" onchange="Chart1.series.items[0].pointer.style=this.value; Chart1.draw();">
+				  <option value="rectangle">Rectangle</option>
+				  <option value="ellipse" selected>Ellipse</option>
+				  <option value="triangle">Triangle</option>
+				  <option value="diamond">Diamond</option>
+				  <option value="downtriangle">Down Triangle</option>
+				</select>
+				<br/>
+				
+				<center>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("seriesonclick.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript All Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -222,30 +223,43 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
-
-<center>
-<canvas id="canvas1" width="300" height="200">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-<canvas id="canvas2" width="300" height="200"></canvas>
-<canvas id="canvas3" width="300" height="200"></canvas>
-<canvas id="canvas4" width="300" height="200"></canvas>
-<canvas id="canvas5" width="300" height="200"></canvas>
-<canvas id="canvas6" width="300" height="200"></canvas>
-<canvas id="canvas7" width="300" height="200"></canvas>
-<canvas id="canvas8" width="300" height="200"></canvas>
-<canvas id="canvas9" width="300" height="200"></canvas>
-<canvas id="canvas10" width="300" height="200"></canvas>
-<canvas id="canvas11" width="300" height="200"></canvas>
-<canvas id="canvas12" width="300" height="200"></canvas>
-<canvas id="canvas13" width="300" height="200"></canvas>
-<canvas id="canvas14" width="300" height="200"></canvas>
-<canvas id="canvas15" width="300" height="200"></canvas>
-<canvas id="canvas16" width="300" height="200"></canvas>
-<canvas id="clockcanvas" width="300" height="200"></canvas>
-<canvas id="worldmap" width="500" height="300"></canvas>
-</center>
-<br/>
-<br/>
+	<table>
+		<tr class="canvasWithOutSelectors">
+		<td>
+			<center>
+			<canvas id="canvas1" width="300" height="200">
+			This browser does not seem to support HTML5 Canvas.
+			</canvas>
+			<canvas id="canvas2" width="300" height="200"></canvas>
+			<canvas id="canvas3" width="300" height="200"></canvas>
+			<canvas id="canvas4" width="300" height="200"></canvas>
+			<canvas id="canvas5" width="300" height="200"></canvas>
+			<canvas id="canvas6" width="300" height="200"></canvas>
+			<canvas id="canvas7" width="300" height="200"></canvas>
+			<canvas id="canvas8" width="300" height="200"></canvas>
+			<canvas id="canvas9" width="300" height="200"></canvas>
+			<canvas id="canvas10" width="300" height="200"></canvas>
+			<canvas id="canvas11" width="300" height="200"></canvas>
+			<canvas id="canvas12" width="300" height="200"></canvas>
+			<canvas id="canvas13" width="300" height="200"></canvas>
+			<canvas id="canvas14" width="300" height="200"></canvas>
+			<canvas id="canvas15" width="300" height="200"></canvas>
+			<canvas id="canvas16" width="300" height="200"></canvas>
+			<canvas id="clockcanvas" width="300" height="200"></canvas>
+			<canvas id="worldmap" width="500" height="300"></canvas>
+			</center>
+		</td>
+		</tr>
+		<tr>
+		<td>
+			<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+		</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		function openSample(){
+			window.open("all.htm", "_blank")
+		}
+	</script>
 </body>
 </html>

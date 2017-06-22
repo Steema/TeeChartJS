@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart for JavaScript Spark Charts Example</title>
 
+<meta charset="UTF-8"/>
 <style type='text/css'>
 table {
     border-collapse: collapse;
@@ -99,16 +100,33 @@ function draw() {
 </head>
 
 <body onload="draw()">
-
-<table>
-<tr><th>Name</th><th>Performance</th><th>Energy</th><th> </th></tr>
-
-<tr><td>Engine 0</td><td><canvas id="c1" width="200" height="30"></canvas></td><td><center><canvas id="p1" width="30" height="30"></canvas></center></td><td><center><canvas id="b1" width="30" height="30"></canvas></center></td></tr>
-<tr><td>Engine 1</td><td><canvas id="c2" width="200" height="30"></canvas></td><td><center><canvas id="p2" width="30" height="30"></canvas></center></td><td><center><canvas id="b2" width="30" height="30"></canvas></center></td></tr>
-<tr><td>Engine 2</td><td><canvas id="c3" width="200" height="30"></canvas></td><td><center><canvas id="p3" width="30" height="30"></canvas></center></td><td><center><canvas id="b3" width="30" height="30"></canvas></center></td></tr>
-<tr><td>Engine 3</td><td><canvas id="c4" width="200" height="30"></canvas></td><td><center><canvas id="p4" width="30" height="30"></canvas></center></td><td><center><canvas id="b4" width="30" height="30"></canvas></center></td></tr>
-<tr><td>Engine 4</td><td><canvas id="c5" width="200" height="30"></canvas></td><td><center><canvas id="p5" width="30" height="30"></canvas></center></td><td><center><canvas id="b5" width="30" height="30"></canvas></center></td></tr>
-</table>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				
+				<table>
+				<tr><th>Name</th><th>Performance</th><th>Energy</th><th> </th></tr>
+				
+				<tr><td>Engine 0</td><td><canvas id="c1" width="200" height="30"></canvas></td><td><center><canvas id="p1" width="30" height="30"></canvas></center></td><td><center><canvas id="b1" width="30" height="30"></canvas></center></td></tr>
+				<tr><td>Engine 1</td><td><canvas id="c2" width="200" height="30"></canvas></td><td><center><canvas id="p2" width="30" height="30"></canvas></center></td><td><center><canvas id="b2" width="30" height="30"></canvas></center></td></tr>
+				<tr><td>Engine 2</td><td><canvas id="c3" width="200" height="30"></canvas></td><td><center><canvas id="p3" width="30" height="30"></canvas></center></td><td><center><canvas id="b3" width="30" height="30"></canvas></center></td></tr>
+				<tr><td>Engine 3</td><td><canvas id="c4" width="200" height="30"></canvas></td><td><center><canvas id="p4" width="30" height="30"></canvas></center></td><td><center><canvas id="b4" width="30" height="30"></canvas></center></td></tr>
+				<tr><td>Engine 4</td><td><canvas id="c5" width="200" height="30"></canvas></td><td><center><canvas id="p5" width="30" height="30"></canvas></center></td><td><center><canvas id="b5" width="30" height="30"></canvas></center></td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("spark.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

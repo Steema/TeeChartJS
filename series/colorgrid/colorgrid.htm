@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Color Grid Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -70,42 +71,58 @@ function addSampleData(index) {
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float:left;">
-
-<input type="checkbox" name="smooth" onclick="grid.smooth= this.checked; Chart1.draw();" checked>Smooth
-<input type="checkbox" name="smooth" onclick="grid.format.stroke.fill= this.checked ? 'black':''; Chart1.draw();">Grid
-<br/>
-
-<input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
-<br/>
-<input type="checkbox" name="grayscale" onclick="grid.palette.grayScale=this.checked; grid.dataChanged=true; Chart1.draw();">Gray Scale
-<br/>
-<input type="checkbox" name="invcolors" onclick="grid.palette.inverted=this.checked; grid.dataChanged=true; Chart1.draw();">Inverted Palette
-<br/>
-<input type="checkbox" name="invlegend" onclick="Chart1.legend.inverted=this.checked; Chart1.draw();">Inverted Legend
-
-<br/>
-<br/>
-<b>Axes:</b><br/>
-<input type="checkbox" name="invV" onclick="Chart1.axes.left.inverted= this.checked; Chart1.draw();">Inverted Vert.
-<br/>
-<input type="checkbox" name="invH" onclick="Chart1.axes.bottom.inverted= this.checked; Chart1.draw();">Inverted Horiz.
-<br/>
-<br/>
-<b>Sample data:</b><br/>
-<form action="">
-  <input type="radio" name="data" id="data0" value="0" onchange="addSampleData(this.value); Chart1.draw();" checked/><label for="data0">7x3</label><br/>
-  <input type="radio" name="data" id="data1" value="1" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data1">200x200</label><br/>
-  <input type="radio" name="data" id="data2" value="2" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data2">400x400</label><br/>
-  <input type="radio" name="data" id="data3" value="3" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data3">100x50</label><br/>
-</form>
-<br/>
-</div>
-
-<canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left;">
+				
+				<input type="checkbox" name="smooth" onclick="grid.smooth= this.checked; Chart1.draw();" checked>Smooth
+				<input type="checkbox" name="smooth" onclick="grid.format.stroke.fill= this.checked ? 'black':''; Chart1.draw();">Grid
+				<br/>
+				
+				<input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
+				<br/>
+				<input type="checkbox" name="grayscale" onclick="grid.palette.grayScale=this.checked; grid.dataChanged=true; Chart1.draw();">Gray Scale
+				<br/>
+				<input type="checkbox" name="invcolors" onclick="grid.palette.inverted=this.checked; grid.dataChanged=true; Chart1.draw();">Inverted Palette
+				<br/>
+				<input type="checkbox" name="invlegend" onclick="Chart1.legend.inverted=this.checked; Chart1.draw();">Inverted Legend
+				
+				<br/>
+				<br/>
+				<b>Axes:</b><br/>
+				<input type="checkbox" name="invV" onclick="Chart1.axes.left.inverted= this.checked; Chart1.draw();">Inverted Vert.
+				<br/>
+				<input type="checkbox" name="invH" onclick="Chart1.axes.bottom.inverted= this.checked; Chart1.draw();">Inverted Horiz.
+				<br/>
+				<br/>
+				<b>Sample data:</b><br/>
+				<form action="">
+				  <input type="radio" name="data" id="data0" value="0" onchange="addSampleData(this.value); Chart1.draw();" checked/><label for="data0">7x3</label><br/>
+				  <input type="radio" name="data" id="data1" value="1" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data1">200x200</label><br/>
+				  <input type="radio" name="data" id="data2" value="2" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data2">400x400</label><br/>
+				  <input type="radio" name="data" id="data3" value="3" onchange="addSampleData(this.value); Chart1.draw();"/><label for="data3">100x50</label><br/>
+				</form>
+				<br/>
+				</div>
+				
+				<canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("colorgrid.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

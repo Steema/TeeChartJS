@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Donut Series Example</title>
 
+<meta charset="UTF-8"/>
 <link type="text/css" href="../../../jquery/css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="../../../jquery/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../../../jquery/js/jquery-ui-1.8.17.custom.min.js"></script>
@@ -68,26 +69,42 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float:left">
-  <input type="checkbox" id="gradient1" onclick="Chart1.series.items[0].format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient<br/>
-  <input type="checkbox" id="shadow" onclick="Chart1.series.items[0].format.shadow.visible=this.checked; Chart1.draw();" checked>Shadow<br/>
-  <input type="checkbox" id="marks" onclick="Chart1.series.items[0].marks.visible=this.checked; Chart1.draw();" checked>Marks<br/>
-  <br/>
-  Donut %:
-  <div id="donut" style="width:100px"></div>
-  <br/>
-  Rotation:
-  <div id="rotation" style="width:100px"></div>
-  Explode:
-  <div id="explode" style="width:100px"></div>
-</div>
-
-<center>
-  <canvas id="canvas" width="600" height="400">
-  This browser does not seem to support HTML5 Canvas.
-  </canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left">
+				  <input type="checkbox" id="gradient1" onclick="Chart1.series.items[0].format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient<br/>
+				  <input type="checkbox" id="shadow" onclick="Chart1.series.items[0].format.shadow.visible=this.checked; Chart1.draw();" checked>Shadow<br/>
+				  <input type="checkbox" id="marks" onclick="Chart1.series.items[0].marks.visible=this.checked; Chart1.draw();" checked>Marks<br/>
+				  <br/>
+				  Donut %:
+				  <div id="donut" style="width:100px"></div>
+				  <br/>
+				  Rotation:
+				  <div id="rotation" style="width:100px"></div>
+				  Explode:
+				  <div id="explode" style="width:100px"></div>
+				</div>
+				
+				<center>
+				  <canvas id="canvas" width="600" height="400">
+				  This browser does not seem to support HTML5 Canvas.
+				  </canvas>
+					</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("donut.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

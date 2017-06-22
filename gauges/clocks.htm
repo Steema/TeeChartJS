@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Clock</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -39,22 +40,38 @@ function makeClock() {
 
 </head>
 <body onload="makeClock()">
-
-<input type="checkbox" name="romans" onclick="clock1.romans=this.checked; clock2.romans=this.checked; clock3.romans=this.checked;">Romans
-<input type="checkbox" name="seconds" onclick="clock1.seconds.visible=this.checked; clock2.seconds.visible=this.checked; clock3.seconds.visible=this.checked;" checked>Seconds
-<input type="checkbox" name="label" onclick="clock1.units.visible=this.checked; clock2.units.visible=this.checked; clock3.units.visible=this.checked;" checked>Text
-<input type="checkbox" name="ampm" onclick="clock1.ampm=this.checked; clock2.ampm=this.checked; clock3.ampm=this.checked;">AM/PM
-
-<br/>
-
-<canvas id="canvas1" width="400" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-
-<div>
-<canvas id="canvas2" width="200" height="200"></canvas>
-<canvas id="canvas3" width="200" height="200"></canvas>
-</div>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<input type="checkbox" name="romans" onclick="clock1.romans=this.checked; clock2.romans=this.checked; clock3.romans=this.checked;">Romans
+				<input type="checkbox" name="seconds" onclick="clock1.seconds.visible=this.checked; clock2.seconds.visible=this.checked; clock3.seconds.visible=this.checked;" checked>Seconds
+				<input type="checkbox" name="label" onclick="clock1.units.visible=this.checked; clock2.units.visible=this.checked; clock3.units.visible=this.checked;" checked>Text
+				<input type="checkbox" name="ampm" onclick="clock1.ampm=this.checked; clock2.ampm=this.checked; clock3.ampm=this.checked;">AM/PM
+				
+				<br/>
+				
+				<canvas id="canvas1" width="400" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				
+				<div>
+				<canvas id="canvas2" width="200" height="200"></canvas>
+				<canvas id="canvas3" width="200" height="200"></canvas>
+				</div>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("clocks.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Yahoo Finance Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -178,20 +179,37 @@ function setAutoRefresh(value) {
 </script>
 </head>
 <body onload="draw()">
+			
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>	
+				<button type="BUTTON" onclick="loadQuote(stock);">Refresh</button>
+				<input type="checkbox" id="autoRefresh" onclick="setAutoRefresh(this.checked);" checked>Every 30 seconds
+				<br/>
+				
+				<span id="fail" style="color:red;"></SPAN>
+				
+				<form id="stocks"></form>
+				</DIV>
+				<br/>
+				<br/>
+				
+				  <canvas id="history" width="800" height="400"></canvas><br/>
+				  <canvas id="canvas" width="800" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
 
-<button type="BUTTON" onclick="loadQuote(stock);">Refresh</button>
-<input type="checkbox" id="autoRefresh" onclick="setAutoRefresh(this.checked);" checked>Every 30 seconds
-<br/>
-
-<span id="fail" style="color:red;"></SPAN>
-
-<form id="stocks"></form>
-</DIV>
-<br/>
-<br/>
-
-  <canvas id="history" width="800" height="400"></canvas><br/>
-  <canvas id="canvas" width="800" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
-
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("fromYahooFinance.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

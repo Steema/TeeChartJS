@@ -3,6 +3,7 @@
 <HEAD>
 <title>TeeChart JavaScript Gantt Series Example</TITLE>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
     <script src="../../../src/excanvas/canvas.text.js"></script>
@@ -127,15 +128,32 @@ Chart1.draw();
 </script>
 </HEAD>
 <BODY onload="draw()">
-
-<input type="checkbox" id="marks" onclick="gantt.marks.visible= this.checked; Chart1.draw();" >Marks
-<input type="checkbox" id="colors" onclick="gantt.colorEach= this.checked ? 'yes' : 'auto'; Chart1.draw();" checked>Colors
-<input type="checkbox" id="completion" onclick="gantt.completion.visible= this.checked; Chart1.draw();" checked>Completion %
-
-<CENTER>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</CENTER>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				
+				<input type="checkbox" id="marks" onclick="gantt.marks.visible= this.checked; Chart1.draw();" >Marks
+				<input type="checkbox" id="colors" onclick="gantt.colorEach= this.checked ? 'yes' : 'auto'; Chart1.draw();" checked>Colors
+				<input type="checkbox" id="completion" onclick="gantt.completion.visible= this.checked; Chart1.draw();" checked>Completion %
+				
+				<CENTER>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</CENTER>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("gantt.htm", "_blank");
+	}
+	
+	</script>
 </BODY>
 </HTML>

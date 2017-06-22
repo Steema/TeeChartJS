@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Gauges Gallery</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -35,7 +36,7 @@ function draw() {
   gauge3.value=60;
 
   var gauge4=Tee.gaugeTemplate(3,"canvas4");
-  gauge4.units.text="Temp. °C";
+  gauge4.units.text="Temp. Â°C";
   gauge4.min=-10;
   gauge4.max=50;
   gauge4.value=29;
@@ -75,16 +76,33 @@ function draw() {
 </script>
 </head>
 <body onload="draw()">
-
-<canvas id="canvas1" width="300" height="250">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-<canvas id="canvas2" width="300" height="250"></canvas>
-<canvas id="canvas3" width="300" height="250"></canvas>
-<canvas id="canvas4" width="300" height="250"></canvas>
-<canvas id="canvas5" width="300" height="200"></canvas>
-<canvas id="canvas6" width="300" height="200"></canvas>
-<canvas id="canvas7" width="300" height="200"></canvas>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				
+				<canvas id="canvas1" width="300" height="250">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				<canvas id="canvas2" width="300" height="250"></canvas>
+				<canvas id="canvas3" width="300" height="250"></canvas>
+				<canvas id="canvas4" width="300" height="250"></canvas>
+				<canvas id="canvas5" width="300" height="200"></canvas>
+				<canvas id="canvas6" width="300" height="200"></canvas>
+				<canvas id="canvas7" width="300" height="200"></canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("gauge_gallery.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

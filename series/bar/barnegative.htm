@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Bar Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -36,33 +37,50 @@ function draw() {
   
   Chart1.legend.format.stroke.fill = "white";
   Chart1.legend.transparent=false;
-  
+
+
   Chart1.draw();
 }
 </script>
 </head>
 <body onload="draw()">
-
-<input type="checkbox" name="inv" onclick="Chart1.axes.left.inverted= !Chart1.axes.left.inverted; Chart1.draw();">Inverted Axis
-<input type="checkbox" name="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked>Legend
-<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible=this.checked; Chart1.draw();" checked>Series1
-<input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible=this.checked; Chart1.draw();">Series2
-<br/>
-<input type="checkbox" id="gradient1" onclick="Chart1.panel.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
-<input type="checkbox" name="legendshadow" onclick="Chart1.legend.format.shadow.visible= !Chart1.legend.format.shadow.visible; Chart1.draw();" checked>Legend Shadow
-<input type="checkbox" name="legendleft" onclick='Chart1.legend.position= this.checked ? "left":"right"; Chart1.draw();'>Legend at left
-<br/>
-<input type="checkbox" id="coloreach" onclick="Chart1.series.items[0].colorEach=this.checked ? 'yes' : 'no'; Chart1.draw();">Series1 ColorEach
-
-<select id="style" onchange="Chart1.series.items[0].barStyle=this.value; Chart1.draw();">
-  <option value="bar" selected>Bar</option>
-  <option value="ellipse">Ellipse</option>
-</select>
-
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+			<input type="checkbox" name="inv" onclick="Chart1.axes.left.inverted= !Chart1.axes.left.inverted; Chart1.draw();">Inverted Axis
+			<input type="checkbox" name="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked>Legend
+			<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible=this.checked; Chart1.draw();" checked>Series1
+			<input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible=this.checked; Chart1.draw();">Series2
+			<br/>
+			<input type="checkbox" id="gradient1" onclick="Chart1.panel.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient
+			<input type="checkbox" name="legendshadow" onclick="Chart1.legend.format.shadow.visible= !Chart1.legend.format.shadow.visible; Chart1.draw();" checked>Legend Shadow
+			<input type="checkbox" name="legendleft" onclick='Chart1.legend.position= this.checked ? "left":"right"; Chart1.draw();'>Legend at left
+			<br/>
+			<input type="checkbox" id="coloreach" onclick="Chart1.series.items[0].colorEach=this.checked ? 'yes' : 'no'; Chart1.draw();">Series1 ColorEach
+			
+			<select id="style" onchange="Chart1.series.items[0].barStyle=this.value; Chart1.draw();">
+			  <option value="bar" selected>Bar</option>
+			  <option value="ellipse">Ellipse</option>
+			</select>
+			
+			<center>
+			<br><canvas id="canvas" width="600" height="400">
+			This browser does not seem to support HTML5 Canvas.
+			</canvas>
+			</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("barnegative.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

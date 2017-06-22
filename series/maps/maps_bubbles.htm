@@ -66,7 +66,8 @@ function draw() {
   Chart1.onzoom=function() { document.getElementById('resetZoom').style.display='block' }
 
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+  
+  Chart1.draw();
 }
 
 function addRandom(cities) {
@@ -101,18 +102,35 @@ function resizeCanvasToFit() {
 </head>
 
 <body onload="draw()">
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
 
-<div id="options" style="float:left;">
-<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label><br/>
-<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);"><label for="axes">Axes</label><br/>
-<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();"><label for="borders">Borders</label>
-<br/>
-<br/>
-<button type="button" id="resetZoom" style="display:none" onclick="Chart1.zoom.reset(); changeTheme(Chart1, "minimal");
-Chart1.draw(); this.style.display='none'">Reset</button>
-</div>
-
-<center><canvas id="canvas1" width="1600" height="1200"></canvas></center>
+				<div id="options" style="float:left;">
+				<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label><br/>
+				<input type="checkbox" id="axes" onclick="three.toogle(Chart1.axes, this.checked);"><label for="axes">Axes</label><br/>
+				<input type="checkbox" id="borders" onclick="map.format.stroke.fill = this.checked ? 'black' : ''; Chart1.draw();"><label for="borders">Borders</label>
+				<br/>
+				<br/>
+				<button type="button" id="resetZoom" style="display:none" onclick="Chart1.zoom.reset(); changeTheme(Chart1, "minimal");
+				Chart1.draw(); this.style.display='none'">Reset</button>
+				</div>
+				
+				<center><canvas id="canvas1" width="1600" height="1200"></canvas></center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("maps_bubbles.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

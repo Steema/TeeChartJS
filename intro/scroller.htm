@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Scroller Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -91,27 +92,25 @@ function draw() {
   Chart1.addSeries(rate);
 
   //config some series appearance characteristics
-  for (i = 0; i < 1; i++)
-  {
-	  Chart1.series.items[i].pointer.width = 10;
-	  Chart1.series.items[i].pointer.height = 10;
-	  Chart1.series.items[i].pointer.style="ellipse";
-	  Chart1.series.items[i].pointer.format.stroke.size = 4;
-	  Chart1.series.items[i].pointer.format.stroke.fill = "white";
-	  Chart1.series.items[i].pointer.format.shadow.visible=false;
-	  Chart1.series.items[i].format.stroke.size = 2;
-	  Chart1.series.items[i].format.shadow.visible=false;
-  }
+ 
+  Chart1.series.items[0].pointer.width = 10;
+  Chart1.series.items[0].pointer.height = 10;
+  Chart1.series.items[0].pointer.style = "ellipse";
+  Chart1.series.items[0].pointer.format.stroke.size = 4;
+  Chart1.series.items[0].pointer.format.stroke.fill = "white";
+  Chart1.series.items[0].pointer.format.shadow.visible = false;
+  Chart1.series.items[0].format.stroke.size = 2;
+  Chart1.series.items[0].format.shadow.visible = false;
   
   //Axes
-  Chart1.axes.left.title.text="$ 000s";
-  Chart1.axes.left.labels.roundFirst=true;
-  Chart1.axes.left.title.visible=false;  
-  Chart1.axes.bottom.labels.roundFirst=true;
-  Chart1.axes.bottom.title.text="Bottom Axis";
+  Chart1.axes.left.title.text = "$ 000s";
+  Chart1.axes.left.labels.roundFirst = true;
+  Chart1.axes.left.title.visible = false;  
+  Chart1.axes.bottom.labels.roundFirst = true;
+  Chart1.axes.bottom.title.text = "Bottom Axis";
   Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
   Chart1.axes.bottom.title.format.font.setSize(20);
-  Chart1.axes.bottom.title.visible=false;  
+  Chart1.axes.bottom.title.visible = false;  
   Chart1.axes.bottom.labels.dateFormat = "mm/yy";
   Chart1.axes.left.setMinMax(1.2, 1.41);
   Chart1.axes.left.grid.format.stroke.size = 1;
@@ -126,22 +125,21 @@ function draw() {
   
   //Legend
   Chart1.legend.visible = false;
-
   // annotation (alternative title)
-  a1=new Tee.Annotation(Chart1);
+  a1 = new Tee.Annotation(Chart1);
   a1.format.fill = "rgba(0,0,0,0.0)";
-  a1.format.stroke.fill="rgba(0,0,0,0.0)";
-  a1.format.font.style="20px Tahoma";
+  a1.format.stroke.fill = "rgba(0,0,0,0.0)";
+  a1.format.font.style = "20px Tahoma";
   a1.format.font.fill = "rgba(0,0,0,0.6)";
-  a1.text="US Dollar against the Euro";
+  a1.text = "US Dollar against the Euro";
   
   // annotation (alternative title)
-  a2=new Tee.Annotation(Chart1);
+  a2 = new Tee.Annotation(Chart1);
   a2.format.fill = "rgba(0,0,0,0.0)";
   a2.format.stroke.fill="rgba(0,0,0,0.0)";
-  a2.format.font.style="12px Arial";
+  a2.format.font.style = "12px Arial";
   a2.format.font.fill = "rgba(20,20,118,1.0)";
-  a2.text="  2012 - 2013 Source: Steema Software SL";
+  a2.text = "  2012 - 2013 Source: Steema Software SL";
   
   Chart1.draw();  //get positions
   
@@ -154,7 +152,7 @@ function draw() {
   
   //tooltip
   tip=new Tee.ToolTip(Chart1);
-  tip.render="dom";
+  tip.render = "dom";
   tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
   tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
   tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:3; z-index:1000;";
@@ -164,59 +162,58 @@ function draw() {
   tip.onhide=function() { scaling=0; poindex=-1; }
   
   tip.ongettext=function( tool, text, series, index) { 
-    var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
-	    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ new Date(series.data.x[index]).format("shortDate")+'</strong></font>';
-        s =	s +'<br/><font face="verdana" color="red" size="1"><b>Value: $'+series.data.values[index].toFixed(2)+'/€</b></font>';  
+    var s = '<font face="verdana" color="black" size="1"><strong>' + series.title + '</strong></font>';
+	    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>' +  new Date(series.data.x[index]).format("shortDate") + '</strong></font>';
+        s =	s +'<br/><font face="verdana" color="red" size="1"><b>Value: $' + series.data.values[index].toFixed(2) + '/â‚¬</b></font>';  
 	return s;
   }
 
   //animation
   
-  animation=new Tee.SeriesAnimation();
-  animation.duration=1000;
-  animation.kind="each";
-  fadeAnimation=new Tee.FadeAnimation();
-  fadeAnimation.duration=500;
-  fadeAnimation.fade.series=true;
-  fadeAnimation.fade.marks=true;
+  animation = new Tee.SeriesAnimation();
+  animation.duration = 1000;
+  animation.kind = "each";
+  fadeAnimation = new Tee.FadeAnimation();
+  fadeAnimation.duration = 500;
+  fadeAnimation.fade.series = true;
+  fadeAnimation.fade.marks = true;
   animation.mode = "linear"; 
   fadeAnimation.mode = "linear";
   animation.items.push(fadeAnimation);
   
   animation.animate(Chart1);
   
-  Chart1.zoom.enabled=false;
-  Chart1.scroll.mouseButton=0;
-  Chart1.scroll.direction="horizontal";
+  Chart1.zoom.enabled = false;
+  Chart1.scroll.mouseButton = 0;
+  Chart1.scroll.direction = "horizontal";
   
   //scroller
-  scroller=new Tee.Scroller("canvas2", Chart1);
+  scroller = new Tee.Scroller("canvas2", Chart1);
   scroller.onChanging = function(s,min,max) {
-    var mi=new Date(min).toDateString(),
-        ma=new Date(max).toDateString();
-
-    document.getElementById("dataRange").innerHTML='<font face="arial" size="2">Showing data from ' +mi+' to '+ma +'</font>';
+    var mi = new Date(min).toDateString(),
+        ma = new Date(max).toDateString();
+    document.getElementById("dataRange").innerHTML = '<font face="arial" size="2">Showing data from ' + mi + ' to ' + ma + '</font>';
   }
-
-  scroller.panel.transparent=false;
-  scroller.panel.format.shadow.visible=false;
-  scroller.panel.format.round.x=0;
-  scroller.panel.format.round.y=0;
-  scroller.panel.format.gradient.visible=true;
+  scroller.panel.transparent = false;
+  scroller.panel.format.shadow.visible = false;
+  scroller.panel.format.round.x = 0;
+  scroller.panel.format.round.y = 0;
+  
+  scroller.panel.format.gradient.visible = true;
   if (Chart1.panel.format.gradient.colors.length>1)
-    scroller.panel.format.gradient.colors=[Chart1.panel.format.gradient.colors[0],Chart1.panel.format.gradient.colors[1]];
+    scroller.panel.format.gradient.colors = [Chart1.panel.format.gradient.colors[0],Chart1.panel.format.gradient.colors[1]];
   else
-    scroller.panel.format.gradient.colors=["white"];
-  scroller.panel.format.gradient.direction="topbottom";
-  scroller.panel.format.stroke.fill="rgba(204,204,204,1.0)";
+    scroller.panel.format.gradient.colors = ["white"];
+  scroller.panel.format.gradient.direction = "topbottom";
+  scroller.panel.format.stroke.fill = "rgba(204,204,204,1.0)";
   scroller.panel.format.stroke.size = 0;
   
-  top.changeTheme(top.topTheme);
+  
 
   Chart1.ondraw=function() {
     var img=document.getElementById("skyline");
     Chart1.ctx.drawImage(img,Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum) + 8,
-	                     Chart1.axes.left.calc(Chart1.axes.left.minimum)-img.height);
+	                     Chart1.axes.left.calc(Chart1.axes.left.minimum) - img.height);
 		resizeScroller(scroller)
   }  
     
@@ -244,15 +241,15 @@ function resize(chart) {
 	else
 	  h = startHeight;
   
-  canvas.setAttribute('width', ""+w+"px");
+  canvas.setAttribute('width', "" + w + "px");
 
-  canvas.setAttribute('height', ""+h+"px");
+  canvas.setAttribute('height', "" + h + "px");
 
-  canvas.style.width=""+w+"px";
-  canvas.style.height=""+h+"px";
+  canvas.style.width = "" + w + "px";
+  canvas.style.height = "" + h + "px";
 
-  chart.bounds.width=w;
-  chart.bounds.height=h;
+  chart.bounds.width = w;
+  chart.bounds.height = h;
 	
   chart.draw();
 }
@@ -268,17 +265,17 @@ function resizeScroller(aScroller) {
 	var w = startWidth;
 	var h = startHeight;
 
-	if ((window.innerWidth - 156  - canvas.offsetLeft - 20) < startWidth)
+	if ((window.innerWidth - 156 - canvas.offsetLeft - 20) < startWidth)
 	  w = window.innerWidth - 156 - canvas.offsetLeft - 20;
 	else
 	  w = startWidth;
 	  
   h = startHeight;
   
-  canvas.setAttribute('width', ""+w+"px");
-  canvas.setAttribute('height', ""+h+"px");
-  canvas.style.width=""+w+"px";
-  canvas.style.height=""+h+"px";
+  canvas.setAttribute('width', "" + w + "px");
+  canvas.setAttribute('height', "" + h + "px");
+  canvas.style.width = "" + w + "px";
+  canvas.style.height = "" + h + "px";
 	
 	aScroller.setBounds(0,0,w,h);
 	aScroller.draw();
@@ -324,16 +321,33 @@ function changePalette(palette)
 </script>
 </head>
 <body id="chartView" onload="draw()" onresize="resize(Chart1)">
-<br/>
-<img id="skyline" src="skylines.png" style="visibility:hidden; position:absolute; left:-400px; top:-150px;"/>
-<br/>
-<canvas id="canvas" width="1000" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-<br/>
-<canvas id="canvas2" width="935" height="40" style="margin-left : 48px;">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-<br><span id="dataRange" style="margin-left:48px; color:#141476;"/>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<br/>
+				<img id="skyline" src="skylines.png" style="visibility:hidden; position:absolute; left:-400px; top:-150px;"/>
+				<br/>
+				<canvas id="canvas" width="1000" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				<br/>
+				<canvas id="canvas2" width="935" height="40" style="margin-left : 48px;">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				<br><span id="dataRange" style="margin-left:48px; color:#141476;"/>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("scroller.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

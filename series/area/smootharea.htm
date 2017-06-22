@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Smooth Area Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -57,28 +58,44 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
-
-<input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
-<input type="checkbox" id="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
-<input type="checkbox" id="series2" onclick="Chart1.series.items[1].visible= !Chart1.series.items[1].visible; Chart1.draw();" checked>Series2
-&nbsp; Stacked:
-<select id="stacked"  onchange="setStacked(this.value)">Stacked>
-  <option value="no">No</option>
-  <option value="yes">Yes</option>
-  <option value="100">100%</option>
-</SELECT>
-<input type="checkbox" id="gradient1" onclick="setGradients(this.checked);">Gradients
-<input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s) {s.format.shadow.visible=document.getElementById('shadow').checked;}); Chart1.draw();" checked>Shadow
-<input type="checkbox" id="marks" name="series1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
-<input type="checkbox" id="clip" onclick="Chart1.aspect.clip= this.checked; Chart1.draw();" checked>Clip
-<input type="checkbox" id="pointers" onclick="Chart1.series.each(function(s) { s.pointer.visible= document.getElementById('pointers').checked; }); Chart1.draw();" checked>Pointers
-<input type="checkbox" id="smooth" onclick="Chart1.series.each(function(s) { s.smooth= document.getElementById('smooth').checked ? 0.5 : 0;}); Chart1.draw();" checked>Smooth
-
-<br/>Click and drag point to modify series<br/>
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>	
+		<tr>
+		<td>	
+			<input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
+			<input type="checkbox" id="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
+			<input type="checkbox" id="series2" onclick="Chart1.series.items[1].visible= !Chart1.series.items[1].visible; Chart1.draw();" checked>Series2
+			&nbsp; Stacked:
+			<select id="stacked"  onchange="setStacked(this.value)">Stacked>
+			  <option value="no">No</option>
+			  <option value="yes">Yes</option>
+			  <option value="100">100%</option>
+			</SELECT>
+			<input type="checkbox" id="gradient1" onclick="setGradients(this.checked);">Gradients
+			<input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s) {s.format.shadow.visible=document.getElementById('shadow').checked;}); Chart1.draw();" checked>Shadow
+			<input type="checkbox" id="marks" name="series1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
+			<input type="checkbox" id="clip" onclick="Chart1.aspect.clip= this.checked; Chart1.draw();" checked>Clip
+			<input type="checkbox" id="pointers" onclick="Chart1.series.each(function(s) { s.pointer.visible= document.getElementById('pointers').checked; }); Chart1.draw();" checked>Pointers
+			<input type="checkbox" id="smooth" onclick="Chart1.series.each(function(s) { s.smooth= document.getElementById('smooth').checked ? 0.5 : 0;}); Chart1.draw();" checked>Smooth
+			
+			<br/>Click and drag point to modify series<br/>
+			<center>
+			<br><canvas id="canvas" width="600" height="400">
+			This browser does not seem to support HTML5 Canvas.
+			</canvas>
+			</center>
+		</td>
+		</tr>
+		<tr>
+		<td>
+			<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+		</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("smootharea.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

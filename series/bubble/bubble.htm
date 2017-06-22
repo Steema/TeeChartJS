@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Bubble Series Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
     <script src="../../../src/excanvas/canvas.text.js"></script>
@@ -27,29 +28,46 @@ function draw() {
 
   Chart1.title.text="Bubble";
   changeTheme(Chart1, "minimal");
+  
 Chart1.draw();
 }
 
 </script>
 </head>
 <body onload="draw()">
-
-Pointer Style:<br/>
-<select id="pointer_style" onchange="Chart1.series.items[0].pointer.style=this.value; Chart1.draw();">
-  <option value="rectangle">Rectangle</option>
-  <option value="ellipse" selected>Ellipse</option>
-  <option value="triangle">Triangle</option>
-  <option value="diamond">Diamond</option>
-  <option value="downtriangle">Down Triangle</option>
-  <option value="cross">Cross</option>
-  <option value="x">X</option>
-</select>
-<br/>
-
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				Pointer Style:<br/>
+				<select id="pointer_style" onchange="Chart1.series.items[0].pointer.style=this.value; Chart1.draw();">
+				  <option value="rectangle">Rectangle</option>
+				  <option value="ellipse" selected>Ellipse</option>
+				  <option value="triangle">Triangle</option>
+				  <option value="diamond">Diamond</option>
+				  <option value="downtriangle">Down Triangle</option>
+				  <option value="cross">Cross</option>
+				  <option value="x">X</option>
+				</select>
+				<br/>
+				
+				<center>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("bubble.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

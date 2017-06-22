@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Stacked Line Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -40,31 +41,48 @@ Chart1.draw();
 
 <body onload="draw()">
 
-<div style="float:left;">
 
-Stacked:
-<select id="stack" onchange="Chart1.series.each(function(s) { s.stacked=document.getElementById('stack').value; }); Chart1.draw();">
-  <option value="no">No</option>
-  <option value="yes" selected>Yes</option>
-  <option value="100">100%</option>
-</select>
-
-<br/>
-
-<input type="checkbox" id="stairs" onclick="Chart1.series.each(function(s) { s.stairs=document.getElementById('stairs').checked; }); Chart1.draw();" >Stairs
-<br/>
-<input type="checkbox" id="pointers"  onchange="Chart1.series.each(function(s) {s.pointer.visible = document.getElementById('pointers').checked;}); Chart1.draw();">Pointers
-<br/>
-<input type="checkbox" id="smooth"  onchange="Chart1.series.each(function(s) {s.smooth = document.getElementById('smooth').checked ? 0.5 : 0;}); Chart1.draw();">Smooth
-<br/>
-<br/>
-<input type="checkbox" id="view3d" onclick="Chart1.aspect.view3d=this.checked; Chart1.draw()">View 3D
-
-</div>
-
-<canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left;">
+	
+				Stacked:
+				<select id="stack" onchange="Chart1.series.each(function(s) { s.stacked=document.getElementById('stack').value; }); Chart1.draw();">
+				  <option value="no">No</option>
+				  <option value="yes" selected>Yes</option>
+				  <option value="100">100%</option>
+				</select>
+				
+				<br/>
+				
+				<input type="checkbox" id="stairs" onclick="Chart1.series.each(function(s) { s.stairs=document.getElementById('stairs').checked; }); Chart1.draw();" >Stairs
+				<br/>
+				<input type="checkbox" id="pointers"  onchange="Chart1.series.each(function(s) {s.pointer.visible = document.getElementById('pointers').checked;}); Chart1.draw();">Pointers
+				<br/>
+				<input type="checkbox" id="smooth"  onchange="Chart1.series.each(function(s) {s.smooth = document.getElementById('smooth').checked ? 0.5 : 0;}); Chart1.draw();">Smooth
+				<br/>
+				<br/>
+				<input type="checkbox" id="view3d" onclick="Chart1.aspect.view3d=this.checked; Chart1.draw()">View 3D
+				
+				</div>
+				
+				<canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("stackedline.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

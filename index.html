@@ -1,261 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <title>Tee Chart Demo</title>
+	
+    <link rel="icon" href="../docs/images/favicon.ico" type="image/x-icon">
+	    <!-- Bootstrap -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom Theme Style -->
+    <link href="build/css/custom.min.css" rel="stylesheet">
+  </head>
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-
-        <meta property="og:title" content="Create charts with multiple-dimensions using JavaScript"/>
-        <meta property="og:image" content="http://www.steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/docs/images/html5.png" />
-        <meta property="og:description" content="TeeChart for JavaScript Data-mining" />
-        <meta property="og:url" content="http://www.steema.com/teechart/html5"/>
-
-        <meta name="Author" content="Steema Software" />
-        <meta name="Generator" content="Steema" />
-        <meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
-        <meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, Three.js, WebGL, 3D, JS Chart, Data Visualization, Chart, Graph, Map, Surface, Heatmap, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
-
-        <!-- Favicon -->
-        <link rel="shortcut icon" href="favicon.ico">
-
-        <style type="text/css">
-            html { height:100%; }
-            body { font-family: tahoma; overflow-x:hidden; height:100%; width:100%; margin:0px; background-color:#FFFFFF;}
-            #options { position: absolute; margin-left: 240px; height:60px; width: 100%; display: none;}
-            #selectors { margin-top: 20px; }
-            #content_div { position: fixed; left:240px; right: -30px; height: 100%; }
-            #frame1 { width:100%; height:100%; border:0;}
-            img { border-width:0; }
-            #titletext { color:white; font-size:16px;}
-            #sample_btn { position: fixed; bottom: 0px; left: 50%; }
-        </style>
-
-        <script src="3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
-        <link href="3rd_party/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
-        <link href="menu/custom.css" rel="stylesheet">
-        <script src="menu/sidemenu.js"></script>
-
-        <title>TeeChart for JavaScript HTML5 Canvas and WebGL 3D, Live Examples</title>
-    </head>
-
-    <body class="nav-md">
-
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-7504244-1']);
-            _gaq.push(['_trackPageview']);
-
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-
-        </script>
-
-        <div id="fb-root"></div>
-        <script>(function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id))
-                    return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//connect.facebook.net/ca_ES/all.js#xfbml=1&appId=19094609301";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-
-        <div class="container body">
-            <div class="main_container">      
-                <!-- load menus -->
-                <div class="include" data-include="menu/sidemenu"></div>
-
-                <!--options-->
-                <div id="options">
-                    <table id="selectors">
-                        <tr>
-                            <td style="padding-left:15px; padding-right: 5px;">Theme:</td>
-                            <td>
-                                <select id="theme"  onchange="changeTheme(this.value);">
-                                    <option value="">Default</option>
-                                    <option value="dark">Dark</option>
-                                    <option value="daybreak">Daybreak</option>    
-                                    <option value="excel">Microsoft Excel (TM)</option>
-                                    <option value="minimal" selected>Minimal</option>  
-                                    <option value="twilight">Twilight</option>
-                                </SELECT></td>
-                            <td style="padding-left:15px; padding-right: 5px;">Palette:</td>
-                            <td>
-                                <select id="palette"  onchange="changePalette(this.value);">
-                                    <option value="">Default</option>
-                                    <option value="cool">Cool</option> 
-                                    <option value="excel">Microsoft Excel (TM)</option>  
-                                    <option value="onBlack">On Black</option>
-                                    <option value="opera">Opera</option>
-                                    <option value="rainbow">Rainbow</option>
-                                    <option value="redRiver">Red River</option>
-                                    <option value="seaWash" selected>Sea Wash</option>
-                                    <option value="warm">Warm</option>  
-                                    <option value="windowsxp">Windows XP</option>  
-                                </SELECT></td></tr></table>
-                </div>
-
-                <!-- page content -->
-                <div class="right_col" role="main">
-                    <div id="content_div">
-                        <iframe id="frame1" name="main" src="dashboard/geo_series.htm">
-                            <p>Your browser does not support iframes.</p>
-                        </iframe>
-                    </div>
-                </div>
-
-                <button id="sample_btn" type="button" class="btn btn-success" onclick="openSample();">Open in a new tab</button>
+  <body class="nav-md" onload="changeSizeIframe();showMenu();" onresize="changeSizeIframe();showMenu();">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col" id="slideMenu">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+            <table>
+             	<tr><td> <a href="https://www.steema.com/" target="_blank"><img src="../docs/images/logo_steema_v3.png"></a></td>
+             	<td><center><span class="closeSpan" style="cursor:pointer" onclick="closeNav()"><p id="txtCloseSpan">&#9747;</p></span></center></td></tr>
+	              
+			</table>
             </div>
+
+            <div class="clearfix"></div>
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+              <br/>
+                <h3>THEMES INTRO</h3>
+                <ul class="nav side-menu">
+                  <li><a>Series <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="intro/lines.htm" target="frame_main">Lines</a></li>
+                      <li><a href="intro/bars.htm" target="frame_main">Bars</a></li>
+                      <li><a href="intro/areas.htm" target="frame_main">Areas</a></li>
+                      <li><a href="intro/pie.htm" target="frame_main">Pie</a></li>
+                      <li><a href="intro/points.htm" target="frame_main">Points</a></li>
+                      <li><a href="intro/gantt.htm" target="frame_main">Gantt</a></li>
+                    </ul>
+                  </li>
+                  <li><a>DashBoards<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="intro/scroller.htm" target="frame_main">Scroller</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="menu_section">
+                <h3>REFERENCE DEMO</h3>
+                <ul class="nav side-menu">
+                  <li><a>Series<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="series/All.htm" target="frame_main">All</a></li>
+                      <li><a>Line<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="basic/Basic.htm" target="frame_main">Basic</a></li>
+                            <li class="sub_menu"><a href="series/line/line.htm" target="frame_main">Line</a></li>
+                            <li class="sub_menu"><a href="series/line/smoothline.htm" target="frame_main">Smooth Line</a></li>
+                            <li class="sub_menu"><a href="series/line/stackedline.htm" target="frame_main">Stacked Line</a></li>
+                            <li class="sub_menu"><a href="series/line/linepoint.htm" target="frame_main">Line and Point</a></li>
+                          </ul>
+                        </li>
+                      <li><a href="series/line/point.htm" target="frame_main">Point XY</a></li>
+                      <li><a>Area<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="series/area/area.htm" target="frame_main">Area</a></li>
+                            <li class="sub_menu"><a href="series/area/horizarea.htm" target="frame_main">Horizontal Area</a></li>
+                            <li class="sub_menu"><a href="series/area/smootharea.htm" target="frame_main">Smooth Area</a></li>
+                          </ul>
+                        </li>
+                      <li><a>Bar<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="series/bar/bar.htm" target="frame_main">Bar</a></li>
+                            <li class="sub_menu"><a href="series/bar/barnegative.htm" target="frame_main">Negative values</a></li>
+                            <li class="sub_menu"><a href="series/bar/volume.htm" target="frame_main">Volume</a></li>
+                          </ul>
+                        </li>
+                      <li><a href="series/bar/horizbar.htm" target="frame_main">Horiz. Bar</a></li>
+                      <li><a>Pie<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="series/pie/pie.htm" target="frame_main">Pie</a></li>
+                            <li class="sub_menu"><a href="series/pie/multipie.htm" target="frame_main">Multiple Pie</a></li>
+                          </ul>
+                        </li>
+                      <li><a>Donut<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="series/donut/donut.htm" target="frame_main">Donut</a></li>
+                            <li class="sub_menu"><a href="series/donut/multidonut.htm" target="frame_main">Multiple Donut</a></li>
+                          </ul>
+                        </li>
+                      <li><a href="series/bubble/bubble.htm" target="frame_main">Bubble</a></li>
+                      <li><a href="series/candle/candle.htm" target="frame_main">Candle OHLC</a></li>
+                      <li><a href="series/gantt/gantt.htm" target="frame_main">Gantt</a></li>
+                      <li><a>Gauge<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="gauges/gauges.htm" target="frame_main">Gauge</a></li>
+                            <li class="sub_menu"><a href="gauges/gauge_gallery.htm" target="frame_main">Gauge Gallery</a></li>
+                            <li class="sub_menu"><a href="gauges/clocks.htm" target="frame_main">Clocks</a></li>
+                          </ul>
+                        </li>
+                      <li><a href="series/spark/spark.htm" target="frame_main">Spark</a></li>
+                      <li><a>World Maps<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="series/maps/worldmap.htm" target="frame_main">World Maps</a></li>
+                            <li class="sub_menu"><a href="series/maps/canvas_maps.htm" target="frame_main">Canvas Maps</a></li>
+                            <li class="sub_menu"><a href="series/maps/maps_bubbles.htm" target="frame_main">Bubble Maps</a></li>
+                          </ul>
+                      </li>
+                      <li><a>Polar/Radar<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="series/polar/polar.htm" target="frame_main">Polar</a></li>
+                            <li class="sub_menu"><a href="series/polar/polar_bar.htm" target="frame_main">Polar Bar</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="series/colorgrid/colorgrid.htm" target="frame_main">Color Grid</a></li>
+                      <li><a href="series/surface/surface.htm" target="frame_main">Surface 3D</a></li>
+                      
+                    </ul>
+                  </li>
+                  <li><a>Axes<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="axes/allaxes.htm" target="frame_main">Axes</a></li>
+                      <li><a href="axes/centeraxes.htm" target="frame_main">Centred axes</a></li>
+                      <li><a href="axes/gridbands.htm" target="frame_main">Grid Bands</a></li>
+                      <li><a href="axes/synchro_many_charts.htm" target="frame_main">Synchronize</a></li>
+                      <li><a href="axes/multiple_axes.htm" target="frame_main">Multiple Axes</a></li>
+                      <li><a href="axes/customlabels.htm" target="frame_main">Custom Labels</a></li>
+                      <li><a href="axes/zoompercent.htm" target="frame_main">Coded zoom</a></li>
+                    </ul>
+                    </li>
+	                  <li><a>Legend<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="legend/legend.htm" target="frame_main">Legend</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Interactivity<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="axes/zoomscroll.htm" target="frame_main">Mouse and Touch</a></li>
+	                      <li><a href="series/seriesonclick.htm" target="frame_main">Series onClick</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Animations<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="animations/linefadein.htm" target="frame_main">Series</a></li>
+	                      <li><a href="animations/sequence.htm" target="frame_main">Sequence</a></li>
+	                      <li><a href="animations/css3_animations.htm" target="frame_main">CSS3 Transitions</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Data Sources<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="sources/fromarray.htm" target="frame_main">From Array</a></li>
+	                      <li><a href="sources/FromText.htm" target="frame_main">From Text</a></li>
+	                      <li><a href="sources/FromTable.htm" target="frame_main">From Table</a></li>
+	                      <li><a href="series/datasource.htm" target="frame_main">From Series</a></li>
+	                      <li><a href="sources/fromxml.htm" target="frame_main">From XML</a></li>
+	                      <li><a href="sources/fromjson.htm" target="frame_main">From JSON</a></li>
+	                      <li><a href="sources/realtime.htm" target="frame_main">Realtime</a></li>
+	                      <li><a href="sources/fromtypedarray.htm" target="frame_main">From Typed Array</a></li>
+	                      <li><a href="sources/datetime.htm" target="frame_main">DateTime Data</a></li>
+	                      <li><a href="sources/fromYahooFinance.htm" target="frame_main">Yahoo Finance</a></li>
+	                      <li><a href="sources/fromWUnderground.htm" target="frame_main">Weather Underground</a></li>
+	                      <li><a href="sources/battery.htm" target="frame_main">Battery Level</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Images<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="basic/BackImage.htm" target="frame_main">From Array</a></li>
+	                      <li><a href="export/ToPNG.htm" target="frame_main">To PNG and JPEG</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Editors<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="editor/ChartEditor.htm" target="frame_main">Chart Editor</a></li>
+	                      <li><a href="editor/modaleditor.htm" target="frame_main">Modal Editor</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Dashboards<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="dashboard/tutorial/index.htm" target="frame_main">Multi-Dim Tutorial</a></li>
+	                      <li><a href="dashboard/demographics.htm" target="frame_main">Demographics</a></li>
+	                      <li><a href="dashboard/productSales.htm" target="frame_main">Product Sales</a></li>
+	                      <li><a href="dashboard/geo_series.htm" target="frame_main">Geo mapping</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>3D<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="canvas/webgl/basic_3d.htm" target="frame_main">Basic 3D</a></li>
+	                      <li><a href="canvas/webgl/threejs_example.htm" target="frame_main">Advanced</a></li>
+	                      <li><a href="canvas/webgl/maps_3d.htm" target="frame_main">Maps 3D</a></li>
+	                      <li><a href="canvas/webgl/index.htm" target="frame_main">WebGL™ 3D</a></li>
+	                    </ul>
+	                  </li>
+	                  <li><a>Other<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="extra/annotations.htm" target="frame_main">Annotations</a></li>
+                      <li><a href="extra/buttons.htm" target="frame_main">Buttons</a></li>
+                      <li><a href="extra/ToolTips.htm" target="frame_main">Tool tips</a></li>
+                      <li><a href="extra/domToolTips.htm" target="frame_main">CSS Tool tips</a></li>
+                      <li><a href="extra/domToolTips_SubChart.htm" target="frame_main">Tips with Charts</a></li>
+                      <li><a>Cursor Tool<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="extra/CursorTool.htm" target="frame_main">Cursor Tool</a></li>
+                            <li class="sub_menu"><a href="extra/CursorTool_Interpolate.htm" target="frame_main">Cursor Tool Interpolate</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="extra/floorreflection.htm" target="frame_main">Floor reflection</a></li>
+                      <li><a>Panel<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="basic/PanelShadow.htm" target="frame_main">Panel</a></li>
+                            <li class="sub_menu"><a href="basic/Transparent.htm" target="frame_main">Transparent</a></li>
+                            <li class="sub_menu"><a href="basic/canvasalign.htm" target="frame_main">Full page align</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="basic/TitleFooter.htm" target="frame_main">Title and Footer</a></li>
+                      <li><a href="extra/slider.htm" target="frame_main">Slider</a></li>
+                      <li><a>Series Scroller<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="extra/scroller.htm" target="frame_main">Series Scroller</a></li>
+                            <li class="sub_menu"><a href="extra/scroller_datetime.htm" target="frame_main">Datetime Scroller</a></li>
+                          </ul>
+                      </li>
+                      <li><a>Canvas<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="canvas/custom_paint.htm" target="frame_main">Custom Painting</a></li>
+                            <li class="sub_menu"><a href="canvas/size_percent_resize.htm" target="frame_main">Percent Size and Auto Resize</a></li>
+                          </ul>
+                      </li>
+                      
+                     </ul>
+                  </li>
+                  <li><a>Plugins<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="plugins/plugins.htm" target="frame_main">List of Plugins</a></li>
+	                      <li><a href="plugins/jquery/teechart_jquery.htm" target="frame_main">JQuery TeeChart</a></li>
+	                      <li><a href="plugins/typescript/index.htm" target="frame_main">Microsoft TypeScript</a></li>
+	                      <li><a href="http://www.nuget.org/packages/TeeChart.htm" target="frame_main">Microsoft Visual Studio</a></li>
+	                      <li><a href="https://npmjs.org/package/TeeChart.htm" target="frame_main">Node.js package</a></li>
+	                      <li><a href="extra/google_gadget.htm" target="frame_main">Google Gadget</a></li>
+	                      <li><a href="http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart.htm" target="frame_main">Smart Mobile Studio</a></li>
+	                      <li><a href="canvas/webgl/index.htm" target="frame_main">Three.js WebGL 3D</a></li>
+	                    </ul>
+	                  </li>
+                  <li><a>Unit Tests<span class="fa fa-chevron-down"></span></a>
+	                    <ul class="nav child_menu">
+	                      <li><a href="tests/index.htm" target="frame_main">Unit Tests</a></li>
+	                    </ul>
+	                  </li>
+                  </ul>
+              </div>
+
+            </div>
+
+          </div>
         </div>
 
-        <script type="text/javascript">
+        <div class="right_col" role="main" id="mainContainer">
+        
+        	<span class="openSpan" style="cursor:pointer" onclick="openNav();openedNav();"><p id="txtOpenSpan">&#9776;</p></span>
+        	<iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
+        
+        </div>
+        
+      </div>
+    </div>
+    <!-- jQuery -->
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+    <script src="build/js/custom.min.js"></script>
 
-            function openSample(url, button, withThemeOptions) {
-                if (url) {
-                    if (button === 0) {
-                        var frame = get("frame1");
-                        frame.setAttribute("src", url + ".htm");
+    <script type="text/javascript">
 
-                        var options = get("options");
-                        var content = get("content_div");
-                        if (withThemeOptions) {
-                            options.style.display = "block";
-                            content.setAttribute("style", "top: 60px");
-                        } else {
-                            options.style.display = "none";
-                            content.setAttribute("style", "top: 0px");
-                        }
-                    }
-                    else if (button === 1) {
-                        window.open(url + ".htm");
-                    }
-                }
-                else {
-                    var frame = get("frame1");
-                    window.open(frame.getAttribute("src"));
-                }
-            }
+    
+	var opened=false;
+	
+   	function openedNav(){
+   		opened=true;
+   	}
+	
+	function changeSizeIframe(){
+   		var w= window.innerWidth;
+   		var h= window.innerHeight;
+   		document.getElementById("frame1").width = w;
+		document.getElementById("frame1").height = h;
+   	}
+	function showMenu(){
+		var w=window.innerWidth;
+		
+		if(w<=991 && !opened){
+			document.getElementById("txtOpenSpan").style.display = 'block';
+		    document.getElementById("slideMenu").style.visibility = 'hidden';
+		    document.getElementById("mainContainer").style.width = '100%';
+		    document.getElementById("mainContainer").style.margin = '0';
+		    document.getElementById("mainContainer").style.paddingRight = '0';
+		    document.getElementById("mainContainer").style.padding = '10px';
+	    	document.getElementById("txtCloseSpan").style.display = 'none';
+	    }
+		else if(opened && w<=991){
 
-            var topTheme = "minimal";  //defaults
-            var topPalette = "seaWash";
+			document.getElementById("txtCloseSpan").style.display = 'block';
+		    document.getElementById("slideMenu").style.visibility = 'visible';
+	    	document.getElementById("txtOpenSpan").style.display = 'none';
+		    document.getElementById("mainContainer").style.width = '100%';
+		    document.getElementById("mainContainer").style.marginLeft = '230px';
+		}
+	    else{
 
-            function changeTheme(aTheme) {
-                top.frames['main'].changeTheme(aTheme);
-                topTheme = aTheme;
-
-                var selectors = document.getElementById("selectors");
-                var theme = document.getElementById("theme");
-                var palette = document.getElementById("palette");
-
-                if (aTheme == "dark") {
-                    document.getElementById("options").style.backgroundColor = "#0C0C0C";
-
-                    selectors.style.backgroundColor = "#0C0C0C";
-                    selectors.style.color = "white";
-                    theme.style.backgroundColor = "#747474";
-                    theme.style.color = "white";
-                    palette.style.backgroundColor = "#747474";
-                    palette.style.color = "white";
-
-                    //top.frames['main'] or parent.main
-                    parent.main.document.body.style.backgroundColor = "#0C0C0C";
-
-                    if (parent.main.a1 != null)
-                        parent.main.a1.format.font.fill = "white";
-
-                    if (parent.main.a2 != null)
-                        parent.main.a2.format.font.fill = "lightgray";
-                } else {
-                    if ((aTheme == "minimal") || (aTheme == "excel")) {
-                        if (parent.main.a1 != null)
-                            parent.main.a1.format.font.fill = "rgba(124,124,184,0.9)";
-
-                        if (parent.main.a2 != null)
-                            parent.main.a2.format.font.fill = "rgba(124,124,184,0.9)";
-                    } else if (aTheme == "twilight") {
-                        if (parent.main.a1 != null)
-                            parent.main.a1.format.font.fill = "white";
-
-                        if (parent.main.a2 != null)
-                            parent.main.a2.format.font.fill = "lightgray";
-                    } else {
-                        if (parent.main.a1 != null)
-                            parent.main.a1.format.font.fill = "rgba(0,0,0,0.6)";
-
-                        if (parent.main.a2 != null)
-                            parent.main.a2.format.font.fill = "rgba(0,0,0,0.6)";
-                    }
-
-                    document.getElementById("options").style.backgroundColor = "#FFFFFF";
-
-                    parent.main.document.body.style.backgroundColor = "#FFFFFF";
-                    selectors.style.backgroundColor = "#FFFFFF";
-                    selectors.style.color = "black";
-                    theme.style.backgroundColor = "#FFFFFF";
-                    theme.style.color = "black";
-                    palette.style.backgroundColor = "#FFFFFF";
-                    palette.style.color = "black";
-                }
-
-                document.getElementById("palette").value = top.frames['main'].Chart1.paletteName;
-
-                top.frames['main'].Chart1.draw();
-            }
-
-            function changePalette(palette) {
-                top.frames['main'].changePalette(palette);
-                topPalette = palette;
-
-                top.frames['main'].Chart1.draw();
-            }
-
-            function get(id) {
-                return document.getElementById(id);
-            }
-
-            function getWidth() {
-                if (self.innerHeight)
-                    return self.innerWidth;
-                else
-                if (document.documentElement && document.documentElement.clientHeight)
-                    return document.documentElement.clientWidth;
-                else
-                if (document.body)
-                    return document.body.clientWidth;
-                else
-                    return 0;
-            }
-
-            function testAll() {
-                var n = 0;
-                function change() {
-                    var s = d.aNodes[n++].url;
-                    if (s !== "")
-                        main.location = s;
-                    if (n < d.aNodes.length)
-                        setTimeout(change, 1000);
-                }
-                setTimeout(change, 1000);
-            }
-        </script>
-
-        <script>!function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (!d.getElementById(id)) {
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = "http://platform.twitter.com/widgets.js";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }
-            }(document, "script", "twitter-wjs");</script>
-    </body>
+		    document.getElementById("slideMenu").style.visibility = 'visible';
+		    document.getElementById("mainContainer").style.width = '100%';
+		    document.getElementById("mainContainer").style.marginLeft = '230px';
+	    	document.getElementById("txtOpenSpan").style.display = 'none';
+		    document.getElementById("txtCloseSpan").style.display = 'none';	
+		    opened=false;
+	    }
+	}
+	function openNav() {
+	    document.getElementById("slideMenu").style.visibility = 'visible';
+    	document.getElementById("txtOpenSpan").style.display = 'none';
+		document.getElementById("txtCloseSpan").style.display = 'block';
+	    document.getElementById("mainContainer").style.width = '100%';
+	    document.getElementById("mainContainer").style.marginLeft = '230px';
+	    opened=true;
+	}
+	
+	function closeNav() {
+	    document.getElementById("slideMenu").style.visibility = 'hidden';
+	    document.getElementById("mainContainer").style.width = '100%';
+	    document.getElementById("mainContainer").style.margin = '0';
+	    document.getElementById("mainContainer").style.paddingRight = '0';
+	    document.getElementById("mainContainer").style.padding = '10px';
+    	document.getElementById("txtOpenSpan").style.display = 'block';
+    	opened=false;
+	}
+    </script>
+  </body>
 </html>

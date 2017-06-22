@@ -3,274 +3,379 @@
 <head>
 <title>TeeChart JavaScript Scatter Example</title>
 
-<!--[if lt IE 9]>
-    <script src="../../src/excanvas/excanvas_text.js"></script>
-    <script src="../../src/excanvas/canvas.text.js"></script>
-<![endif]-->
-
-<link rel="stylesheet" type="text/css" href="../demo.css">
-<script src="../../src/teechart.js" type="text/javascript"></script>
-<script src="../../src/teechart-extras.js" type="text/javascript"></script>
-<script src="../../src/teechart-animations.js" type="text/javascript"></script>
-<script src="../../src/date.format.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-
-var Chart1;
-
-function draw() {
-
-  //init chart
-  Chart1=new Tee.Chart("canvas");
-  
-  Chart1.panel.margins.top = 12;
-  
-  //can add your own colour scheme in here, ie. the colours taken by Series added to the Chart in
-  //palette order  ..eg.
-  /*Chart1.palette.colors=[ "#FF9999","#663399","#CCFFFF","#FFFFCC","#660066","#8080FF","#CC6600",
-    "#FFCCCC","#800000","#FF00FF","#00FFFF","#FFFF00","#800080","#000080","#808000","#FF0000",
-    "#FFCC00","#FFFFCC","#CCFFCC","#00FFFF","#FFCC99","#CC99FF"];*/
-
-  //add series and data
-  var points1 = new Tee.PointXY();
-  points1.title = "Apples";
-  points1.data.values = [5,3,2,7,1,6,4,5,1,0,10,7,11,15,12,21,17,15,19,24,21,11,15,21,19,17,20,23]; //,5,1,3,4];
-  var points2 = new Tee.PointXY();
-  points2.title = "Pears";
-  points2.data.values = [7,1,5,1,0,10,6,3,2,7,11,4,5,3,4,5,1,5,11,15,16,14,14,13,12,15,17,19];
-
-  points1.data.x = [new Date(2012, 9, 1),new Date(2012, 9, 15),new Date(2012, 10, 1),new Date(2012, 10, 15),new Date(2012, 11, 1)
-                  ,new Date(2012, 11, 15),new Date(2012, 12, 1),new Date(2012, 12, 15),new Date(2013, 1, 1),new Date(2013, 1, 15)
-				  ,new Date(2013, 2, 1),new Date(2013, 2, 15),new Date(2013, 3, 1),new Date(2013, 3, 15)
-				  ,new Date(2013, 4, 1),new Date(2013, 4, 15),new Date(2013, 5, 1),new Date(2013, 5, 15),new Date(2013, 6, 1)
-                  ,new Date(2013, 6, 15),new Date(2013, 7, 1),new Date(2013, 7, 15),new Date(2013, 8, 1),new Date(2013, 8, 15)
-				  ,new Date(2013, 9, 1),new Date(2013, 9, 15),new Date(2013, 10, 1),new Date(2013, 10, 15)];
-				  
-  points2.data.x = points1.data.x; 
-				  
-  Chart1.addSeries(points1).pointer.visible=true;
-  Chart1.addSeries(points2).pointer.visible=true;
-  
-  
-  //function series
-  var avg = new Tee.Line();
-  avg.title = "Average";
-  var avgVals = new Array();
-  
-  for (i = 0; i < points1.data.x.length; i++)
-  {
-    avgVals[i] = (points1.data.values[i]+points2.data.values[i]) / 2;
-  }
-  
-  avg.data.values = avgVals;
-  avg.data.x = points1.data.x;
-  avg.format.stroke.size=2;
-  avg.smooth=0.5;
-  Chart1.addSeries(avg);
-  
-
-  //config some series appearance characteristics
-  for (i = 0; i < 2; i++)
-  {
-  Chart1.series.items[i].pointer.width = 10;
-  Chart1.series.items[i].pointer.height = 10;
-  Chart1.series.items[i].pointer.style="ellipse";
-  Chart1.series.items[i].pointer.format.stroke.size = 4;
-  Chart1.series.items[i].pointer.format.stroke.fill = "white";
-  Chart1.series.items[i].pointer.format.shadow.visible=false;
-  Chart1.series.items[i].format.stroke.size = 2;
-  Chart1.series.items[i].format.shadow.visible=false;
-  }
-  
-  //Axes
-  Chart1.axes.left.title.text="$ 000s";
-  Chart1.axes.left.labels.roundFirst=true;
-  Chart1.axes.left.title.visible=false;  
-  Chart1.axes.bottom.labels.roundFirst=true;
-  Chart1.axes.bottom.title.text="Bottom Axis";
-  Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
-  Chart1.axes.bottom.title.format.font.setSize(20);
-  Chart1.axes.bottom.title.visible=false;  
-  Chart1.axes.bottom.labels.dateFormat = "mm/yy";
-  Chart1.axes.left.increment=3;
-  Chart1.axes.left.setMinMax(-1, 26);
-  Chart1.axes.left.grid.format.stroke.size = 1;
-  Chart1.axes.left.ticks.visible=false;
-  Chart1.axes.left.format.stroke.fill = "rgba(0,0,0,0.0)";
-  Chart1.axes.bottom.format.stroke.size = 1;
-
-  //Title
-  Chart1.title.visible = false;
-  Chart1.title.text="Sales figures";
-  
-  //Legend
-  //Chart1.legend.position="right";
-
-  // annotation (alternative title)
-  a1=new Tee.Annotation(Chart1);
-  a1.format.fill = "rgba(0,0,0,0.0)";
-  a1.format.stroke.fill="rgba(0,0,0,0.0)";
-  a1.format.font.style="20px Tahoma";
-  a1.format.font.fill = "rgba(0,0,0,0.6)";
-  a1.text="Product shipments";
-  
-  // annotation (alternative title)
-  a2=new Tee.Annotation(Chart1);
-  a2.format.fill = "rgba(0,0,0,0.0)";
-  a2.format.stroke.fill="rgba(0,0,0,0.0)";
-  a2.format.font.style="12px Arial";
-  a2.format.font.fill = "darkblue";
-  a2.text=" Tons fortnightly, all freighted sources";
-  
-  Chart1.draw();  //get positions
-  
-  a1.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
-  a1.position.y = 8;
-  Chart1.tools.add(a1);
-  a2.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
-  a2.position.y = 38;
-  Chart1.tools.add(a2);  
-  
-  //tooltip
-  tip=new Tee.ToolTip(Chart1);
-  tip.render="dom";
-  tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
-  tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
-  tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:3; z-index:1000;";
-
-  Chart1.tools.add(tip);
-
-  tip.onhide=function() { scaling=0; poindex=-1; }
-  
-  tip.ongettext=function( tool, text, series, index) { 
-    var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
-	    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ index.toFixed(0)+'</strong></font>';
-        s =	s +'<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';  
-	return s;
-  }
-
-  changeTheme(top.topTheme);
-  //changePalette(top.topPalette);
-  
-  //animation
-  
-  animation=new Tee.SeriesAnimation();
-  animation.duration=1500;
-  animation.kind="each";
-  fadeAnimation=new Tee.FadeAnimation();
-  fadeAnimation.duration=500;
-  fadeAnimation.fade.series=true;
-  fadeAnimation.fade.marks=true;
-  animation.mode = "linear"; 
-  fadeAnimation.mode = "linear";
-  animation.items.push(fadeAnimation);
-  
-  animation.animate(Chart1);
-  
-  resize(Chart1);
-}
-
-function resize(chart) {
-  if (!chart) return;
-  
-  var canvas = chart.canvas;
+	<meta charset="UTF-8"/>
+	<style type="text/css">
+		td {
+			width:25%;
+			text-aling:left;
+		}
 	
-	startWidth = 1000;
-	startHeight = 400;
-  
-	var w = startWidth;
-	var h = startHeight;
+	</style>
+	<!--[if lt IE 9]>
+	    <script src="../../src/excanvas/excanvas_text.js"></script>
+	    <script src="../../src/excanvas/canvas.text.js"></script>
+	<![endif]-->
+	
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script src="../../src/teechart.js" type="text/javascript"></script>
+	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
+	<script src="../../src/date.format.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		
+		var Chart1;
+		
+		function draw() {
+		
+		  //init chart
+		  Chart1=new Tee.Chart("canvas");
+		  
+		  Chart1.panel.margins.top = 12;
+		  
+		  //can add your own colour scheme in here, ie. the colours taken by Series added to the Chart in
+		  //palette order  ..eg.
+		  /*Chart1.palette.colors=[ "#FF9999","#663399","#CCFFFF","#FFFFCC","#660066","#8080FF","#CC6600",
+		    "#FFCCCC","#800000","#FF00FF","#00FFFF","#FFFF00","#800080","#000080","#808000","#FF0000",
+		    "#FFCC00","#FFFFCC","#CCFFCC","#00FFFF","#FFCC99","#CC99FF"];*/
+		
+		  //add series and data
+		  var points1 = new Tee.PointXY();
+		  points1.title = "Apples";
+		  points1.data.values = [5,3,2,7,1,6,4,5,1,0,10,7,11,15,12,21,17,15,19,24,21,11,15,21,19,17,20,23]; //,5,1,3,4];
+		  var points2 = new Tee.PointXY();
+		  points2.title = "Pears";
+		  points2.data.values = [7,1,5,1,0,10,6,3,2,7,11,4,5,3,4,5,1,5,11,15,16,14,14,13,12,15,17,19];
+		
+		  points1.data.x = [new Date(2012, 9, 1),new Date(2012, 9, 15),new Date(2012, 10, 1),new Date(2012, 10, 15),new Date(2012, 11, 1)
+		                  ,new Date(2012, 11, 15),new Date(2012, 12, 1),new Date(2012, 12, 15),new Date(2013, 1, 1),new Date(2013, 1, 15)
+						  ,new Date(2013, 2, 1),new Date(2013, 2, 15),new Date(2013, 3, 1),new Date(2013, 3, 15)
+						  ,new Date(2013, 4, 1),new Date(2013, 4, 15),new Date(2013, 5, 1),new Date(2013, 5, 15),new Date(2013, 6, 1)
+		                  ,new Date(2013, 6, 15),new Date(2013, 7, 1),new Date(2013, 7, 15),new Date(2013, 8, 1),new Date(2013, 8, 15)
+						  ,new Date(2013, 9, 1),new Date(2013, 9, 15),new Date(2013, 10, 1),new Date(2013, 10, 15)];
+						  
+		  points2.data.x = points1.data.x; 
+						  
+		  Chart1.addSeries(points1).pointer.visible=true;
+		  Chart1.addSeries(points2).pointer.visible=true;
+		  
+		  
+		  //function series
+		  var avg = new Tee.Line();
+		  avg.title = "Average";
+		  var avgVals = new Array();
+		  
+		  for (i = 0; i < points1.data.x.length; i++)
+		  {
+		    avgVals[i] = (points1.data.values[i]+points2.data.values[i]) / 2;
+		  }
+		  
+		  avg.data.values = avgVals;
+		  avg.data.x = points1.data.x;
+		  avg.format.stroke.size=2;
+		  avg.smooth=0.5;
+		  Chart1.addSeries(avg);
+		  
+		
+		  //config some series appearance characteristics
+		  for (i = 0; i < 2; i++)
+		  {
+		  Chart1.series.items[i].pointer.width = 10;
+		  Chart1.series.items[i].pointer.height = 10;
+		  Chart1.series.items[i].pointer.style="ellipse";
+		  Chart1.series.items[i].pointer.format.stroke.size = 4;
+		  Chart1.series.items[i].pointer.format.stroke.fill = "white";
+		  Chart1.series.items[i].pointer.format.shadow.visible=false;
+		  Chart1.series.items[i].format.stroke.size = 2;
+		  Chart1.series.items[i].format.shadow.visible=false;
+		  }
+		  
+		  //Axes
+		  Chart1.axes.left.title.text="$ 000s";
+		  Chart1.axes.left.labels.roundFirst=true;
+		  Chart1.axes.left.title.visible=false;  
+		  Chart1.axes.bottom.labels.roundFirst=true;
+		  Chart1.axes.bottom.title.text="Bottom Axis";
+		  Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
+		  Chart1.axes.bottom.title.format.font.setSize(20);
+		  Chart1.axes.bottom.title.visible=false;  
+		  Chart1.axes.bottom.labels.dateFormat = "mm/yy";
+		  Chart1.axes.left.increment=3;
+		  Chart1.axes.left.setMinMax(-1, 26);
+		  Chart1.axes.left.grid.format.stroke.size = 1;
+		  Chart1.axes.left.ticks.visible=false;
+		  Chart1.axes.left.format.stroke.fill = "rgba(0,0,0,0.0)";
+		  Chart1.axes.bottom.format.stroke.size = 1;
+		
+		  //Title
+		  Chart1.title.visible = false;
+		  Chart1.title.text="Sales figures";
+		  
+		  //Legend
+		  //Chart1.legend.position="right";
+		
+		  // annotation (alternative title)
+		  a1=new Tee.Annotation(Chart1);
+		  a1.format.fill = "rgba(0,0,0,0.0)";
+		  a1.format.stroke.fill="rgba(0,0,0,0.0)";
+		  a1.format.font.style="20px Tahoma";
+		  a1.format.font.fill = "rgba(0,0,0,0.6)";
+		  a1.text="Product shipments";
+		  
+		  // annotation (alternative title)
+		  a2=new Tee.Annotation(Chart1);
+		  a2.format.fill = "rgba(0,0,0,0.0)";
+		  a2.format.stroke.fill="rgba(0,0,0,0.0)";
+		  a2.format.font.style="12px Arial";
+		  a2.format.font.fill = "darkblue";
+		  a2.text=" Tons fortnightly, all freighted sources";
+		  
+		  Chart1.draw();  //get positions
+		  
+		  a1.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
+		  a1.position.y = 8;
+		  Chart1.tools.add(a1);
+		  a2.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
+		  a2.position.y = 38;
+		  Chart1.tools.add(a2);  
+		  
+		  //tooltip
+		  tip=new Tee.ToolTip(Chart1);
+		  tip.render="dom";
+		  tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
+		  tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
+		  tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:3; z-index:1000;";
+		
+		  Chart1.tools.add(tip);
+		
+		  tip.onhide=function() { scaling=0; poindex=-1; }
+		  
+		  tip.ongettext=function( tool, text, series, index) { 
+		    var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
+			    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ index.toFixed(0)+'</strong></font>';
+		        s =	s +'<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';  
+			return s;
+		  }
+		
+		  changeTheme(top.topTheme);
+		  //changePalette(top.topPalette);
+		  
+		  //animation
+		  
+		  animation=new Tee.SeriesAnimation();
+		  animation.duration=1500;
+		  animation.kind="each";
+		  fadeAnimation=new Tee.FadeAnimation();
+		  fadeAnimation.duration=500;
+		  fadeAnimation.fade.series=true;
+		  fadeAnimation.fade.marks=true;
+		  animation.mode = "linear"; 
+		  fadeAnimation.mode = "linear";
+		  animation.items.push(fadeAnimation);
+		  
+		  animation.animate(Chart1);
+		  
+		  resize(Chart1);
+		}
+		
+		function resize(chart) {
+		  if (!chart) return;
+		  
+		  var canvas = chart.canvas;
+			
+			startWidth = 1000;
+			startHeight = 400;
+		  
+			var w = startWidth;
+			var h = startHeight;
+		
+			if ((window.innerWidth - 156  - canvas.offsetLeft - 20) < startWidth)
+			  w = window.innerWidth - 156 - canvas.offsetLeft - 20;
+			else
+			  w = startWidth;
+			  
+			if ((window.innerHeight - 70  - canvas.offsetTop - 20) < startHeight)
+			  h = window.innerHeight - 70 - canvas.offsetTop - 20;
+			else
+			  h = startHeight;
+		
+			
+		  canvas.setAttribute('width', ""+w+"px");
+		
+		  canvas.setAttribute('height', ""+h+"px");
+		
+		  canvas.style.width=""+w+"px";
+		  canvas.style.height=""+h+"px";
+		
+		  chart.bounds.width=w;
+		  chart.bounds.height=h;
+		
+		  chart.draw();
+		}
+		
+		function changeTheme(aTheme)
+		{
+		   Chart1.applyTheme(aTheme);
+		
+		   if (aTheme == "dark")
+		   {
+		     a1.format.font.fill = "white"; 
+			 a2.format.font.fill = "lightblue";
+			 document.getElementById("chartView").style.backgroundColor = "#0C0C0C";
+			 if (Chart1.series.items.length > 0) {
+			  for (var i = 0; i < Chart1.series.items.length; i++)
+			  {
+			    Chart1.series.items[i].pointer.format.stroke.size = 3;
+		        Chart1.series.items[i].pointer.format.stroke.fill = "white"; 
+			  }
+			}
+		   }
+		   else if ((aTheme == "daybreak") || (aTheme == "twilight"))
+		   {
+		     if (aTheme == "twilight") {
+		       a1.format.font.fill = "white"; 
+			   a2.format.font.fill = "lightblue"; 
+			 }  
+			 else
+			 {
+			   a1.format.font.fill = "rgba(0,0,0,0.6)";
+			   a2.format.font.fill = "darkblue";  
+			 }
+			 document.getElementById("chartView").style.backgroundColor = "#FFFFFF";
+			 if (Chart1.series.items.length > 0) {
+			  for (var i = 0; i < Chart1.series.items.length; i++)
+			  {
+			    Chart1.series.items[i].pointer.format.stroke.size = 1;
+		        Chart1.series.items[i].pointer.format.stroke.fill = "rgba(224,224,224,0.6)"; 
+			  }
+			}  
+		   }
+		   else
+		   {
+		     a1.format.font.fill = "rgba(0,0,0,0.6)";
+			 a2.format.font.fill = "darkblue";
+			 document.getElementById("chartView").style.backgroundColor = "#FFFFFF";
+			 if (Chart1.series.items.length > 0) {
+			  for (var i = 0; i < Chart1.series.items.length; i++)
+			  {
+			    Chart1.series.items[i].pointer.format.stroke.size = 3;
+		        Chart1.series.items[i].pointer.format.stroke.fill = "white"; 
+			  }
+			}
+		   }
+			 
+		  resize(Chart1);
+		}
+		
+		function changePalette(palette)
+		{
+		   Chart1.applyPalette(palette);
+		   resize(Chart1);
+		}
+		
+	</script>
+	<script type="text/javascript">
+		function changeThemeToDefault(){
+			changeTheme("minimal");
+			changePalette("seaWash");
+		}
+	
+	</script>
+	<script type="text/javascript">
+		function openSample() {
+		    window.open("points.htm", "_blank");
+		}
 
-	if ((window.innerWidth - 156  - canvas.offsetLeft - 20) < startWidth)
-	  w = window.innerWidth - 156 - canvas.offsetLeft - 20;
-	else
-	  w = startWidth;
-	  
-	if ((window.innerHeight - 70  - canvas.offsetTop - 20) < startHeight)
-	  h = window.innerHeight - 70 - canvas.offsetTop - 20;
-	else
-	  h = startHeight;
-  
-  canvas.setAttribute('width', ""+w+"px");
+	</script>
+	<script type="text/javascript">
+		function changeBackground(aTheme){
+			if(aTheme=="dark")
+				changeBackgroundToDark();
+			else
+				changeBackgroundToWhite();
+		}
+		function changeBackgroundToDark(){
+		
+		    document.body.style.backgroundColor = "#0C0C0C";
+		    document.getElementById("table1").style.backgroundColor="#0C0C0C";
+		    document.getElementById("table1").style.color="#ffffff";
+		    document.getElementById("canvas").style.backgroundColor="#0C0C0C";
+		}
+		function changeBackgroundToWhite(){
+		
+		    document.body.style.backgroundColor = "#ffffff";
+		    document.getElementById("table1").style.backgroundColor="#ffffff";
+		    document.getElementById("table1").style.color="#0C0C0C";
+		    document.getElementById("canvas").style.backgroundColor="#ffffff";
+		}
+	</script>
+	
+	
+	<script type="text/javascript">
+		var topTheme = "minimal";  //defaults
+        var topPalette = "seaWash";
+		
+		function changeTheme(aTheme) {
+			.changeTheme(aTheme);
+			topTheme = aTheme;
+            var selectors = document.getElementById("selectors");
+            var theme = document.getElementById("theme");
+            var palette = document.getElementById("palette");
+            document.getElementById("palette").value = document.paletteName;
+            Chart1.draw();
+        }
 
-  canvas.setAttribute('height', ""+h+"px");
+        function changePalette(palette) {
+        	document.changePalette(palette);
+            topPalette = palette;
 
-  canvas.style.width=""+w+"px";
-  canvas.style.height=""+h+"px";
-
-  chart.bounds.width=w;
-  chart.bounds.height=h;
-
-  chart.draw();
-}
-
-function changeTheme(aTheme)
-{
-   Chart1.applyTheme(aTheme);
-
-   if (aTheme == "dark")
-   {
-     a1.format.font.fill = "white"; 
-	 a2.format.font.fill = "lightblue";
-	 document.getElementById("chartView").style.backgroundColor = "#0C0C0C";
-	 if (Chart1.series.items.length > 0) {
-	  for (var i = 0; i < Chart1.series.items.length; i++)
-	  {
-	    Chart1.series.items[i].pointer.format.stroke.size = 3;
-        Chart1.series.items[i].pointer.format.stroke.fill = "white"; 
-	  }
-	}
-   }
-   else if ((aTheme == "daybreak") || (aTheme == "twilight"))
-   {
-     if (aTheme == "twilight") {
-       a1.format.font.fill = "white"; 
-	   a2.format.font.fill = "lightblue"; 
-	 }  
-	 else
-	 {
-	   a1.format.font.fill = "rgba(0,0,0,0.6)";
-	   a2.format.font.fill = "darkblue";  
-	 }
-	 document.getElementById("chartView").style.backgroundColor = "#FFFFFF";
-	 if (Chart1.series.items.length > 0) {
-	  for (var i = 0; i < Chart1.series.items.length; i++)
-	  {
-	    Chart1.series.items[i].pointer.format.stroke.size = 1;
-        Chart1.series.items[i].pointer.format.stroke.fill = "rgba(224,224,224,0.6)"; 
-	  }
-	}  
-   }
-   else
-   {
-     a1.format.font.fill = "rgba(0,0,0,0.6)";
-	 a2.format.font.fill = "darkblue";
-	 document.getElementById("chartView").style.backgroundColor = "#FFFFFF";
-	 if (Chart1.series.items.length > 0) {
-	  for (var i = 0; i < Chart1.series.items.length; i++)
-	  {
-	    Chart1.series.items[i].pointer.format.stroke.size = 3;
-        Chart1.series.items[i].pointer.format.stroke.fill = "white"; 
-	  }
-	}
-   }
-	 
-  resize(Chart1);
-}
-
-function changePalette(palette)
-{
-   Chart1.applyPalette(palette);
-   resize(Chart1);
-}
-
-</script>
+            document.body.Chart1.draw();
+        }
+	</script>
 </head>
-<body id="chartView" onload="draw()" onresize="resize(Chart1)">
-<br/>
-<br/>
-<canvas id="canvas" width="1000" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
+<body  id="chartView"  onload="draw();changeThemeToDefault()" style="background-color: #ffffff;" onresize="resize(Chart1)">
+<table border="0" id="table1">
+ <tr class="selectors">
+     <td style="padding-left:15px; padding-right: 5px;">Theme:</td>
+     <td>
+         <select id="theme"  onchange="changeTheme(this.value);changeBackground(this.value);">
+             <option value="">Default</option>
+             <option value="dark">Dark</option>
+             <option value="daybreak">Daybreak</option>    
+             <option value="excel">Microsoft Excel (TM)</option>
+             <option value="minimal" selected>Minimal</option>  
+             <option value="twilight">Twilight</option>
+         </SELECT>
+     </td>
+     <td style="padding-left:15px; padding-right: 5px;">Palette:</td>
+     <td>
+         <select id="palette"  onchange="changePalette(this.value);">
+             <option value="">Default</option>
+             <option value="cool">Cool</option> 
+             <option value="excel">Microsoft Excel (TM)</option>  
+             <option value="onBlack">On Black</option>
+             <option value="opera">Opera</option>
+             <option value="rainbow">Rainbow</option>
+             <option value="redRiver">Red River</option>
+             <option value="seaWash" selected>Sea Wash</option>
+             <option value="warm">Warm</option>  
+             <option value="windowsxp">Windows XP</option>  
+         </SELECT>
+         </td>
+   </tr>
+   <tr>
+   		<td class="canvasWithSelector" colspan="4">
+			   		
+			<canvas id="canvas" width="1000" height="400">
+			This browser does not seem to support HTML5 Canvas.
+			</canvas>
+   		
+   		</td>
+   </tr>
+        	<tr class="button"><td colspan="4"><center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center></td></tr>
+</table>
+<!--<hr style="color:#3C3C3C;" width="85%" align="left">-->
+
+
 </body>
 </html>

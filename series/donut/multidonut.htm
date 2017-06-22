@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Multiple Donut Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -55,23 +56,38 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float:left">
-  <input type="checkbox" id="conc" onclick="setConcentric(this.checked);" checked>Concentric<br/>
-  <input type="checkbox" id="s1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Donut 1<br/>
-  <input type="checkbox" id="s2" onclick="Chart1.series.items[1].visible= this.checked; Chart1.draw();" checked>Donut 2<br/>
-  <input type="checkbox" id="s3" onclick="Chart1.series.items[2].visible= this.checked; Chart1.draw();" checked>Donut 3<br/>
-  <input type="checkbox" id="s4" onclick="Chart1.series.items[3].visible= this.checked; Chart1.draw();" checked>Donut 4<br/>
-  <input type="checkbox" id="s5" onclick="Chart1.series.items[4].visible= this.checked; Chart1.draw();" checked>Donut 5<br/>
-</div>
-
-<br/>
-
-<center>
-  <canvas id="canvas" width="600" height="400">
-  This browser does not seem to support HTML5 Canvas.
-  </canvas>
-</center>
-
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left">
+				  <input type="checkbox" id="conc" onclick="setConcentric(this.checked);" checked>Concentric<br/>
+				  <input type="checkbox" id="s1" onclick="Chart1.series.items[0].visible= this.checked; Chart1.draw();" checked>Donut 1<br/>
+				  <input type="checkbox" id="s2" onclick="Chart1.series.items[1].visible= this.checked; Chart1.draw();" checked>Donut 2<br/>
+				  <input type="checkbox" id="s3" onclick="Chart1.series.items[2].visible= this.checked; Chart1.draw();" checked>Donut 3<br/>
+				  <input type="checkbox" id="s4" onclick="Chart1.series.items[3].visible= this.checked; Chart1.draw();" checked>Donut 4<br/>
+				  <input type="checkbox" id="s5" onclick="Chart1.series.items[4].visible= this.checked; Chart1.draw();" checked>Donut 5<br/>
+				</div>
+				
+				<br/>
+				
+				<center>
+				  <canvas id="canvas" width="600" height="400">
+				  This browser does not seem to support HTML5 Canvas.
+				  </canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("multidonut.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

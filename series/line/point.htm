@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Point XY Scatter Series Example</title>
 
+<meta charset="UTF-8"/>
 <link type="text/css" href="../../../jquery/css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="../../../jquery/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../../../jquery/js/jquery-ui-1.8.17.custom.min.js"></script>
@@ -34,8 +35,11 @@ function draw() {
 
     annot.text="Clicked point: "+index+"\nX: "+xValue+"\nValue: "+series.data.values[index].toFixed(series.decimals);
     changeTheme(Chart1, "minimal");
-Chart1.draw();
+    
+	Chart1.draw();
   }
+
+  
 
   Chart1.addSeries(xy).addRandom(20,1000,true);
 
@@ -88,6 +92,7 @@ Chart1.draw();
   annot.position.x=15;
   annot.position.y=20;
   Chart1.tools.add(annot);
+
 }
 
 $(function() {
@@ -107,43 +112,59 @@ Chart1.draw();
 Chart1.draw();
       }
   });
+  
 });
 
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float:left">
-  <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend<br/>
-  <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1<br/>
-  <input type="checkbox" id="gradient1" onclick="Chart1.series.items[0].pointer.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient<br/>
-  <input type="checkbox" id="marks" name="series1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
-  <br/>
-  <br/>
-  Width:
-  <div id="w" style="width:100px"></div>
-  Height:
-  <div id="h" style="width:100px"></div>
-  <br/>
-  Pointer Style:<br/>
-  <select id="pointer_style" onchange="Chart1.series.items[0].pointer.style=this.value; Chart1.draw();">
-    <option value="rectangle">Rectangle</option>
-    <option value="ellipse" selected>Ellipse</option>
-    <option value="triangle">Triangle</option>
-    <option value="diamond">Diamond</option>
-    <option value="downtriangle">Down Triangle</option>
-    <option value="cross">Cross</option>
-    <option value="x">X</option>
-    <option value="cylinder">Cylinder</option>
-    <option value="cone">Cone</option>
-    <option value="sphere">Sphere</option>
-  </select>
-</div>
-
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr>
+		<td>			
+			<div style="float:left">
+			  <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend<br/>
+			  <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1<br/>
+			  <input type="checkbox" id="gradient1" onclick="Chart1.series.items[0].pointer.format.gradient.visible= this.checked; Chart1.draw();" checked>Gradient<br/>
+			  <input type="checkbox" id="marks" name="series1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
+			  <br/>
+			  <br/>
+			  Width:
+			  <div id="w" style="width:100px"></div>
+			  Height:
+			  <div id="h" style="width:100px"></div>
+			  <br/>
+			  Pointer Style:<br/>
+			  <select id="pointer_style" onchange="Chart1.series.items[0].pointer.style=this.value; Chart1.draw();">
+			    <option value="rectangle">Rectangle</option>
+			    <option value="ellipse" selected>Ellipse</option>
+			    <option value="triangle">Triangle</option>
+			    <option value="diamond">Diamond</option>
+			    <option value="downtriangle">Down Triangle</option>
+			    <option value="cross">Cross</option>
+			    <option value="x">X</option>
+			    <option value="cylinder">Cylinder</option>
+			    <option value="cone">Cone</option>
+			    <option value="sphere">Sphere</option>
+			  </select>
+			</div>
+			
+			<center>
+			<br><canvas id="canvas" width="600" height="400">
+			This browser does not seem to support HTML5 Canvas.
+			</canvas>
+			</center>
+		</td>
+		</tr>
+		<tr>
+		<td>
+			<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+		</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+		function openSample(){
+			window.open("point.htm","_blank")
+		}
+	</script>
 </body>
 </html>

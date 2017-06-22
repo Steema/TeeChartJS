@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript XML to Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -26,26 +27,44 @@ function draw() {
   Chart1.axes.left.title.text=b.data.title;
 
   changeTheme(Chart1, "minimal");
+  
 Chart1.draw();
 }
 </script>
 </head>
 <body onload="draw()">
 
-<div>
-<textarea id="xml" rows="6" cols="60" "wrap="off">
-<series name="Friends" color="Blue" metric="Quantity">
-  <point name="Facebook" value="123"/>
-  <point name="Twitter" value="456"/>
-  <point name="Google+" value="789"/>
-</series>
-</textarea>
-<br/>
-<button type="BUTTON" onclick="Chart1.series.items[0].refresh();">Refresh</Button>
-</DIV>
-<br/>
-<canvas id="canvas" width="600" height="300">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div>
+				<textarea id="xml" rows="6" cols="60" "wrap="off">
+				<series name="Friends" color="Blue" metric="Quantity">
+				  <point name="Facebook" value="123"/>
+				  <point name="Twitter" value="456"/>
+				  <point name="Google+" value="789"/>
+				</series>
+				</textarea>
+				<br/>
+				<button type="BUTTON" onclick="Chart1.series.items[0].refresh();">Refresh</Button>
+				</DIV>
+				<br/>
+				<canvas id="canvas" width="600" height="300">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("fromxml.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

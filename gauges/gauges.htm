@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Gauges Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -249,19 +250,36 @@ function draw() {
 </script>
 </head>
 <body onload="draw()">
-
-<canvas id="canvas" width="600" height="350">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-
-<div id="divconfig" style="float:left; margin-right:16px; display:none;">
-Min:<input type="text" size="5" id="min" onkeyup="gauge.min=parseFloat(this.value); gauge.chart.draw();"><br/>
-Max:<input type="text" size="5" id="max" onkeyup="gauge.max=parseFloat(this.value); gauge.chart.draw();"><br/>
-Step:<input type="text" size="5" id="step" onkeyup="gauge.step=parseFloat(this.value); gauge.chart.draw();"><br/>
-<br/>
-<canvas id="config" width="320" height="450">
-</canvas>
-</div>
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<canvas id="canvas" width="600" height="350">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				
+				<div id="divconfig" style="float:left; margin-right:16px; display:none;">
+				Min:<input type="text" size="5" id="min" onkeyup="gauge.min=parseFloat(this.value); gauge.chart.draw();"><br/>
+				Max:<input type="text" size="5" id="max" onkeyup="gauge.max=parseFloat(this.value); gauge.chart.draw();"><br/>
+				Step:<input type="text" size="5" id="step" onkeyup="gauge.step=parseFloat(this.value); gauge.chart.draw();"><br/>
+				<br/>
+				<canvas id="config" width="320" height="450">
+				</canvas>
+				</div>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("gauges.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

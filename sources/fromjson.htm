@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript JSON to Series Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -31,12 +32,15 @@ function draw() {
   Chart1.axes.bottom.title.text=bar.title;
 
   changeTheme(Chart1, "minimal");
+
+  
   Chart1.draw();
 
   // XY Data, multiple series:
   Chart2 = new Tee.Chart("canvasXY");
   Chart2.title.text="JSON XY to Chart";
 
+  
   loadXYData(Chart2);
 }
 
@@ -62,107 +66,124 @@ function loadXYData(chart) {
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float:left;">
-<b>JSON data including values and labels:</b><br/>
-<textarea id="json" rows="20" cols="40" "wrap="off">
-{
-    "series":{
-        "name":"Friends",
-        "metric":"Quantity",
-        "category":"Social Networks",
-        "point":[
-            {
-                "name":"Facebook",
-                "value":123,
-                "color":"Blue"
-            },
-            {
-                "name":"Twitter",
-                "value":456,
-                "color":"Orange"
-            },
-            {
-                "name":"Google+",
-                "value":789,
-                "color":"Red"
-            }
-        ]
-    }
-}
-</textarea>
-<br/>
-<button type="BUTTON" onclick="Chart1.series.items[0].refresh();">Refresh</Button>
-</DIV>
-
-<center>
-<br><canvas id="canvas" width="500" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
-
-<br/>
-
-<b>JSON data, multiple series including X and Y values:</b><br/>
-
-<div style="float:left;">
-
-<textarea id="jsonXY" rows="20" cols="40" "wrap="off">
-{ "chart": [
-   {
-    "series": {
-      "name":"Data 1",
-      "color":"Blue",
-      "metric":"Y",
-      "category":"X",
-      "pointer":"rectangle",
-      "point": [
-          { "value":123, "x": 21 },
-          { "value":456, "x": 14 },
-          { "value":789, "x": 33 }
-      ]
-    }
-   },
-   {
-    "series": {
-      "name":"Data 2",
-      "color":"Red",
-      "metric":"Y",
-      "category":"X",
-      "pointer":"triangle",
-      "point": [
-          { "value":321, "x": 15 },
-          { "value":555, "x": 24 },
-          { "value":111, "x":  3 }
-      ]
-    }
-   },
-   {
-    "series": {
-      "name":"Data 3",
-      "color":"Green",
-      "metric":"Y",
-      "category":"X",
-      "pointer":"ellipse",
-      "point": [
-          { "value":321, "x": 35 },
-          { "value":555, "x": 17 },
-          { "value":111, "x": 23 }
-      ]
-    }
-   }
- ]
-}
-</textarea>
-<br/>
-<button type="button" onclick="loadXYData(Chart2)">Refresh</button>
-</div>
-
-<center>
-<br><canvas id="canvasXY" width="500" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left;">
+				<b>JSON data including values and labels:</b><br/>
+				<textarea id="json" rows="20" cols="40" "wrap="off">
+				{
+				    "series":{
+				        "name":"Friends",
+				        "metric":"Quantity",
+				        "category":"Social Networks",
+				        "point":[
+				            {
+				                "name":"Facebook",
+				                "value":123,
+				                "color":"Blue"
+				            },
+				            {
+				                "name":"Twitter",
+				                "value":456,
+				                "color":"Orange"
+				            },
+				            {
+				                "name":"Google+",
+				                "value":789,
+				                "color":"Red"
+				            }
+				        ]
+				    }
+				}
+				</textarea>
+				<br/>
+				<button type="BUTTON" onclick="Chart1.series.items[0].refresh();">Refresh</Button>
+				</DIV>
+				
+				<center>
+				<br><canvas id="canvas" width="500" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+				
+				<br/>
+				
+				<b>JSON data, multiple series including X and Y values:</b><br/>
+				
+				<div style="float:left;">
+				
+				<textarea id="jsonXY" rows="20" cols="40" "wrap="off">
+				{ "chart": [
+				   {
+				    "series": {
+				      "name":"Data 1",
+				      "color":"Blue",
+				      "metric":"Y",
+				      "category":"X",
+				      "pointer":"rectangle",
+				      "point": [
+				          { "value":123, "x": 21 },
+				          { "value":456, "x": 14 },
+				          { "value":789, "x": 33 }
+				      ]
+				    }
+				   },
+				   {
+				    "series": {
+				      "name":"Data 2",
+				      "color":"Red",
+				      "metric":"Y",
+				      "category":"X",
+				      "pointer":"triangle",
+				      "point": [
+				          { "value":321, "x": 15 },
+				          { "value":555, "x": 24 },
+				          { "value":111, "x":  3 }
+				      ]
+				    }
+				   },
+				   {
+				    "series": {
+				      "name":"Data 3",
+				      "color":"Green",
+				      "metric":"Y",
+				      "category":"X",
+				      "pointer":"ellipse",
+				      "point": [
+				          { "value":321, "x": 35 },
+				          { "value":555, "x": 17 },
+				          { "value":111, "x": 23 }
+				      ]
+				    }
+				   }
+				 ]
+				}
+				</textarea>
+				<br/>
+				<button type="button" onclick="loadXYData(Chart2)">Refresh</button>
+				</div>
+				
+				<center>
+				<br><canvas id="canvasXY" width="500" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("fromjson.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>
