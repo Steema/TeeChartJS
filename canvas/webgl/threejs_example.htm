@@ -101,7 +101,7 @@ function draw() {
   series1.horizAxis="both";
   series1.vertAxis="both";
 
-  //series1.format.image.url = "textures/charcoal.png";
+  series1.format.image.url = "textures/charcoal.png";
 
   Chart1.axes.top.grid.visible=false;
   Chart1.axes.right.grid.visible=false;
@@ -117,7 +117,7 @@ function draw() {
 
   Chart1.walls.back.size=0.2;
   Chart1.walls.back.format.transparency=0.2;
-  
+
   if (three.stats)
     document.getElementById('divright').appendChild(three.stats.domElement);
 
@@ -161,16 +161,13 @@ function draw() {
 
   if (three.isEnabled()) {
     changeTheme(Chart1, "minimal");
+Chart1.draw();
 
     three.lights[0].target=Chart1.walls.visual;
     three.lights[2].target=Chart1.walls.left.visual;
-	
-	three.showLight(0,false);
-	three.setCamera(false);
-	three.ambientLight.visible=true;
-	three.ambientLight.color.setRGB(118/255,118/255,118/255);
 
     addLightSlider('ambient',three.ambientLight);
+    addLightSlider('light0',three.lights[0]);
     addLightSlider('light1',three.lights[1]);
     addLightSlider('light2',three.lights[2]);
 
@@ -178,8 +175,6 @@ function draw() {
        addCameraSlider();
 
     addText3DSlider();
-	
-	Chart1.draw();
   }
   else
   {
@@ -648,12 +643,13 @@ Style:
 <br/>
 <span>
 <b>Lights:</b><br/>
- <input type="checkbox" id="ambientVisible" onclick="three.ambientLight.visible=this.checked; three.needsRender=true; three.update();" checked>Ambient<canvas id="ambient" width="100" height="20"></canvas><br/>
+ <input type="checkbox" id="ambientVisible" onclick="three.ambientLight.visible=this.checked; three.needsRender=true; three.update();">Ambient<canvas id="ambient" width="100" height="20"></canvas><br/>
+ <input type="checkbox" id="" onclick="three.showLight(0,this.checked);" checked>Light 0<canvas id="light0" width="100" height="20"></canvas><br/>
  <input type="checkbox" id="" onclick="three.showLight(1,this.checked);" checked>Light 1<canvas id="light1" width="100" height="20"></canvas><br/>
  <input type="checkbox" id="" onclick="three.showLight(2,this.checked);" checked>Light 2<canvas id="light2" width="100" height="20"></canvas><br/>
 <br/>
 <b>Camera:</b><br/>
-<input type="checkbox" id="" onclick="three.setCamera(this.checked);">Perspective<br/>
+<input type="checkbox" id="" onclick="three.setCamera(this.checked);" checked>Perspective<br/>
 FOV:<canvas id="cameraFOV" width="100" height="20"></canvas><br/>
 </span>
 Text 3D:<canvas id="text3d" width="100" height="20"></canvas><br/>

@@ -43,6 +43,7 @@ function draw() {
   Chart1 = new Tee.Chart(three);
 
   // Set mouse-drag zoom to be "proportional":
+	  
   Chart1.zoom.keepAspect = true;
 
   // Add WorldMap series:
@@ -171,7 +172,6 @@ function changeMap(value) {
   t1=new Date();
   timing=false;
 }
-
 function resizeCanvasToFit() {
   var width = window.innerWidth,
       w = width - document.getElementById('options').clientWidth,
@@ -192,7 +192,6 @@ function resizeCanvasToFit() {
      c.height=h;
   }
 }
-
 function switchWebGL(value) {
   three.setEnabled(value, Chart1);
   document.getElementById('webglopt').style.display = value ? 'block':'none';
