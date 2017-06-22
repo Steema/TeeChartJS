@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Slider Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -53,7 +54,8 @@ function draw() {
   Chart1.tools.add(slider);
 
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+
+  Chart1.draw();
 }
 
 function setHoriz(value) {

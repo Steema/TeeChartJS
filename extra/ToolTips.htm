@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Tooltips Example</title>
+<meta charset="UTF-8"/>
 
 <link type="text/css" href="../../jquery/css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="../../jquery/js/jquery-1.7.1.min.js"></script>
@@ -63,7 +64,7 @@ function draw() {
   tip.ongettext=function(tool,text) { return "Text:\n"+text; }
   
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+  Chart1.draw();
 }
 
 $(function() {
