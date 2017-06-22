@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Modal Editor Example</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -60,10 +61,27 @@ function draw() {
 </head>
 
 <body onload="draw()">
-<div id="editor" title="Editing Chart1"></DIV>
-<button id="doedit">Edit...</BUTTON><br/><br/>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div id="editor" title="Editing Chart1"></DIV>
+				<button id="doedit">Edit...</BUTTON><br/><br/>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("modaleditor.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>
