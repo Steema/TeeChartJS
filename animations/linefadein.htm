@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Animations Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -80,6 +81,8 @@ function draw() {
 
   animation.items.push(fadeAnimation);
 
+
+  
   /*
   animation.onstop=function() {
     if (animation.chart != Chart3)
@@ -92,62 +95,79 @@ function draw() {
 </script>
 </head>
 <body onload="draw()">
-
-<BUTTON type="button" onclick="animation.animate(Chart1);">Animate</BUTTON>
-
-<select id="kind" onchange="animation.kind = this.value;">
-  <option value="axis">Axis</option>
-  <option value="left" selected>From Left</option>
-  <option value="top">From Top</option>
-  <option value="right">From Right</option>
-  <option value="bottom">From Bottom</option>
-  <option value="x">Scale from Left</option>
-  <option value="y">Scale from Top</option>
-  <option value="each">Each Point</option>
-  <option value="all">All Points</option>
-  <option value="zoomin">Zoom in</option>
-  <option value="zoomout">Zoom out</option>
-</select>
-
-<select id="duration" onchange="animation.duration= this.value; fadeAnimation.duration=this.value;">
-  <option value="100">100 msec</option>
-  <option value="250">250 msec</option>
-  <option value="500" selected>500 msec</option>
-  <option value="1000">1 second</option>
-  <option value="2000">2 seconds</option>
-  <option value="5000">5 seconds</option>
-</select>
-
-<select id="mode" onchange="animation.mode= this.value; fadeAnimation.mode=this.value;">
-  <option value="linear" selected>Linear</option>
-  <option value="exp">Exponential</option>
-</select>
-
-<input type="checkbox" name="fade" onclick="fadeAnimation.active=this.checked;" checked>Fade:
-
-<select id="fadeKind" onchange="fadeAnimation.kind= this.value;">
-  <option value="in" selected>In</option>
-  <option value="out">Out</option>
-  <option value="inout">In-Out</option>
-  <option value="outin">Out-In</option>
-</select>
-
-<input type="checkbox" id="loop" onclick="animation.loop=this.checked">Loop
-
-</BR>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-<br/>
-<br/>
-<BUTTON type="button" onclick="animation.animate(Chart2);">Animate</BUTTON>
-</BR>
-<canvas id="canvas2" width="600" height="400"></canvas>
-<br/>
-<br/>
-<BUTTON type="button" onclick="animation.animate(Chart3);">Animate</BUTTON>
-</BR>
-<canvas id="canvas3" width="600" height="400"></canvas>
+			
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>	
+				<BUTTON type="button" onclick="animation.animate(Chart1);">Animate</BUTTON>
+				
+				<select id="kind" onchange="animation.kind = this.value;">
+				  <option value="axis">Axis</option>
+				  <option value="left" selected>From Left</option>
+				  <option value="top">From Top</option>
+				  <option value="right">From Right</option>
+				  <option value="bottom">From Bottom</option>
+				  <option value="x">Scale from Left</option>
+				  <option value="y">Scale from Top</option>
+				  <option value="each">Each Point</option>
+				  <option value="all">All Points</option>
+				  <option value="zoomin">Zoom in</option>
+				  <option value="zoomout">Zoom out</option>
+				</select>
+				
+				<select id="duration" onchange="animation.duration= this.value; fadeAnimation.duration=this.value;">
+				  <option value="100">100 msec</option>
+				  <option value="250">250 msec</option>
+				  <option value="500" selected>500 msec</option>
+				  <option value="1000">1 second</option>
+				  <option value="2000">2 seconds</option>
+				  <option value="5000">5 seconds</option>
+				</select>
+				
+				<select id="mode" onchange="animation.mode= this.value; fadeAnimation.mode=this.value;">
+				  <option value="linear" selected>Linear</option>
+				  <option value="exp">Exponential</option>
+				</select>
+				
+				<input type="checkbox" name="fade" onclick="fadeAnimation.active=this.checked;" checked>Fade:
+				
+				<select id="fadeKind" onchange="fadeAnimation.kind= this.value;">
+				  <option value="in" selected>In</option>
+				  <option value="out">Out</option>
+				  <option value="inout">In-Out</option>
+				  <option value="outin">Out-In</option>
+				</select>
+				
+				<input type="checkbox" id="loop" onclick="animation.loop=this.checked">Loop
+				
+				</BR>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				<br/>
+				<br/>
+				<BUTTON type="button" onclick="animation.animate(Chart2);">Animate</BUTTON>
+				</BR>
+				<canvas id="canvas2" width="600" height="400"></canvas>
+				<br/>
+				<br/>
+				<BUTTON type="button" onclick="animation.animate(Chart3);">Animate</BUTTON>
+				</BR>
+				<canvas id="canvas3" width="600" height="400"></canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("linefadein.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

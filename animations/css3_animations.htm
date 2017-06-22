@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript CSS3 Animations Example</title>
 
+<meta charset="UTF-8"/>
 <style type="text/css">
 #canvas {
   position: absolute;
@@ -52,24 +53,42 @@ function draw() {
   Chart1.title.text="CSS3 Animation";
   Chart1.tools.add(new Tee.ToolTip(Chart1));
   changeTheme(Chart1, "minimal");
+  
 Chart1.draw();
 }
 </script>
 </head>
 
 <body onload="draw()">
-
-Move the mouse inside the rectangle below:
-<br/>
-<br/>
-
-<div id="chartframe" style="border:2px solid red; border-radius:10px; width:600px; height:400px;">
-
-<canvas id="canvas" width="600" height="400">
-  This browser does not seem to support HTML5 Canvas.
-</canvas>
-
-</div>
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				Move the mouse inside the rectangle below:
+				<br/>
+				<br/>
+				
+				<div id="chartframe" style="border:2px solid red; border-radius:10px; width:600px; height:400px;">
+				
+				<canvas id="canvas" width="600" height="400">
+				  This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				
+				</div>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("css3_animations.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

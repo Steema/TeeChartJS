@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Sequence of Animations Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -120,15 +121,32 @@ function runAnimation() {
 </head>
 
 <body onload="draw()">
-
-<button type="button" onclick="runAnimation();">Animate</button>
-<input type="checkbox" id="loop">Loop
-
-<br/>
-
-<canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
+				
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<button type="button" onclick="runAnimation();">Animate</button>
+				<input type="checkbox" id="loop">Loop
+				
+				<br/>
+				
+				<canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("sequence.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>
