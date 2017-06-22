@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Multiple Axes</title>
+<meta charset="UTF-8"/>
 
 <style type="text/css">
 .teetip { padding:2px 12px 3px 7px; margin-left:5px; background:#444; color:#FFF }
@@ -224,12 +225,28 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
-
-<input type="checkbox" id="follow" onclick="cursor.followMouse=this.checked;" checked>Cursor follows mouse
-<button type="button" onclick="Chart1.zoom.reset(); Chart1.axes.bottom.setMinMax(0,DISPLAY_RANGE); Chart1.draw();">Reset view</button>
-<br/>
-<canvas id="canvas1" width="700" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
-<br/>
-Drag chart to scroll. Right-button drag to zoom.
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<input type="checkbox" id="follow" onclick="cursor.followMouse=this.checked;" checked>Cursor follows mouse
+				<button type="button" onclick="Chart1.zoom.reset(); Chart1.axes.bottom.setMinMax(0,DISPLAY_RANGE); Chart1.draw();">Reset view</button>
+				<br/>
+				<canvas id="canvas1" width="700" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
+				<br/>
+				Drag chart to scroll. Right-button drag to zoom.
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("multiple_axes.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

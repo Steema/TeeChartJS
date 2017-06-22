@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Zoom and Scroll Example</title>
-
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -33,42 +33,59 @@ function draw() {
   };
 
   changeTheme(Chart1, "minimal");
+  
 Chart1.draw();
 }
 </script>
 </head>
 
 <body onload="draw()">
-
-Default behavior is: </<BR>
-<ul>
-<li>Zoom by dragging left mouse button from top-left to right-bottom.</li>
-<li>Zoom can also be done by dragging the mouse wheel, if enabled.</li>
-<li>Reset zoom (unzoom) by dragging left mouse button from right-bottom to top-left.</li>
-<li>Scroll by dragging right mouse button.</li>
-</ul>
-
-<input type="checkbox" id="zoomenabled" onclick="Chart1.zoom.enabled= this.checked;" checked>Zoom enabled:
-<select id="zoomdir" onchange="Chart1.zoom.direction=this.value;">
-  <option value="both">Both</option>
-  <option value="horizontal">Horizontal</option>
-  <option value="vertical">Vertical</option>
-</select>
-<input type="checkbox" id="zoomwheel" onclick="Chart1.zoom.wheel.enabled= this.checked;" checked>Mouse Wheel
-<br/>
-
-<input type="checkbox" id="scrollenabled" onclick="Chart1.scroll.enabled= this.checked;" checked>Scroll enabled:
-<select id="scrolldir" onchange="Chart1.scroll.direction=this.value;">
-  <option value="both">Both</option>
-  <option value="horizontal">Horizontal</option>
-  <option value="vertical">Vertical</option>
-</select>
-
-<button type="button" onclick="Chart1.zoom.reset(); Chart1.draw();">Reset</button>
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				Default behavior is: </<BR>
+				<ul>
+				<li>Zoom by dragging left mouse button from top-left to right-bottom.</li>
+				<li>Zoom can also be done by dragging the mouse wheel, if enabled.</li>
+				<li>Reset zoom (unzoom) by dragging left mouse button from right-bottom to top-left.</li>
+				<li>Scroll by dragging right mouse button.</li>
+				</ul>
+				
+				<input type="checkbox" id="zoomenabled" onclick="Chart1.zoom.enabled= this.checked;" checked>Zoom enabled:
+				<select id="zoomdir" onchange="Chart1.zoom.direction=this.value;">
+				  <option value="both">Both</option>
+				  <option value="horizontal">Horizontal</option>
+				  <option value="vertical">Vertical</option>
+				</select>
+				<input type="checkbox" id="zoomwheel" onclick="Chart1.zoom.wheel.enabled= this.checked;" checked>Mouse Wheel
+				<br/>
+				
+				<input type="checkbox" id="scrollenabled" onclick="Chart1.scroll.enabled= this.checked;" checked>Scroll enabled:
+				<select id="scrolldir" onchange="Chart1.scroll.direction=this.value;">
+				  <option value="both">Both</option>
+				  <option value="horizontal">Horizontal</option>
+				  <option value="vertical">Vertical</option>
+				</select>
+				
+				<button type="button" onclick="Chart1.zoom.reset(); Chart1.draw();">Reset</button>
+				<center>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("zoomscroll.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

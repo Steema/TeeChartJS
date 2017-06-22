@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript All Axes Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -58,7 +59,9 @@ function draw() {
   Chart1.series.items[1].legend.visible=false;
   
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+   
+  
+  Chart1.draw();
 }
 
 function setHoriz(value) {
@@ -152,43 +155,59 @@ function setRoundFirst(value) {
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float: left;">
-Horizontal axis:<br/>
-<select id="horizAxis" onchange="setHoriz(this.value); Chart1.draw();">
-  <option value="both">Both</option>
-  <option value="bottom">Bottom</option>
-  <option value="top">Top</option>
-</select>
-<br/>
-Vertical axis:<br/>
-<select id="vertAxis" onchange="setVert(this.value); Chart1.draw();">
-  <option value="both">Both</option>
-  <option value="left">Left</option>
-  <option value="right">Right</option>
-</select>
-<br/>
-<input type="checkbox" id="dash" onclick="setDash(this.checked); Chart1.draw();">Dashed grids<br/>
-<input type="checkbox" id="ticks" onclick="setTicks(this.checked); Chart1.draw();" checked>Ticks<br/>
-<input type="checkbox" id="minor" onclick="setMinorTicks(this.checked); Chart1.draw();" checked>Minor Ticks<br/>
-<input type="checkbox" id="inner" onclick="setInnerTicks(this.checked); Chart1.draw();" checked>Inner Ticks<br/>
-<input type="checkbox" id="labels" onclick="setLabels(this.checked); Chart1.draw();" checked>Labels<br/>
-<input type="checkbox" id="grids" onclick="setGrids(this.checked); Chart1.draw();" checked>Grids<br/>
-<input type="checkbox" id="alter" onclick="setAlter(this.checked); Chart1.draw();">Alternate Labels<br/>
-<input type="checkbox" id="invert" onclick="setInvert(this.checked); Chart1.draw();">Inverted<br/>
-<input type="checkbox" id="allvisible" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked>Axes Visible<br/>
-<input type="checkbox" id="title" onclick="setTitle(this.checked); Chart1.draw();" checked>Titles<br/>
-<input type="checkbox" id="rotatedTitle" onclick="setRotatedTitle(this.checked); Chart1.draw();">Rotated Titles<br/>
-<input type="checkbox" id="roundFirst" onclick="setRoundFirst(this.checked); Chart1.draw();" checked> Round First Labels<br/>
-</div>
-<br/>
-<br/>
-
-<center>
-<canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float: left;">
+				Horizontal axis:<br/>
+				<select id="horizAxis" onchange="setHoriz(this.value); Chart1.draw();">
+				  <option value="both">Both</option>
+				  <option value="bottom">Bottom</option>
+				  <option value="top">Top</option>
+				</select>
+				<br/>
+				Vertical axis:<br/>
+				<select id="vertAxis" onchange="setVert(this.value); Chart1.draw();">
+				  <option value="both">Both</option>
+				  <option value="left">Left</option>
+				  <option value="right">Right</option>
+				</select>
+				<br/>
+				<input type="checkbox" id="dash" onclick="setDash(this.checked); Chart1.draw();">Dashed grids<br/>
+				<input type="checkbox" id="ticks" onclick="setTicks(this.checked); Chart1.draw();" checked>Ticks<br/>
+				<input type="checkbox" id="minor" onclick="setMinorTicks(this.checked); Chart1.draw();" checked>Minor Ticks<br/>
+				<input type="checkbox" id="inner" onclick="setInnerTicks(this.checked); Chart1.draw();" checked>Inner Ticks<br/>
+				<input type="checkbox" id="labels" onclick="setLabels(this.checked); Chart1.draw();" checked>Labels<br/>
+				<input type="checkbox" id="grids" onclick="setGrids(this.checked); Chart1.draw();" checked>Grids<br/>
+				<input type="checkbox" id="alter" onclick="setAlter(this.checked); Chart1.draw();">Alternate Labels<br/>
+				<input type="checkbox" id="invert" onclick="setInvert(this.checked); Chart1.draw();">Inverted<br/>
+				<input type="checkbox" id="allvisible" onclick="Chart1.axes.visible=this.checked; Chart1.draw();" checked>Axes Visible<br/>
+				<input type="checkbox" id="title" onclick="setTitle(this.checked); Chart1.draw();" checked>Titles<br/>
+				<input type="checkbox" id="rotatedTitle" onclick="setRotatedTitle(this.checked); Chart1.draw();">Rotated Titles<br/>
+				<input type="checkbox" id="roundFirst" onclick="setRoundFirst(this.checked); Chart1.draw();" checked> Round First Labels<br/>
+				</div>
+				<br/>
+				<br/>
+				
+				<center>
+				<canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("allaxes.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

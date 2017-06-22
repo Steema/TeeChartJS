@@ -2,7 +2,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
+<style>
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius:8px;
+}
+</style>
 <title>TeeChart JavaScript Basic Example</title>
 
 <!--[if lt IE 9]>
@@ -87,30 +99,47 @@ function draw() {
 
   changeTheme(Chart1, "minimal");
 
+  
   Chart1.draw();
 }
 </script>
 </head>
 <body onload="draw()" style="font-family:Monospace">
-
-<div style="float:left">
-  <br><br><br>
-  <div><strong>TeeChart coded zoom example. Use Left mousebutton zoom-drag over chart for manual zoom; right mousebutton-drag for scroll.</strong></div><br><br>
-  <input type="checkbox" id="zoomdir" name="zoomdir" onclick="horizZoomOnly=this.checked;" unchecked>Zoom Horizontal Only<br><br>
-  <BUTTON type="button" onclick="zoomChart(true,10)">Zoom 10%</BUTTON> 
-  <BUTTON type="button" onclick="zoomChart(false,10)">UnZoom 10%</BUTTON><br><br>
-</div>
-
-
-<center>
-  <canvas id="canvas" width="800" height="400">
-  This browser does not seem to support HTML5 Canvas.
-  </canvas>
-</center>
-
-
-
-<br/>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				<div style="float:left">
+				  <br><br><br>
+				  <div><strong>TeeChart coded zoom example. Use Left mousebutton zoom-drag over chart for manual zoom; right mousebutton-drag for scroll.</strong></div><br><br>
+				  <input type="checkbox" id="zoomdir" name="zoomdir" onclick="horizZoomOnly=this.checked;" unchecked>Zoom Horizontal Only<br><br>
+				  <BUTTON type="button" onclick="zoomChart(true,10)">Zoom 10%</BUTTON> 
+				  <BUTTON type="button" onclick="zoomChart(false,10)">UnZoom 10%</BUTTON><br><br>
+				</div>
+				
+				
+				<center>
+				  <canvas id="canvas" width="800" height="400">
+				  This browser does not seem to support HTML5 Canvas.
+				  </canvas>
+				</center>
+				
+				
+				
+				<br/>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("zoompercent.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Grid Bands Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -37,6 +38,8 @@ function draw() {
   Chart1.axes.left.grid.format.fill="yellow";
 
   changeTheme(Chart1, "minimal");
+   
+  
 Chart1.draw();
 }
 
@@ -117,45 +120,62 @@ function setCentered(value) {
 </script>
 </head>
 <body onload="draw()">
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
 
-<div style="float: left;">
-Horizontal axis:<br/>
-<select id="horizAxis" onchange="setHoriz(this.value); Chart1.draw();">
-  <option value="both">Both</option>
-  <option value="bottom">Bottom</option>
-  <option value="top">Top</option>
-</select>
-<br/>
-Vertical axis:<br/>
-<select id="vertAxis" onchange="setVert(this.value); Chart1.draw();">
-  <option value="both">Both</option>
-  <option value="left" selected>Left</option>
-  <option value="right">Right</option>
-</select>
-<br/>
-<input type="checkbox" id="grids" onclick="setGrids(this.checked); Chart1.draw();" checked>Grids
-<select id="dashGrid" onchange="setDash(this.value); Chart1.draw();">
-  <option value="solid">Solid</option>
-  <option value="dash">Dash</option>
-  <option value="dot">Dot</option>
-</select>
-<br/>
-<input type="checkbox" id="bands" onclick="Chart1.axes.left.grid.format.fill= this.checked ? 'yellow' : ''; Chart1.draw();" checked>Bands<br/>
-<input type="checkbox" id="ticks" onclick="setTicks(this.checked); Chart1.draw();" checked>Ticks<br/>
-<input type="checkbox" id="minor" onclick="setMinorTicks(this.checked); Chart1.draw();" checked>Minor Ticks<br/>
-<input type="checkbox" id="inner" onclick="setInnerTicks(this.checked); Chart1.draw();" checked>Inner Ticks<br/>
-<input type="checkbox" id="labels" onclick="setLabels(this.checked); Chart1.draw();" checked>Labels<br/>
-<input type="checkbox" id="alter" onclick="setAlter(this.checked); Chart1.draw();">Alternate Labels<br/>
-<input type="checkbox" id="centered" onclick="setCentered(this.checked); Chart1.draw();">Centered<br/>
-</div>
-<br/>
-<br/>
+				<div style="float: left;">
+				Horizontal axis:<br/>
+				<select id="horizAxis" onchange="setHoriz(this.value); Chart1.draw();">
+				  <option value="both">Both</option>
+				  <option value="bottom">Bottom</option>
+				  <option value="top">Top</option>
+				</select>
+				<br/>
+				Vertical axis:<br/>
+				<select id="vertAxis" onchange="setVert(this.value); Chart1.draw();">
+				  <option value="both">Both</option>
+				  <option value="left" selected>Left</option>
+				  <option value="right">Right</option>
+				</select>
+				<br/>
+				<input type="checkbox" id="grids" onclick="setGrids(this.checked); Chart1.draw();" checked>Grids
+				<select id="dashGrid" onchange="setDash(this.value); Chart1.draw();">
+				  <option value="solid">Solid</option>
+				  <option value="dash">Dash</option>
+				  <option value="dot">Dot</option>
+				</select>
+				<br/>
+				<input type="checkbox" id="bands" onclick="Chart1.axes.left.grid.format.fill= this.checked ? 'yellow' : ''; Chart1.draw();" checked>Bands<br/>
+				<input type="checkbox" id="ticks" onclick="setTicks(this.checked); Chart1.draw();" checked>Ticks<br/>
+				<input type="checkbox" id="minor" onclick="setMinorTicks(this.checked); Chart1.draw();" checked>Minor Ticks<br/>
+				<input type="checkbox" id="inner" onclick="setInnerTicks(this.checked); Chart1.draw();" checked>Inner Ticks<br/>
+				<input type="checkbox" id="labels" onclick="setLabels(this.checked); Chart1.draw();" checked>Labels<br/>
+				<input type="checkbox" id="alter" onclick="setAlter(this.checked); Chart1.draw();">Alternate Labels<br/>
+				<input type="checkbox" id="centered" onclick="setCentered(this.checked); Chart1.draw();">Centered<br/>
+				</div>
+				<br/>
+				<br/>
+				
+				<center>
+				<canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
 
-<center>
-<canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
-
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("gridbands.htm", "_blank");
+	}
+	
+	</script>
 </body>
 </html>

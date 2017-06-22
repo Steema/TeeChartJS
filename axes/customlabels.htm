@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Custom Axis Labels Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -53,18 +54,36 @@ function draw() {
   }
 
   changeTheme(Chart1, "minimal");
+  
 Chart1.draw();
 }
 
 </script>
 </head>
 <body onload="draw()">
-
-<center>
-<br><canvas id="canvas" width="600" height="400">
-This browser does not seem to support HTML5 Canvas.
-</canvas>
-</center>
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
+				
+				<center>
+				<br><canvas id="canvas" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+				</center>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("customlabels.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>

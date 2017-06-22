@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>TeeChart JavaScript Synchronize Zoom and Scroll on many Charts</title>
+<meta charset="UTF-8"/>
 
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
@@ -138,12 +139,29 @@ Chart1.draw();
 </script>
 </head>
 <body onload="draw()">
+	<table>
+		<tr class="canvasWithOutSelectors">
+			<td>
 
-<a href="javascript:reset();">Reset</a>&nbsp;Scroll (drag left mouse button) or zoom (drag right mouse button) a chart<br/>
-<br/>
-<canvas id="canvas1" width="600" height="200">This browser does not seem to support HTML5 Canvas.</canvas><br/>
-<canvas id="canvas2" width="600" height="200"></canvas><br/>
-<canvas id="canvas3" width="600" height="200"></canvas>
+				<a href="javascript:reset();">Reset</a>&nbsp;Scroll (drag left mouse button) or zoom (drag right mouse button) a chart<br/>
+				<br/>
+				<canvas id="canvas1" width="600" height="200">This browser does not seem to support HTML5 Canvas.</canvas><br/>
+				<canvas id="canvas2" width="600" height="200"></canvas><br/>
+				<canvas id="canvas3" width="600" height="200"></canvas>
+			</td>
+		</tr>
+		<tr class="button">
+			<td>
+				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+			</td>
+		</tr>
+	</table>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("synchro_many_charts.htm", "_blank");
+	}
+	
+	</script>
 
 </body>
 </html>
