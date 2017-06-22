@@ -3,6 +3,7 @@
 <head>
 <title>TeeChart JavaScript Title and Footer Example</title>
 
+<meta charset="UTF-8"/>
 <!--[if lt IE 9]>
     <script src="../../src/excanvas/excanvas_text.js"></script>
     <script src="../../src/excanvas/canvas.text.js"></script>
@@ -36,7 +37,7 @@ function setRound(round) {
   Chart1.panel.format.round.x = round ? 10 : 0;
   Chart1.panel.format.round.y = round ? 10 : 0;
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+  Chart1.draw();
 }
 
 </script>

@@ -48,79 +48,93 @@ function draw() {
   
   Chart1.draw();
 
-  sh_highlightDocument();
+
 }
 </script>
 </head>
 <body onload="draw()">
-
-<div style="float:left">
-  <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
-  <br/>
-  <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= !Chart1.series.items[1].visible; Chart1.draw();" checked>Series2
-  <br/>
-  <input type="checkbox" name="inv" onclick="Chart1.axes.left.inverted= !Chart1.axes.left.inverted; Chart1.draw();">Inverted Axis
-  <br/>
-  <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
-  <br/>
-  <input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible=this.checked; Chart1.draw();">Gradient
-  <br/>
-  <input type="checkbox" name="skipNulls" onclick="var skip=this.checked ? 'skip' : 'dontPaint'; Chart1.series.items[0].treatNulls=skip; Chart1.series.items[1].treatNulls=skip; Chart1.draw();" checked>Skip Nulls
-</div>
-
-<center>
-  <canvas id="canvas" width="600" height="400">
-  This browser does not seem to support HTML5 Canvas.
-  </canvas>
-</center>
-
-<br/>
-<b>Basic code:</b><br/>
-<br/>
-
-<pre id="code" class="sh_javascript">
-// Use the teechart.js script:
-&lt;script src="../../src/teechart.js" type="text/javascript"&gt;&lt;/script&gt;
-
-// Script to create and draw the chart:
-&lt;script type="text/javascript"&gt;
-
-function draw() {
-  // Create a chart with the specified canvas:
-  var Chart1=new Tee.Chart("canvas");
-
-  // Add two line series:
-  Chart1.addSeries(new Tee.Line([5,3,2,null,7,1]) );
-  Chart1.addSeries(new Tee.Line([4,4,null,8,2,9]) ).visible=true;
-
-  Chart1.series.items[0].format.stroke.size=3;
-
-  Chart1.title.text="TeeChart for JavaScript";
-
-  Chart1.series.items[0].title="Red";
-  Chart1.series.items[1].title="Orange";
-
-  // Null values, skip by default:
-  Chart1.series.items[0].treatNulls="skip";
-  Chart1.series.items[1].treatNulls="skip";
-  
-  changeTheme(Chart1, "minimal");
-
-  Chart1.draw();
-}
-&lt;/script&gt;
-</pre>
-
-<br/>
-<pre class="sh_javascript">
-// Call the draw() function, for example at body onload event:
-&lt;body onload="draw()"&gt;
-  &lt;canvas id="canvas" width="600" height="400" style="display: block; margin-left: auto; margin-right: auto;&gt;&lt;/canvas&gt;
-&lt;/body&gt;
-</pre>
-
-<br/>
-<br/>
-
+<table>
+	<tr class="canvasWithOutSelectors">
+	<td>		
+		<div style="float:left">
+		  <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
+		  <br/>
+		  <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= !Chart1.series.items[1].visible; Chart1.draw();" checked>Series2
+		  <br/>
+		  <input type="checkbox" name="inv" onclick="Chart1.axes.left.inverted= !Chart1.axes.left.inverted; Chart1.draw();">Inverted Axis
+		  <br/>
+		  <input type="checkbox" name="legend" onclick="Chart1.legend.visible= !Chart1.legend.visible; Chart1.draw();" checked>Legend
+		  <br/>
+		  <input type="checkbox" name="gradient1" onclick="Chart1.panel.format.gradient.visible=this.checked; Chart1.draw();">Gradient
+		  <br/>
+		  <input type="checkbox" name="skipNulls" onclick="var skip=this.checked ? 'skip' : 'dontPaint'; Chart1.series.items[0].treatNulls=skip; Chart1.series.items[1].treatNulls=skip; Chart1.draw();" checked>Skip Nulls
+		</div>
+		
+		<center>
+		  <canvas id="canvas" width="600" height="400">
+		  This browser does not seem to support HTML5 Canvas.
+		  </canvas>
+		</center>
+		
+		<br/>
+		<b>Basic code:</b><br/>
+		<br/>
+		
+		<pre id="code" class="sh_javascript">
+		// Use the teechart.js script:
+		&lt;script src="../../src/teechart.js" type="text/javascript"&gt;&lt;/script&gt;
+		
+		// Script to create and draw the chart:
+		&lt;script type="text/javascript"&gt;
+		
+		function draw() {
+		  // Create a chart with the specified canvas:
+		  var Chart1=new Tee.Chart("canvas");
+		
+		  // Add two line series:
+		  Chart1.addSeries(new Tee.Line([5,3,2,null,7,1]) );
+		  Chart1.addSeries(new Tee.Line([4,4,null,8,2,9]) ).visible=true;
+		
+		  Chart1.series.items[0].format.stroke.size=3;
+		
+		  Chart1.title.text="TeeChart for JavaScript";
+		
+		  Chart1.series.items[0].title="Red";
+		  Chart1.series.items[1].title="Orange";
+		
+		  // Null values, skip by default:
+		  Chart1.series.items[0].treatNulls="skip";
+		  Chart1.series.items[1].treatNulls="skip";
+		  
+		  changeTheme(Chart1, "minimal");
+		
+		  Chart1.draw();
+		}
+		&lt;/script&gt;
+		</pre>
+		
+		<br/>
+		<pre class="sh_javascript">
+		// Call the draw() function, for example at body onload event:
+		&lt;body onload="draw()"&gt;
+		  &lt;canvas id="canvas" width="600" height="400" style="display: block; margin-left: auto; margin-right: auto;&gt;&lt;/canvas&gt;
+		&lt;/body&gt;
+		</pre>
+		
+		<br/>
+		<br/>
+	</td>
+	</tr>
+	<tr>
+	<td class="button">
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</td>
+	</tr>
+</table>
+<script type="text/javascript">
+	function openSample(){
+		window.open("basic.htm", "_blank")
+	}
+</script>
 </body>
 </html>
