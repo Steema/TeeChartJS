@@ -2922,9 +2922,7 @@ function Axis(chart,horizontal,otherSide) {
     this.increm = (this.increment===0) ? calcIncrement(this,l) : this.increment;
 
     if (this.increm<=0) this.increm=0.1;
-
-    //var w=this.calc(this.minimum+this.increm)-this.startPos;
-    //if (w<l) this.increm*=2;
+	else if ((this.increm>0) && (this.increm<=0.0000000001)) this.increm=0.0000000001;
   }
 
  /**
@@ -3063,39 +3061,39 @@ function Axis(chart,horizontal,otherSide) {
 
     c.z=is3d ? this.chart.walls.back.format.z - 0.01 : 0;
 
-    while (v <= this.maximum) {
+	while (v <= this.maximum) {
 
-      pos=this.calc(v);
+	  pos=this.calc(v); 
 
-      (horizontal) ? x1=x2=pos : y1=y2=pos;
+	  (horizontal) ? x1=x2=pos : y1=y2=pos;
 
-      if (isOrtho) {
-        if (horizontal) {
-          x1+=a._orthox;
-          x2+=a._orthox;
-        }
-        else
-        {
-          y1-=a._orthoy;
-          y2-=a._orthoy;
-        }
-      }
+	  if (isOrtho) {
+		if (horizontal) {
+		  x1+=a._orthox;
+		  x2+=a._orthox;
+		}
+		else
+		{
+		  y1-=a._orthoy;
+		  y2-=a._orthoy;
+		}
+	  }
 
-      // TODO: lineZ (3D grid sides)
+	  // TODO: lineZ (3D grid sides)
 
-      if (is3d && (!this.otherSide) && c.lineZ)
-         c.lineZ(x1,y1,0,c.z);
+	  if (is3d && (!this.otherSide) && c.lineZ)
+		 c.lineZ(x1,y1,0,c.z);
 
-      if (isCustomDash)
-          dashedLine(c,x1,y1,x2,y2);
-      else
-      {
-        c.moveTo(x1,y1);
-        c.lineTo(x2,y2);
-      }
+	  if (isCustomDash)
+		  dashedLine(c,x1,y1,x2,y2);
+	  else
+	  {
+		c.moveTo(x1,y1);
+		c.lineTo(x2,y2);
+	  }
 
-      v += this.increm;
-    }
+	  v += this.increm;
+	}
 
     f.stroke.prepare();
     f.shadow.prepare(c);
@@ -3304,7 +3302,8 @@ function Axis(chart,horizontal,otherSide) {
   }
 
   this.drawLabels=function() {
-    var v=this.roundMin(), r=new Rectangle(), c=this.axisPos, l=this.labels;
+	var v=this.roundMin(), r=new Rectangle(), c=this.axisPos, l=this.labels;
+    //var v=(this.minimum<this.maximum) ? this.roundMin() : this.minimum, r=new Rectangle(), c=this.axisPos, l=this.labels;
 
     l.maxWidth=0;
     l.format.font.prepare();
@@ -3555,6 +3554,14 @@ Axis.draw=function() {
 
     this.z = this.otherSide ? this.chart.walls.back.format.z : 0;
 
+	//guarantee centre label for one-value axes.
+    if (Math.abs(this.maximum-this.minimum) <= 0.000000001 /*widen beyond this.minAxisRange*/)
+	{
+	   this.setMinMax(this.minimum-0.00000001,this.maximum+0.00000001);
+	   if (this.chart != null)
+	     this.chart.draw();
+	}
+	
     if (this.format.stroke.fill!=="")
        this.drawAxis();
 
