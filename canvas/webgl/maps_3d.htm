@@ -273,10 +273,30 @@ function addCities(cities) {
     map.addLocation(citySeries, cities[t].lat, cities[t].lon, cities[t].name);
 }
 
+function resize(){
+	
+	var startWidth=800;
+	var startHeight=500;
+	var w;
+	var h;
+	var canvas = document.getElementById("canvas1");
+		
+		w = window.innerWidth;
+		h = window.innerHeight;
+		if(w<=991){
+			canvas.style.width="" + w + "px";
+			canvas.style.height="" + w*startHeight/startWidth + "px";
+		}
+		else{
+			canvas.style.width = "" + startWidth + "px";
+			canvas.style.height = "" + startHeight + "px";
+		}
+		
+}
 </script>
 </head>
 
-<body onload="draw()">
+<body onload="draw();resize()" onresize="resize()">
 
 <div id="options" style="float:left;">
 

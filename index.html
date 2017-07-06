@@ -6,30 +6,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	
+   
     <title>Tee Chart Demo</title>
-	
-    <link rel="icon" href="../docs/images/favicon.ico" type="image/x-icon">
-	    <!-- Bootstrap -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+       <!-- Bootstrap -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
   </head>
 
-  <body class="nav-md" onload="changeSizeIframe();showMenu();" onresize="changeSizeIframe();showMenu();">
+  <body class="nav-md" onload="showMenu();" onresize="showMenu();" style="background-color:white">
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col" id="slideMenu">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
             <table>
-             	<tr><td> <a href="https://www.steema.com/" target="_blank"><img src="../docs/images/logo_steema_v3.png"></a></td>
-             	<td><center><span class="closeSpan" style="cursor:pointer" onclick="closeNav()"><p id="txtCloseSpan">&#9747;</p></span></center></td></tr>
-	              
-			</table>
+                <tr><td> <a href="https://www.steema.com/" target="_blank"><img src="images/logo-steema-v3.png"></a></td>
+                <td><center><span class="closeSpan" style="cursor:pointer; color:#ffffff" onclick="closeNav()"><p id="txtCloseSpan">X</p></span></center></td></tr>
+                 
+         </table>
             </div>
 
             <div class="clearfix"></div>
@@ -44,17 +44,17 @@
                 <ul class="nav side-menu">
                   <li><a>Series <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="intro/lines.htm" target="frame_main">Lines</a></li>
-                      <li><a href="intro/bars.htm" target="frame_main">Bars</a></li>
-                      <li><a href="intro/areas.htm" target="frame_main">Areas</a></li>
-                      <li><a href="intro/pie.htm" target="frame_main">Pie</a></li>
-                      <li><a href="intro/points.htm" target="frame_main">Points</a></li>
-                      <li><a href="intro/gantt.htm" target="frame_main">Gantt</a></li>
+                      <li><a href="intro/lines.htm" target="frame_main" onclick="closeNav();">Lines</a></li>
+                      <li><a href="intro/bars.htm" target="frame_main" onclick="closeNav();">Bars</a></li>
+                      <li><a href="intro/areas.htm" target="frame_main" onclick="closeNav();">Areas</a></li>
+                      <li><a href="intro/pie.htm" target="frame_main" onclick="closeNav();">Pie</a></li>
+                      <li><a href="intro/points.htm" target="frame_main" onclick="closeNav();">Points</a></li>
+                      <li><a href="intro/gantt.htm" target="frame_main" onclick="closeNav();">Gantt</a></li>
                     </ul>
                   </li>
                   <li><a>DashBoards<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="intro/scroller.htm" target="frame_main">Scroller</a></li>
+                      <li><a href="intro/scroller.htm" target="frame_main" onclick="closeNav();">Scroller</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -64,201 +64,201 @@
                 <ul class="nav side-menu">
                   <li><a>Series<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="series/All.htm" target="frame_main">All</a></li>
+                      <li><a href="series/All.htm" target="frame_main" onclick="closeNav();">All</a></li>
                       <li><a>Line<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="basic/Basic.htm" target="frame_main">Basic</a></li>
-                            <li class="sub_menu"><a href="series/line/line.htm" target="frame_main">Line</a></li>
-                            <li class="sub_menu"><a href="series/line/smoothline.htm" target="frame_main">Smooth Line</a></li>
-                            <li class="sub_menu"><a href="series/line/stackedline.htm" target="frame_main">Stacked Line</a></li>
-                            <li class="sub_menu"><a href="series/line/linepoint.htm" target="frame_main">Line and Point</a></li>
+                            <li class="sub_menu" ><a href="basic/Basic.htm" target="frame_main" onclick="closeNav();">Basic</a></li>
+                            <li class="sub_menu" ><a href="series/line/line.htm" target="frame_main" onclick="closeNav();">Line</a></li>
+                            <li class="sub_menu" ><a href="series/line/smoothline.htm" target="frame_main" onclick="closeNav();">Smooth Line</a></li>
+                            <li class="sub_menu" ><a href="series/line/stackedline.htm" target="frame_main" onclick="closeNav();">Stacked Line</a></li>
+                            <li class="sub_menu" ><a href="series/line/linepoint.htm" target="frame_main" onclick="closeNav();">Line and Point</a></li>
                           </ul>
                         </li>
-                      <li><a href="series/line/point.htm" target="frame_main">Point XY</a></li>
+                      <li><a href="series/line/point.htm" target="frame_main" onclick="closeNav();">Point XY</a></li>
                       <li><a>Area<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="series/area/area.htm" target="frame_main">Area</a></li>
-                            <li class="sub_menu"><a href="series/area/horizarea.htm" target="frame_main">Horizontal Area</a></li>
-                            <li class="sub_menu"><a href="series/area/smootharea.htm" target="frame_main">Smooth Area</a></li>
+                            <li class="sub_menu" ><a href="series/area/area.htm" target="frame_main" onclick="closeNav();">Area</a></li>
+                            <li class="sub_menu" ><a href="series/area/horizarea.htm" target="frame_main" onclick="closeNav();">Horizontal Area</a></li>
+                            <li class="sub_menu" ><a href="series/area/smootharea.htm" target="frame_main" onclick="closeNav();">Smooth Area</a></li>
                           </ul>
                         </li>
                       <li><a>Bar<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="series/bar/bar.htm" target="frame_main">Bar</a></li>
-                            <li class="sub_menu"><a href="series/bar/barnegative.htm" target="frame_main">Negative values</a></li>
-                            <li class="sub_menu"><a href="series/bar/volume.htm" target="frame_main">Volume</a></li>
+                            <li class="sub_menu" ><a href="series/bar/bar.htm" target="frame_main" onclick="closeNav();">Bar</a></li>
+                            <li class="sub_menu" ><a href="series/bar/barnegative.htm" target="frame_main" onclick="closeNav();">Negative values</a></li>
+                            <li class="sub_menu" ><a href="series/bar/volume.htm" target="frame_main" onclick="closeNav();">Volume</a></li>
                           </ul>
                         </li>
-                      <li><a href="series/bar/horizbar.htm" target="frame_main">Horiz. Bar</a></li>
+                      <li><a href="series/bar/horizbar.htm" target="frame_main" onclick="closeNav();">Horiz. Bar</a></li>
                       <li><a>Pie<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="series/pie/pie.htm" target="frame_main">Pie</a></li>
-                            <li class="sub_menu"><a href="series/pie/multipie.htm" target="frame_main">Multiple Pie</a></li>
+                            <li class="sub_menu" ><a href="series/pie/pie.htm" target="frame_main" onclick="closeNav();">Pie</a></li>
+                            <li class="sub_menu" ><a href="series/pie/multipie.htm" target="frame_main" onclick="closeNav();">Multiple Pie</a></li>
                           </ul>
                         </li>
                       <li><a>Donut<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="series/donut/donut.htm" target="frame_main">Donut</a></li>
-                            <li class="sub_menu"><a href="series/donut/multidonut.htm" target="frame_main">Multiple Donut</a></li>
+                            <li class="sub_menu" ><a href="series/donut/donut.htm" target="frame_main" onclick="closeNav();">Donut</a></li>
+                            <li class="sub_menu" ><a href="series/donut/multidonut.htm" target="frame_main" onclick="closeNav();">Multiple Donut</a></li>
                           </ul>
                         </li>
-                      <li><a href="series/bubble/bubble.htm" target="frame_main">Bubble</a></li>
-                      <li><a href="series/candle/candle.htm" target="frame_main">Candle OHLC</a></li>
-                      <li><a href="series/gantt/gantt.htm" target="frame_main">Gantt</a></li>
+                      <li><a href="series/bubble/bubble.htm" target="frame_main" onclick="closeNav();">Bubble</a></li>
+                      <li><a href="series/candle/candle.htm" target="frame_main" onclick="closeNav();">Candle OHLC</a></li>
+                      <li><a href="series/gantt/gantt.htm" target="frame_main" onclick="closeNav();">Gantt</a></li>
                       <li><a>Gauge<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="gauges/gauges.htm" target="frame_main">Gauge</a></li>
-                            <li class="sub_menu"><a href="gauges/gauge_gallery.htm" target="frame_main">Gauge Gallery</a></li>
-                            <li class="sub_menu"><a href="gauges/clocks.htm" target="frame_main">Clocks</a></li>
+                            <li class="sub_menu" ><a href="gauges/gauges.htm" target="frame_main" onclick="closeNav();">Gauge</a></li>
+                            <li class="sub_menu" ><a href="gauges/gauge_gallery.htm" target="frame_main" onclick="closeNav();">Gauge Gallery</a></li>
+                            <li class="sub_menu" ><a href="gauges/clocks.htm" target="frame_main" onclick="closeNav();">Clocks</a></li>
                           </ul>
                         </li>
-                      <li><a href="series/spark/spark.htm" target="frame_main">Spark</a></li>
+                      <li><a href="series/spark/spark.htm" target="frame_main" onclick="closeNav();">Spark</a></li>
                       <li><a>World Maps<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="series/maps/worldmap.htm" target="frame_main">World Maps</a></li>
-                            <li class="sub_menu"><a href="series/maps/canvas_maps.htm" target="frame_main">Canvas Maps</a></li>
-                            <li class="sub_menu"><a href="series/maps/maps_bubbles.htm" target="frame_main">Bubble Maps</a></li>
+                            <li class="sub_menu" ><a href="series/maps/worldmap.htm" target="frame_main" onclick="closeNav();">World Maps</a></li>
+                            <li class="sub_menu" ><a href="series/maps/canvas_maps.htm" target="frame_main" onclick="closeNav();">Canvas Maps</a></li>
+                            <li class="sub_menu" ><a href="series/maps/maps_bubbles.htm" target="frame_main" onclick="closeNav();">Bubble Maps</a></li>
                           </ul>
                       </li>
                       <li><a>Polar/Radar<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="series/polar/polar.htm" target="frame_main">Polar</a></li>
-                            <li class="sub_menu"><a href="series/polar/polar_bar.htm" target="frame_main">Polar Bar</a></li>
+                            <li class="sub_menu" ><a href="series/polar/polar.htm" target="frame_main" onclick="closeNav();">Polar</a></li>
+                            <li class="sub_menu" ><a href="series/polar/polar_bar.htm" target="frame_main" onclick="closeNav();">Polar Bar</a></li>
                           </ul>
                       </li>
-                      <li><a href="series/colorgrid/colorgrid.htm" target="frame_main">Color Grid</a></li>
-                      <li><a href="series/surface/surface.htm" target="frame_main">Surface 3D</a></li>
+                      <li><a href="series/colorgrid/colorgrid.htm" target="frame_main" onclick="closeNav();">Color Grid</a></li>
+                      <li><a href="series/surface/surface.htm" target="frame_main" onclick="closeNav();">Surface 3D</a></li>
                       
                     </ul>
                   </li>
                   <li><a>Axes<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="axes/allaxes.htm" target="frame_main">Axes</a></li>
-                      <li><a href="axes/centeraxes.htm" target="frame_main">Centred axes</a></li>
-                      <li><a href="axes/gridbands.htm" target="frame_main">Grid Bands</a></li>
-                      <li><a href="axes/synchro_many_charts.htm" target="frame_main">Synchronize</a></li>
-                      <li><a href="axes/multiple_axes.htm" target="frame_main">Multiple Axes</a></li>
-                      <li><a href="axes/customlabels.htm" target="frame_main">Custom Labels</a></li>
-                      <li><a href="axes/zoompercent.htm" target="frame_main">Coded zoom</a></li>
+                      <li><a href="axes/allaxes.htm" target="frame_main" onclick="closeNav();">Axes</a></li>
+                      <li><a href="axes/centeraxes.htm" target="frame_main" onclick="closeNav();">Centred axes</a></li>
+                      <li><a href="axes/gridbands.htm" target="frame_main" onclick="closeNav();">Grid Bands</a></li>
+                      <li><a href="axes/synchro_many_charts.htm" target="frame_main" onclick="closeNav();">Synchronize</a></li>
+                      <li><a href="axes/multiple_axes.htm" target="frame_main" onclick="closeNav();">Multiple Axes</a></li>
+                      <li><a href="axes/customlabels.htm" target="frame_main" onclick="closeNav();">Custom Labels</a></li>
+                      <li><a href="axes/zoompercent.htm" target="frame_main" onclick="closeNav();">Coded zoom</a></li>
                     </ul>
                     </li>
-	                  <li><a>Legend<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="legend/legend.htm" target="frame_main">Legend</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Interactivity<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="axes/zoomscroll.htm" target="frame_main">Mouse and Touch</a></li>
-	                      <li><a href="series/seriesonclick.htm" target="frame_main">Series onClick</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Animations<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="animations/linefadein.htm" target="frame_main">Series</a></li>
-	                      <li><a href="animations/sequence.htm" target="frame_main">Sequence</a></li>
-	                      <li><a href="animations/css3_animations.htm" target="frame_main">CSS3 Transitions</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Data Sources<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="sources/fromarray.htm" target="frame_main">From Array</a></li>
-	                      <li><a href="sources/FromText.htm" target="frame_main">From Text</a></li>
-	                      <li><a href="sources/FromTable.htm" target="frame_main">From Table</a></li>
-	                      <li><a href="series/datasource.htm" target="frame_main">From Series</a></li>
-	                      <li><a href="sources/fromxml.htm" target="frame_main">From XML</a></li>
-	                      <li><a href="sources/fromjson.htm" target="frame_main">From JSON</a></li>
-	                      <li><a href="sources/realtime.htm" target="frame_main">Realtime</a></li>
-	                      <li><a href="sources/fromtypedarray.htm" target="frame_main">From Typed Array</a></li>
-	                      <li><a href="sources/datetime.htm" target="frame_main">DateTime Data</a></li>
-	                      <li><a href="sources/fromYahooFinance.htm" target="frame_main">Yahoo Finance</a></li>
-	                      <li><a href="sources/fromWUnderground.htm" target="frame_main">Weather Underground</a></li>
-	                      <li><a href="sources/battery.htm" target="frame_main">Battery Level</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Images<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="basic/BackImage.htm" target="frame_main">From Array</a></li>
-	                      <li><a href="export/ToPNG.htm" target="frame_main">To PNG and JPEG</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Editors<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="editor/ChartEditor.htm" target="frame_main">Chart Editor</a></li>
-	                      <li><a href="editor/modaleditor.htm" target="frame_main">Modal Editor</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Dashboards<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="dashboard/tutorial/index.htm" target="frame_main">Multi-Dim Tutorial</a></li>
-	                      <li><a href="dashboard/demographics.htm" target="frame_main">Demographics</a></li>
-	                      <li><a href="dashboard/productSales.htm" target="frame_main">Product Sales</a></li>
-	                      <li><a href="dashboard/geo_series.htm" target="frame_main">Geo mapping</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>3D<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="canvas/webgl/basic_3d.htm" target="frame_main">Basic 3D</a></li>
-	                      <li><a href="canvas/webgl/threejs_example.htm" target="frame_main">Advanced</a></li>
-	                      <li><a href="canvas/webgl/maps_3d.htm" target="frame_main">Maps 3D</a></li>
-	                      <li><a href="canvas/webgl/index.htm" target="frame_main">WebGL™ 3D</a></li>
-	                    </ul>
-	                  </li>
-	                  <li><a>Other<span class="fa fa-chevron-down"></span></a>
+                     <li><a>Legend<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="legend/legend.htm" target="frame_main" onclick="closeNav();">Legend</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Interactivity<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="axes/zoomscroll.htm" target="frame_main" onclick="closeNav();">Mouse and Touch</a></li>
+                         <li><a href="series/seriesonclick.htm" target="frame_main" onclick="closeNav();">Series onClick</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Animations<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="animations/linefadein.htm" target="frame_main" onclick="closeNav();">Series</a></li>
+                         <li><a href="animations/sequence.htm" target="frame_main" onclick="closeNav();">Sequence</a></li>
+                         <li><a href="animations/css3_animations.htm" target="frame_main" onclick="closeNav();">CSS3 Transitions</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Data Sources<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="sources/fromarray.htm" target="frame_main" onclick="closeNav();">From Array</a></li>
+                         <li><a href="sources/FromText.htm" target="frame_main" onclick="closeNav();">From Text</a></li>
+                         <li><a href="sources/FromTable.htm" target="frame_main" onclick="closeNav();">From Table</a></li>
+                         <li><a href="series/datasource.htm" target="frame_main" onclick="closeNav();">From Series</a></li>
+                         <li><a href="sources/fromxml.htm" target="frame_main" onclick="closeNav();">From XML</a></li>
+                         <li><a href="sources/fromjson.htm" target="frame_main" onclick="closeNav();">From JSON</a></li>
+                         <li><a href="sources/realtime.htm" target="frame_main" onclick="closeNav();">Realtime</a></li>
+                         <li><a href="sources/fromtypedarray.htm" target="frame_main" onclick="closeNav();">From Typed Array</a></li>
+                         <li><a href="sources/datetime.htm" target="frame_main" onclick="closeNav();">DateTime Data</a></li>
+                         <li><a href="sources/fromYahooFinance.htm" target="frame_main" onclick="closeNav();">Yahoo Finance</a></li>
+                         <li><a href="sources/fromWUnderground.htm" target="frame_main" onclick="closeNav();">Weather Underground</a></li>
+                         <li><a href="sources/battery.htm" target="frame_main" onclick="closeNav();">Battery Level</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Images<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="basic/BackImage.htm" target="frame_main" onclick="closeNav();">From Array</a></li>
+                         <li><a href="export/ToPNG.htm" target="frame_main" onclick="closeNav();">To PNG and JPEG</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Editors<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="editor/ChartEditor.htm" target="frame_main" onclick="closeNav();">Chart Editor</a></li>
+                         <li><a href="editor/modaleditor.htm" target="frame_main" onclick="closeNav();">Modal Editor</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Dashboards<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="dashboard/tutorial/index.htm" target="frame_main" onclick="closeNav();">Multi-Dim Tutorial</a></li>
+                         <li><a href="dashboard/demographics.htm" target="frame_main" onclick="closeNav();">Demographics</a></li>
+                         <li><a href="dashboard/productSales.htm" target="frame_main" onclick="closeNav();">Product Sales</a></li>
+                         <li><a href="dashboard/geo_series.htm" target="frame_main" onclick="closeNav();">Geo mapping</a></li>
+                       </ul>
+                     </li>
+                     <li><a>3D<span class="fa fa-chevron-down"></span></a>
+                       <ul class="nav child_menu">
+                         <li><a href="canvas/webgl/basic_3d.htm" target="frame_main" onclick="closeNav();">Basic 3D</a></li>
+                         <li><a href="canvas/webgl/threejs_example.htm" target="frame_main" onclick="closeNav();">Advanced</a></li>
+                         <li><a href="canvas/webgl/maps_3d.htm" target="frame_main" onclick="closeNav();">Maps 3D</a></li>
+                         <li><a href="canvas/webgl/index.htm" target="frame_main" onclick="closeNav();">WebGL™ 3D</a></li>
+                       </ul>
+                     </li>
+                     <li><a>Other<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="extra/annotations.htm" target="frame_main">Annotations</a></li>
-                      <li><a href="extra/buttons.htm" target="frame_main">Buttons</a></li>
-                      <li><a href="extra/ToolTips.htm" target="frame_main">Tool tips</a></li>
-                      <li><a href="extra/domToolTips.htm" target="frame_main">CSS Tool tips</a></li>
-                      <li><a href="extra/domToolTips_SubChart.htm" target="frame_main">Tips with Charts</a></li>
+                      <li><a href="extra/annotations.htm" target="frame_main" onclick="closeNav();">Annotations</a></li>
+                      <li><a href="extra/buttons.htm" target="frame_main" onclick="closeNav();">Buttons</a></li>
+                      <li><a href="extra/ToolTips.htm" target="frame_main" onclick="closeNav();">Tool tips</a></li>
+                      <li><a href="extra/domToolTips.htm" target="frame_main" onclick="closeNav();">CSS Tool tips</a></li>
+                      <li><a href="extra/domToolTips_SubChart.htm" target="frame_main" onclick="closeNav();">Tips with Charts</a></li>
                       <li><a>Cursor Tool<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="extra/CursorTool.htm" target="frame_main">Cursor Tool</a></li>
-                            <li class="sub_menu"><a href="extra/CursorTool_Interpolate.htm" target="frame_main">Cursor Tool Interpolate</a></li>
+                            <li class="sub_menu" ><a href="extra/CursorTool.htm" target="frame_main" onclick="closeNav();">Cursor Tool</a></li>
+                            <li class="sub_menu" ><a href="extra/CursorTool_Interpolate.htm" target="frame_main" onclick="closeNav();">Cursor Tool Interpolate</a></li>
                           </ul>
                       </li>
-                      <li><a href="extra/floorreflection.htm" target="frame_main">Floor reflection</a></li>
+                      <li><a href="extra/floorreflection.htm" target="frame_main" onclick="closeNav();">Floor reflection</a></li>
                       <li><a>Panel<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="basic/PanelShadow.htm" target="frame_main">Panel</a></li>
-                            <li class="sub_menu"><a href="basic/Transparent.htm" target="frame_main">Transparent</a></li>
-                            <li class="sub_menu"><a href="basic/canvasalign.htm" target="frame_main">Full page align</a></li>
+                            <li class="sub_menu" ><a href="basic/PanelShadow.htm" target="frame_main" onclick="closeNav();">Panel</a></li>
+                            <li class="sub_menu" ><a href="basic/Transparent.htm" target="frame_main" onclick="closeNav();">Transparent</a></li>
+                            <li class="sub_menu" ><a href="basic/canvasalign.htm" target="frame_main" onclick="closeNav();">Full page align</a></li>
                           </ul>
                       </li>
-                      <li><a href="basic/TitleFooter.htm" target="frame_main">Title and Footer</a></li>
-                      <li><a href="extra/slider.htm" target="frame_main">Slider</a></li>
+                      <li><a href="basic/TitleFooter.htm" target="frame_main" onclick="closeNav();">Title and Footer</a></li>
+                      <li><a href="extra/slider.htm" target="frame_main" onclick="closeNav();">Slider</a></li>
                       <li><a>Series Scroller<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="extra/scroller.htm" target="frame_main">Series Scroller</a></li>
-                            <li class="sub_menu"><a href="extra/scroller_datetime.htm" target="frame_main">Datetime Scroller</a></li>
+                            <li class="sub_menu" ><a href="extra/scroller.htm" target="frame_main" onclick="closeNav();">Series Scroller</a></li>
+                            <li class="sub_menu" ><a href="extra/scroller_datetime.htm" target="frame_main" onclick="closeNav();">Datetime Scroller</a></li>
                           </ul>
                       </li>
                       <li><a>Canvas<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="canvas/custom_paint.htm" target="frame_main">Custom Painting</a></li>
-                            <li class="sub_menu"><a href="canvas/size_percent_resize.htm" target="frame_main">Percent Size and Auto Resize</a></li>
+                            <li class="sub_menu" ><a href="canvas/custom_paint.htm" target="frame_main" onclick="closeNav();">Custom Painting</a></li>
+                            <li class="sub_menu" ><a href="canvas/size_percent_resize.htm" target="frame_main" onclick="closeNav();">Percent Size and Auto Resize</a></li>
                           </ul>
                       </li>
                       
                      </ul>
                   </li>
                   <li><a>Plugins<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="plugins/plugins.htm" target="frame_main">List of Plugins</a></li>
-	                      <li><a href="plugins/jquery/teechart_jquery.htm" target="frame_main">JQuery TeeChart</a></li>
-	                      <li><a href="plugins/typescript/index.htm" target="frame_main">Microsoft TypeScript</a></li>
-	                      <li><a href="http://www.nuget.org/packages/TeeChart.htm" target="frame_main">Microsoft Visual Studio</a></li>
-	                      <li><a href="https://npmjs.org/package/TeeChart.htm" target="frame_main">Node.js package</a></li>
-	                      <li><a href="extra/google_gadget.htm" target="frame_main">Google Gadget</a></li>
-	                      <li><a href="http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart.htm" target="frame_main">Smart Mobile Studio</a></li>
-	                      <li><a href="canvas/webgl/index.htm" target="frame_main">Three.js WebGL 3D</a></li>
-	                    </ul>
-	                  </li>
+                       <ul class="nav child_menu">
+                         <li><a href="plugins/plugins.htm" target="frame_main" onclick="closeNav();">List of Plugins</a></li>
+                         <li><a href="plugins/jquery/teechart_jquery.htm" target="frame_main" onclick="closeNav();">JQuery TeeChart</a></li>
+                         <li><a href="plugins/typescript/index.htm" target="frame_main" onclick="closeNav();">Microsoft TypeScript</a></li>
+                         <li><a href="http://www.nuget.org/packages/TeeChart.htm" target="frame_main" onclick="closeNav();">Microsoft Visual Studio</a></li>
+                         <li><a href="https://npmjs.org/package/TeeChart.htm" target="frame_main" onclick="closeNav();">Node.js package</a></li>
+                         <li><a href="extra/google_gadget.htm" target="frame_main" onclick="closeNav();">Google Gadget</a></li>
+                         <li><a href="http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart.htm" target="frame_main" onclick="closeNav();">Smart Mobile Studio</a></li>
+                         <li><a href="canvas/webgl/index.htm" target="frame_main" onclick="closeNav();">Three.js WebGL 3D</a></li>
+                       </ul>
+                     </li>
                   <li><a>Unit Tests<span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="tests/index.htm" target="frame_main">Unit Tests</a></li>
-	                    </ul>
-	                  </li>
+                       <ul class="nav child_menu">
+                         <li><a href="tests/index.htm" target="frame_main" onclick="closeNav();">Unit Tests</a></li>
+                       </ul>
+                     </li>
                   </ul>
               </div>
 
@@ -266,14 +266,12 @@
 
           </div>
         </div>
-
-        <div class="right_col" role="main" id="mainContainer">
-        
-        	<span class="openSpan" style="cursor:pointer" onclick="openNav();openedNav();"><p id="txtOpenSpan">&#9776;</p></span>
-        	<iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
-        
-        </div>
-        
+	      <div class="right_col" role="main" id="mainContainer">
+	        
+	           <span class="openSpan" style="cursor:pointer; color:#000000" onclick="openNav();"><p id="txtOpenSpan">&#8801;</p></span>
+	           <iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
+	        
+	        </div>  
       </div>
     </div>
     <!-- jQuery -->
@@ -286,66 +284,69 @@
     <script type="text/javascript">
 
     
-	var opened=false;
-	
-   	function openedNav(){
-   		opened=true;
-   	}
-	
-	function changeSizeIframe(){
-   		var w= window.innerWidth;
-   		var h= window.innerHeight;
-   		document.getElementById("frame1").width = w;
-		document.getElementById("frame1").height = h;
-   	}
-	function showMenu(){
-		var w=window.innerWidth;
-		
-		if(w<=991 && !opened){
-			document.getElementById("txtOpenSpan").style.display = 'block';
-		    document.getElementById("slideMenu").style.visibility = 'hidden';
-		    document.getElementById("mainContainer").style.width = '100%';
-		    document.getElementById("mainContainer").style.margin = '0';
-		    document.getElementById("mainContainer").style.paddingRight = '0';
-		    document.getElementById("mainContainer").style.padding = '10px';
-	    	document.getElementById("txtCloseSpan").style.display = 'none';
-	    }
-		else if(opened && w<=991){
+   var opened=false;
 
-			document.getElementById("txtCloseSpan").style.display = 'block';
-		    document.getElementById("slideMenu").style.visibility = 'visible';
-	    	document.getElementById("txtOpenSpan").style.display = 'none';
-		    document.getElementById("mainContainer").style.width = '100%';
-		    document.getElementById("mainContainer").style.marginLeft = '230px';
-		}
-	    else{
+   function showMenu(){
+      var w=window.innerWidth;
+      if(w<=991 && !opened){
+         document.getElementById("txtOpenSpan").style.display = 'block';
+          document.getElementById("slideMenu").style.visibility = 'hidden';
+         document.getElementById("slideMenu").style.width = '230px';
+          document.getElementById("mainContainer").style.width = '100%';
+          document.getElementById("mainContainer").style.margin = '0';
+          document.getElementById("mainContainer").style.paddingRight = '0';
+          document.getElementById("mainContainer").style.padding = '10px';
+          document.getElementById("txtCloseSpan").style.display = 'none';
+       }
+      else if(opened && w<=991){
 
-		    document.getElementById("slideMenu").style.visibility = 'visible';
-		    document.getElementById("mainContainer").style.width = '100%';
-		    document.getElementById("mainContainer").style.marginLeft = '230px';
-	    	document.getElementById("txtOpenSpan").style.display = 'none';
-		    document.getElementById("txtCloseSpan").style.display = 'none';	
-		    opened=false;
-	    }
-	}
-	function openNav() {
-	    document.getElementById("slideMenu").style.visibility = 'visible';
-    	document.getElementById("txtOpenSpan").style.display = 'none';
-		document.getElementById("txtCloseSpan").style.display = 'block';
-	    document.getElementById("mainContainer").style.width = '100%';
-	    document.getElementById("mainContainer").style.marginLeft = '230px';
-	    opened=true;
-	}
-	
-	function closeNav() {
-	    document.getElementById("slideMenu").style.visibility = 'hidden';
-	    document.getElementById("mainContainer").style.width = '100%';
-	    document.getElementById("mainContainer").style.margin = '0';
-	    document.getElementById("mainContainer").style.paddingRight = '0';
-	    document.getElementById("mainContainer").style.padding = '10px';
-    	document.getElementById("txtOpenSpan").style.display = 'block';
-    	opened=false;
-	}
+         document.getElementById("txtCloseSpan").style.display = 'block';
+         document.getElementById("slideMenu").style.width = '230px';
+          document.getElementById("slideMenu").style.visibility = 'visible';
+          document.getElementById("txtOpenSpan").style.display = 'none';
+          document.getElementById("mainContainer").style.width = '100%';
+          document.getElementById("mainContainer").style.marginLeft = '230px';
+      }
+      
+       else{
+
+          document.getElementById("slideMenu").style.visibility = 'visible';
+         document.getElementById("slideMenu").style.width = '230px';
+          document.getElementById("mainContainer").style.width = '100%';
+          document.getElementById("mainContainer").style.marginLeft = '230px';
+          document.getElementById("txtOpenSpan").style.display = 'none';
+          document.getElementById("txtCloseSpan").style.display = 'none';   
+          opened=false;
+       }
+   }
+   function openNav() {
+      var w = window.innerWidth;
+      if(w<=991){
+          document.getElementById("slideMenu").style.visibility = 'visible';
+         document.getElementById("slideMenu").style.width = '230px';
+          document.getElementById("txtOpenSpan").style.display = 'none';
+         document.getElementById("txtCloseSpan").style.display = 'block';
+          document.getElementById("mainContainer").style.width = '100%';
+          document.getElementById("mainContainer").style.marginLeft = '230px';
+          opened=true;
+      }
+       
+   }
+   
+   function closeNav() {
+
+         var w= window.innerWidth;
+         if(w<=991){
+          document.getElementById("slideMenu").style.visibility = 'hidden';
+         document.getElementById("slideMenu").style.width = '230px';
+          document.getElementById("mainContainer").style.width = '100%';
+          document.getElementById("mainContainer").style.margin = '0';
+          document.getElementById("mainContainer").style.paddingRight = '0';
+          document.getElementById("mainContainer").style.padding = '10px';
+          document.getElementById("txtOpenSpan").style.display = 'block';
+          opened=false;
+         }
+   }
     </script>
   </body>
 </html>

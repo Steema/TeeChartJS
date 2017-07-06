@@ -56,10 +56,57 @@ function draw() {
   
 Chart1.draw();
 }
+function resize(){
+	
+	var startWidth=600;
+	var startHeight=400;
+	var w;
+	var h;
+	var canvas = document.getElementById("canvas");
+	var canvasDiv = document.getElementById("chartframe");
+	
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		
+		w = window.innerWidth;
+		h = window.innerHeight;
+		if(w<=600){
+			canvas.style.width="" + w*0.85 + "px";
+			canvas.style.height="" + 0.85*w*startHeight/startWidth + "px";
+			canvasDiv.style.width = "" + 0.95*w + "px";
+			canvasDiv.style.height = "" + 0.95*w*startHeight/startWidth + "px";
+		} 
+		else{
+			canvas.style.width = "" + startWidth + "px";
+			canvas.style.height = "" + startHeight + "px";
+			canvasDiv.style.width = "" + startWidth + "px";
+			canvasDiv.style.height = "" + startHeight + "px";
+		}
+	}
+	else{
+		w = startWidth;
+		h = startHeight;
+		
+		if ((window.innerWidth) < startWidth)
+			w = window.innerWidth;
+		else
+			w = startWidth;
+			  
+		if ((window.innerWidth * startHeight / startWidth) < startHeight)
+			h =window.innerWidth * startHeight / startWidth;
+		else
+			h = startHeight;
+		
+		canvas.style.width=""+0.85*w+"px";
+		canvas.style.height=""+0.85*h+"px";
+
+		canvasDiv.style.width = "" + 0.95*w + "px";
+		canvasDiv.style.height = "" + 0.95*h + "px";
+	}	
+}
 </script>
 </head>
+<body onload="draw();resize()" onresize="resize()">
 
-<body onload="draw()">
 				
 	<table>
 		<tr class="canvasWithOutSelectors">

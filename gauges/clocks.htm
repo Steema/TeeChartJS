@@ -36,10 +36,52 @@ function makeClock() {
   clock2.tick();
   clock3.tick();
 }
+
+function resizeClocks(){
+	resize("canvas1", 400, 400, 90);
+	resize("canvas2", 200, 200, 45);
+	resize("canvas3", 200, 200, 45);
+}
+
+function resize(canvasId, startWidth, startHeight, perc){
+	var w;
+	var h;
+	var canvas = document.getElementById(canvasId);
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		w = window.innerWidth;
+		h = window.innerHeight;
+		if(w<=300){
+			canvas.style.width="" + w*perc/100 + "px";
+			canvas.style.height="" + w*startHeight/startWidth*perc/100 + "px";
+		}
+		else{
+			canvas.style.width = "" + startWidth + "px";
+			canvas.style.height = "" + startHeight + "px";
+		}
+	}
+	else{
+		w = startWidth;
+		h = startHeight;
+		
+		if ((window.innerWidth*perc/100) < startWidth)
+			w = window.innerWidth*perc/100;
+		else
+			w = startWidth;
+			  
+		if ((window.innerWidth*perc/100 * startHeight / startWidth) < startHeight)
+			h =window.innerWidth*perc/100 * startHeight / startWidth;
+		else
+			h = startHeight;
+		
+		canvas.style.width=""+w+"px";
+		canvas.style.height=""+h+"px";
+	}	
+}
+
 </script>
 
 </head>
-<body onload="makeClock()">
+<body onload="makeClock();resizeClocks()" onresize="resizeClocks()" >
 	<table>
 		<tr class="canvasWithOutSelectors">
 			<td>

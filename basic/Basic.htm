@@ -16,10 +16,10 @@
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 
 <!-- Syntax highlight -->
-<script src="../tools/syntax/sh_main.min.js" type="text/javascript"></script>
-<script src="../tools/syntax/sh_javascript.min.js" type="text/javascript"></script>
-<link href="../tools/syntax/sh_ide-eclipse.min.css" rel="stylesheet" type="text/css">
+<style>
 
+
+</style>
 <link rel="stylesheet" type="text/css" href="../demo.css">
 
 <script type="text/javascript">
@@ -50,13 +50,33 @@ function draw() {
 
 
 }
+
+function resize(){
+	
+	var startWidth=600;
+	var startHeight=400;
+	var w;
+	var h;
+	var canvas = document.getElementById("canvas");
+	w = window.innerWidth;
+	h = window.innerHeight;
+	if(w<=991){
+		canvas.style.width="" + w*0.5 + "px";
+		canvas.style.height="" + w*startHeight/startWidth*0.5 + "px";
+		//document.getElementById("options").style.cssFloat = top;
+	}
+	else{
+		canvas.style.width = "" + startWidth + "px";
+		canvas.style.height = "" + startHeight + "px";
+	}
+}
 </script>
 </head>
-<body onload="draw()">
-<table>
-	<tr class="canvasWithOutSelectors">
-	<td>		
-		<div style="float:left">
+<body onload="draw();resize()" onresize="resize()">
+<table class="contentClass">
+	<tr class="options">
+	<td width="30%">
+		<div id="options">
 		  <input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= !Chart1.series.items[0].visible; Chart1.draw();" checked>Series1
 		  <br/>
 		  <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= !Chart1.series.items[1].visible; Chart1.draw();" checked>Series2
@@ -69,64 +89,68 @@ function draw() {
 		  <br/>
 		  <input type="checkbox" name="skipNulls" onclick="var skip=this.checked ? 'skip' : 'dontPaint'; Chart1.series.items[0].treatNulls=skip; Chart1.series.items[1].treatNulls=skip; Chart1.draw();" checked>Skip Nulls
 		</div>
-		
+	</td>
+	<td width="70%">
 		<center>
 		  <canvas id="canvas" width="600" height="400">
 		  This browser does not seem to support HTML5 Canvas.
 		  </canvas>
 		</center>
-		
+	</td>
+	</tr>
+	<tr class="basicCode">
+	<td colspan="2">
 		<br/>
 		<b>Basic code:</b><br/>
 		<br/>
 		
-		<pre id="code" class="sh_javascript">
+		<p id="code" class="sh_javascript">
 		// Use the teechart.js script:
-		&lt;script src="../../src/teechart.js" type="text/javascript"&gt;&lt;/script&gt;
-		
-		// Script to create and draw the chart:
-		&lt;script type="text/javascript"&gt;
-		
-		function draw() {
-		  // Create a chart with the specified canvas:
-		  var Chart1=new Tee.Chart("canvas");
-		
-		  // Add two line series:
-		  Chart1.addSeries(new Tee.Line([5,3,2,null,7,1]) );
-		  Chart1.addSeries(new Tee.Line([4,4,null,8,2,9]) ).visible=true;
-		
-		  Chart1.series.items[0].format.stroke.size=3;
-		
-		  Chart1.title.text="TeeChart for JavaScript";
-		
-		  Chart1.series.items[0].title="Red";
-		  Chart1.series.items[1].title="Orange";
-		
-		  // Null values, skip by default:
-		  Chart1.series.items[0].treatNulls="skip";
-		  Chart1.series.items[1].treatNulls="skip";
-		  
-		  changeTheme(Chart1, "minimal");
-		
-		  Chart1.draw();
-		}
-		&lt;/script&gt;
-		</pre>
+		&lt;script src="../../src/teechart.js" type="text/javascript"&gt;&lt;/script&gt;<br/>
+		<br/>
+		// Script to create and draw the chart:<br/>
+		&lt;script type="text/javascript"&gt;<br/>
+		<br/>
+		function draw() {<br/>
+		&nbsp;&nbsp;// Create a chart with the specified canvas:<br/>
+		&nbsp;&nbsp;var Chart1=new Tee.Chart("canvas");<br/>
+		<br/>
+		&nbsp;&nbsp;// Add two line series:<br/>
+		&nbsp;&nbsp;Chart1.addSeries(new Tee.Line([5,3,2,null,7,1]) );<br/>
+		&nbsp;&nbsp;Chart1.addSeries(new Tee.Line([4,4,null,8,2,9]) ).visible=true;<br/>
+		<br/>
+		&nbsp;&nbsp;Chart1.series.items[0].format.stroke.size=3;<br/>
+		<br/>
+		&nbsp;&nbsp;Chart1.title.text="TeeChart for JavaScript";<br/>
+		<br/>
+		&nbsp;&nbsp;Chart1.series.items[0].title="Red";<br/>
+		&nbsp;&nbsp;Chart1.series.items[1].title="Orange";<br/>
+		<br/>
+		&nbsp;&nbsp;// Null values, skip by default:<br/>
+		&nbsp;&nbsp;Chart1.series.items[0].treatNulls="skip";<br/>
+		&nbsp;&nbsp;Chart1.series.items[1].treatNulls="skip";<br/>
+		  <br/>
+		&nbsp;&nbsp;changeTheme(Chart1, "minimal");<br/>
+		<br/>
+		&nbsp;&nbsp;Chart1.draw();<br/>
+		}<br/>
+		&lt;/script&gt;<br/>
+		</p>
 		
 		<br/>
-		<pre class="sh_javascript">
-		// Call the draw() function, for example at body onload event:
-		&lt;body onload="draw()"&gt;
-		  &lt;canvas id="canvas" width="600" height="400" style="display: block; margin-left: auto; margin-right: auto;&gt;&lt;/canvas&gt;
-		&lt;/body&gt;
-		</pre>
+		<p class="sh_javascript">
+		// Call the draw() function, for example at body onload event:<br/>
+		&lt;body onload="draw()"&gt;<br/>
+		  &lt;canvas id="canvas" width="600" height="400" style="display: block; margin-left: auto; margin-right: auto;&gt;&lt;/canvas&gt;<br/>
+		&lt;/body&gt;<br/>
+		</p>
 		
 		<br/>
 		<br/>
 	</td>
 	</tr>
 	<tr>
-	<td class="button">
+	<td class="button" colspan="2">
 		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
 	</td>
 	</tr>

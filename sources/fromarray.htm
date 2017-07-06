@@ -38,9 +38,62 @@ function draw() {
   Chart1.draw();
 }
 
+function resize(chart){
+	
+	var startWidth=600;
+	var startHeight=400;
+	var w;
+	var h;
+	var canvas = chart.canvas;
+	if (chart!=null){
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			
+			w = window.innerWidth;
+			h = window.innerHeight;
+			if(w<=991){
+				canvas.style.width="" + w + "px";
+				canvas.style.height="" + w*startHeight/startWidth + "px";
+			}
+			else{
+				canvas.style.width = "" + startWidth + "px";
+				canvas.style.height = "" + startHeight + "px";
+				chart.bounds.width = startWidth;
+				chart.bounds.height = startHeight;
+			}
+			chart.draw();	 
+		}
+		else{
+			w = startWidth;
+			h = startHeight;
+			
+			if ((window.innerWidth - canvas.offsetLeft - 20) < startWidth)
+				w = window.innerWidth - canvas.offsetLeft - 20;
+			else
+				w = startWidth;
+				  
+			if ((window.innerWidth * startHeight / startWidth) < startHeight)
+				h =window.innerWidth * startHeight / startWidth;
+			else
+				h = startHeight;
+			
+			canvas.setAttribute('width', ""+w+"px");
+			
+			canvas.setAttribute('height', ""+h+"px");
+			
+			canvas.style.width=""+w+"px";
+			canvas.style.height=""+h+"px";
+			
+			chart.bounds.width=w;
+			chart.bounds.height=h;
+			
+			chart.draw();
+		}
+	}	
+}
 </script>
 </head>
-<body onload="draw()">
+<body onload="draw();resize(Chart1)" onresize="resize(Chart1)">
+
 
 	<table>
 		<tr class="canvasWithOutSelectors">

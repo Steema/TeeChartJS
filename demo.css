@@ -110,7 +110,7 @@ TR {
 }
 
 TD {
-     border: 0;
+     border:0;
      padding: 5px;
 }
 
@@ -163,24 +163,25 @@ button {
     display: inline-block;
     font-size: 16px;
     border-radius:8px;
+    width:20%;
+    height:7%;
 }
-table .body{
-	height:100%;
-	width:100%;
+@media(max-width: 992px){
+	button{
+		width:50%;
+	}
 }
-tr .selectors{
-	height:10%;
-	width:100%;
-}
-tr .canvasWithSelectors{
+
+
+
+table .contentTable{
 	height:80%;
-	width:100%
+	width:80%;
 }
-tr .canvasWithOutSelectors{
-	height:90%;
-	width:100%
+table .contentTable tr{
+	text-align:center;
+	width:80%;
 }
-tr .button{
-	height:10%;
-	width:100%;
+tr .selectors td{
+	width:20%;
 }

@@ -29,12 +29,14 @@
 		}
 		 
 		resize(Chart1);
+		Chart1.draw();
 	}
 	
 	function changePalette(palette)
 	{
 		Chart1.applyPalette(palette);
 		resize(Chart1);
+		Chart1.draw();
 	}
 	
 	function draw() {
@@ -88,7 +90,9 @@
 		Chart1.axes.bottom.title.text="Bottom Axis";
 		Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
 		Chart1.axes.bottom.title.format.font.setSize(20);
-		Chart1.axes.bottom.title.visible=false;  
+		Chart1.axes.bottom.title.visible=false;
+		Chart1.axes.left.title.visible=false;
+		 
 		Chart1.axes.bottom.labels.dateFormat = "mm/yy";
 		//Chart1.axes.bottom.increment=30;
 		Chart1.axes.left.increment=3;
@@ -123,16 +127,16 @@
 		tip=new Tee.ToolTip(Chart1);
 		//tip.format.font.style="10px Tahoma";
 		//tip.format.fill = "rgba(255,0,0,1.0)";
-	tip.render="dom";
+		tip.render="dom";
 		tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
 		tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
 		tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:3; z-index:1000;";
 	  
-	  //"padding:4px; margin-left:4px; background-color:#FFF; border-radius:2px 2px; color:#555; z-index:1000;"
+	  	//"padding:4px; margin-left:4px; background-color:#FFF; border-radius:2px 2px; color:#555; z-index:1000;"
 	
 		Chart1.tools.add(tip);
 	
-	  //tip.onshow=function(tool,series,index) { scaling=2; poindex=index; }
+	  	//tip.onshow=function(tool,series,index) { scaling=2; poindex=index; }
 		tip.onhide=function() { scaling=0; poindex=-1; }
 	
 		tip.onshow=function(tool,series,index) {
@@ -142,7 +146,7 @@
 	  
 		var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
 			s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ index.toFixed(0)+'</strong></font>';
-			s =	s +'<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';  
+			s =	s + '<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';
 			return s;
 		}
 	
@@ -161,45 +165,66 @@
 		
 		animation.animate(Chart1);
 
+		changeTheme("minimal");
+		changePalette("seaWash");
+
 		resize(Chart1);
 	}
-	function resize(chart) {
-		if (!chart) return;
+	function resize(chart){
+		
+		if (chart!=null){
+		var startWidth=1000;
+		var startHeight=400;
+		var w;
+		var h;
 		var canvas = chart.canvas;
-		
-		startWidth = 1000;
-		startHeight = 400;
-		 
-		var w = startWidth;
-		var h = startHeight;
-		
-		if ((window.innerWidth - canvas.offsetLeft - 20) < startWidth)
-			w = window.innerWidth  - canvas.offsetLeft - 20;
-		else
-			w = startWidth;
-		  
-		if ((window.innerHeight - 70  - canvas.offsetTop - 20) < startHeight)
-			h = window.innerHeight - 70 - canvas.offsetTop - 20;
-		else
-			h = startHeight;
-		
-		
-		canvas.setAttribute('width' , "" + w + "px");
-		canvas.setAttribute('height' , "" + h + "px");
-		
-		canvas.style.width = "" + w + "px";
-		canvas.style.height = "" + h + "px";
-		
-		chart.bounds.width = w;
-		chart.bounds.height = h;
-
-		//enableTouchZoom(chart);
-		chart.draw();
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				
+				w = window.innerWidth;
+				h = window.innerHeight;
+				if(w<=991){
+						canvas.style.width="" + w + "px";
+						canvas.style.height="" + w*startHeight/startWidth + "px";
+				}
+				else{
+					canvas.style.width = "" + startWidth + "px";
+					canvas.style.height = "" + startHeight + "px";
+					chart.bounds.width = startWidth;
+					chart.bounds.height = startHeight;
+				}
+				chart.draw();	 
+			}
+			else{
+				w = startWidth;
+				h = startHeight;
+				
+				if ((window.innerWidth - canvas.offsetLeft - 20) < startWidth)
+					w = window.innerWidth - canvas.offsetLeft - 20;
+				else
+					w = startWidth;
+					  
+				if ((window.innerWidth * startHeight / startWidth) < startHeight)
+					h =window.innerWidth * startHeight / startWidth;
+				else
+					h = startHeight;
+				
+				canvas.setAttribute('width', ""+w+"px");
+				
+				canvas.setAttribute('height', ""+h+"px");
+				
+				canvas.style.width=""+w+"px";
+				canvas.style.height=""+h+"px";
+				
+				chart.bounds.width=w;
+				chart.bounds.height=h;
+				
+				chart.draw();
+			}
+		}	
 	}
 	
-	
 	</script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 	function openSample() {
 	    window.open("lines.htm", "_blank");
 	}
@@ -213,14 +238,12 @@
 			changeBackgroundToWhite();
 	}
 	function changeBackgroundToDark(){
-	
 	    document.body.style.backgroundColor = "#0C0C0C";
 	    document.getElementById("table1").style.backgroundColor="#0C0C0C";
 	    document.getElementById("table1").style.color="#ffffff";
 	    document.getElementById("canvas").style.backgroundColor="#0C0C0C";
 	}
 	function changeBackgroundToWhite(){
-	
 	    document.body.style.backgroundColor = "#ffffff";
 	    document.getElementById("table1").style.backgroundColor="#ffffff";
 	    document.getElementById("table1").style.color="#0C0C0C";
@@ -228,16 +251,9 @@
 	}
 	</script>
 	<script type="text/javascript">
-	function changeThemeToDefault(){
-		changeTheme("minimal");
-		changePalette("seaWash");
-	}
-	
-	</script>
-	<script type="text/javascript">
 		var topTheme = "minimal";  //defaults
         var topPalette = "seaWash";
-		
+        
 		function changeTheme(aTheme) {
 			.changeTheme(aTheme);
 			topTheme = aTheme;
@@ -256,10 +272,10 @@
         }
 	</script>
 </head>
-<body  id="chartView"  onload="draw();changeThemeToDefault();" style="background-color: #ffffff;" onresize="resize(Chart1)">
-	<table id="table1">
- 		<tr class="selectors">
-     		<td style="padding-left:15px; padding-right: 5px;" id="text1">Theme:</td>
+<body  id="chartView"  onload="draw(Chart1);resize(Chart1);" style="background-color: #ffffff;" onresize="resize(Chart1);">
+	<table class="contentTable">
+ 		<tr class="selectorsTr" id="selectors">
+     		<td><p>Theme:</p></td>
      		<td>
          		<select id="theme"  onchange="changeTheme(this.value);changeBackground(this.value);" onload="changeBackgound(this.value);">
 		             <option value="">Default</option>
@@ -267,10 +283,10 @@
 		             <option value="daybreak">Daybreak</option>    
 		             <option value="excel">Microsoft Excel (TM)</option>
 		             <option value="minimal" selected>Minimal</option>  
-		             <option value="twilight">Twilight</option>
+		             <option value="twilight">Twilight</option>  
          		</select>
      		</td>
-     		<td style="padding-left:15px; padding-right: 5px;" id="text2">Palette:</td>
+     		<td><p>Palette:</p></td>
 	     	<td>
 	        	<select id="palette"  onchange="changePalette(this.value);">
 		             <option value="">Default</option>
@@ -282,21 +298,19 @@
 		             <option value="redRiver">Red River</option>
 		             <option value="seaWash" selected>Sea Wash</option>
 		             <option value="warm">Warm</option>  
-		             <option value="windowsxp">Windows XP</option>  
+		             <option value="windowsxp">Windows XP</option>
 	         	</select>
          	</td>
    		</tr>
-   		<tr>
+   		<tr class="canvasPart">
 	   		<td class="canvasWithSelector" colspan="4">
-		   		<div id="touchSection">
 						<canvas id="canvas" width="1000" height="400">
 						This browser does not seem to support HTML5 Canvas.
 						</canvas>
-				</div>
 	   		
 	   		</td>
    		</tr>
-       	<tr class="button"><td><center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center></td></tr>
+       	<tr class="button"><td colspan="4"><center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center></td></tr>
 	</table>
 
 	

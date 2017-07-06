@@ -72,10 +72,53 @@ function draw() {
   var clock1=new Tee.Clock("canvas7");
   clock1.gauge.tick();
 }
+function resizeGauges(){
+	resize("canvas1", 300, 250, 95);
+	resize("canvas2", 300, 250, 95);
+	resize("canvas3", 300, 250, 95);
+	resize("canvas4", 300, 250, 95);
+	resize("canvas5", 300, 200, 95);
+	resize("canvas6", 300, 200, 95);
+	resize("canvas7", 300, 200, 95);
+}
+function resize(canvasId, startWidth, startHeight, perc){
+	var w;
+	var h;
+	var canvas = document.getElementById(canvasId);
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		w = window.innerWidth;
+		h = window.innerHeight;
+		if(w<=300){
+			canvas.style.width="" + w*perc/100 + "px";
+			canvas.style.height="" + w*startHeight/startWidth*perc/100 + "px";
+		}
+		else{
+			canvas.style.width = "" + startWidth + "px";
+			canvas.style.height = "" + startHeight + "px";
+		}
+	}
+	else{
+		w = startWidth;
+		h = startHeight;
+		
+		if ((window.innerWidth*perc/100) < startWidth)
+			w = window.innerWidth*perc/100;
+		else
+			w = startWidth;
+			  
+		if ((window.innerWidth*perc/100 * startHeight / startWidth) < startHeight)
+			h =window.innerWidth*perc/100 * startHeight / startWidth;
+		else
+			h = startHeight;
+		
+		canvas.style.width=""+w+"px";
+		canvas.style.height=""+h+"px";
 
+	}	
+}
 </script>
 </head>
-<body onload="draw()">
+<body onload="draw();resizeGauges();" resize="resizeGauges();">
 	<table>
 		<tr class="canvasWithOutSelectors">
 			<td>

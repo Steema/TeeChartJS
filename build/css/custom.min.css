@@ -161,6 +161,8 @@
     min-width: inherit;
     color: #C4CFDA
 }
+
+
 .active a span.fa {
     text-align: right !important;
     margin-right: 4px
@@ -693,19 +695,91 @@ iframe{
 	width:100%;
 	height:800px;
 }
-img{
-	margin:5px;
-	width:145px;
-	height:75px;
+table{
+	width:225px;
+}
+
+@media(max-height:850px){
+	iframe{
+		height:730px;
+	}
+	div .right_col{
+		height: 750px;
+	}
+}
+@media(max-height:800px){
+	iframe{
+		height:680px;
+	}
+	div .right_col{
+		height: 700px;
+	}
+}
+@media(max-height:750px){
+	iframe{
+		height:630px;
+	}
+	div .right_col{
+		height: 650px;
+	}
+}
+@media(max-height:700px){
+	iframe{
+		height:580px;
+	}
+	div .right_col{
+		height: 600px;
+	}
+}
+@media(max-height:650px){
+	iframe{
+		height:530px;
+	}
+	div .right_col{
+		height: 550px;
+	}
+}
+@media(max-height:600px){
+	iframe{
+		height:480px;
+	}
+	div .right_col{
+		height: 500px;
+	}
+}
+@media(max-height:550px){
+	iframe{
+		height:430px;
+	}
+	div .right_col{
+		height: 450px;
+	}
+}
+@media(max-height:500px){
+	iframe{
+		height:380px;
+	}
+	div .right_col{
+		height: 400px;
+	}
+}
+
+
+
+
+span .closeSpan{
+	margin:150px;
+	width:80px;
+	text-align:right;
 }
 #txtCloseSpan{
 	color:#ffffff;
 	font-size:30px;
+	text-align:right
 }
-.openSpan{
+#txtOpenSpan{
 	color:#000000;
 	font-size:30px;
 }
-table{
-	width:230px;
-}
+
+

@@ -118,7 +118,7 @@ function draw() {
   cosmetic(Chart3);
 
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+  Chart1.draw();
   Chart2.draw();
   Chart3.draw();
 
@@ -131,14 +131,63 @@ Chart1.draw();
 
 function reset() {
   Chart1.zoom.reset(); changeTheme(Chart1, "minimal");
-Chart1.draw();
+  Chart1.draw();
   Chart2.zoom.reset(); Chart2.draw();
   Chart3.zoom.reset(); Chart3.draw();
 }
 
+function resize(chart){
+
+	if (chart!=null){
+		var startWidth=600;
+		var startHeight=200;
+		var w;
+		var h;
+		var canvas = chart.canvas;
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			
+			w = window.innerWidth;
+			h = window.innerHeight;
+			if(w<=991){
+				canvas.style.width="" + w + "px";
+				canvas.style.height="" + w*startHeight/startWidth + "px";
+			}
+			else{
+				canvas.style.width = "" + startWidth + "px";
+				canvas.style.height = "" + startHeight + "px";
+				chart.bounds.width = startWidth;
+				chart.bounds.height = startHeight;
+			}
+			chart.draw();	 
+		}
+		else{
+			w = startWidth;
+			h = startHeight;
+			
+			if ((window.innerWidth*0.9) < startWidth)
+				w = window.innerWidth*0.9;
+			else
+				w = startWidth;
+				  
+			if ((window.innerWidth*0.9 * startHeight / startWidth) < startHeight)
+				h =window.innerWidth*0.9 * startHeight / startWidth;
+			else
+				h = startHeight;
+			
+			canvas.style.width=""+w+"px";
+			canvas.style.height=""+h+"px";
+			
+			chart.bounds.width=canvas.width;
+			chart.bounds.height=canvas.height;
+			
+			chart.draw();
+		}
+	}	
+}
 </script>
 </head>
-<body onload="draw()">
+<body onload="draw();resize(Chart1);resize(Chart2);resize(Chart3);" onresize="resize(Chart1);resize(Chart2);resize(Chart3);">
+
 	<table>
 		<tr class="canvasWithOutSelectors">
 			<td>

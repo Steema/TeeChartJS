@@ -56,25 +56,25 @@ function draw() {
 }
 
 function resize(chart) {
-  if (!chart) return;
-  
-  var canvas = chart.canvas;
-
-  var w=canvas.parentNode.clientWidth;
-  canvas.width=w;
-  canvas.setAttribute('width', ""+w+"px");
-
-  var h=canvas.parentNode.clientHeight;
-  canvas.height=h;
-  canvas.setAttribute('height', ""+h+"px");
-
-  canvas.style.width=""+w+"px";
-  canvas.style.height=""+h+"px";
-
-  chart.bounds.width=w;
-  chart.bounds.height=h;
-  
-  chart.draw();
+	if(chart!=null){
+	  var canvas = chart.canvas;
+	
+	  var w=canvas.parentNode.clientWidth;
+	  canvas.width=w;
+	  canvas.setAttribute('width', ""+w+"px");
+	
+	  var h=canvas.parentNode.clientHeight;
+	  canvas.height=h;
+	  canvas.setAttribute('height', ""+h+"px");
+	
+	  canvas.style.width=""+w+"px";
+	  canvas.style.height=""+h+"px";
+	
+	  chart.bounds.width=w;
+	  chart.bounds.height=h;
+	  
+	  chart.draw();
+	}
 }
 </script>
 </head>

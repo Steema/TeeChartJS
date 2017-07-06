@@ -39,9 +39,28 @@ Chart1.draw();
 
 //  Chart1.legend.format.ellipse(50,50,100,200);
 }
+function resize(){
+	var w = window.innerWidth;
+	var h = window.innerHeight;
+	var canvas = document.getElementById("canvas");
+	if(w<=600){
+		if(h>w*0.667){
+			canvas.style.width="" + w*0.9 + "px";
+			canvas.style.height="" + w*0.6 + "px";
+		}
+		else{
+			canvas.style.width="" + w*0.9 + "px";
+			canvas.style.height="" + h*0.7 + "px";
+		}
+	}
+	else{
+		canvas.style.width="600px";
+		canvas.style.height="400px";
+	}
+}
 </script>
 </head>
-<body onload="draw()">
+<body onload="draw();resize();" onresize="resize();">
 	<table>
 		<tr class="canvasWithOutSelectors">
 			<td>
