@@ -705,6 +705,8 @@ Tee.doHttpRequest=function(target, url, success, failure) {
 Tee.Slider=function(chart,position) {
   Tee.Tool.call(this,chart);
 
+  var touchDragging=false;
+  
   var t=this.thumb=new Tee.Format(chart);
   t.round={ x:4, y:4}
   t.stroke.size=0.5;
@@ -852,7 +854,14 @@ Tee.Slider=function(chart,position) {
      this.chart.draw();
      this.chart.newCursor="col-resize";
   }
-
+  this.chart.canvas.addEventListener('touchstart', function(e){
+  	touchDragging=true;
+  	e.preventDefault();
+  });
+  this.chart.canvas.addEventListener('touchend', function(e){
+  	touchDragging=false;
+  	e.preventDefault();
+  });
   this.mousemove=function(p) {
     var s=this.horizontal ? b.width : b.height,
         pp=this.horizontal ? p.x : p.y,
@@ -880,7 +889,7 @@ Tee.Slider=function(chart,position) {
       this.resized();
     }
     else
-    if (this.dragging) {
+    if (this.dragging||touchDragging) {
       this.clickAt(pp);
     }
     else
@@ -1131,8 +1140,11 @@ Tee.CheckBox=function(chart,text,checked) {
     }
   }
 
+  this.chart.canvas.addEventListener('touchstart', function(){
+	  
+  });
   this.onclick=function( /*a,x,y*/ ) {
-    this.checked=!this.checked;
+	  this.checked=!this.checked;
     if (this.onchange) this.onchange(this);
     return true;
   }

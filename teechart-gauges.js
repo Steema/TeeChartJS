@@ -676,12 +676,11 @@ Tee.CircularGauge=function(o,o2) {
       requestAnimFrame(function() {g.chart.draw()});
      }
   }
-
   this.mousemove=function(p) {
+	  
     var r=this.calcBounds(),
         ok=this.inValue(p,r);
-
-    if (this.dragging) {
+    if (this.dragging || ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)&&this.drag.enabled)) {
        if (ok && this.setValue(p.value))
           this.chart.draw();
 
@@ -695,9 +694,9 @@ Tee.CircularGauge=function(o,o2) {
     else
       changeHover(this,null);
   }
-
+  
   var p={x:0,y:0};
-
+  
   this.mousedown=function(e) {
     if (this.drag.enabled) {
       var r=this.calcBounds();
