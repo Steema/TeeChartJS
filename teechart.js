@@ -5280,10 +5280,13 @@ function SeriesList(chart)
       li[0].vertMargins(result);
 
       for(t=1; t<len; t++) {
-        s.x=s.y=0;
-        li[t].vertMargins(s);
-        if (s.x>result.x) result.x=s.x;
-        if (s.y>result.y) result.y=s.y;
+		if (li[t].data.values.length>0)
+		{			
+			s.x=s.y=0;
+			li[t].vertMargins(s);
+			if (s.x>result.x) result.x=s.x;
+			if (s.y>result.y) result.y=s.y;
+		}
       }
     }
     return result;
@@ -5302,11 +5305,14 @@ function SeriesList(chart)
       li[0].horizMargins(result);
 
       for(t=1; t<len; t++) {
-        s.x=s.y=0;
-        li[t].horizMargins(s);
+		if (li[t].data.values.length>0)
+		{			  
+			s.x=s.y=0;
+			li[t].horizMargins(s);
 
-        if (s.x>result.x) result.x=s.x;
-        if (s.y>result.y) result.y=s.y;
+			if (s.x>result.x) result.x=s.x;
+			if (s.y>result.y) result.y=s.y;
+		}
       }
     }
     return result;
@@ -6544,7 +6550,7 @@ Tee.CustomBar=function(o,o2) {
   if (this.stacked=="sideAll")  
     this.calcBarOffset(nomand.axisSize);
   else
-      this.calcBarOffset(range===0? nomand.axisSize : nomand.calcSize(range));
+    this.calcBarOffset(range===0? nomand.axisSize : nomand.calcSize(range));
 
     if (this.useOrigin) {
       if (this.origin instanceof Array) {
