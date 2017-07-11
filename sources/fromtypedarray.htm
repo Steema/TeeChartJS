@@ -56,8 +56,8 @@ function resize(chart){
 			w = window.innerWidth;
 			h = window.innerHeight;
 			if(w<=991){
-				canvas.style.width="" + w + "px";
-				canvas.style.height="" + w*startHeight/startWidth + "px";
+				canvas.style.width="" + w*0.9 + "px";
+				canvas.style.height="" + w*0.9*startHeight/startWidth + "px";
 			}
 			else{
 				canvas.style.width = "" + startWidth + "px";

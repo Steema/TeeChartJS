@@ -18,6 +18,8 @@
 <script type="text/javascript">
 
 var Chart1, Config1, gauge, slider, showConfig, checkPos=20, sliderPos=60;
+var gauge2;
+var editChecked=true, showSecondChecked=true;
 
 function addCheckBox(text, value, onchange, target) {
   if (!target) target=Config1;
@@ -76,6 +78,8 @@ function draw() {
   Chart1.title.text="TeeChart Gauge";
   Chart1.panel.format.gradient.colors=["#101010","white"];
 
+  
+  changeTheme(Chart1, "minimal");
   //Chart1.panel.transparent=true;
 
   // First Gauge:
@@ -113,7 +117,7 @@ function draw() {
 
 
   // Another gauge, invisible by default:
-  var gauge2=Chart1.addSeries(new Tee.CircularGauge());
+  gauge2=Chart1.addSeries(new Tee.CircularGauge());
 
   gauge2.visible=false;
   gauge2.min=-90;
@@ -142,103 +146,6 @@ function draw() {
   gauge2.hand.stroke.size=3;
 
   gauge2.ticks.outside=false;
-
-  addCheckBox("Edit", showConfig,function(c) {
-    showConfig=c.checked;
-
-    if (showConfig && (!Config1)) {
-      Config1=new Tee.Chart('config');
-      Config1.title.text='Gauge Editor';
-      Config1.panel.format.gradient.colors[1]="orange";
-      
-      // Add one slider to control gauge value:
-      slider=addSlider("Value", gauge.value,function(s,v) { gauge.value=v; return v; });
-
-      // Another slider to control the "total angle":
-      addSlider("Angle", gauge.angle, function(s,v) { gauge.angle=v; return v; }).max=360;
-
-      // Another slider to control the rotation angle:
-      addSlider("Rotation", gauge.rotation,function(s,v) { gauge.rotation=v; return v; }).max=360;
-
-      // Another slider to control the bevel size:
-      addSlider("Frame", gauge.format.size, function(s,v) { gauge.format.size=v; return v; }).max=50;
-
-      // Checkboxes to show or hide gauges and items:
-
-      addCheckBox("Transparent",  !gauge.back.visible, function(c) {
-         gauge.back.visible=!c.checked;
-         gauge.format.visible=!c.checked;
-         gauge.bevel.visible=!c.checked;
-      });
-
-      addCheckBox("Back", gauge.back.visible, function(c) { gauge.back.visible=c.checked; });
-      addCheckBox("Frame", gauge.format.visible, function(c) { gauge.format.visible=c.checked; });
-      addCheckBox("Bevel", gauge.bevel.visible, function(c) { gauge.bevel.visible=c.checked; });
-      addCheckBox("Circle", gauge.shape=="circle", function(c) { gauge.shape=c.checked ? "circle" : "segment"; });
-      addCheckBox("Marker", gauge.marks.visible, function(c) { gauge.marks.visible=c.checked; });
-      addCheckBox("Decimals", gauge.decimals>0, function(c) { gauge.decimals=c.checked ? 2 : 0; });
-      addCheckBox("Center", gauge.center.visible, function(c) { gauge.center.visible=c.checked; });
-      addCheckBox("Top", gauge.center.top.visible, function(c) { gauge.center.top.visible=c.checked; });
-      addCheckBox("Texts", gauge.format.font.visible, function(c) { gauge.format.font.visible=c.checked; });
-      addCheckBox("Units", gauge.units.visible, function(c) { gauge.units.visible=c.checked; });
-      addCheckBox("Ticks", gauge.ticks.visible, function(c) { gauge.ticks.visible=c.checked; });
-      addCheckBox("Ticks Triangle", gauge.ticks.triangle, function(c) { gauge.ticks.triangle=c.checked; });
-      addCheckBox("Outside", gauge.ticks.outside, function(c) { gauge.ticks.outside=c.checked; });
-      addCheckBox("Minor", gauge.minor.visible, function(c) { gauge.minor.visible=c.checked; });
-      addCheckBox("Minor Back", gauge.minorBack.visible, function(c) { gauge.minorBack.visible=c.checked; });
-      addCheckBox("Ticks Back", gauge.ticksBack.visible, function(c) { gauge.ticksBack.visible=c.checked; });
-      addCheckBox("Pointer", gauge.pointer.visible, function(c) { gauge.pointer.visible=c.checked; });
-      addCheckBox("Rotate Text", gauge.rotateText, function(c) { gauge.rotateText=c.checked; });
-      addCheckBox("Draggable", gauge.drag.enabled, function(c) { gauge.drag.enabled=c.checked; });
-      addCheckBox("Inverted", gauge.inverted, function(c) { gauge.inverted=c.checked; });
-
-      var s2=addSlider("Font Size", gauge.format.font.getSize(), function(s,v) { gauge.format.font.setSize(v); return v; });
-      s2.min=1;
-      s2.max=40;
-
-      var s3=addSlider("Hand Size", gauge.hand.size, function(s,v) { gauge.hand.size=v; return v; });
-      s3.min=1;
-      s3.max=30;
-
-      var s4=addSlider("Hand Width", gauge.hand.stroke.size, function(s,v) { gauge.hand.stroke.size=v; return v; });
-      s4.min=1;
-      s4.max=30;
-
-      addSlider("Center Transp", gauge.center.transparency*100, function(s,v) { gauge.center.transparency=v*0.01; return v; });
-
-      var s5=addSlider("Center Size", gauge.center.size, function(s,v) { gauge.center.size=v; return v; });
-      s5.min=1;
-      s5.max=30;
-
-      var s6=addSlider("Center X", gauge.center.location.x, function(s,v) { gauge.center.location.x=v; return v; });
-      s6.min=-100;
-      s6.max=100;
-
-      var s7=addSlider("Center Y", gauge.center.location.y, function(s,v) { gauge.center.location.y=v; return v; });
-      s7.min=-100;
-      s7.max=100;
-
-      addSlider("Hand Length", gauge.hand.length, function(s,v) { gauge.hand.length=v; return v; });
-      addSlider("Hand Back", gauge.hand.back, function(s,v) { gauge.hand.back=v; return v; });
-      addSlider("Tick Length", gauge.ticks.length, function(s,v) { gauge.ticks.length=v; return v; }).max=30;
-
-      var s8=addSlider("Animate", gauge.animate.duration, function(s,v) { gauge.animate.duration=v; return v; });
-      s8.min=0;
-      s8.max=1000;
-
-      addSlider("Pointer Size", gauge.pointer.size, function(s,v) { gauge.pointer.size=v; return v; });
-
-      Config1.draw();
-    }
-
-    document.getElementById('divconfig').style.display= showConfig ? 'block' : 'none';
-
-  },Chart1);
-
-  addCheckBox("Transparent", Chart1.panel.transparent, function(c) { Chart1.panel.transparent=c.checked; }, Chart1).position.x=60;
-
-  addCheckBox("Show 2", gauge2.visible, function(c) { gauge2.visible=c.checked; }, Chart1).position.x=460;
-  
   
   document.getElementById("min").value=gauge.min;
   document.getElementById("max").value=gauge.max;
@@ -259,8 +166,8 @@ function resizeChart(chart,startWidth ,startHeight){
 			w = window.innerWidth;
 			h = window.innerHeight;
 			if(w<=991){
-				canvas.style.width="" + w + "px";
-				canvas.style.height="" + w*startHeight/startWidth + "px";
+				canvas.style.width="" + w*0.9 + "px";
+				canvas.style.height="" + w*0.9*startHeight/startWidth + "px";
 			}
 			else{
 				canvas.style.width = "" + startWidth + "px";
@@ -298,14 +205,121 @@ function resizeChart(chart,startWidth ,startHeight){
 		}
 	}	
 }
+function edit(){
+	if(Config1==null)
+		createConfigChart();
+	if(editChecked)
+		document.getElementById('divconfig').style.display= 'block';
+	else
+		document.getElementById('divconfig').style.display= 'none';
+}
+function showSecond(){
+	gauge2.visible = showSecondChecked;
+	gauge2.draw();
+	Chart1.draw();
+}
+
+function createConfigChart(){
+	  Config1 = new Tee.Chart('config');
+	  changeTheme(Config1, "twilight");
+	  Config1.title.text='Gauge Editor';
+	  Config1.panel.format.gradient.colors[1]="cyan";
+	  Config1.panel.format.gradient.colors[0]="white";
+
+    // Add one slider to control gauge value:
+    slider=addSlider("Value", gauge.value,function(s,v) { gauge.value=v; return v; });
+
+    // Another slider to control the "total angle":
+    addSlider("Angle", gauge.angle, function(s,v) { gauge.angle=v; return v; }).max=360;
+
+    // Another slider to control the rotation angle:
+    addSlider("Rotation", gauge.rotation,function(s,v) { gauge.rotation=v; return v; }).max=360;
+
+    // Another slider to control the bevel size:
+    addSlider("Frame", gauge.format.size, function(s,v) { gauge.format.size=v; return v; }).max=50;
+
+    // Checkboxes to show or hide gauges and items:
+
+    addCheckBox("Transparent",  !gauge.back.visible, function(c) {
+       gauge.back.visible=!c.checked;
+       gauge.format.visible=!c.checked;
+       gauge.bevel.visible=!c.checked;
+    });
+
+    addCheckBox("Back", gauge.back.visible, function(c) { gauge.back.visible=c.checked; });
+    addCheckBox("Frame", gauge.format.visible, function(c) { gauge.format.visible=c.checked; });
+    addCheckBox("Bevel", gauge.bevel.visible, function(c) { gauge.bevel.visible=c.checked; });
+    addCheckBox("Circle", gauge.shape=="circle", function(c) { gauge.shape=c.checked ? "circle" : "segment"; });
+    addCheckBox("Marker", gauge.marks.visible, function(c) { gauge.marks.visible=c.checked; });
+    addCheckBox("Decimals", gauge.decimals>0, function(c) { gauge.decimals=c.checked ? 2 : 0; });
+    addCheckBox("Center", gauge.center.visible, function(c) { gauge.center.visible=c.checked; });
+    addCheckBox("Top", gauge.center.top.visible, function(c) { gauge.center.top.visible=c.checked; });
+    addCheckBox("Texts", gauge.format.font.visible, function(c) { gauge.format.font.visible=c.checked; });
+    addCheckBox("Units", gauge.units.visible, function(c) { gauge.units.visible=c.checked; });
+    addCheckBox("Ticks", gauge.ticks.visible, function(c) { gauge.ticks.visible=c.checked; });
+    addCheckBox("Ticks Triangle", gauge.ticks.triangle, function(c) { gauge.ticks.triangle=c.checked; });
+    addCheckBox("Outside", gauge.ticks.outside, function(c) { gauge.ticks.outside=c.checked; });
+    addCheckBox("Minor", gauge.minor.visible, function(c) { gauge.minor.visible=c.checked; });
+    addCheckBox("Minor Back", gauge.minorBack.visible, function(c) { gauge.minorBack.visible=c.checked; });
+    addCheckBox("Ticks Back", gauge.ticksBack.visible, function(c) { gauge.ticksBack.visible=c.checked; });
+    addCheckBox("Pointer", gauge.pointer.visible, function(c) { gauge.pointer.visible=c.checked; });
+    addCheckBox("Rotate Text", gauge.rotateText, function(c) { gauge.rotateText=c.checked; });
+    addCheckBox("Draggable", gauge.drag.enabled, function(c) { gauge.drag.enabled=c.checked; });
+    addCheckBox("Inverted", gauge.inverted, function(c) { gauge.inverted=c.checked; });
+
+    var s2=addSlider("Font Size", gauge.format.font.getSize(), function(s,v) { gauge.format.font.setSize(v); return v; });
+    s2.min=1;
+    s2.max=40;
+    
+    var s3=addSlider("Hand Size", gauge.hand.size, function(s,v) { gauge.hand.size=v; return v; });
+    s3.min=1;
+    s3.max=30;
+
+    var s4=addSlider("Hand Width", gauge.hand.stroke.size, function(s,v) { gauge.hand.stroke.size=v; return v; });
+    s4.min=1;
+    s4.max=30;
+
+    addSlider("Center Transp", gauge.center.transparency*100, function(s,v) { gauge.center.transparency=v*0.01; return v; });
+
+    var s5=addSlider("Center Size", gauge.center.size, function(s,v) { gauge.center.size=v; return v; });
+    s5.min=1;
+    s5.max=30;
+
+    var s6=addSlider("Center X", gauge.center.location.x, function(s,v) { gauge.center.location.x=v; return v; });
+    s6.min=-100;
+    s6.max=100;
+
+    var s7=addSlider("Center Y", gauge.center.location.y, function(s,v) { gauge.center.location.y=v; return v; });
+    s7.min=-100;
+    s7.max=100;
+
+    addSlider("Hand Length", gauge.hand.length, function(s,v) { gauge.hand.length=v; return v; });
+    addSlider("Hand Back", gauge.hand.back, function(s,v) { gauge.hand.back=v; return v; });
+    addSlider("Tick Length", gauge.ticks.length, function(s,v) { gauge.ticks.length=v; return v; }).max=30;
+
+    var s8=addSlider("Animate", gauge.animate.duration, function(s,v) { gauge.animate.duration=v; return v; });
+    s8.min=0;
+    s8.max=1000;
+
+    addSlider("Pointer Size", gauge.pointer.size, function(s,v) { gauge.pointer.size=v; return v; });
+
+    Config1.draw();
+}
+
 </script>
 </head>
 <body onload="draw();resizeChart(Chart1,600,350);resizeChart(Config1,320,450);" onresize="resizeChart(Chart1,600,350);resizeChart(Config1,320,450);">
-
-				
 	<table>
+		<tr>
+		<td>
+			<input type="checkbox" name="edit" onclick="edit();editChecked=!this.checked">Edit
+		</td>
+		<td>
+			<input type="checkbox" name="showSecond" onclick="showSecond();showSecondChecked=!this.checked">Show2
+		</td>
+		</tr>
 		<tr class="canvasWithOutSelectors">
-			<td>
+			<td colspan="2">
 				<canvas id="canvas" width="600" height="350">
 				This browser does not seem to support HTML5 Canvas.
 				</canvas>
@@ -321,7 +335,7 @@ function resizeChart(chart,startWidth ,startHeight){
 			</td>
 		</tr>
 		<tr class="button">
-			<td>
+			<td colspan="2">
 				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
 			</td>
 		</tr>
