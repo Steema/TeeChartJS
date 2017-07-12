@@ -2557,7 +2557,7 @@ function Axis(chart,horizontal,otherSide) {
 	    var fractions = fixed.substring(fixed.indexOf(".")+1); //zero based idx
 		return localeVal.substring(0,localeVal.indexOf(n) == -1 ? localeVal.length : localeVal.indexOf(n))+n+fractions;
           }
-	  else return value;
+	  else return fixed;
     }
 
     /**
