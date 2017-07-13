@@ -165,7 +165,6 @@ window.Canvas.Text = {
       return this.faces[family][weight][style];
     }
     else throw 'Unable to load the font ['+family+' '+weight+' '+style+']';
-    return false;
   };
   
   ctxt.loadFace = function(data){
