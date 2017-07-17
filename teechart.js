@@ -2549,15 +2549,29 @@ function Axis(chart,horizontal,otherSide) {
     
     this.formatValueString=function(value)
     {
-	  var fixed = this.fixedDecimals ? value.toFixed(this.decimals) : value.toFixed(0);
-	  var localeVal = value.toLocaleString(this.chart.language);
+			if (this.valueFormat){
+				var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1); 
+				
+				var AmountWithCommas = (value * 1).toLocaleString();
+				var arParts = String(AmountWithCommas).split(DecimalSeparator);
+				var intPart = arParts[0];
+				
+				var padding = "";
+				if (this.decimals > 0)
+					for (var i=0; i<this.decimals; i++) {
+						padding = padding + "0";    
+					}
+				
+				var decPart = (arParts.length > 1 ? arParts[1] : '');
+				decPart = (decPart + padding).substr(0,this.decimals);
         
-	  if (fixed.indexOf(".")!=-1) {
-		var n = 1.1; n = n.toLocaleString(this.chart.language).substring(1, 2);
-	    var fractions = fixed.substring(fixed.indexOf(".")+1); //zero based idx
-		return localeVal.substring(0,localeVal.indexOf(n) == -1 ? localeVal.length : localeVal.indexOf(n))+n+fractions;
+				if (decPart.length > 0)
+					return intPart + DecimalSeparator + decPart;
+				else
+					return intPart;
           }
-	  else return fixed;
+			else
+				return value.toFixed(this.decimals);
     }
 
     /**
