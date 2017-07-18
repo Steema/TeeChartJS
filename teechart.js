@@ -2936,7 +2936,7 @@ function Axis(chart,horizontal,otherSide) {
     this.increm = (this.increment===0) ? calcIncrement(this,l) : this.increment;
 
     if (this.increm<=0) this.increm=0.1;
-	else if ((this.increm>0) && (this.increm<=0.0000000001)) this.increm=0.0000000001;
+	else if ((this.increm>0) && (this.increm<=0.00000001)) this.increm=0.00000001;
   }
 
  /**
@@ -3571,7 +3571,7 @@ Axis.draw=function() {
 	//guarantee centre label for one-value axes.
     if (Math.abs(this.maximum-this.minimum) <= 0.000000001 /*widen beyond this.minAxisRange*/)
 	{
-	   this.setMinMax(this.minimum-0.00000001,this.maximum+0.00000001);
+	   this.setMinMax(this.minimum-(this.minimum/10000000),this.maximum+(this.maximum/10000000));
 	   if (this.chart != null)
 	     this.chart.draw();
 	}
