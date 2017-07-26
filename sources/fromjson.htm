@@ -14,6 +14,15 @@
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../demos/theme.js" type="text/javascript"></script>
 <script src="../../src/teechart-table.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<!-- Custom Theme Style -->
+<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
 var Chart1, Chart2;
@@ -115,14 +124,43 @@ function resize(chart){
 		}
 	}	
 }
+function resizeToolBars(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var toolbar2 = document.getElementById("toolbar2");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar1.style.width = "" + w + "px";
+		toolbar2.style.width = "" + w + "px";
+	}
+	else{
+		toolbar1.style.width = "" + w - 230 + "px";
+		toolbar2.style.width = "" + w - 230 + "px";
+	}
+}
 </script>
 </head>
-<body onload="draw();resize(Chart1);resize(Chart2)" onresize="resize(Chart1);resize(Chart2)">
-
-				
-	<table>
-		<tr class="canvasWithOutSelectors">
-			<td>
+<body onload="draw();resize(Chart1);resize(Chart2);resizeToolBars();" onresize="resize(Chart1);resize(Chart2);resizeToolBars();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Tee Chart from JSON</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+			<div class="x_title">
+				<h2><span class="smallLetters">JSON to Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
 				<div style="float:left;">
 				<b>JSON data including values and labels:</b><br/>
 				<textarea id="json" rows="20" cols="40" "wrap="off">
@@ -160,83 +198,101 @@ function resize(chart){
 				This browser does not seem to support HTML5 Canvas.
 				</canvas>
 				</center>
-				
-				<br/>
-				
-				<b>JSON data, multiple series including X and Y values:</b><br/>
-				
-				<div style="float:left;">
-				
-				<textarea id="jsonXY" rows="20" cols="40" "wrap="off">
-				{ "chart": [
-				   {
-				    "series": {
-				      "name":"Data 1",
-				      "color":"Blue",
-				      "metric":"Y",
-				      "category":"X",
-				      "pointer":"rectangle",
-				      "point": [
-				          { "value":123, "x": 21 },
-				          { "value":456, "x": 14 },
-				          { "value":789, "x": 33 }
-				      ]
-				    }
-				   },
-				   {
-				    "series": {
-				      "name":"Data 2",
-				      "color":"Red",
-				      "metric":"Y",
-				      "category":"X",
-				      "pointer":"triangle",
-				      "point": [
-				          { "value":321, "x": 15 },
-				          { "value":555, "x": 24 },
-				          { "value":111, "x":  3 }
-				      ]
-				    }
-				   },
-				   {
-				    "series": {
-				      "name":"Data 3",
-				      "color":"Green",
-				      "metric":"Y",
-				      "category":"X",
-				      "pointer":"ellipse",
-				      "point": [
-				          { "value":321, "x": 35 },
-				          { "value":555, "x": 17 },
-				          { "value":111, "x": 23 }
-				      ]
-				    }
-				   }
-				 ]
-				}
-				</textarea>
-				<br/>
-				<button type="button" onclick="loadXYData(Chart2)">Refresh</button>
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">JSON XY to Chart</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
 				</div>
+				<div class="x_content">
+					
+					<b>JSON data, multiple series including X and Y values:</b><br/>
+					
+					<div style="float:left;">
+					
+					<textarea id="jsonXY" rows="20" cols="40" "wrap="off">
+					{ "chart": [
+					   {
+					    "series": {
+					      "name":"Data 1",
+					      "color":"Blue",
+					      "metric":"Y",
+					      "category":"X",
+					      "pointer":"rectangle",
+					      "point": [
+					          { "value":123, "x": 21 },
+					          { "value":456, "x": 14 },
+					          { "value":789, "x": 33 }
+					      ]
+					    }
+					   },
+					   {
+					    "series": {
+					      "name":"Data 2",
+					      "color":"Red",
+					      "metric":"Y",
+					      "category":"X",
+					      "pointer":"triangle",
+					      "point": [
+					          { "value":321, "x": 15 },
+					          { "value":555, "x": 24 },
+					          { "value":111, "x":  3 }
+					      ]
+					    }
+					   },
+					   {
+					    "series": {
+					      "name":"Data 3",
+					      "color":"Green",
+					      "metric":"Y",
+					      "category":"X",
+					      "pointer":"ellipse",
+					      "point": [
+					          { "value":321, "x": 35 },
+					          { "value":555, "x": 17 },
+					          { "value":111, "x": 23 }
+					      ]
+					    }
+					   }
+					 ]
+					}
+					</textarea>
+					<br/>
+					<button type="button" onclick="loadXYData(Chart2)">Refresh</button>
+					</div>
+					
+					<center>
+					<br><canvas id="canvasXY" width="500" height="400">
+					This browser does not seem to support HTML5 Canvas.
+					</canvas>
+					</center>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>
 				
-				<center>
-				<br><canvas id="canvasXY" width="500" height="400">
-				This browser does not seem to support HTML5 Canvas.
-				</canvas>
-				</center>
-			</td>
-		</tr>
-		<tr class="button">
-			<td>
-				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
-			</td>
-		</tr>
-	</table>
+
 	<script type="text/javascript">
 	function openSample() {
 	    window.open("fromjson.htm", "_blank");
 	}
 	
 	</script>
+	<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
 
+    <!-- Custom Theme Scripts -->
+    <script src="../3rd_party/build/js/custom.min.js"></script>
 </body>
 </html>

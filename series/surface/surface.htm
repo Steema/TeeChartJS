@@ -18,6 +18,15 @@
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../../demos/theme.js" type="text/javascript"></script>
 <script src="../../../src/teechart-3d.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<!-- Custom Theme Style -->
+<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
 "use strict";
@@ -144,15 +153,44 @@ function resize(){
 			canvas.style.height=""+h+"px";
 	}	
 }
+function resizeToolBars(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var toolbar2 = document.getElementById("toolbar2");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar1.style.width = "" + w + "px";
+		toolbar2.style.width = "" + w + "px";
+	}
+	else{
+		toolbar1.style.width = "" + w - 230 + "px";
+		toolbar2.style.width = "" + w - 230 + "px";
+	}
+}
 </script>
 </head>
-<body onload="draw();resize()" onresize="resize()">
+<body onload="draw();resize();resizeToolBars();" onresize="resize();resizeToolBars();">
 
-				
-	<table>
-		<tr class="canvasWithOutSelectors">
-			<td>
-				<div style="float:left">
+		<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Surface 3D</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+			<div class="x_title">
+				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
 				<input type="checkbox" id="walls" onclick="three.toogle(Chart1.walls, this.checked);"><label for="walls">Walls</label>
 				<input type="checkbox" id="grid" onclick="surface.grid.visible=this.checked; Chart1.draw();"><label for="grid">Grid</label>
 				<br/>
@@ -162,37 +200,51 @@ function resize(){
 				<br/>
 				<b>Surface samples:</b>
 				<br/>
-				<br/>
-				
 				<form action="">
-				  <input type="radio" name="surface" id="s0" value="s0" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s0">7x3</label><br/>
-				  <input type="radio" name="surface" id="s1" value="s1" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s1">10x100</label><br/>
-				  <input type="radio" name="surface" id="s2" value="s2" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s2">100x10</label><br/>
-				  <input type="radio" name="surface" id="s3" value="s3" onchange="changeSurface(this.value); Chart1.draw();" checked/><label for="s3">200x200</label><br/>
+				  <input type="radio" name="surface" id="s0" value="s0" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s0">7x3</label>
+				  <input type="radio" name="surface" id="s1" value="s1" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s1">10x100</label>
+				  <input type="radio" name="surface" id="s2" value="s2" onchange="changeSurface(this.value); Chart1.draw();"/><label for="s2">100x10</label>
+				  <input type="radio" name="surface" id="s3" value="s3" onchange="changeSurface(this.value); Chart1.draw();" checked/><label for="s3">200x200</label>
 				</form>
-				<br/>
-				
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Surface 3D</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
 				</div>
-				
+				<div class="x_content">
 				 <center>
 				  <canvas id="canvas1" style="background:#666677" width="800" height="500"></canvas>
 				  <br/>
 				  <span>Drag mouse and wheel to rotate, pan and zoom.</span>
 				 </center>
-			</td>
-		</tr>
-		<tr class="button">
-			<td>
-				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
-			</td>
-		</tr>
-	</table>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>		
 	<script type="text/javascript">
 	function openSample() {
 	    window.open("surface.htm", "_blank");
 	}
 	
 	</script>
+	<!-- jQuery -->
+    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../../3rd_party/build/js/custom.min.js"></script>
 
 </body>
 </html>

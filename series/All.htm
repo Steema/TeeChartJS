@@ -19,7 +19,13 @@
 
 <script src="../../src/date.format.js" type="text/javascript"></script>
 <script src="../../src/teechart-maps.js" type="text/javascript"></script>
-
+<!-- Bootstrap -->
+<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Custom Theme Style -->
+<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
 <script type="text/javascript">
 
 var Chart1, Chart2, Chart3, Chart4, Chart5, Chart6, Chart7,
@@ -223,24 +229,11 @@ function draw() {
   
 }
 function resizeCharts(){
-	  resize(Chart1);
-	  resize(Chart2);
-	  resize(Chart3);
-	  resize(Chart4);
-	  resize(Chart5);
-	  resize(Chart6);
-	  resize(Chart7);
-	  resize(Chart8);
-	  resize(Chart9);
-	  resize(Chart10);
-	  resize(Chart11);
-	  resize(Chart12);
-	  resize(Chart13);
-	  resize(Chart14);
-	  resize(Chart15);
-	  resize(Chart16);
+	var charts = [Chart1, Chart2, Chart3, Chart4, Chart5, Chart6, Chart7, Chart8, Chart9, Chart10, Chart11, Chart12, Chart13, Chart14, Chart15, Chart16, ClockChart];
+	var i;
+	for(i=0; i<charts.length;i++)
+	  resize(charts[i]);
 	  resizeWM(WorldMap);
-	  resize(ClockChart);
 }
 function resize(chart){
 	if (chart!=null){
@@ -294,30 +287,31 @@ function resize(chart){
 	}	
 }
 function resizeWM(chart){
-	var startWidth=500;
-	var startHeight=300;
-	var w;
-	var h;
-	var canvas = chart.canvas;
-	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		
-		w = window.innerWidth;
-		h = window.innerHeight;
-		if(w<=991){
-			canvas.style.width="" + 0.5*w + "px";
-			canvas.style.height="" + w*0.5*startHeight/startWidth + "px";
+
+	if (chart!=null){
+		var startWidth=500;
+		var startHeight=300;
+		var w;
+		var h;
+		var canvas = chart.canvas;
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			
+			w = window.innerWidth;
+			h = window.innerHeight;
+			if(w<=991){
+				canvas.style.width="" + 0.5*w + "px";
+				canvas.style.height="" + w*0.5*startHeight/startWidth + "px";
+			}
+			else{
+				canvas.style.width = "" + startWidth + "px";
+				canvas.style.height = "" + startHeight + "px";
+				chart.bounds.width = startWidth;
+				chart.bounds.height = startHeight;
+			}
+			chart.draw();	 
 		}
 		else{
-			canvas.style.width = "" + startWidth + "px";
-			canvas.style.height = "" + startHeight + "px";
-			chart.bounds.width = startWidth;
-			chart.bounds.height = startHeight;
-		}
-		chart.draw();	 
-	}
-	else{
-		if (chart!=null){
-			  
+				  
 			w = startWidth;
 			h = startHeight;
 			
@@ -345,46 +339,414 @@ function resizeWM(chart){
 		}
 	}	
 }
+function resizeToolBars(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var toolbar2 = document.getElementById("toolbar2");
+	var toolbar3 = document.getElementById("toolbar3");
+	var toolbar4 = document.getElementById("toolbar4");
+	var toolbar5 = document.getElementById("toolbar5");
+	var toolbar6 = document.getElementById("toolbar6");
+	var toolbar7 = document.getElementById("toolbar7");
+	var toolbar8 = document.getElementById("toolbar8");
+	var toolbar9 = document.getElementById("toolbar9");
+	var toolbar10 = document.getElementById("toolbar10");
+	var toolbar11 = document.getElementById("toolbar11");
+	var toolbar12 = document.getElementById("toolbar12");
+	var toolbar13 = document.getElementById("toolbar13");
+	var toolbar14 = document.getElementById("toolbar14");
+	var toolbar15 = document.getElementById("toolbar15");
+	var toolbar16 = document.getElementById("toolbar16");
+	var toolbar17 = document.getElementById("toolbar17");
+	var toolbar18 = document.getElementById("toolbar18");
+	var i;
+	var toolbars = [toolbar1, toolbar2, toolbar3, toolbar4, toolbar5, toolbar6, toolbar7, toolbar8, toolbar9, toolbar10, toolbar11, toolbar12, toolbar13, toolbar14, toolbar15, toolbar16, toolbar17]
+	for(i=0; i<toolbars.length; i++)
+		resizeToolBar(toolbars[i]);
+	resizeToolBarMap(toolbar18);
+	function resizeToolBar(toolbar){
+		var w = window.innerWidth;
+		if(w<=400){
+			toolbar.style.width = "" + w + "px";
+		}
+		else{
+			toolbar.style.width = "" + 400 + "px";
+		}
+	}
+	function resizeToolBarMap(toolbar){
+		var w = window.innerWidth;
+		if(w<=600){
+			toolbar.style.width = "" + w + "px";
+		}
+		else{
+			toolbar.style.width = "" + 600 + "px";
+		}
+	}
+}
 </script>
 </head>
-<body onload="draw();resizeCharts();" onresize="resizeCharts();">
-	<table width="100%">
-		<tr class="canvasWithOutSelectors">
-		<td>
-			<center>
-			<canvas id="canvas1" width="300" height="200">
-			This browser does not seem to support HTML5 Canvas.
-			</canvas>
-			<canvas id="canvas2" width="300" height="200"></canvas>
-			<canvas id="canvas3" width="300" height="200"></canvas>
-			<canvas id="canvas4" width="300" height="200"></canvas>
-			<canvas id="canvas5" width="300" height="200"></canvas>
-			<canvas id="canvas6" width="300" height="200"></canvas>
-			<canvas id="canvas7" width="300" height="200"></canvas>
-			<canvas id="canvas8" width="300" height="200"></canvas>
-			<canvas id="canvas9" width="300" height="200"></canvas>
-			<canvas id="canvas10" width="300" height="200"></canvas>
-			<canvas id="canvas11" width="300" height="200"></canvas>
-			<canvas id="canvas12" width="300" height="200"></canvas>
-			<canvas id="canvas13" width="300" height="200"></canvas>
-			<canvas id="canvas14" width="300" height="200"></canvas>
-			<canvas id="canvas15" width="300" height="200"></canvas>
-			<canvas id="canvas16" width="300" height="200"></canvas>
-			<canvas id="clockcanvas" width="300" height="200"></canvas>
-			<canvas id="worldmap" width="500" height="300"></canvas>
-			</center>
-		</td>
-		</tr>
-		<tr>
-		<td>
-			<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
-		</td>
-		</tr>
-	</table>
+<body onload="draw();resizeCharts();resizeToolBars();" onresize="resizeCharts();resizeToolBars();">
+
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">All series</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar1">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Bar</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas1" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar2">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Line</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas2" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar3">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Pie</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas3" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar4">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Area</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas4" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar5">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Horizontal bar</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas5" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar6">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">XY Point</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas6" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar7">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Donut</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas7" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar8">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Smooth line</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas8" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar9">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Bubble</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas9" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar10">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Horizontal area</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas10" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar11">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Candle OHLC</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas11" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar12">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Smooth area</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas12" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar13">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Volume</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas13" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar14">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Gantt</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas14" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar15">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Gauge</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas15" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar16">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Polar</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas16" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar17">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Clock</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="clockcanvas" width="300" height="200">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	<div class="row" id="toolbar18">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">World Map</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="worldmap" width="500" height="300">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>
+	
 	<script type="text/javascript">
 		function openSample(){
 			window.open("all.htm", "_blank")
 		}
 	</script>
+	  <!-- jQuery -->
+    <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../3rd_party/build/js/custom.min.js"></script>
 </body>
 </html>

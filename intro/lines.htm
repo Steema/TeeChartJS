@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>TeeChart JavaScript Lines Example</title>
+	<meta charset="UTF-8"/>
 	<!--[if lt IE 9]>
 	    <script src="../../src/excanvas/excanvas_text.js"></script>
 	    <script src="../../src/excanvas/canvas.text.js"></script>
@@ -13,6 +14,13 @@
 	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
 	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
 	<script src="../../src/date.format.js" type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
 	
 	<script type="text/javascript">
 	
@@ -173,11 +181,11 @@
 	function resize(chart){
 		
 		if (chart!=null){
-		var startWidth=1000;
-		var startHeight=400;
-		var w;
-		var h;
-		var canvas = chart.canvas;
+			var startWidth=1000;
+			var startHeight=400;
+			var w;
+			var h;
+			var canvas = chart.canvas;
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				
 				w = window.innerWidth;
@@ -239,15 +247,19 @@
 	}
 	function changeBackgroundToDark(){
 	    document.body.style.backgroundColor = "#0C0C0C";
-	    document.getElementById("table1").style.backgroundColor="#0C0C0C";
-	    document.getElementById("table1").style.color="#ffffff";
 	    document.getElementById("canvas").style.backgroundColor="#0C0C0C";
+	    document.getElementById("toolbar1").style.backgroundColor="#0C0C0C";
+	    document.getElementById("canvasPanel").style.backgroundColor="#0C0C0C";
+	    document.getElementById("toolbar2").style.backgroundColor="#0C0C0C";
+	    document.getElementById("optionPanel").style.backgroundColor="#0C0C0C";
 	}
 	function changeBackgroundToWhite(){
 	    document.body.style.backgroundColor = "#ffffff";
-	    document.getElementById("table1").style.backgroundColor="#ffffff";
-	    document.getElementById("table1").style.color="#0C0C0C";
 	    document.getElementById("canvas").style.backgroundColor="#ffffff";
+	    document.getElementById("toolbar1").style.backgroundColor="#ffffff";
+	    document.getElementById("canvasPanel").style.backgroundColor="#ffffff";
+	    document.getElementById("toolbar2").style.backgroundColor="#ffffff";
+	    document.getElementById("optionPanel").style.backgroundColor="#ffffff";
 	}
 	</script>
 	<script type="text/javascript">
@@ -270,49 +282,123 @@
 
             document.body.Chart1.draw();
         }
+        
+	</script>
+	<script>
+	function resizeToolBars(){
+		var toolbar1 = document.getElementById("toolbar1");
+		var toolbar2 = document.getElementById("toolbar2");
+		var w = window.innerWidth;
+		if(w<=954){
+			toolbar1.style.width = "" + w + "px";
+			toolbar2.style.width = "" + w + "px";
+		}
+		else{
+			toolbar1.style.width = "" + w - 230 + "px";
+			toolbar2.style.width = "" + w -230 + "px";
+		}
+	}
+	function showHide1(){
+		var selectorsDiv = document.getElementById("selectorsDiv");
+		var icon=document.getElementById("icon1");
+		if(selectorsDiv.style.display=="none"){
+			selectorsDiv.style.display="block";
+			icon.classList.add('fa-chevron-up');
+			icon.classList.remove('fa-chevron-down');
+		}
+		else{
+			selectorsDiv.style.display="none";
+			icon.classList.add('fa-chevron-down');
+			icon.classList.remove('fa-chevron-up');
+		}
+	}
+	function showHide2(){
+		var canvasDiv = document.getElementById("canvasDiv");
+		var icon = document.getElementById("icon2");
+		if(canvasDiv.style.display=="none"){
+			canvasDiv.style.display="block";
+			icon.classList.add('fa-chevron-up');
+			icon.classList.remove('fa-chevron-down');
+		}
+		else{
+			canvasDiv.style.display="none";
+			icon.classList.add('fa-chevron-down');
+			icon.classList.remove('fa-chevron-up');
+		}
+	}
 	</script>
 </head>
-<body  id="chartView"  onload="draw(Chart1);resize(Chart1);" style="background-color: #ffffff;" onresize="resize(Chart1);">
-	<table class="contentTable">
- 		<tr class="selectorsTr" id="selectors">
-     		<td><p>Theme:</p></td>
-     		<td>
+<body  id="chartView"  onload="draw(Chart1);resize(Chart1);resizeToolBars();" style="background-color: #ffffff;" onresize="resize(Chart1);resizeToolBars();">
+	
+	
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Lines</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row" id="toolbar1">
+			<div id="optionPanel" class="x_panel">
+			<div class="x_title">
+				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link" onclick="showHide1();"><i id="icon1" class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content" id="selectorsDiv">
+				<ul class="options">
+	     		<li>Theme:
          		<select id="theme"  onchange="changeTheme(this.value);changeBackground(this.value);" onload="changeBackgound(this.value);">
 		             <option value="">Default</option>
 		             <option value="dark">Dark</option>
-		             <option value="daybreak">Daybreak</option>    
+		             <option value="daybreak">Daybreak</option>
 		             <option value="excel">Microsoft Excel (TM)</option>
-		             <option value="minimal" selected>Minimal</option>  
-		             <option value="twilight">Twilight</option>  
-         		</select>
-     		</td>
-     		<td><p>Palette:</p></td>
-	     	<td>
+		             <option value="minimal" selected>Minimal</option>
+		             <option value="twilight">Twilight</option>
+         		</select></li>
+	     		<li>Palette:
 	        	<select id="palette"  onchange="changePalette(this.value);">
 		             <option value="">Default</option>
-		             <option value="cool">Cool</option> 
-		             <option value="excel">Microsoft Excel (TM)</option>  
+		             <option value="cool">Cool</option>
+		             <option value="excel">Microsoft Excel (TM)</option>
 		             <option value="onBlack">On Black</option>
 		             <option value="opera">Opera</option>
 		             <option value="rainbow">Rainbow</option>
 		             <option value="redRiver">Red River</option>
 		             <option value="seaWash" selected>Sea Wash</option>
-		             <option value="warm">Warm</option>  
+		             <option value="warm">Warm</option>
 		             <option value="windowsxp">Windows XP</option>
-	         	</select>
-         	</td>
-   		</tr>
-   		<tr class="canvasPart">
-	   		<td class="canvasWithSelector" colspan="4">
-						<canvas id="canvas" width="1000" height="400">
-						This browser does not seem to support HTML5 Canvas.
-						</canvas>
-	   		
-	   		</td>
-   		</tr>
-       	<tr class="button"><td colspan="4"><center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center></td></tr>
-	</table>
-
-	
+	         	</select></li></ul>
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row" id="toolbar2">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Lines</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link" onclick="showHide2();"><i id="icon2" class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content" id="canvasDiv">
+					<canvas id="canvas" width="1000" height="400">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>
 </body>
 </html>

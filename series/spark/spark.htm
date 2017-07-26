@@ -4,16 +4,6 @@
 <title>TeeChart for JavaScript Spark Charts Example</title>
 
 <meta charset="UTF-8"/>
-<style type='text/css'>
-table {
-    border-collapse: collapse;
-    border-style: hidden;
-}
-
-table td, table th {
-    border: 1px solid black;
-}
-</style>
 
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -24,6 +14,15 @@ table td, table th {
 <script src="../../../src/teechart.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../../demos/theme.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<!-- Custom Theme Style -->
+<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
 
@@ -96,37 +95,66 @@ function draw() {
      bar.draw();
   }
 }
+function resizeToolBar(){
+	var toolbar = document.getElementById("toolbar");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar.style.width = "" + w + "px";
+	}
+	else{
+		toolbar.style.width = "" + w - 230 + "px";
+	}
+}
 </script>
 </head>
 
-<body onload="draw()">
-	<table>
-		<tr class="canvasWithOutSelectors">
-			<td>
-				
-				<table>
-				<tr><th>Name</th><th>Performance</th><th>Energy</th><th> </th></tr>
-				
-				<tr><td>Engine 0</td><td><canvas id="c1" width="200" height="30"></canvas></td><td><center><canvas id="p1" width="30" height="30"></canvas></center></td><td><center><canvas id="b1" width="30" height="30"></canvas></center></td></tr>
-				<tr><td>Engine 1</td><td><canvas id="c2" width="200" height="30"></canvas></td><td><center><canvas id="p2" width="30" height="30"></canvas></center></td><td><center><canvas id="b2" width="30" height="30"></canvas></center></td></tr>
-				<tr><td>Engine 2</td><td><canvas id="c3" width="200" height="30"></canvas></td><td><center><canvas id="p3" width="30" height="30"></canvas></center></td><td><center><canvas id="b3" width="30" height="30"></canvas></center></td></tr>
-				<tr><td>Engine 3</td><td><canvas id="c4" width="200" height="30"></canvas></td><td><center><canvas id="p4" width="30" height="30"></canvas></center></td><td><center><canvas id="b4" width="30" height="30"></canvas></center></td></tr>
-				<tr><td>Engine 4</td><td><canvas id="c5" width="200" height="30"></canvas></td><td><center><canvas id="p5" width="30" height="30"></canvas></center></td><td><center><canvas id="b5" width="30" height="30"></canvas></center></td></tr>
-				</table>
-			</td>
-		</tr>
-		<tr class="button">
-			<td>
-				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
-			</td>
-		</tr>
-	</table>
+<body onload="draw();resizeToolBar();" onresize="resizeToolBar();">
+<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Spark</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row" id="toolbar">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Spark</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<table>
+					<tr><th>Name</th><th>Performance</th><th>Energy</th><th> </th></tr>
+					
+					<tr><td>Engine 0</td><td><canvas id="c1" width="200" height="30"></canvas></td><td><center><canvas id="p1" width="30" height="30"></canvas></center></td><td><center><canvas id="b1" width="30" height="30"></canvas></center></td></tr>
+					<tr><td>Engine 1</td><td><canvas id="c2" width="200" height="30"></canvas></td><td><center><canvas id="p2" width="30" height="30"></canvas></center></td><td><center><canvas id="b2" width="30" height="30"></canvas></center></td></tr>
+					<tr><td>Engine 2</td><td><canvas id="c3" width="200" height="30"></canvas></td><td><center><canvas id="p3" width="30" height="30"></canvas></center></td><td><center><canvas id="b3" width="30" height="30"></canvas></center></td></tr>
+					<tr><td>Engine 3</td><td><canvas id="c4" width="200" height="30"></canvas></td><td><center><canvas id="p4" width="30" height="30"></canvas></center></td><td><center><canvas id="b4" width="30" height="30"></canvas></center></td></tr>
+					<tr><td>Engine 4</td><td><canvas id="c5" width="200" height="30"></canvas></td><td><center><canvas id="p5" width="30" height="30"></canvas></center></td><td><center><canvas id="b5" width="30" height="30"></canvas></center></td></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>
 	<script type="text/javascript">
 	function openSample() {
 	    window.open("spark.htm", "_blank");
 	}
 	
 	</script>
+	<!-- jQuery -->
+    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
 
+    <!-- Custom Theme Scripts -->
+    <script src="../../3rd_party/build/js/custom.min.js"></script>
+	
 </body>
 </html>

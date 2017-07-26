@@ -13,6 +13,15 @@
 <script src="../../src/teechart.js" type="text/javascript"></script>
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../demos/theme.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<!-- Custom Theme Style -->
+<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script type="text/javascript">
 var Chart1;
@@ -58,27 +67,69 @@ function resize(){
 		canvas.style.height="400px";
 	}
 }
+function resizeToolBars(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var toolbar2 = document.getElementById("toolbar2");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar1.style.width = "" + w + "px";
+		toolbar2.style.width = "" + w + "px";
+	}
+	else{
+		toolbar1.style.width = "" + w - 230 + "px";
+		toolbar2.style.width = "" + w - 230 + "px";
+	}
+}
 </script>
 </head>
-<body onload="draw();resize();" onresize="resize();">
-	<table>
-		<tr class="canvasWithOutSelectors">
-			<td>
-				
-				<canvas id="canvas" width="600" height="400">
-				This browser does not seem to support HTML5 Canvas.
-				</canvas>
-				
-				<br/>
+<body onload="draw();resize();resizeToolBars();" onresize="resize();resizeToolBars();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Legend</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Legend</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas" width="600" height="400">
+					</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+			<div class="x_title">
+				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
 				<input type="checkbox" id="legend" onclick="Chart1.legend.visible= this.checked; Chart1.draw();" checked>Legend
-				<br/>
 				Legend style:
 				<select id="legend_style" onchange="Chart1.legend.legendStyle= this.value; Chart1.draw();">
 				  <option value="auto">Auto</option>
 				  <option value="series">Series</option>
 				  <option value="values">Values</option>
 				</select>
-				<br/>
 				Text style:
 				<select id="legend_textstyle" onchange="Chart1.legend.textStyle= this.value;
 				               document.getElementById('legend_style').options[2].selected=true;
@@ -93,7 +144,6 @@ function resize(){
 				  <option value="percentlabel">Percent and Label</option>
 				  <option value="labelpercent">Label and Percent</option>
 				</select>
-				<br/>
 				Position:
 				<select id="legend_position" onchange="Chart1.legend.position= this.value; Chart1.draw();">
 				  <option value="right">Right</option>
@@ -101,7 +151,6 @@ function resize(){
 				  <option value="top">Top</option>
 				  <option value="bottom">Bottom</option>
 				</select>
-				<br/>
 				Padding:
 				<select id="legend_padding" onchange="Chart1.legend.padding= this.value; Chart1.draw();">
 				  <option value="1">1%</option>
@@ -110,7 +159,6 @@ function resize(){
 				  <option value="20">20%</option>
 				  <option value="30">30%</option>
 				</select>
-				<br/>
 				Transparency:
 				<select id="legend_transp" onchange="Chart1.legend.format.transparency= parseFloat(this.value); Chart1.draw();">
 				  <option value="0" selected>0%</option>
@@ -121,28 +169,26 @@ function resize(){
 				  <option value="0.9">90%</option>
 				  <option value="1">100%</option>
 				</select>
-				<br/>
 				<input type="checkbox" id="symbols" onclick="Chart1.legend.symbol.visible= this.checked; Chart1.draw();" checked>Symbols
-				<br/>
 				<input type="checkbox" id="transp" onclick="Chart1.legend.transparent= this.checked; Chart1.draw();">Transparent
-				<br/>
 				<input type="checkbox" id="fontcolor" onclick="Chart1.legend.fontColor= this.checked; Chart1.draw();">Font Color
-				<br/>
 				<input type="checkbox" id="shadow" onclick="Chart1.legend.format.shadow.visible= this.checked; Chart1.draw();" checked>Shadow
-
-			</td>
-		</tr>
-		<tr class="button">
-			<td>
-				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
-			</td>
-		</tr>
-	</table>
+			</div>					
+			</div>
+		</div>
+		
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>
 	<script type="text/javascript">
 	function openSample() {
 	    window.open("legend.htm", "_blank");
 	}
 	
 	</script>
+	<!-- jQuery -->
+    <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../3rd_party/build/js/custom.min.js"></script>
 </body>
 </html>

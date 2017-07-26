@@ -81,6 +81,7 @@ P {
 
 TABLE {
      font-size: 100%;
+     border-collapse: collapse;
      width: 93%;
 }
 
@@ -98,19 +99,22 @@ DL {
 }
 
 TH {
+     background-color: #cccccc;
+     color: #000000;
      font-weight: bolder;
      padding: 5px;
-     border: 0;
+     border: 1px solid #999999;
 }
 
 TR {
+     background-color: #ffffff;
      padding: 5px;
      text-align: left;
-     border: 0;
+     border: 1px solid #999999;
 }
 
 TD {
-     border:0;
+     border: 1px solid #999999;
      padding: 5px;
 }
 
@@ -152,8 +156,18 @@ BLOCKQUOTE.dtBlock {
      margin-bottom: 1em;
      width: 96%;
 }
-
-button {
+button{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    border-radius:8px;
+}
+.btn{
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -163,13 +177,8 @@ button {
     display: inline-block;
     font-size: 16px;
     border-radius:8px;
-    width:20%;
+    width:50%;
     height:7%;
-}
-@media(max-width: 992px){
-	button{
-		width:50%;
-	}
 }
 
 
@@ -185,3 +194,13 @@ table .contentTable tr{
 tr .selectors td{
 	width:20%;
 }
+
+.smallLetters{
+	font-size:0.8em;
+}
+ul.options li {
+    display:inline;
+}
+table .alignTable, .alignTable td, .alignTable tr{
+	border:0px;
+} 

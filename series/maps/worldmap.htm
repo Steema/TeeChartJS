@@ -7,22 +7,16 @@
     <script src="../../../src/excanvas/excanvas_text.js"></script>
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
-<style type="text/css">
-
-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius:8px;
-}
-</style>
 <script type="text/javascript" src="../../../src/teechart.js"></script>
 <script type="text/javascript" src="../../../src/teechart-maps.js"></script>
+<!-- Bootstrap -->
+<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Custom Theme Style -->
+<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
 
 <title>TeeChart HTML5 Canvas Charting for JavaScript Geo World Map Example</title>
 
@@ -53,6 +47,10 @@ button {
   stroke: orange;
   fill: white;
   stroke-width: 0.1px;
+}
+
+.x_panel{
+	background-color:#BE4410;
 }
 </style>
 
@@ -101,38 +99,104 @@ function fillMap(){
   }
 
 }
+function resizeToolBars(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var toolbar2 = document.getElementById("toolbar2");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar1.style.width = "" + w + "px";
+		toolbar2.style.width = "" + w + "px";
+	}
+	else{
+		toolbar1.style.width = "" + w - 230 + "px";
+		toolbar2.style.width = "" + w - 230 + "px";
+	}
+}
+
+function showHide1(){
+	var map1 = document.getElementById("worldMap");
+	if(map1.style.display=="none"){
+		map1.style.display="block";
+		document.getElementById("icon1").classList.add('fa-chevron-up');
+		document.getElementById("icon1").classList.remove('fa-chevron-down');
+	}
+	else{
+		map1.style.display="none";
+		document.getElementById("icon1").classList.add('fa-chevron-down');
+		document.getElementById("icon1").classList.remove('fa-chevron-up');
+	}
+}
+function showHide2(){
+	var map2 = document.getElementById("usaMap");
+	if(map2.style.display=="none"){
+		map2.style.display="block";
+		document.getElementById("icon2").classList.add('fa-chevron-up');
+		document.getElementById("icon2").classList.remove('fa-chevron-down');
+	}
+	else{
+		map2.style.display="none";
+		document.getElementById("icon2").classList.add('fa-chevron-down');
+		document.getElementById("icon2").classList.remove('fa-chevron-up');
+	}
+}
 </script>
 
 </head>
 
-<body style="height:100%; font-family:Tahoma; background-color:#BE4410" onload="fillMap();">
-	<table>
-		<tr class="canvasWithOutSelectors">
-			<td>
-				<span style="font-size:28px">TeeChart HTML5 Maps</span>
-				
-				<div>
-				   <img id="flag" style="width:auto; height:auto; vertical-align:middle" src="../../images/HTML5_Logo_64.png" alt="Country Flag"/>
-				   <span id="label">&nbsp;</span>
-				   <div style="clear: both"></div>
+<body style="height:100%; font-family:Tahoma; background-color:#BE4410" onload="fillMap();resizeToolBars();" onresize="resizeToolBars();">
+	
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">World Map</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+				<div class="x_title" >
+					<h2><span class="smallLetters">World Map</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link" onclick="showHide1();"><i id="icon1" class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
 				</div>
-				
-				<svg id="world" class="map" width="65%" height="75%"/>
-				<svg id="usa" class="map" width="30%" height="45%"/>
-			</td>
-		</tr>
-		<tr class="button">
-			<td>
-				<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
-			</td>
-		</tr>
-	</table>
+				<div class="x_content" id="worldMap">
+					<svg id="world" class="map" width="65%" height="75%"/>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">USA Map</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link" onclick="showHide2();"><i id="icon2" class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content" id="usaMap">
+					<svg id="usa" class="map" width="30%" height="45%"/>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<center><button id="sample_btn" type="button" class="btn btn-success" onclick="openSample()">Open in new tab</button></center>
+	</div>
 	<script type="text/javascript">
 	function openSample() {
 	    window.open("worldmap.htm", "_blank");
 	}
 	
 	</script>
-
+	
 </body>
 </html>
