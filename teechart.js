@@ -4595,7 +4595,7 @@ Tee.Series=function(o,o2) {
   this.visible=true;
 
   // Hover
-  ho.stroke.size=3;
+  ho.stroke.size=1;
   ho.fill="";
   ho.stroke.fill="red";
 
