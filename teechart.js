@@ -8694,14 +8694,14 @@ var top = 3,
       if ((u-h)<0) u=h;
       if (l<0) l=0;
       
-	  var offsetLeft = target.offsetLeft;
-	  var node=target;
-      while ((node.offsetParent!=null)){
-		   offsetLeft+=node.offsetLeft;
-           node=node.offsetParent;
-      }
+	  if (target) {
+		  var offsetLeft = target.offsetLeft;
+		  var node=target;
+		  while ((node.offsetParent!=null)){
+			   offsetLeft+=node.offsetLeft;
+			   node=node.offsetParent;
+		  }
       
-      if (target) {
 		  if (l>(offsetLeft+target.clientWidth-tt.offsetWidth - 25))
             l = offsetLeft+target.clientWidth-tt.offsetWidth - 25;
       }
