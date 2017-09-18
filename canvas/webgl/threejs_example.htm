@@ -8,7 +8,7 @@
 <title>TeeChart 3D Charting for JavaScript Three.js WebGL&trade; Example</title>
 
 <style>
-#canvas1 { border: 4px solid #FF6666; border-radius:2px; }
+#canvas1 { border: 4px solid #FFFFFF; border-radius:0px; }
 </style>
 <!--[if lt IE 9]>
     <script src="../../../src/excanvas/excanvas_text.js"></script>
@@ -66,7 +66,7 @@ window["gliEmbedDebug"]=true;
 var Chart1, three, pole, poleBase;
 
 function resizeCanvasToFit() {
-  var w = document.getElementById('wrap').clientWidth,
+ /* var w = document.getElementById('wrap').clientWidth,
       l = document.getElementById('divleft').clientWidth,
       r = document.getElementById('divright').clientWidth,
       w2 = w - l - r,
@@ -81,12 +81,14 @@ function resizeCanvasToFit() {
    var h2 = ( (3 * w2 / 4) | 0) - 60;
    c.setAttribute('height', ""+h2+"px");
    c.style.height=""+h2+"px";
-   c.height=h2;
+   c.height=h2;*/
 }
 
 function draw() {
 
   three = new Tee.Three("canvas1");
+  
+  three.showLight(0,false);
 
   Chart1 = new Tee.Chart(three);
 
@@ -161,13 +163,12 @@ function draw() {
 
   if (three.isEnabled()) {
     changeTheme(Chart1, "minimal");
-Chart1.draw();
+    Chart1.draw();
 
     three.lights[0].target=Chart1.walls.visual;
     three.lights[2].target=Chart1.walls.left.visual;
 
     addLightSlider('ambient',three.ambientLight);
-    addLightSlider('light0',three.lights[0]);
     addLightSlider('light1',three.lights[1]);
     addLightSlider('light2',three.lights[2]);
 
@@ -225,7 +226,7 @@ function addCameraSlider() {
 
   s.min=0;
   s.max=180;
-  s.position=three.camera.fov;
+  s.position=85; //three.camera.fov;
   s.thumbSize=12;
   s.chart.draw();
 
@@ -528,6 +529,8 @@ function resize(){
   })();
 </script>
 
+<table><tr><td>
+
 <div id="divleft" style="float:left;">
 
 <b>Chart Style:</b><br/>
@@ -655,7 +658,35 @@ Style:
 
 </div>
 
+</div>
+
+</td><td width=500>
+
+ <center>
+  <div id="wrap">
+
+    <canvas id="canvas1" style="background:#F4F4FF; margin:0" width="500" height="600"></canvas>
+
+<!--[if IE]>
+  <script id="WebGLCanvasCreationScript" type="text/javascript" style="width:100%;height:100%">
+    function OnGLCanvasCreated(canvasElement, elementId) {}
+    function OnGLCanvasFailed(canvasElement, elementId) {
+      document.getElementById('canvas1').style.display = 'none';
+    }
+    WebGLHelper.CreateGLCanvasInline('canvas1', OnGLCanvasCreated, OnGLCanvasFailed);
+  </script>
+<![endif]-->
+
+  </div>
 <div id="divright" style="float:right">
+
+
+</div>
+ </center>
+
+</td><td>
+
+<div id="divright">
 <input type="checkbox" id="enableGL" onclick="enableGL(this.checked);" checked>Enable Three.js WebGL&trade;
 <br/>
 <div id="gloptions">
@@ -663,7 +694,6 @@ Style:
 <span>
 <b>Lights:</b><br/>
  <input type="checkbox" id="ambientVisible" onclick="three.ambientLight.visible=this.checked; three.needsRender=true; three.update();">Ambient<canvas id="ambient" width="100" height="20"></canvas><br/>
- <input type="checkbox" id="" onclick="three.showLight(0,this.checked);" checked>Light 0<canvas id="light0" width="100" height="20"></canvas><br/>
  <input type="checkbox" id="" onclick="three.showLight(1,this.checked);" checked>Light 1<canvas id="light1" width="100" height="20"></canvas><br/>
  <input type="checkbox" id="" onclick="three.showLight(2,this.checked);" checked>Light 2<canvas id="light2" width="100" height="20"></canvas><br/>
 <br/>
@@ -690,24 +720,8 @@ Text 3D:<canvas id="text3d" width="100" height="20"></canvas><br/>
 </div>
 </div>
 
- <center>
-  <div id="wrap">
-
-    <canvas id="canvas1" style="background:#9F6677; margin:0" width="800" height="600"></canvas>
-
-<!--[if IE]>
-  <script id="WebGLCanvasCreationScript" type="text/javascript" style="width:100%;height:100%">
-    function OnGLCanvasCreated(canvasElement, elementId) {}
-    function OnGLCanvasFailed(canvasElement, elementId) {
-      document.getElementById('canvas1').style.display = 'none';
-    }
-    WebGLHelper.CreateGLCanvasInline('canvas1', OnGLCanvasCreated, OnGLCanvasFailed);
-  </script>
-<![endif]-->
-
-  </div>
- </center>
-
+ </td></tr></table>
+ 
  <script type="text/javascript">resizeCanvasToFit();</script>
 </body>
 </html>
