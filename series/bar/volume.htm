@@ -34,6 +34,8 @@ function draw() {
   // Create series:
   var volume=Chart1.addSeries(new Tee.Volume());
 
+  volume.hover.stroke.fill="black"; 
+  volume.hover.stroke.size=1;
   // Random data:
 
   var value=Math.random()*10;
