@@ -1601,7 +1601,7 @@ Tee.USAMap.prototype=new Tee.SVGMap();
 Tee.EuropeMap=function(id) {
   this.filter=["AD","AL","AT","BA","BE","BG","BY","CH","CY","CZ","DE","DK","EE","ES","FI","FO","FR",
                "GG","GI","GR","HR","HU","IE","IM","IS","IT","JE","LI","LT","LU","LV","MC","MD","MK",
-               "MT","NL","NO","PL","PT","RO","RU","SE","SI","SJ","SK","SM","TR","UA","UK","VA","YU"];
+               "MT","NL","NO","PL","PT","RO","RU","SE","SI","SJ","SK","SM","TR","UA","GB","VA","YU"];
 
   Tee.WorldMap.call(this, id, -30, 85, 210, 55);
 }
@@ -1614,7 +1614,7 @@ Tee.EuropeMap.prototype=Tee.WorldMap;
  */
 Tee.Europe27Map=function(id) {
   this.filter=["AT","BE","BG","CY","CZ","DK","DE","EE","IE","GR","FI","FR",
-               "HU","IT","LV","LT","LU","UK","MT","NL","PL","PT","RO","SK","SI","ES","SE"];
+               "HU","IT","LV","LT","LU","GB","MT","NL","PL","PT","RO","SK","SI","ES","SE"];
 
   Tee.WorldMap.call(this, id, -15, 70, 55, 38);
 }

@@ -4595,12 +4595,11 @@ Tee.Series=function(o,o2) {
   this.visible=true;
 
   // Hover
-  ho.stroke.size=1;
+  ho.stroke.size=0.3;
   ho.fill="";
   ho.stroke.fill="red";
 
   s.visible=true;
-  s.color="red";
   s.blur=10;
   s.width=0;
   s.height=0;
