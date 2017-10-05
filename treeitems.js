@@ -34,6 +34,7 @@ var s=d.add(t++,0,'Series','series/All.htm');
     var map=d.add(t++,s,'World Maps','series/maps/worldmap.htm');
         d.add(t++,map,'Canvas Maps','series/maps/canvas_maps.htm');
         d.add(t++,map,'Bubble Maps','series/maps/maps_bubbles.htm');
+		d.add(t++,map,'Continents','series/maps/continents.htm');
 
     var polar=d.add(t++,s,'Polar / Radar');
       d.add(t++,polar,'Polar','series/polar/polar.htm');
