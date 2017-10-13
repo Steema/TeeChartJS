@@ -1865,24 +1865,24 @@ Tee.ToolTip=function(chart) {
   var redraw=function(args) {
     if (args) args[0].hide();
   }
-
   this.mousemove=function(p) {
 
-    var li=this.chart.series, len=li.count(), ser=null, index=-1;
-
+    var li=this.chart.series, len=li.count(), ser=null, index=-1; 
     if (this.chart.chartRect.contains(p))
     for (var t=len-1; t>=0; t--) {
       var s=li.items[t];
 
       if (s.visible) {
-        index=s.clicked(p);
+        //index=s.clicked(p);
+		index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
         if (index!=-1) {
           ser=s;
           break;
         }
       }
     }
-
+    else
+	    index=-1;
     if (index==-1) {
       this.hide();
 
@@ -3398,7 +3398,29 @@ function Axis(chart,horizontal,otherSide) {
   this.fromSize=function(p) {
     return (p/this.scale);
   }
+  
+  this.fromSizeCalcIndex=function(p) {
+	  var  index = -1;
+	  if(this.dateTime==true){
 
+		  var i=0,inc=0,actualValue=((this.maximum-this.minimum)/(this.axisSize)*p + this.minimum);
+		
+		if(this.chart.series.items[0].data.x.length>1){
+			inc = this.chart.series.items[0].data.x[1].getTime() - this.chart.series.items[0].data.x[0].getTime();
+		}
+		while(index==-1 && index<(this.chart.series.items[0].data.x.length-1)){
+	    	if(this.chart.series.items[0].data.x[i].getTime() + (inc/2) > actualValue){
+	    		index=i;
+	    	}
+	    	else i++;
+	    }
+	  }
+	  else{
+		  index = (p/this.scale)+this.minimum;
+		  if(this.chart.series.items[0].data.values.length<index || index<0) index=-1;
+	  }
+    return (index);
+  }
  /**
   * @returns {Number} Returns the size in pixels of a given value, using the axis scales.
   */
