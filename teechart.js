@@ -1873,8 +1873,9 @@ Tee.ToolTip=function(chart) {
       var s=li.items[t];
 
       if (s.visible) {
-        //index=s.clicked(p);
-		index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
+	    index=s.clicked(p);
+    	if(index == -1) 
+    		index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
         if (index!=-1) {
           ser=s;
           break;
