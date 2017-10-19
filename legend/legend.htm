@@ -36,15 +36,15 @@ function draw() {
   Chart1.panel.format.stroke.fill="";
   
   Chart1.title.text="Legend";
-  Chart1.title.format.font.style="48px Verdana";
+  Chart1.title.format.font.style="64px Verdana";
   Chart1.title.format.font.shadow.visible=true;
   Chart1.title.format.font.gradient.visible=true;
-  Chart1.title.format.font.gradient.colors=["lime","white"];
-  Chart1.title.format.font.stroke.fill="green";
+  Chart1.title.format.font.gradient.colors=["#EEEEEE","white"];
+  Chart1.title.format.font.stroke.fill="#5A5A5A";
 
   changeTheme(Chart1, "minimal");
   
-Chart1.draw();
+  Chart1.draw();
 
 //  Chart1.legend.format.ellipse(50,50,100,200);
 }

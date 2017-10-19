@@ -34,22 +34,19 @@ var Engine=new Tee.Data(),
 
       Models=Engine.addDataSet("Models", models),
         ModelItems=Models.addDimension("Models", "id"),
-          ModelItem=ModelItems.addDimension("Model", "items", "code");
+          ModelItem=ModelItems.addDimension("Models", "items", "code");
 
       Amounts.addLink("product", ProductItems, "code");
       ModelItems.addLink("id", ProductItems, "code");
       ModelItems.titles=ProductItems;
 
       ModelSales=Engine.addDataSet("Model Sales", modelSales);
-        ModelSales.Items=ModelSales.addDimension("Model Sales", "model"),
-          ModelSales.Quantity=ModelSales.Items.addMetric("Quantity", "quantity");
+		 ModelSales.Items=ModelSales.addDimension("modelSales", "model"),
+		 ModelSales.Quantity=ModelSales.addMetric("Quantity", "quantity");
 
-      ModelSales.Items.addLink("model", ModelItem, "code");
-
-  var MonthsData=Engine.addDataSet("Months", MonthNames),
-        MonthNames=MonthsData.addDimension("Months", null, "name");
-
-      Months.addLink("month", MonthNames, "month");
+  var MonthsData=Engine.addDataSet("Months", MonthNames);
+        MonthNames=MonthsData.addDimension("Months", "name");
+		 MonthsData.Quantity=MonthsData.addMetric("Quantity", "quantity");
 
 var Chart1, Chart2, Chart3, Chart4, metric;
 
@@ -59,6 +56,11 @@ function draw() {
   Chart2=Engine.Chart("canvas2", "Product Sales");
   Chart3=Engine.Chart("canvas3", "Monthly Sales");
   Chart4=Engine.Chart("canvasUnits", "Models");
+  
+  changeTheme(Chart1, "minimal");
+  changeTheme(Chart2, "minimal");
+  changeTheme(Chart3, "minimal");
+  changeTheme(Chart4, "minimal");
 
   ProductGroups.nulls=false;
   ProductItems.nulls=false;
@@ -73,14 +75,14 @@ function draw() {
 
     Chart2.fill(ProductItems, metric);
     Chart3.fill(MonthNames, metric);
-//    Chart4.fill(ModelSales.Items, ModelSales.Quantity);
+    Chart4.fill(ModelSales.Items, ModelSales.Quantity);
   }
 
-  Chart2.onclickseries=function(series,index) {
+    Chart2.onclickseries=function(series,index) {
 
     ProductItems.toggleSelected(series,index);
 
-    Chart3.fill(MonthNames, metric);
+    Chart3.fill(MonthNames, MonthsData.Quantity);
     Chart4.fill(ModelSales.Items, ModelSales.Quantity);
   }
 }
@@ -93,7 +95,7 @@ function setMetric(value) {
 
   Chart1.fill(ProductGroups, metric);
   Chart2.fill(ProductItems, metric);
-  Chart3.fill(MonthNames, metric);
+  Chart3.fill(MonthNames, MonthsData.Quantity);
   Chart4.fill(ModelSales.Items, ModelSales.Quantity);
 }
 

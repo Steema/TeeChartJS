@@ -1,6 +1,14 @@
 var products=
 
 { "groups": [
+  { "name": "Software",
+    "items": [
+      { "code": "6", "name": "Microsoft" },
+      { "code": "7", "name": "Google" },
+      { "code": "8", "name": "Oracle" },
+      { "code": "9", "name": "Embarcadero" }
+        ]
+  },
   { "name": "Hardware",
     "items": [
       { "code": "1", "name": "Intel" },
@@ -11,22 +19,14 @@ var products=
       { "code": "LE", "name": "Lenovo" }
         ]
   },
-  { "name": "Software",
+  { "name": "SmartPhones",
     "items": [
-      { "code": "6", "name": "Microsoft" },
-      { "code": "7", "name": "Google" },
-      { "code": "8", "name": "Oracle" },
-      { "code": "9", "name": "Embarcadero" },
-        ]
-  },
-  { "name": "Smart Phones",
-    "items": [
-      { "code": "10", "name": "Windows Phone" },
+      { "code": "10", "name": "WindowsPhone" },
       { "code": "11", "name": "Blackberry" },
       { "code": "12", "name": "Android" },
       { "code": "IP", "name": "iPhone" },
         ]
-  }
+  }  
   ]
 }
 
@@ -44,7 +44,7 @@ var sales=
       { "product": 7, "quantity": 326 },
       { "product": 8, "quantity": 281 },
       { "product": 9, "quantity": 513 },
-      { "product": 12, "units": 7103 }
+      { "product": 12, "quantity": 214, "units": 7103 }
     ]
   },
   { "month": "2",
@@ -70,7 +70,8 @@ var sales=
       { "product": 6, "quantity": 175 },
       { "product": 7, "quantity": 312 },
       { "product": 8, "quantity": 118 },
-      { "product": 9, "quantity": 500 }
+      { "product": 9, "quantity": 500 },
+	  { "product": 11, "quantity": 312 }
     ]
   }
   ]
@@ -98,17 +99,17 @@ var models =
 
 var modelSales =
  [
-  { "product": "4", "model": "2", "quantity": 321 },
-  { "product": "9", "model": "XE3", "quantity": 456 }
+  { "product": "4", "model": "HTML5", "quantity": 321 },
+  { "product": "9", "model": "RAD Studio XE3", "quantity": 456 }
  ];
 
 var MonthNames=[
-    { "month":1, "name":"Jan" },
+    { "month":1, "name":"Jan", "quantity": 456 },
     { "month":2, "name":"Feb" },
     { "month":3, "name":"Mar" },
     { "month":4, "name":"Apr" },
     { "month":5, "name":"May" },
-    { "month":6, "name":"Jun" },
+    { "month":6, "name":"Jun", "quantity": 313 },
     { "month":7, "name":"Jul" },
     { "month":8, "name":"Aug" },
     { "month":9, "name":"Sep" },

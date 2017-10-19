@@ -44,7 +44,7 @@ function draw() {
   Chart1.axes.right.innerTicks.visible=true;
   Chart1.axes.bottom.innerTicks.visible=true;
 
-  Chart1.axes.left.grid.format.fill="yellow";
+  Chart1.axes.left.grid.format.fill="#FFFFE6";
 
   changeTheme(Chart1, "minimal");
    
@@ -233,7 +233,7 @@ function resizeToolBars(){
 				  <option value="dash">Dash</option>
 				  <option value="dot">Dot</option>
 				</select>
-				<input type="checkbox" id="bands" onclick="Chart1.axes.left.grid.format.fill= this.checked ? 'yellow' : ''; Chart1.draw();" checked>Bands
+				<input type="checkbox" id="bands" onclick="Chart1.axes.left.grid.format.fill= this.checked ? '#FFFFE6' : ''; Chart1.draw();" checked>Bands
 				<input type="checkbox" id="ticks" onclick="setTicks(this.checked); Chart1.draw();" checked>Ticks
 				<input type="checkbox" id="minor" onclick="setMinorTicks(this.checked); Chart1.draw();" checked>Minor Ticks
 				<input type="checkbox" id="inner" onclick="setInnerTicks(this.checked); Chart1.draw();" checked>Inner Ticks
