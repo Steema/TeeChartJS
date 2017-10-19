@@ -3409,8 +3409,8 @@ function Axis(chart,horizontal,otherSide) {
 		if(this.chart.series.items[0].data.x.length>1){
 			inc = this.chart.series.items[0].data.x[1].getTime() - this.chart.series.items[0].data.x[0].getTime();
 		}
-		while(index==-1 && index<(this.chart.series.items[0].data.x.length-1)){
-	    	if(this.chart.series.items[0].data.x[i].getTime() + (inc/2) > actualValue){
+		while(index==-1 && i<(this.chart.series.items[0].data.x.length)){
+	    	if(this.chart.series.items[0].data.x[i].getTime() + (inc/2) > actualValue && actualValue + inc/2 > this.chart.series.items[0].data.x[i].getTime()){
 	    		index=i;
 	    	}
 	    	else i++;
