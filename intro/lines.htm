@@ -90,7 +90,6 @@
 			Chart1.series.items[i].format.shadow.visible=false;
 			Chart1.series.items[i].hover.stroke.fill = "rgba(255,255,128,1.0)";
 		}
-		
 		//Axes
 		Chart1.axes.left.title.text="$ 000s";
 		Chart1.axes.left.labels.roundFirst=true;
@@ -150,13 +149,16 @@
 		tip.onshow=function(tool,series,index) {
 		}
 	  
-		tip.ongettext=function( tool, text, series, index) { 
-	  
-		var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
-			s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ index.toFixed(0)+'</strong></font>';
-			s =	s + '<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';
-			return s;
-		}
+		tip.ongettext=function(tool, text, series, index) {
+		    var t, s="", ser;
+
+		    for(t=0;t<Chart1.series.count(); t++) {
+		      if (t>0) s+="<br/>";
+		      ser=Chart1.series.items[t];
+		      s+='<font face="verdana" color="darkorange" size="1"><b>'+ser.title+':</b></font> <font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
+		    }
+		    return s;
+	  }
 	
 		
 		//animation
@@ -175,7 +177,9 @@
 
 		changeTheme("minimal");
 		changePalette("seaWash");
-
+		var t = new Tee.CursorTool(Chart1);
+		t.direction="vertical";
+		Chart1.tools.add(t);
 		resize(Chart1);
 	}
 	function resize(chart){
@@ -229,12 +233,6 @@
 				chart.draw();
 			}
 		}	
-	}
-	
-	</script>
-	<script type="text/javascript">
-	function openSample() {
-	    window.open("lines.htm", "_blank");
 	}
 	
 	</script>
@@ -398,7 +396,6 @@
 			</div>
 		</div>
 		<div class="clearfix"></div>
-		
 	</div>
 </body>
 </html>
