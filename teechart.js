@@ -6077,7 +6077,7 @@ Tee.Chart=function(canvas,data,type)
   */
 
   c.onmousedown = c.ontouchstart = this.domousedown;
-  c.onmouseup = c.ontouchstop = this.domouseup;
+  c.onmouseup = c.ontouchend = this.domouseup;
   c.onmousemove = c.ontouchmove = this.domousemove;
 
   // Mouse wheel default to zoom / unzoom axes:
