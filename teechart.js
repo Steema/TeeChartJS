@@ -1358,7 +1358,9 @@ Tee.Annotation=function(chart,text,x,y) {
   this.visible=true;
   this.transparent=false;
   this.text=text || "";
-
+  this.isDom = false;
+  this.domElement = null;
+  this.domStyle = "border-radius: 5px;border: 2px solid #faad44;background: #FFF;padding:5px;";
   var f=this.format=new Tee.Format(chart);
 
   f.font.textAlign="center";
@@ -1373,6 +1375,8 @@ Tee.Annotation=function(chart,text,x,y) {
 
   var fontH, thisH, over;
 
+  this.getDOMHeight = function () { return this.domElement == null ? 0 : this.domElement.offsetHeight }
+  this.getDOMWidth = function () { return this.domElement == null ? 0 : this.domElement.offsetWidth }
   this.moveTo=function(x,y) {
     this.position.x=x;
     this.position.y=y;
@@ -1441,6 +1445,10 @@ Tee.Annotation=function(chart,text,x,y) {
   this.doDraw=function() {
     if (!isEmpty(this.text)) {
 
+          if (this.isDom) {
+              this.drawDOMText();
+          }
+          else {
       if (this.transparent)
         this.chart.ctx.z=f.z;
       else
@@ -1494,6 +1502,7 @@ Tee.Annotation=function(chart,text,x,y) {
     for(var t=0, i; i=this.items[t++];)
        i.doDraw();
   }
+  }
 
  /**
   * @returns {Boolean} Returns if {@link Tee.Point} p is inside this Annotation bounds.
@@ -1534,6 +1543,18 @@ Tee.Annotation=function(chart,text,x,y) {
   this.setChart=function(chart) {
     this.chart=chart;
     this.format.setChart(chart);
+  }
+
+  this.drawDOMText = function () {
+      var rect = this.chart.canvas.getBoundingClientRect();
+      var opacity = this.transparent ? "opacity:0;" : "opacity:1;";
+      if(!this.domElement){
+          this.domElement = document.createElement('div');
+          document.body.appendChild(this.domElement);
+      }
+      this.chart.canvas.setAttribute('style', 'z-index:1;');
+      this.domElement.setAttribute('style', "position:absolute;top:" + (this.position.y + rect.top) + "px;left:" + (this.position.x + rect.left) + "px;display:block;z-index:10000;" + this.domStyle + opacity);
+      if (this.domElement.innerHTML != this.text) this.domElement.innerHTML = this.text;
   }
 }
 
