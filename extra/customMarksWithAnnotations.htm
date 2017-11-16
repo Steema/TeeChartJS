@@ -31,10 +31,10 @@ function draw() {
     var x;
   Chart1=new Tee.Chart("canvas");
   Chart1.addSeries(new Tee.Bar([5,3,2,7,1,6,4,5,1,0,10]) );
-  
+
   Chart1.axes.left.title.text="Left Axis";
   Chart1.axes.bottom.title.text = "Bottom Axis";
-  Chart1.axes.left.setMinMax(0,12);
+  Chart1.axes.left.setMinMax(0, 12);
 
   Chart1.title.text = "Custom Marks Using Annotations";
   Chart1.title.format.font.style="18px Verdana";
@@ -53,16 +53,18 @@ function draw() {
       y = Chart1.axes.left.calc(Chart1.series.items[0].data.values[i]);
       x = Chart1.axes.bottom.calc(i);
       a = new Tee.Annotation(Chart1);
-      a.format.fill = "white";
-      a.format.shadow.visible = false;
-      a.format.font.style = "10px Arial";
-      a.format.font.fill = "brown";
-      a.text = "Left Axis: " + Chart1.series.items[0].data.values[i] + "\nBottom Axis: " + i;
-      if (x < Chart1.axes.bottom.startPos || x > Chart1.axes.bottom.endPos) a.position.x = -100;
-      else a.position.x = x - 40;
-      if (y < Chart1.axes.left.startPos || y > Chart1.axes.left.endPos) a.position.y = -100;
-      else a.position.y = y - 35;
+      a.domStyle = "border-radius: 5px;border: 2px solid #faad44;opacity:1;background: white;padding:5px;font-size:70%;";
+      a.isDom = true;
+      if (i == 5)
+          a.text = '<div><center><img src="../images/html5.png" width="50"></center></div><div><font color="red">Left Axis: </font><font color="orange">' + Chart1.series.items[0].data.values[i] + '</font><font color="blue"><br>Bottom Axis: </font><font size="2" color="LightSkyBlue">' + i + '</font></div>';
+      else if (i % 2 == 0) {
+          a.text = '<font color="purple">Left Axis: </font><font color="orange">' + Chart1.series.items[0].data.values[i] + '</font><font color="blue"><br>Bottom Axis: </font><font size="2" color="RoyalBlue">' + i + '</font>';
+          a.domStyle = "border-radius: 5px;border: 2px solid #faad44;opacity:1;background: Khaki;padding:5px;font-size:80%;";
+      }
+      else
+          a.text = '<font color="red">Left Axis: </font><font color="orange">' + Chart1.series.items[0].data.values[i] + '</font><font color="red"><br>Bottom Axis: </font><font color="orange">' + i + '</font>';
       Chart1.tools.add(a);
+
   }
   Chart1.draw();
 }
@@ -72,16 +74,15 @@ function changeMarkAnotationsPos(){
         for (var i = 0; i < Chart1.series.items[0].data.values.length; i++) {
             y = Chart1.axes.left.calc(Chart1.series.items[0].data.values[i]);
             x = Chart1.axes.bottom.calc(i);
-            a = new Tee.Annotation(Chart1);
-            a.format.fill = "white";
-            a.format.shadow.visible = false;
-            a.format.font.style = "10px Arial";
-            a.format.font.fill = "brown";
-            a.text = "Left Axis: " + Chart1.series.items[0].data.values[i] + "\nBottom Axis: " + i;
-            if (x < Chart1.axes.bottom.startPos || x > Chart1.axes.bottom.endPos) a.position.x = -100;
-            else a.position.x = x - 40;
-            if (y < Chart1.axes.left.startPos || y > Chart1.axes.left.endPos) a.position.y = -100;
-            else a.position.y = y - 35;
+            a = Chart1.tools.items[i];
+            if (x < Chart1.axes.bottom.startPos || x > Chart1.axes.bottom.endPos || y < Chart1.axes.left.startPos || y > Chart1.axes.left.endPos)
+                a.transparent = true;
+            else {
+                x = x - a.getDOMWidth() / 2;
+                a.transparent = false; y = y - a.getDOMHeight();
+            }
+            a.moveTo(x, y);
+            //console.log(a.domElement.offsetHeight);
             Chart1.tools.items[i] = a;
         }
         Chart1.draw();
@@ -151,7 +152,7 @@ function resizeToolBar(){
 }
     </script>
 </head>
-<body onload="draw();resize(Chart1);resizeToolBar();" onresize="resize(Chart1);resizeToolBar();" onmousemove="changeMarkAnotationsPos();" onmouseup="changeMarkAnotationsPos();">
+<body onload="draw(); resize(Chart1); resizeToolBar(); changeMarkAnotationsPos();" onresize=" resize(Chart1); resizeToolBar();" onmousemove=" changeMarkAnotationsPos();" onmouseup=" changeMarkAnotationsPos();">
     <div class="right_col" role="main">
         <div class="page-title">
             <div class="title_left">
