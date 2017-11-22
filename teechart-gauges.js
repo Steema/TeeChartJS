@@ -65,16 +65,16 @@ Tee.CircularGauge=function(o,o2) {
   
   var be=this.bevel=new Tee.Format(this.chart);
   be.gradient.visible=true;
-  be.gradient.colors=["white","blue","white"];
+  be.gradient.colors=["white"];
   be.shadow.visible=false;
-  be.visible=true;
+  be.visible=false;
   be.stroke.fill="";
 
   var ce=this.center=new Tee.Format(this.chart);
   ce.stroke.fill="";
   ce.gradient.visible=true;
   ce.size=10;
-  ce.visible=true;
+  ce.visible=false;
   ce.shadow.visible=true;
   ce.gradient.offset={ x:2, y:-2 }
   ce.location={x:0, y:0 } // %
@@ -101,7 +101,7 @@ Tee.CircularGauge=function(o,o2) {
   tb.gradient.visible=true;
   tb.gradient.colors=["red", "yellow", "green"];
   tb.gradient.direction="rightleft";
-  tb.visible=true;
+  tb.visible=false;
   tb.radius=0;
 
   var mi=this.minor=new Tee.Format(this.chart);
@@ -112,11 +112,11 @@ Tee.CircularGauge=function(o,o2) {
 
   var mb=this.minorBack=new Tee.Format(this.chart);
   mb.stroke.fill="";
-  mb.visible=true;
+  mb.visible=false;
   mb.fill="white";
-  mb.gradient.visible=true;
-  mb.gradient.direction="bottomtop";
-  mb.gradient.colors=["white","gray","white","silver"];
+  mb.gradient.visible=false;
+  mb.gradient.direction="leftright";
+  mb.gradient.colors=["green","yellow","red"];
   mb.radius=0;
   
   this.hands=[];
@@ -148,22 +148,22 @@ Tee.CircularGauge=function(o,o2) {
   b.fill="black";
   b.visible=true;
   b.gradient.visible=true;
-  b.gradient.colors=["black","gray"];
+  b.gradient.colors = ["rgba(255,126,95,0.8)", "rgba(254,180,123,0.8)"];
   b.stroke.fill="";
 
   var po=this.pointer=new Tee.Format(this.chart);
   po.size=3;
   po.fill="black";
   po.stroke.fill="";
-  po.visible=true;
+  po.visible=false;
 
   var m=this.marks, mf=m.format;
   m.location={ x:0, y:10 } // %
   m.visible=true;
   mf.fill="black";
-  mf.font.fill="white";
+  mf.font.fill="black";
   mf.gradient.visible=true;
-  mf.gradient.colors=["gray","black"];
+  mf.gradient.colors = ["rgba(255,126,95,0.6)", "rgba(254,180,123,0.6)"];
   mf.shadow.visible=true;
   mf.shadow.blur=8;
   mf.shadow.color="black";
@@ -171,19 +171,19 @@ Tee.CircularGauge=function(o,o2) {
   var f=this.format;
   f.visible=true;
   f.gradient.visible=true;
-  f.gradient.colors=["white","black","white"];
+  f.gradient.colors=["white"];
   f.shadow.visible=true;
   f.font.style="12px Verdana";
-  f.font.fill="white";
+  f.font.fill="black";
   f.font.visible=true;
-  f.size=14; // %
+  f.size=2; // %
   f.round={ x:6, y:6 }
 
   f.padding=0.5; // %
   
   this.units=new Tee.Annotation(this.chart);
   this.units.transparent=true;
-  this.units.format.font.fill="orange";
+  this.units.format.font.fill="black";
   this.units.location={ x:0, y:24 } // %
 
   this.bounds=this.getRect();
