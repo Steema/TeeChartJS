@@ -12,15 +12,16 @@ Tee.gaugeTemplate=function(index,canvas) {
   switch (index) {
     case 1:  {
       gauge.shape="segment";
-      gauge.format.gradient.colors[1]="#E64000";
-      gauge.back.gradient.colors[1]="silver";
-      gauge.back.gradient.colors[0]="#1090AA";
+      gauge.back.gradient.colors[1] = "SkyBlue";
+      gauge.back.gradient.colors[0] = "RoyalBlue";
       gauge.units.visible=false;
-      gauge.angle=220;
-      gauge.hand.gradient.colors[1]="blue";
+      gauge.angle = 200;
+      gauge.marks.format.gradient.colors = ["SkyBlue", "RoyalBlue"];
+      gauge.hand.gradient.colors[0] = "RoyalBlue";
+      gauge.hand.gradient.colors[1] = "SkyBlue";
       gauge.hand.gradient.direction="leftright";
-      gauge.format.font.fill="black";
-      gauge.format.font.setSize(14);
+      gauge.format.font.fill="white";
+      gauge.format.font.setSize(10);
       gauge.ticksBack.visible=false;
       gauge.marks.transparent=true;
       break;
@@ -30,13 +31,18 @@ Tee.gaugeTemplate=function(index,canvas) {
       gauge.rotation=135;
       gauge.angle=270;
       gauge.inverted=true;
-      gauge.format.gradient.colors[0]="#00E640";
-      gauge.back.gradient.colors[1]="#00E640";
+      gauge.format.gradient.colors[0] = "SeaGreen";
+      gauge.format.shadow.color = "SeaGreen";
+      gauge.back.gradient.colors[0] = "PaleGreen";
+      gauge.back.gradient.colors[1] = "SeaGreen";
+      gauge.hand.gradient.colors[0] = "SeaGreen";
+      gauge.hand.gradient.colors[1] = "PaleGreen";
+      gauge.marks.format.gradient.colors = ["PaleGreen", "SeaGreen"];
       gauge.ticksBack.visible=false;
       gauge.minorBack.visible=false;
       gauge.minor.stroke.size=3;
       gauge.ticks.triangle=true;
-      gauge.ticks.stroke.fill="yellow";
+      gauge.ticks.stroke.fill="white";
       gauge.marks.location.x=-25; // %
       gauge.marks.location.y=-25; // %
       break;
@@ -66,6 +72,7 @@ Tee.gaugeTemplate=function(index,canvas) {
       gauge.center.gradient.colors[0]="black";
       gauge.center.top.gradient.colors[1]="black";
       gauge.center.top.size=75;
+      gauge.marks.format.gradient.colors = ["white", "silver"];
       break;
     }
 
@@ -89,7 +96,7 @@ Tee.gaugeTemplate=function(index,canvas) {
       gauge.format.gradient.colors=["gray","white"];
       gauge.format.gradient.direction="topbottom";
 
-      gauge.format.font.fill="black";
+      gauge.format.font.fill="white";
       gauge.format.font.shadow.visible=true;
       gauge.format.font.style="12px monospace";
 
@@ -121,11 +128,12 @@ Tee.gaugeTemplate=function(index,canvas) {
     case 5:  {
       gauge.ticksBack.radius=5;
       gauge.format.gradient.colors[1]="#B85C00";
-      gauge.format.font.style="12px Impact";
+      gauge.format.font.style = "12px Arial";
+      gauge.format.font.fill = "black";
       gauge.format.font.shadow.visible=true;
       gauge.rotation=30;
       gauge.minor.shape="ellipse";
-      gauge.minor.fill="black";
+      gauge.minor.fill="white";
       gauge.minor.stroke.fill="";
       break;
     }

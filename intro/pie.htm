@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <title>TeeChart JavaScript Pie Example</title>
@@ -44,7 +44,7 @@
 		  pie1.data.values = [15,17,12,19,30,41];
 		  
 		  pie1.data.labels =  [ "jan","feb","mar","apr","may","jun" ];
-		  
+		  pie1.explode = [4,4,3,5,8,0];
 		  Chart1.axes.bottom.labelStyle="text";
 						  
 		  Chart1.addSeries(pie1);
@@ -61,7 +61,7 @@
 			  Chart1.series.items[i].marks.arrow.stroke.fill = "rgba(0,0,0,0.0)";
 			  Chart1.series.items[i].marks.format.fill = "rgba(0,0,0,0.0)";
 			  Chart1.series.items[i].marks.format.font.style="bold 13px Arial";
-			  Chart1.series.items[i].marks.format.font.fill = "rgba(224,224,224,1)";
+			  Chart1.series.items[i].marks.format.font.fill = "rgb(0,0,0)";
 			  Chart1.series.items[i].marks.format.stroke.fill = "rgba(0,0,0,0.0)";
 		  }
 		
@@ -228,7 +228,7 @@ function resize(chart){
 	<script type="text/javascript">
 		function changeThemeToDefault(){
 			changeTheme("minimal");
-			changePalette("seaWash");
+			changePalette("warm");
 		}
 	
 	</script>
@@ -236,7 +236,7 @@ function resize(chart){
 	
 	<script type="text/javascript">
 		var topTheme = "minimal";  //defaults
-        var topPalette = "seaWash";
+		var topPalette = "warm";
 		
 		function changeTheme(aTheme) {
 			.changeTheme(aTheme);
@@ -340,8 +340,8 @@ function resize(chart){
 		             <option value="opera">Opera</option>
 		             <option value="rainbow">Rainbow</option>
 		             <option value="redRiver">Red River</option>
-		             <option value="seaWash" selected>Sea Wash</option>
-		             <option value="warm">Warm</option>  
+		             <option value="seaWash">Sea Wash</option>
+		             <option value="warm" selected>Warm</option>  
 		             <option value="windowsxp">Windows XP</option>
 	         	</select>
 	         	</p>

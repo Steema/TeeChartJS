@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <title>TeeChart JavaScript Gauges Example</title>
@@ -130,7 +130,8 @@ function draw() {
   gauge.format.shadow.blur=10;
 
   var ranges=[ {value:10, fill:"green" } ,  {value:60, fill:"yellow" } , {value:100, fill:"red"} ];
-  gauge.ticksBack.ranges=ranges;
+  gauge.ticksBack.ranges = ranges;
+  
 
 
   // Another gauge, invisible by default:
@@ -147,11 +148,11 @@ function draw() {
 
   gauge2.format.size=4;
 
-  gauge2.format.gradient.colors=["orange","white","yellow"];
-  gauge2.back.gradient.colors=["red","blue"];
-  gauge2.back.gradient.direction="radial";
+  gauge2.format.gradient.colors=["white"];
+  gauge2.back.gradient.colors = ["rgba(238,9,121,0.8)", "rgba(255, 106, 0, 0.8)"];
+  gauge2.back.gradient.direction="bottomtop";
 
-  gauge2.format.font.fill="lime";
+  gauge2.format.font.fill = "white";
   gauge2.format.font.style="12px Tahoma";
   gauge2.format.font.shadow.visible=true;
   gauge2.format.font.shadow.color="black";
@@ -160,7 +161,8 @@ function draw() {
   gauge2.center.gradient.colors=["black","white"];
   gauge2.center.size=3; // %
   gauge2.hand.size=0;
-  gauge2.hand.stroke.size=3;
+  gauge2.hand.stroke.size = 3;
+  gauge2.hand.back = 0;
 
   gauge2.ticks.outside=false;
   
@@ -233,8 +235,8 @@ function createConfigChart(){
 	  Config1 = new Tee.Chart('config');
 	  changeTheme(Config1, "twilight");
 	  Config1.title.text='Gauge Editor';
-	  Config1.panel.format.gradient.colors[1]="cyan";
-	  Config1.panel.format.gradient.colors[0]="white";
+	  Config1.panel.format.gradient.colors[1] = "#feb47b";
+	  Config1.panel.format.gradient.colors[0] = "#ff7e5f";
 
     // Add one slider to control gauge value:
     slider=addSlider("Value", gauge.value,function(s,v) { gauge.value=v; return v; });
@@ -420,40 +422,8 @@ function showHideOptions(){
 			</div>
 		</div>
 		<div class="clearfix"></div>
-		
 	</div>
-<!--	<table>
-		<tr class="canvasWithOutSelectors">
-			<td colspan="2">
-				<canvas id="canvas1" width="600" height="350">
-				This browser does not seem to support HTML5 Canvas.
-				</canvas>
-				<canvas id="canvas2" width="600" height="350">
-				This browser does not seem to support HTML5 Canvas.
-				</canvas>
-				
-				<div id="divconfig" style="float:left; margin-right:16px; display:none;">
-				Min:<input type="text" size="5" id="min" onkeyup="gauge.min=parseFloat(this.value); gauge.chart.draw();"><br/>
-				Max:<input type="text" size="5" id="max" onkeyup="gauge.max=parseFloat(this.value); gauge.chart.draw();"><br/>
-				Step:<input type="text" size="5" id="step" onkeyup="gauge.step=parseFloat(this.value); gauge.chart.draw();"><br/>
-				<br/>
-				<canvas id="config" width="320" height="450">
-				</canvas>
-				</div>
-			</td>
-		</tr>
-		<tr class="button">
-			<td colspan="2">
-				
-			</td>
-		</tr>
-	</table>-->
-	<script type="text/javascript">
-	function openSample() {
-	    window.open("gauges.htm", "_blank");
-	}
-	
-	</script>
+
 	<!-- jQuery -->
     <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
 
