@@ -51,7 +51,8 @@ function draw() {
     Chart1.series.items[0].pointer.format.shadow.visible = false;
     Chart1.series.items[0].format.stroke.size = 2;
     Chart1.series.items[0].format.shadow.visible = false;
-    Chart1.axes.left.setMinMax(0, 10);
+    Chart1.series.items[0].smooth = 1 / 2;
+    Chart1.axes.left.setMinMax(-0.5, 10.5);
     var showCounter=new Tee.Annotation(Chart1);
     Chart1.tools.add(showCounter);
 
