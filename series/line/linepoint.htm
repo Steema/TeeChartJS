@@ -42,6 +42,29 @@ function draw() {
   Chart1.title.text="Line and Point";
 
   changeTheme(Chart1, "minimal");
+  
+	
+	Chart1.ondraw=function() {
+
+	  Chart1.aspect.clipRect(Chart1.chartRect);
+		for (var i=0;i<this.series.items[0].count();i++) {
+		  var xValue;
+		  if (this.series.items[0].data.x != null) //if x values populated
+			xValue=this.axes.bottom.calc(this.series.items[0].x.values[i]);
+		  else
+			xValue=this.axes.bottom.calc(i);
+		  var ys=this.axes.left.calc(this.series.items[0].data.values[i]);
+		  var f=new Tee.Format(this);
+		  //with the location information you can output any information or drawing
+		  //object you require. You could read in the original Pointer specification/size/color, etc
+		  //This is a simple example:
+		  if (i>6)  //add a condition of your choice
+			f.ellipse(xValue,ys,10,10);
+		  //or
+		  //f.rectangle(xValue-5,ys-5,10,10);
+		}
+	}			
+	  
 
   Chart1.draw();
 }
@@ -92,11 +115,12 @@ function resize(chart){
 			
 			chart.bounds.width=w;
 			chart.bounds.height=h;
-			
-			chart.draw();
+
+	chart.draw();
 		}
 	}	
 }
+
 function resizeToolBars(){
 	var toolbar1 = document.getElementById("toolbar1");
 	var toolbar2 = document.getElementById("toolbar2");
