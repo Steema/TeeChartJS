@@ -1,7 +1,7 @@
 /**
  * @preserve TeeChart(tm) for JavaScript(tm)
  * @fileOverview TeeChart for JavaScript(tm)
- * v2.1 Oct 2017
+ * v2.21 Nov 2017
  * Copyright(c) 2012-2017 by Steema Software SL. All Rights Reserved.
  * http://www.steema.com
  *
@@ -13,7 +13,7 @@
 
 /**
  * @author <a href="mailto:david@steema.com">Steema Software</a>
- * @version 2.1
+ * @version 2.21
  */
 
 /**
@@ -1895,7 +1895,7 @@ Tee.ToolTip=function(chart) {
 
       if (s.visible) {
 	    index=s.clicked(p);
-    	if(index == -1) 
+    	if ((index == -1) && (s.continuous))
     		index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
         if (index!=-1) {
           ser=s;
@@ -6349,6 +6349,7 @@ Tee.CustomBar=function(o,o2) {
   this.sideMargins=100;
   this.useOrigin=true;
   this.origin=0;
+  this.continuous=false;
 
   this.marks.visible=true;
   this.marks.location='end';
@@ -6948,6 +6949,8 @@ Tee.CustomSeries=function(o,o2) {
   this.stacked="no"; // "yes", "100"
   this.stairs=false;
   this.invertedStairs=false;
+  
+  this.continuous=true; //allows tooltip interpolation between points
 
   this.hover.enabled=true;
   this.hover.line=false;
