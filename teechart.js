@@ -7479,7 +7479,7 @@ Tee.Pie=function(o,o2) {
   this.rotation=0;
   this.colorEach="yes";
   this.useAxes=false;
-
+  this.continuous = false;
   var f=this.format;
   f.stroke.fill="black";
   f.shadow.visible=true;
@@ -7954,7 +7954,7 @@ Tee.Gantt=function(o,o2) {
 
   this.height=70;
   this.margin=new Point(6,6);
-
+  this.continuous = false;
   var f=this.format;
   f.shadow.visible=true;
   f.round.x=f.round.y=8;
@@ -8368,7 +8368,7 @@ Tee.Polar=function(o,o2) {
 
   this._paintAxes=false;
   this._paintWalls=false;
-
+  this.continuous = false;
   this.useOrigin=false;
   this.origin=0;
 
