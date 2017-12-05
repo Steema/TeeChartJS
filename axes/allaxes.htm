@@ -32,6 +32,10 @@ function draw() {
   Chart1.addSeries(new Tee.Area([2,9,6,5,8,1,7,0,2,4,5]));
   Chart1.addSeries(new Tee.Bar([7,5,1,3,4,9,2,6,5,1,0]));
   Chart1.addSeries(new Tee.Line([3,2,9,1,0,7,3,8,4,5,6]));
+  
+  Chart1.series.items[0].format.stroke.size=0.5;
+  Chart1.series.items[1].format.stroke.size=0.5;
+  Chart1.series.items[2].format.stroke.size=0.5;
 
   setHoriz("both");
   setVert("both");
@@ -45,10 +49,10 @@ function draw() {
 
   var font = Chart1.title.format.font;
   font.style="48px Verdana";
-  font.shadow.visible=true;
+  //font.shadow.visible=true;
   font.gradient.visible=true;
-  font.gradient.colors=["lime","white"];
-  font.stroke.fill="green";
+  font.gradient.colors=["gray","white"];
+  //font.stroke.fill="green";
 
   Chart1.axes.left.minorTicks.visible=true;
   Chart1.axes.top.minorTicks.visible=true;
@@ -162,7 +166,7 @@ function setRoundFirst(value) {
 }
 function resize(chart){
 	
-	var startWidth=600;
+	var startWidth=1000;
 	var startHeight=400;
 	var w;
 	var h;
@@ -292,7 +296,7 @@ function resizeToolBars(){
 				</div>
 				<div class="x_content">
 					<center>
-					<canvas id="canvas" width="600" height="400">
+					<canvas id="canvas" width="1000" height="400">
 					This browser does not seem to support HTML5 Canvas.
 					</canvas>
 					</center>

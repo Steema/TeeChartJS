@@ -31,6 +31,9 @@ function draw() {
   Chart1=new Tee.Chart("canvas");
   Chart1.addSeries(new Tee.Area([7,5,1,3,4,9,2,0,3,8,11.2,7]));
   Chart1.addSeries(new Tee.Area([3,2,8,4,1,6.1,4,3,2,5,5,8]));
+  
+  Chart1.series.items[0].format.stroke.size=0.75;
+  Chart1.series.items[1].format.stroke.size=0.75;
 
   Chart1.panel.format.gradient.colors=["beige","orange"];
   Chart1.panel.format.gradient.direction="bottomtop";
@@ -39,10 +42,10 @@ function draw() {
   
   Chart1.title.text="Area";
   Chart1.title.format.font.style="48px Verdana";
-  Chart1.title.format.font.shadow.visible=true;
+  //Chart1.title.format.font.shadow.visible=true;
   Chart1.title.format.font.gradient.visible=true;
-  Chart1.title.format.font.gradient.colors=["lime","white"];
-  Chart1.title.format.font.stroke.fill="green";
+  Chart1.title.format.font.gradient.colors=["gray","white"];
+  //Chart1.title.format.font.stroke.fill="gray";
 
   changeTheme(Chart1, "minimal");
 Chart1.draw();
