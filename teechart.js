@@ -7668,7 +7668,7 @@ Tee.Pie=function(o,o2) {
       if (r2<radius) radius=r2;
 
       donutRadius=radius*this.donut*0.01;
-
+      radius = radius / (100 / this.maxRadius);
       total=ArraySumAbs(this.data.values);
 
       sorted=this.doSort(this.sort, this.orderAscending);
@@ -7926,11 +7926,165 @@ Tee.HorizArea.prototype=new Tee.Area;
  * @property {Number} [donut=50] Percent of hole size relative to pie radius. From 0 to 100.
  */
 Tee.Donut=function(o,o2) {
+    var lessDonutWidth = 100;
+    var donutArray = [];
   Tee.Pie.call(this,o,o2);
   this.donut=50;
+    
+    this.refreshWidth = function () {
+        if (this.concentric) {
+            donutArray = this.chart.series.items;
+            var nVisibleDonuts = 0;
+            var n = 0;
+            for (var i = 0; i < donutArray.length; i++) {
+                if (donutArray[i].visible) nVisibleDonuts++;
+            }
+            if (lessDonutWidth == 100) getLessDonutWidth();
+            for (var i = 0; i < donutArray.length; i++) {
+                if (donutArray[i].visible) {
+                    donutArray[i].donut = lessDonutWidth + n * ((100 - lessDonutWidth) / (nVisibleDonuts));
+                    n++;
+                }
+            }
+        }
+    }
+    function getLessDonutWidth() {
+        for (var i = 0; i < donutArray.length; i++) {
+            if (donutArray[i].donut < lessDonutWidth) lessDonutWidth = donutArray[i].donut;
+                }
+    }
+
 }
 
 Tee.Donut.prototype=new Tee.Pie();
+   
+    /**
+     * @constructor
+     * @augments Tee.Donut
+     * @class Draws series data as slices of a circle, with a center hole
+     * @property {Number} [rotation=270] Rotates all slices by specified degree from 0 to 360.
+     * @property {Number} [angleWidth=values%] Indicates the width of the Donut/Pie/ActivityGauge in degrees form 0 to 360.
+     */
+    
+Tee.ActivityGauge = function (o, o2) {
+    
+    Tee.Donut.call(this, [], []);
+    this.data = {
+        values:(o!=null)?o:[],
+        labels: (o2 != null) ? o2 : []
+    }
+    
+    this.donutArray = [];
+    this.maxWidth = 230;
+    this.addRandom = function (count) {
+        for (var i = 0; i < count; i++) {
+            this.add((Math.floor((Math.random() * 20) + 10)), (String.fromCharCode(65 + i)));
+        }
+        return this;
+    }
+    this.maxValue = function () {
+        var tmp = this.data.values[0];
+        for (var i = 0; i < this.data.values.length; i++) {
+            if (tmp < this.data.values[i]) tmp = this.data.values[i];
+        }
+        return tmp;
+    }
+
+    if (o != null) {
+        for (var i = 0; i < o.length; i++) {
+            var donutCenterSize = 40;
+            var tmpDonut = donutCenterSize + ((100 - donutCenterSize) * (i) / o.length);
+            var tmpMaxRadius = donutCenterSize + ((100 - donutCenterSize) * (i + 1) / o.length);
+            var tmpAngleWidth = Math.abs(this.maxWidth * o[o.length - 1 - i] / this.maxValue());
+            this.donutArray.push(createDonut(o[o.length - 1 - i], o2[o.length - 1 - i], tmpDonut, tmpMaxRadius, tmpAngleWidth));
+        }
+    }
+
+    function createDonut(value, label, tmpDonut, maxRadius, angleWidth) {
+        var donut = new Tee.Donut([value], [label]);
+        donut.concentric = true;
+        donut.marks.visible = false;
+        donut.format.shadow.visible = false;
+        donut.format.gradient.visible = false;
+        donut.donut = tmpDonut;
+        donut.maxRadius = maxRadius;
+        donut.angleWidth = angleWidth;
+        donut.rotation = 270;
+        donut.visible = false;
+        return donut;
+    }
+
+    function copyFormat(donut, origin, colorNum) {
+        var dF = donut.format;
+        var f = origin.format;
+        dF.fill = origin.chart.palette.colors[origin.donutArray.length - 1 - colorNum % origin.chart.palette.colors.length];
+        dF.font.baseLine = f.font.baseLine;
+        dF.font.fill = f.font.fill;
+        dF.font.style = f.font.style;
+        dF.font.textAlign = f.font.textAlign;
+        dF.gradient.colors = [f.gradient.colors[0][colorNum]];
+        dF.gradient.direction = f.gradient.direction;
+        dF.gradient.offset.x = f.gradient.offset.x;
+        dF.gradient.offset.y = f.gradient.offset.y;
+        dF.gradient.stops = f.gradient.stops;
+        dF.gradient.visible = f.gradient.visible;
+        dF.round.x = f.round.x;
+        dF.round.y = f.round.y;
+        dF.shadow.blur = f.shadow.blur;
+        dF.shadow.color = f.shadow.color;
+        dF.shadow.height = f.shadow.height;
+        dF.shadow.visible = f.shadow.visible;
+        dF.shadow.width = f.shadow.width;
+        dF.stroke.fill = f.stroke.fill.slice(0);
+        dF.stroke.cap = f.stroke.cap;
+        dF.stroke.dash = f.stroke.dash;
+        dF.stroke.join = f.stroke.join;
+        dF.stroke.size = f.stroke.size;
+        dF.transparency = f.transparency;
+        donut.fill = function (i) { return dF.gradient.visible ? dF.gradient.colors : dF.fill; }
+    }
+    this.recalcWidth=function() {
+        for (var i = 0; i < this.donutArray.length; i++) {
+            var donutCenterSize = 40;
+            this.donutArray[i].donut = donutCenterSize + ((100 - donutCenterSize) * (i) / this.data.values.length);
+            this.donutArray[i].maxRadius = donutCenterSize + ((100 - donutCenterSize) * (i + 1) / this.data.values.length);
+            this.donutArray[i].angleWidth = Math.abs(this.maxWidth * this.data.values[this.data.values.length - 1 - i] / this.maxValue());
+        }
+    }
+
+    this.minValue = function () {
+        var tmp = this.data.values[0];
+        for (var i = 0; i < this.data.values.length; i++) {
+            if (tmp > this.data.values[i]) tmp = this.data.values[i];
+        }
+        return tmp;
+    }
+    this.add = function (value, label) {
+        var donutTmp = createDonut(value, label, 0, 0, 0);
+        this.donutArray.push(donutTmp);
+        this.data.values.push(value);
+        this.data.labels.push(label);
+        if(this.chart!=null) this.linkDonutsToChart();
+    }
+    this.draw = function () {
+        
+        for (var i = 0; i < this.donutArray.length; i++) {
+            var c = this.donutArray[i].chart.ctx;
+            copyFormat(this.donutArray[i], this, i);
+            c.fillStyle = this.donutArray[i].getFillStyle(this.donutArray[i].chart.chartRect, this.donutArray[i].format.fill);
+            this.recalcWidth();
+            this.donutArray[i].draw();
+
+        }
+    }
+    this.linkDonutsToChart = function () {
+        for (var i = 0; i < this.donutArray.length; i++) {
+            this.donutArray[i].setChart(this.donutArray[i], this.chart);
+        }
+        }
+    }
+Tee.ActivityGauge.prototype = new Tee.Donut();
+
 
 /**
  * @constructor
