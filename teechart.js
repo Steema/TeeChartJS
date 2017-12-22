@@ -6172,6 +6172,7 @@ Tee.Chart=function(canvas,data,type)
    */
   this.addSeries=function(series) {
     series.setChart(series,this);
+    if (series.donutArray !=null && series.donutArray !== 'undefined') series.linkDonutsToChart();
 
     var li=this.series.items, n=li.indexOf(series);
 
@@ -7480,6 +7481,8 @@ Tee.Pie=function(o,o2) {
   this.colorEach="yes";
   this.useAxes=false;
   this.continuous = false;
+  this.angleWidth = 360;
+  this.maxRadius = 100;
   var f=this.format;
   f.stroke.fill="black";
   f.shadow.visible=true;
@@ -7558,8 +7561,7 @@ Tee.Pie=function(o,o2) {
   this.slice=function(c,index) {
     var p=new Point();
 
-    endAngle+=Math.PI*2*( Math.abs(this.data.values[index]) / total);
-
+    endAngle += Math.PI * 2 * (Math.abs(this.data.values[index]) / total) / (360 / this.angleWidth);
     center.x=piex;
     center.y=piey;
     this.calcCenter(index,radius,(angle+endAngle)*0.5,center);
