@@ -26,6 +26,7 @@
 	
 		var Chart1;
 		var a1;
+		var enableCursor = false;
 		
 		function draw() {
 		
@@ -127,14 +128,19 @@
 		  Chart1.tools.add(tip);
 		
 		  tip.onhide=function() { scaling=0; poindex=-1; }
-		 /*
-		  tip.ongettext=function( tool, text, series, index) { 
-		    var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
-			    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ index.toFixed(0)+'</strong></font>';
-		        s =	s +'<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';  
-			return s;
-		  }*/
-		 tip.ongettext=function(tool, text, series, index) {
+		  
+		  var t = new Tee.CursorTool(Chart1);
+		  t.direction="vertical";
+
+		  tip.onshow=function(tool,series,index) {
+			  if (enableCursor == false){
+				Chart1.tools.add(t);
+				enableCursor = true;
+				resize(Chart1);
+			  }
+		  }		  
+
+		  tip.ongettext=function(tool, text, series, index) {
 			    var t, s="", ser;
 
 			    for(t=0;t<Chart1.series.count(); t++) {
@@ -153,9 +159,7 @@
 		  animation.mode = "linear"; 
 		 
 		  animation.animate(Chart1);
-		  var t = new Tee.CursorTool(Chart1);
-		  t.direction="vertical";
-		  Chart1.tools.add(t);
+
 		  resize(Chart1);
 		}
 		

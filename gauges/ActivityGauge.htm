@@ -25,7 +25,7 @@
 <script type="text/javascript">
 var Chart1;
 function draw() {
-    var colors = ["#FF6347", "#FA8072", "#3CB371", "#48D1CC", "#6495ED", "#2095FF"];
+  //var colors = ["#FF6347", "#FA8072", "#3CB371", "#48D1CC", "#6495ED", "#2095FF"];
   Chart1 = new Tee.Chart("canvas");
 
   Chart1.addSeries(new Tee.ActivityGauge().addRandom(6));
@@ -46,7 +46,7 @@ function draw() {
   Chart1.legend.textStyle = "auto";
     
   changeTheme(Chart1, "minimal");
-  Chart1.palette.colors=colors;
+  //Chart1.palette.colors=colors;
   Chart1.draw();
 }
 

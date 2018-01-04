@@ -47,6 +47,8 @@
 		Chart1.draw();
 	}
 	
+	var enableCursor = false;
+	
 	function draw() {
 	
 		//init chart
@@ -145,10 +147,18 @@
 	
 	  	//tip.onshow=function(tool,series,index) { scaling=2; poindex=index; }
 		tip.onhide=function() { scaling=0; poindex=-1; }
-	
+		
+		var t = new Tee.CursorTool(Chart1);
+		t.direction="vertical";
+		
 		tip.onshow=function(tool,series,index) {
+		  if (enableCursor == false){
+		    Chart1.tools.add(t);
+			enableCursor = true;
+			resize(Chart1);
+		  }
 		}
-	  
+  
 		tip.ongettext=function(tool, text, series, index) {
 		    var t, s="", ser;
 
@@ -158,8 +168,7 @@
 		      s+='<font face="verdana" color="darkorange" size="1"><b>'+ser.title+':</b></font> <font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
 		    }
 		    return s;
-	  }
-	
+	    }
 		
 		//animation
 		animation = new Tee.SeriesAnimation();
@@ -177,9 +186,7 @@
 
 		changeTheme("minimal");
 		changePalette("seaWash");
-		var t = new Tee.CursorTool(Chart1);
-		t.direction="vertical";
-		Chart1.tools.add(t);
+
 		resize(Chart1);
 	}
 	function resize(chart){

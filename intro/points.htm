@@ -25,6 +25,7 @@
 	<script type="text/javascript">
 		
 		var Chart1;
+		var enableCursor = false;
 		
 		function draw() {
 		
@@ -150,6 +151,17 @@
 		
 		  tip.onhide=function() { scaling=0; poindex=-1; }
 		  
+		  var t = new Tee.CursorTool(Chart1);
+		  t.direction="vertical";
+		  
+		  tip.onshow=function(tool,series,index) {
+			  if (enableCursor == false){
+				Chart1.tools.add(t);
+				enableCursor = true;
+				resize(Chart1);
+			  }
+		  }		  
+		  
 		  tip.ongettext=function(tool, text, series, index) {
 			    var t, s="", ser;
 
@@ -179,9 +191,7 @@
 		  animation.items.push(fadeAnimation);
 		  
 		  animation.animate(Chart1);
-		  var t = new Tee.CursorTool(Chart1);
-		  t.direction="vertical";
-		  Chart1.tools.add(t);
+
 		  resize(Chart1);
 		}
 		

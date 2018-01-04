@@ -30,6 +30,7 @@
 <script type="text/javascript">
 
 var Chart1, cursor, DISPLAY_RANGE=100;
+var enableCursor = false;
 
 function draw() {
 
@@ -89,6 +90,12 @@ function draw() {
   Chart1.series.items[3].vertAxis = axis2;
   Chart1.series.items[4].vertAxis = axis3;
   
+  axis3.labels.ongetlabel=function(value,s) {
+     this.format.font.fill="midnightblue";
+     this.format.font.style="11px Tahoma";
+     return s + "mm";
+  }
+  
   // Cursor tool
 
   cursor=new Tee.CursorTool(Chart1);
@@ -102,8 +109,6 @@ function draw() {
 
   // Repaint full chart when moving the cursor:
   cursor.render="full";
-
-  Chart1.tools.add(cursor);
 
   // Set mouse zooming and vertical scroll:
 
@@ -142,6 +147,14 @@ function draw() {
   tip.delay = 3000;
 
   Chart1.tools.add(tip);
+  
+  tip.onshow=function(tool,series,index) {
+	  if (enableCursor == false){
+		Chart1.tools.add(cursor);
+		enableCursor = true;
+		resize(Chart1);
+	  }
+  }  
 
   tip.ongettext=function(tool, text, series, index) {
     var t, s="", ser;
@@ -224,7 +237,7 @@ function draw() {
   Chart1.axes.left.format.stroke.size = 1;
   Chart1.axes.left.format.stroke.fill = "black";
   Chart1.applyPalette("warm");
-Chart1.draw();
+  Chart1.draw();
 }
 
 function resize(chart){
