@@ -7961,7 +7961,7 @@ Tee.Donut.prototype=new Tee.Pie();
     /**
      * @constructor
      * @augments Tee.Donut
-     * @class Draws series data as slices of a circle, with a center hole
+     * @class Draws comparative of values plotted as concentric circular bands
      * @property {Number} [rotation=270] Rotates all slices by specified degree from 0 to 360.
      * @property {Number} [angleWidth=values%] Indicates the width of the Donut/Pie/ActivityGauge in degrees form 0 to 360.
      */
