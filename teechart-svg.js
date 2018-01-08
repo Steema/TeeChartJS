@@ -1,6 +1,6 @@
 // -------------------------------------------------------------
 // TeeChart(tm) for JavaScript(tm)
-// v1.9 - April 2017
+// v2.2 Jan 2018
 // Copyright(c) 2012-2017 by Steema Software SL. All Rights Reserved.
 // www.steema.com
 //
