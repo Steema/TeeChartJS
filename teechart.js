@@ -1,7 +1,7 @@
 /**
  * @preserve TeeChart(tm) for JavaScript(tm)
  * @fileOverview TeeChart for JavaScript(tm)
- * v2.21 Nov 2017
+ * v2.3 Jan 2018
  * Copyright(c) 2012-2017 by Steema Software SL. All Rights Reserved.
  * http://www.steema.com
  *
@@ -13,7 +13,7 @@
 
 /**
  * @author <a href="mailto:david@steema.com">Steema Software</a>
- * @version 2.21
+ * @version 2.3
  */
 
 /**
