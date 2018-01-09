@@ -5658,6 +5658,7 @@ Tee.Chart=function(canvas,data,type)
   }
 
   var c=this.canvas;
+  var isNLc=false;
 
   this.__webgl=c.__webgl;
 
@@ -6316,6 +6317,24 @@ Tee.Chart=function(canvas,data,type)
        this.zoom.draw();
 
    if (this.ondraw) this.ondraw(this);
+   
+   if (this.isNLc)
+   {
+	   var f = new Tee.Format(this);
+	   var msg = "TeeChart Evaluation (c)Steema Software 2018";
+	   var tw; 
+	   var ctx = this.ctx;
+	   ctx.save();
+	   ctx.font = "13px Courier";
+	   tw = f.textWidth(msg);
+	   var rText = { x: this.chartRect.x + (this.chartRect.width / 2) - (tw/2), y: (this.bounds.height / 2), width: tw, height: f.textHeight("H")};
+	   ctx.translate((this.chartRect.x + (this.chartRect.width / 2)), (this.bounds.height / 2));
+	   ctx.rotate(-30 * Math.PI / 180);
+	   ctx.translate(-(this.chartRect.x + (this.chartRect.width / 2)), -(this.bounds.height / 2));
+	   f.font.fill = "rgba(64,108,128, 0.55)";
+	   f.drawText(rText, msg);
+	   ctx.restore();
+   }   
   }
 
   /**
