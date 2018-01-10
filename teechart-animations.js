@@ -219,7 +219,11 @@ Tee.SeriesAnimation=function(target) {
 
       var v=s.data.values, old=s.data._old, t, len=v.length;
 
-      if (s instanceof Tee.Pie) {
+                    if (s instanceof Tee.ActivityGauge) {
+                        s.maxDrawWidth = s.maxWidth * (f);
+                    }
+                    else
+                    if (s instanceof Tee.Pie) {
         s.rotation=360*(1-f);
         scaling=f;
       }
@@ -244,6 +248,7 @@ Tee.SeriesAnimation=function(target) {
   }
 
   this.stop=function() {
+            this.doStep(1);
     var a=o.getAxis();
 
     if (a) {

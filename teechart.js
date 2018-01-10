@@ -7995,6 +7995,7 @@ Tee.ActivityGauge = function (o, o2) {
     
     this.donutArray = [];
     this.maxWidth = 230;
+    this.maxDrawWidth = this.maxWidth;
     this.addRandom = function (count) {
         for (var i = 0; i < count; i++) {
             this.add((Math.floor((Math.random() * 20) + 10)), (String.fromCharCode(65 + i)));
@@ -8014,7 +8015,7 @@ Tee.ActivityGauge = function (o, o2) {
             var donutCenterSize = 40;
             var tmpDonut = donutCenterSize + ((100 - donutCenterSize) * (i) / o.length);
             var tmpMaxRadius = donutCenterSize + ((100 - donutCenterSize) * (i + 1) / o.length);
-            var tmpAngleWidth = Math.abs(this.maxWidth * o[o.length - 1 - i] / this.maxValue());
+            var tmpAngleWidth = Math.abs(this.maxDrawWidth * o[o.length - 1 - i] / this.maxValue());
             this.donutArray.push(createDonut(o[o.length - 1 - i], o2[o.length - 1 - i], tmpDonut, tmpMaxRadius, tmpAngleWidth));
         }
     }
@@ -8067,7 +8068,7 @@ Tee.ActivityGauge = function (o, o2) {
             var donutCenterSize = 40;
             this.donutArray[i].donut = donutCenterSize + ((100 - donutCenterSize) * (i) / this.data.values.length);
             this.donutArray[i].maxRadius = donutCenterSize + ((100 - donutCenterSize) * (i + 1) / this.data.values.length);
-            this.donutArray[i].angleWidth = Math.abs(this.maxWidth * this.data.values[this.data.values.length - 1 - i] / this.maxValue());
+            this.donutArray[i].angleWidth = Math.abs(this.maxDrawWidth * this.data.values[this.data.values.length - 1 - i] / this.maxValue());
         }
     }
 
