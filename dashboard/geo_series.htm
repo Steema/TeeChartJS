@@ -173,6 +173,7 @@ function draw() {
 
     var Chart1=Engine.Chart("canvas1", Years.title);
     Chart1.setSeriesStyle(Tee.Line);
+	Chart1.panel.margins.right=10;
 	
 	Chart1.legend.visible=false;
 
@@ -253,7 +254,7 @@ function resize(){
 	var geoMap = document.getElementById("usa");
 	var canvas1 = document.getElementById("canvas1");
 	var canvas2 = document.getElementById("canvas2");
-	var startWidthC1 = 400;
+	var startWidthC1 = 600;
 	var startWidthC2 = 500;
 	var startHeightC = 200;
 	var startWidthGeoMap = 600;
@@ -280,24 +281,25 @@ function resize(){
 </head>
 <body onload="draw();resize()" onresize="resize();" style="backgorund-color:white;">
 
-<table style="position:absolute; left:5px; top:5px; border: 2px solid white; width:80%"><tr style="border:0px solid white;"><td bgcolor="#FFFFFF" style="font-size:16px; border:0px solid white;" colspan=2>TeeChart Geo Mapping example: USA - Average Temperatures Degrees Celsius</td></tr>
-<tr style="border:1px solid black;"><td style="border:1px solid black;" colspan=2>&nbsp;</td></tr>
+<table style="position:absolute; left:5px; top:5px; border: 0px solid white; width:80%"><tr style="border:1px solid black;"><td bgcolor="#FFFFFF" style="font-size:16px;" colspan=2>TeeChart Geo Mapping example: USA - Average Temperatures Degrees Celsius</td></tr>
 
-<tr style="border:2px solid white;"><td style="border:2px solid white;">
+
+<tr style="border-top:1pt solid black;"><td style=" border-right:1pt solid white;">
   <div style="float:left;">
   Move mouse over USA map to show values for selected State:<br/><br/>
   <svg id="usa" width="600" height="300"></svg>
   </div>
-</td><td class="mapTxtPart" style="font-size:14px; border: 2px solid white; background-color:#FFFFFF; padding-left:5px; padding-right:5px;"><div style="color:#FFFFFF">Temperatures</div><br>Based on query of average Temperatures (Degrees Celsius) of a given Year, grouped by USA State.</td></tr>
-<tr style="border: 2px solid white;"><td style="border: 2px solid white;">
+</td><td class="mapTxtPart" style="font-size:14px; background-color:#FFFFFF; padding-left:5px; padding-right:5px;"><div style="color:#FFFFFF">Temperatures</div><br>Based on query of average Temperatures (Degrees Celsius) of a given Year, grouped by USA State.</td></tr>
+
+<tr style="border:1pt solid #AAAAAA;"  ><td style="border-right:1pt solid white;">
   <div style="float:left;">
-    <canvas id="canvas1" width="400" height="200"></canvas>&nbsp;&nbsp;
+    <canvas id="canvas1" width="600" height="200"></canvas>&nbsp;&nbsp;
     </td>
-    <td style="border: 2px solid white;">
+    <td>
     <canvas id="canvas2" width="500" height="200"></canvas>
   </div>
 </td></tr>
-<tr style="border:0px solid white;"><td style="border:0px solid white;" colspan=2>
+<tr style="border:1pt solid #AAAAAA;"><td style="border:0px solid white;" colspan=2>
   <table style="position:relative; left:0px; top:0px; width:100%; font-size:12px; border: 2px solid white;" id="legend"></table>
 </td></tr>  
 </table>
