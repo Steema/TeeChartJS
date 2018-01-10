@@ -710,13 +710,13 @@ Tee.Slider=function(chart,position) {
   var t=this.thumb=new Tee.Format(chart);
   t.round={ x:4, y:4}
   t.stroke.size=0.5;
-  t.gradient.visible=false;
-  t.gradient.direction="leftright";
-  t.shadow.visible=false;
+  t.gradient.visible=true;
+  t.gradient.direction="bottomtop";
+  t.shadow.visible=true;
 
   var f=this.back=new Tee.Format(chart);
   f.fill="white";
-  f.gradient.visible=false;
+  f.gradient.visible=true;
   f.stroke.fill="darkgrey";
   f.round={ x:4, y:4 }
 
