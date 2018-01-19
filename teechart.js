@@ -1895,8 +1895,21 @@ Tee.ToolTip=function(chart) {
 
       if (s.visible) {
 	    index=s.clicked(p);
-    	if ((index == -1) && (s.continuous))
+          if ((index == -1) && (s.continuous)) {
     		index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
+              var distance, oldDistance;
+              for (var n = 0; n < len; n++) {
+                  distance = Math.abs(li.items[n].data.values[index] - this.chart.axes.left.fromPos(p.y));
+                  if (n == 0) {
+                      oldDistance = distance;
+                      s = li.items[n];
+                  }
+                  else if(distance<oldDistance){
+                      s = li.items[n];
+                  }
+              }
+          }
+
         if (index!=-1) {
           ser=s;
           break;
@@ -3420,7 +3433,9 @@ function Axis(chart,horizontal,otherSide) {
   this.fromSize=function(p) {
     return (p/this.scale);
   }
-  
+    /**
+    * @returns {Number} Returns the index of a given position in pixels (only works in bottom axes).
+    */
   this.fromSizeCalcIndex=function(p) {
 	  var  index = -1;
 	  if(this.dateTime==true){
@@ -3439,7 +3454,7 @@ function Axis(chart,horizontal,otherSide) {
 	  }
 	  else{
 		  index = (p/this.scale)+this.minimum;
-		  if(this.chart.series.items[0].data.values.length<index || index<0) index=-1;
+		  if(this.chart.series.items[0].data.values.length<index || index<-0.5) index=-1;
 	  }
     return (index);
   }
