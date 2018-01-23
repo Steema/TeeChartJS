@@ -8872,28 +8872,56 @@ Tee.PaletteSeries.prototype.legendText=function(index /*,style,title,asArray*/ )
 Tee.DOMTip=function(){
 var top = 3,
     left = 3,
+    arrowtt,
     speed = 10,
     timer = 10,
+    arrowWidth = 8,
+    arrowStyleBefore,
+    arrowStyleAfter,
+    arrowBorderWidth,
+    domStylesBorderColor,
     endalpha = 97,
     alpha = 0,
     tt,
     ttstyle,
     h,
     target,
-    ie = ((typeof document!=='undefined') && document.all) ? true : false;
+    ie = ((typeof document!=='undefined') && document.all) ? true : false,
+    width;
 
  return{
   show: function(v,w, dest, domStyle){
     if (!tt){
-      tt = document.createElement('div');
-      tt.setAttribute('id','teetip1');
+            arrowStyleAfter = document.createElement('style');
+            arrowStyleBefore = document.createElement('style');
 
+            domStylesBorderColor = "";
+      tt = document.createElement('div');
+            arrowtt = document.createElement('div');
+
+            tt.setAttribute('id', 'teetip1');
+            arrowtt.setAttribute('id', 'teetiparrow1');
       tt.className='teetip';
+            arrowtt.className = 'teetiparrow';
     
       tt.setAttribute("style", domStyle);
+            domStylesBorderColor = tt.style.getPropertyValue("border-color");
 
-      document.body.appendChild(tt);
+            arrowBorderWidth = tt.style.getPropertyValue("border-width");
+            
+            if (arrowBorderWidth.length == 0) arrowBorderWidth = arrowWidth / 2;
+            else {
+                arrowBorderWidth = arrowBorderWidth.substring(0, arrowBorderWidth.length - 2);
+                arrowBorderWidth = arrowBorderWidth * 2;
+            }
 
+            arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: 25px;}";
+            arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth) + "px;bottom: " + (-arrowWidth + arrowBorderWidth*2) + "px; border: " + (arrowWidth - arrowBorderWidth) + "px solid;border-color: #fff transparent transparent transparent;}";
+            document.head.appendChild(arrowStyleBefore);
+            document.head.appendChild(arrowStyleAfter);
+
+            document.body.appendChild(tt);
+            tt.appendChild(arrowtt);
       ttstyle=tt.style;
       ttstyle.opacity = 0;
 
@@ -8904,12 +8932,10 @@ var top = 3,
     
     target=dest;
     
-    document.onmousemove = this.pos;
 
     ttstyle.display = 'block';
     ttstyle.position = 'absolute';
-
-    tt.innerHTML = v;
+        tt.innerHTML = arrowtt.outerHTML + v;
     ttstyle.width = w ? w + 'px' : 'auto';
 
     if (!w && ie)
@@ -8917,17 +8943,65 @@ var top = 3,
 
     if (tt.offsetWidth > 300)
       ttstyle.width = 300 + 'px';
-
+        width = tt.offsetWidth;
     h = parseInt(tt.offsetHeight,10) + top;
     if (tt.timer) clearInterval(tt.timer);
     tt.timer = setInterval(function() { Tee.DOMTip.fade(1) },timer);
+
+        document.onmousemove = this.pos;
+    
   },
 
   pos: function(e){
+         
+         var chart = target.chart;
+         var chartRect = chart.chartRect;
+         var horizontal = !chart.axes.bottom.firstSeries.yMandatory;
+         if (chart) {
+
+             
+
+             if (chart.series.items[0] instanceof Tee.Pie) {
       var d = document.documentElement,
           u = ie ? e.clientY + d.scrollTop : e.pageY,
-          l = ie ? e.clientX + d.scrollLeft : e.pageX;
+                     l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
+             }
+             else {
+                 var index ;
+                 if (!horizontal) index = Math.round(chart.axes.bottom.fromSizeCalcIndex(e.clientX - chart.canvas.getBoundingClientRect().left - chart.axes.bottom.startPos));
+                 else index = Math.round(chart.axes.left.fromPos(e.layerY));
+                 var point = new Point();
+                 var distance, oldDistance;
+                 if (e.target==chart.canvas) {
+                     for (var n = 0; n < chart.series.items.length; n++) {
+                         if (!horizontal) distance = Math.abs(chart.series.items[n].data.values[index] - chart.axes.left.fromPos(e.layerY));
+                         else distance = Math.abs(chart.series.items[n].data.values[index] - chart.axes.bottom.fromPos(e.layerX));
+                         if (n == 0) {
+                             oldDistance = distance;
+                             chart.series.items[n].calc(index, point);
+                         }
+                         else if (distance < oldDistance) {
+                             chart.series.items[n].calc(index, point);
+                         }
+                         oldDistance = distance;
+                     }
+                 }
+                 var d = document.documentElement;
+                 var u = point.y + chart.canvas.getBoundingClientRect().top - arrowWidth/2;// - document.body.getBoundingClientRect().top - arrowWidth;
 
+                 var l = point.x + chart.canvas.getBoundingClientRect().left  - width / 2 - arrowWidth*2;
+                 if ((l + width / 2) > chartRect.width) {
+                     l -= width / 2 - 10 - arrowWidth;
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (width-arrowWidth*2) + "px;}";
+                 }
+                 else if (l < chartRect.x) {
+                     l += width / 2 - 10 + arrowWidth;
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (0) + "px;}";
+                 }
+                 else if(l) {
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + ((width / 2)-(arrowWidth/2)) + "px;}";
+                 }
+             }
       if ((u-h)<0) u=h;
       if (l<0) l=0;
       
@@ -8959,6 +9033,7 @@ var top = 3,
       
       ttstyle.top = (u - h) + 'px';
       ttstyle.left = (l + left) + 'px';
+    }
   },
 
   fade: function(d){
