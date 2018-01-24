@@ -4582,7 +4582,7 @@ function removeEmptyArrayElements(arr) {
        return arr.filter( function(elem) { return elem !== null } ).map(
       removeEmptyArrayElements);
   }
-   }
+}
 
 function isArray(obj) {
   return obj && (obj.constructor==Array);
@@ -4593,14 +4593,28 @@ function isArray(obj) {
  * @param {Array|ArrayBuffer} a The array or typed-array of numbers.
  */
 function ArrayMax(a){
-  return Math.max.apply({},removeEmptyArrayElements(a));
+  var arr = removeEmptyArrayElements(a);
+  var max = -Number.MAX_VALUE;
+  arr.forEach(function(e) {
+    if (max < e) {
+      max = e;
+    }
+  });
+  return max;
 }
 /**
  * @returns {Number} Returns the minimum value in the array or typed-array parameter.
  * @param {Array|ArrayBuffer} a The array or typed-array of numbers.
  */
 function ArrayMin(a){
-  return Math.min.apply({},removeEmptyArrayElements(a));
+  var arr = removeEmptyArrayElements(a);
+  var min = Number.MAX_VALUE;
+  arr.forEach(function(e) {
+    if (min > e) {
+      min = e;
+    }
+  });
+  return min;
 }
 
 /**
