@@ -4615,6 +4615,9 @@ function ArrayMax(a){
       max = e;
     }
   });
+  if (Object.prototype.toString.call(max) === '[object Date]') {
+    max = max.getTime();
+  }
   return max;
 }
 /**
@@ -4629,6 +4632,9 @@ function ArrayMin(a){
       min = e;
     }
   });
+  if (Object.prototype.toString.call(min) === '[object Date]') {
+    min = min.getTime();
+  }
   return min;
 }
 
