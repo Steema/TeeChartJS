@@ -9003,10 +9003,10 @@ var top = 3,
                  var d = document.documentElement;
                  var u = point.y + chart.canvas.getBoundingClientRect().top - arrowWidth/2;// - document.body.getBoundingClientRect().top - arrowWidth;
 
-                 var l = point.x + chart.canvas.getBoundingClientRect().left  - width / 2 - arrowWidth*2;
+                 var l = point.x + chart.canvas.getBoundingClientRect().left - width / 2 - arrowWidth*1.5;
                  if ((l + width / 2) > chartRect.width) {
                      l -= width / 2 - 10 - arrowWidth;
-                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (width-arrowWidth*2) + "px;}";
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (width-arrowWidth*2.7) + "px;}";
                  }
                  else if (l < chartRect.x) {
                      l += width / 2 - 10 + arrowWidth;
