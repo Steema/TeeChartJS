@@ -1842,6 +1842,7 @@ Tee.ToolTip=function(chart) {
   Tee.Annotation.call(this,chart);
 
   this.visible=false;
+  this.staticAtPoint = false;
 
   /**
    * @private
@@ -2001,7 +2002,7 @@ Tee.ToolTip=function(chart) {
 
         if (this.autoRedraw)
            if (isDom)
-             Tee.DOMTip.show(this.text, 'auto', this.chart.canvas, this.domStyle);
+             Tee.DOMTip.show(this.text, 'auto', this.chart.canvas, this.domStyle, this.staticAtPoint);
            else
              this.chart.draw();
       }
@@ -8897,9 +8898,11 @@ var top = 3,
     timer = 10,
     arrowWidth = 8,
     arrowStyleBefore,
+    followCursor=false,
     arrowStyleAfter,
     arrowBorderWidth,
     domStylesBorderColor,
+    arrowBorderRadius,
     endalpha = 97,
     alpha = 0,
     tt,
@@ -8910,7 +8913,11 @@ var top = 3,
     width;
 
  return{
-  show: function(v,w, dest, domStyle){
+     show: function (v, w, dest, domStyle, staticAtPoint) {
+         if (!staticAtPoint) {
+             arrowWidth = 0;
+             followCursor = true;
+         }
     if (!tt){
             arrowStyleAfter = document.createElement('style');
             arrowStyleBefore = document.createElement('style');
@@ -8928,6 +8935,9 @@ var top = 3,
             domStylesBorderColor = tt.style.getPropertyValue("border-color");
 
             arrowBorderWidth = tt.style.getPropertyValue("border-width");
+            arrowBorderRadius = tt.style.getPropertyValue("border-radius");
+
+            arrowBorderRadius = arrowBorderRadius.substring(0, arrowBorderRadius.length - 2);
             
             if (arrowBorderWidth.length == 0) arrowBorderWidth = arrowWidth / 2;
             else {
@@ -8936,7 +8946,7 @@ var top = 3,
             }
 
             arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: 25px;}";
-            arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth) + "px;bottom: " + (-arrowWidth + arrowBorderWidth*2) + "px; border: " + (arrowWidth - arrowBorderWidth) + "px solid;border-color: #fff transparent transparent transparent;}";
+            arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: #fff transparent transparent transparent;}";
             document.head.appendChild(arrowStyleBefore);
             document.head.appendChild(arrowStyleAfter);
 
@@ -8981,7 +8991,7 @@ var top = 3,
 
              
 
-             if (chart.series.items[0] instanceof Tee.Pie) {
+             if (chart.series.items[0] instanceof Tee.Pie || followCursor) {
       var d = document.documentElement,
           u = ie ? e.clientY + d.scrollTop : e.pageY,
                      l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
@@ -8991,35 +9001,47 @@ var top = 3,
                  if (!horizontal) index = Math.round(chart.axes.bottom.fromSizeCalcIndex(e.clientX - chart.canvas.getBoundingClientRect().left - chart.axes.bottom.startPos));
                  else index = Math.round(chart.axes.left.fromPos(e.layerY));
                  var point = new Point();
-                 var distance, oldDistance;
+                 var distance, minDistance;
                  if (e.target==chart.canvas) {
                      for (var n = 0; n < chart.series.items.length; n++) {
                          if (!horizontal) distance = Math.abs(chart.series.items[n].data.values[index] - chart.axes.left.fromPos(e.layerY));
                          else distance = Math.abs(chart.series.items[n].data.values[index] - chart.axes.bottom.fromPos(e.layerX));
                          if (n == 0) {
-                             oldDistance = distance;
+                             minDistance = distance;
                              chart.series.items[n].calc(index, point);
                          }
-                         else if (distance < oldDistance) {
+                         else if (distance < minDistance) {
                              chart.series.items[n].calc(index, point);
+                             minDistance = distance;
                          }
-                         oldDistance = distance;
+
                      }
                  }
                  var d = document.documentElement;
-                 var u = point.y + chart.canvas.getBoundingClientRect().top - arrowWidth/2;// - document.body.getBoundingClientRect().top - arrowWidth;
+                 var marginTop = tt.style.marginTop.substring(0, tt.style.marginTop.length-2);
+                 var marginLeft = tt.style.marginLeft.substring(0, tt.style.marginLeft.length-2);
+                 var u = Math.round(point.y + window.scrollY + chart.canvas.getBoundingClientRect().top - tt.getBoundingClientRect().height - arrowWidth - marginTop + arrowBorderWidth/2);
+                 var l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - tt.getBoundingClientRect().width / 2 - marginLeft - arrowBorderWidth/2);
 
-                 var l = point.x + chart.canvas.getBoundingClientRect().left - width / 2 - arrowWidth*1.5;
+
                  if ((l + width / 2) > chartRect.width) {
-                     l -= width / 2 - 10 - arrowWidth;
-                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (width-arrowWidth*2.7) + "px;}";
+                     u = Math.round(point.y + window.scrollY + chart.canvas.getBoundingClientRect().top - tt.getBoundingClientRect().height - arrowWidth * 2 - marginTop + arrowBorderWidth / 2);
+                     l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - tt.getBoundingClientRect().width - marginLeft);
+                     ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px 0px " + arrowBorderRadius + "px";
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " " + domStylesBorderColor + " transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (tt.getBoundingClientRect().width - arrowWidth*2 - arrowBorderWidth/2) + "px;}";
+                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth-arrowBorderWidth/2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth  - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: #fff #fff transparent transparent;}";
                  }
                  else if (l < chartRect.x) {
-                     l += width / 2 - 10 + arrowWidth;
-                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (0) + "px;}";
+                     l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - marginLeft);
+                     u = Math.round(point.y + window.scrollY + chart.canvas.getBoundingClientRect().top - tt.getBoundingClientRect().height - arrowWidth*2 - marginTop + arrowBorderWidth/2);
+                     ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px "+ arrowBorderRadius + "px 0px";
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent " + domStylesBorderColor + ";bottom: -" + arrowWidth * 2 + "px;left: " + (0 - arrowBorderWidth/2) + "px;}";
+                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth/2) + "px;bottom: " + (arrowBorderWidth-(arrowWidth-1)) + "px; border: " + (arrowWidth-arrowBorderWidth/2) + "px solid;border-color: #fff transparent transparent #fff;}";
                  }
                  else if(l) {
-                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + ((width / 2)-(arrowWidth/2)) + "px;}";
+                     ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px " + arrowBorderRadius + "px " + arrowBorderRadius + "px";
+                     arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + ((tt.getBoundingClientRect().width / 2) - (arrowWidth)) + "px;}";
+                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth/2) + "px;bottom: " + (arrowBorderWidth-(arrowWidth-1)) + "px; border: " + (arrowWidth-arrowBorderWidth/2) + "px solid;border-color: #fff transparent transparent transparent;}";
                  }
              }
       if ((u-h)<0) u=h;
@@ -9050,9 +9072,14 @@ var top = 3,
         }
       }
       */
-      
+	  if (followCursor) {
       ttstyle.top = (u - h) + 'px';
       ttstyle.left = (l + left) + 'px';
+	  }
+	  else {
+	      ttstyle.top = (u /*- h*/) + 'px';
+	      ttstyle.left = (l /*+ left*/) + 'px';
+	  }
     }
   },
 
