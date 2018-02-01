@@ -9243,12 +9243,14 @@ function twoFingersZoom(chart,zoom){
 		touches = event.touches;
 	});
 
-	function drawMinMaxBottom(min, max){
-		chart.axes.bottom.calcMinMax(min,max);
+	function drawMinMaxBottom(min, max) {
+	    chart.axes.top.calcMinMax(min, max);
+	    chart.axes.bottom.calcMinMax(min, max);
 		chart.draw();
 	}
-	function drawMinMaxLeft(min, max){
-		chart.axes.left.calcMinMax(min,max);
+	function drawMinMaxLeft(min, max) {
+	    chart.axes.right.calcMinMax(min, max);
+	    chart.axes.left.calcMinMax(min, max);
 		chart.draw();
 	}
 }
