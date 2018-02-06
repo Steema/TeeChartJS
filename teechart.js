@@ -1416,7 +1416,7 @@ Tee.Annotation=function(chart,text,x,y) {
     w+=(m.left+m.right);
 
     var pos=this.position, p=pos.y+thisH, t, i;
-
+    /*
     for(t=0; i=this.items[t++];)
     {
       var bi=i.bounds;
@@ -1430,7 +1430,7 @@ Tee.Annotation=function(chart,text,x,y) {
 
     for(t=0; i=this.items[t++];)
       i.bounds.width=w-m.right;
-
+      */
     b.set(pos.x,pos.y,w,h);
   }
 
@@ -1498,9 +1498,10 @@ Tee.Annotation=function(chart,text,x,y) {
       if (ft>0)
          ctx.globalAlpha=old;
     }
-
+        /*
     for(var t=0, i; i=this.items[t++];)
        i.doDraw();
+       */
   }
   }
 
