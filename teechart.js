@@ -2003,7 +2003,7 @@ Tee.ToolTip=function(chart) {
 
         if (this.autoRedraw)
            if (isDom)
-             Tee.DOMTip.show(this.text, 'auto', this.chart.canvas, this.domStyle, this.staticAtPoint);
+             Tee.DOMTip.show(this.text, 'auto', this.chart.canvas, this.domStyle, this);
            else
              this.chart.draw();
       }
@@ -8902,7 +8902,9 @@ var top = 3,
     followCursor=false,
     arrowStyleAfter,
     arrowBorderWidth,
+    tip,
     domStylesBorderColor,
+    domStylesBackgroundColor,
     arrowBorderRadius,
     endalpha = 97,
     alpha = 0,
@@ -8914,8 +8916,9 @@ var top = 3,
     width;
 
  return{
-     show: function (v, w, dest, domStyle, staticAtPoint) {
-         if (!staticAtPoint) {
+     show: function (v, w, dest, domStyle, toolTip) {
+         tip = toolTip;
+         if (!toolTip.staticAtPoint) {
              arrowWidth = 0;
              followCursor = true;
          }
@@ -8934,20 +8937,21 @@ var top = 3,
     
       tt.setAttribute("style", domStyle);
             domStylesBorderColor = tt.style.getPropertyValue("border-color");
+            domStylesBackgroundColor = tt.style.getPropertyValue("background-color");
 
             arrowBorderWidth = tt.style.getPropertyValue("border-width");
             arrowBorderRadius = tt.style.getPropertyValue("border-radius");
 
             arrowBorderRadius = arrowBorderRadius.substring(0, arrowBorderRadius.length - 2);
             
-            if (arrowBorderWidth.length == 0) arrowBorderWidth = arrowWidth / 2;
+            if (arrowBorderWidth.length == 0) arrowBorderWidth = 0;
             else {
                 arrowBorderWidth = arrowBorderWidth.substring(0, arrowBorderWidth.length - 2);
                 arrowBorderWidth = arrowBorderWidth * 2;
             }
 
             arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: 25px;}";
-            arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: #fff transparent transparent transparent;}";
+            arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " transparent transparent transparent;}";
             document.head.appendChild(arrowStyleBefore);
             document.head.appendChild(arrowStyleAfter);
 
@@ -8984,7 +8988,14 @@ var top = 3,
   },
 
   pos: function(e){
-         
+      if (!tip.staticAtPoint) {
+          arrowWidth = 0;
+          followCursor = true;
+      }
+      else {
+          arrowWidth = 8;
+          followCursor = false;
+      }
          var chart = target.chart;
          var chartRect = chart.chartRect;
          var horizontal = !chart.axes.bottom.firstSeries.yMandatory;
@@ -8996,6 +9007,9 @@ var top = 3,
       var d = document.documentElement,
           u = ie ? e.clientY + d.scrollTop : e.pageY,
                      l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
+                    arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " " + domStylesBorderColor + " transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (tt.getBoundingClientRect().width - arrowWidth * 2 - arrowBorderWidth / 2) + "px;}";
+                    arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " " + domStylesBackgroundColor + " transparent transparent;}";
+
              }
              else {
                  var index ;
@@ -9030,19 +9044,20 @@ var top = 3,
                      l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - tt.getBoundingClientRect().width - marginLeft);
                      ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px 0px " + arrowBorderRadius + "px";
                      arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " " + domStylesBorderColor + " transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (tt.getBoundingClientRect().width - arrowWidth*2 - arrowBorderWidth/2) + "px;}";
-                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth-arrowBorderWidth/2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth  - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: #fff #fff transparent transparent;}";
+                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " " + domStylesBackgroundColor + " transparent transparent;}";
+                     
                  }
                  else if (l < chartRect.x) {
                      l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - marginLeft);
                      u = Math.round(point.y + window.scrollY + chart.canvas.getBoundingClientRect().top - tt.getBoundingClientRect().height - arrowWidth*2 - marginTop + arrowBorderWidth/2);
                      ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px "+ arrowBorderRadius + "px 0px";
                      arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent " + domStylesBorderColor + ";bottom: -" + arrowWidth * 2 + "px;left: " + (0 - arrowBorderWidth/2) + "px;}";
-                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth/2) + "px;bottom: " + (arrowBorderWidth-(arrowWidth-1)) + "px; border: " + (arrowWidth-arrowBorderWidth/2) + "px solid;border-color: #fff transparent transparent #fff;}";
+                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " transparent transparent " + domStylesBackgroundColor + ";}";
                  }
                  else if(l) {
                      ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px " + arrowBorderRadius + "px " + arrowBorderRadius + "px";
                      arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + ((tt.getBoundingClientRect().width / 2) - (arrowWidth)) + "px;}";
-                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth/2) + "px;bottom: " + (arrowBorderWidth-(arrowWidth-1)) + "px; border: " + (arrowWidth-arrowBorderWidth/2) + "px solid;border-color: #fff transparent transparent transparent;}";
+                     arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " transparent transparent transparent;}";
                  }
              }
       if ((u-h)<0) u=h;
