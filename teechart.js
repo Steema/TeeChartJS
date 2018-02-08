@@ -8917,11 +8917,14 @@ var top = 3,
 
  return{
      show: function (v, w, dest, domStyle, toolTip) {
+         if(toolTip)
+         {
          tip = toolTip;
          if (!toolTip.staticAtPoint) {
              arrowWidth = 0;
              followCursor = true;
          }
+        }
     if (!tt){
             arrowStyleAfter = document.createElement('style');
             arrowStyleBefore = document.createElement('style');
@@ -8988,6 +8991,7 @@ var top = 3,
   },
 
   pos: function(e){
+      if(tip){
       if (!tip.staticAtPoint) {
           arrowWidth = 0;
           followCursor = true;
@@ -9059,6 +9063,13 @@ var top = 3,
                      arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + ((tt.getBoundingClientRect().width / 2) - (arrowWidth)) + "px;}";
                      arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " transparent transparent transparent;}";
                  }
+             }
+             }
+             else {
+                 var d = document.documentElement,
+                         u = ie ? e.clientY + d.scrollTop : e.pageY,
+                         l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
+
              }
       if ((u-h)<0) u=h;
       if (l<0) l=0;
