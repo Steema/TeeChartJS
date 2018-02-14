@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <HEAD>
 <title>TeeChart JavaScript Gantt Series Example</TITLE>
@@ -41,7 +41,7 @@
 		function draw() {
 		  Chart1=new Tee.Chart("canvas");
 		
-		  Chart1.zoom.enabled=false;
+		  Chart1.zoom.enabled=true;
 		
 		  // Create series:
 		  gantt=Chart1.addSeries(new Tee.Gantt());
@@ -74,11 +74,16 @@
 		  gantt.completion.font.fill="white";
 		  gantt.completion.font.shadow.visible=true;
 		
+		  var originalScale;
 		  // Use the series onDraw event to paint completion data:
 		
 		  gantt.ondraw=function(g) {
 		    if (!g.completion.visible) return;
 		
+		    if(!originalScale) originalScale = g.chart.axes.left.scale;
+              
+		      /*it change font size depending of the actual scale from gantt*/
+		    g.completion.font.style = 28 * (1.5 - originalScale / g.chart.axes.left.scale) + "px Tahoma";
 		    var r={ x:0,y:0,width:0,height:0 },
 		        t=0,
 		        len=g.count();
@@ -191,8 +196,8 @@
 		  // Chart options:
 		  Chart1.title.text="project planner";
 		
-		  Chart1.scroll.direction="horizontal";
-		  Chart1.zoom.direction="horizontal";
+		  Chart1.scroll.direction="both";
+		  Chart1.zoom.direction="both";
 		
 		  Chart1.legend.visible=false;
 		
