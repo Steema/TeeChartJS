@@ -205,13 +205,33 @@ Tee.SeriesAnimation=function(target) {
     return s ? s.mandatoryAxis : null;
   }
 
+  this.getOtherAxis=function() {
+    var s=this.series || this.chart.series.firstVisible();
+    if (s) {
+      if (s.yMandatory) {
+        if (s.vertAxis === "both")
+          return this.chart.axes.right;
+      }
+      else if (s.horizAxis === "both")
+        return this.chart.axes.top;
+    }
+    else return null;
+  }
+
   this.doStep=function(f) {
 
-    var a=o.getAxis();
-    if (a) a.automatic=false;
+    var a=o.getAxis(), a2=o.getOtherAxis();
+    if (a) {
+      a.automatic=false;
+    }
+    if (a2) {
+      a2.automatic=false;
+    }
 
     if (o.kind=="axis") {
        changeAxis(o,a,1+(1-f)*100);
+       if (a2)
+         changeAxis(o,a2,1+(1-f)*100);
     }
     else
     o.chart.series.each(function(s) {
@@ -249,12 +269,17 @@ Tee.SeriesAnimation=function(target) {
 
   this.stop=function() {
             this.doStep(1);
-    var a=o.getAxis();
+    var a=o.getAxis(), a2=o.getOtherAxis();
 
     if (a) {
       a.maximum=o.oldmax;
       a.minimum=o.oldmin;
       a.automatic=o.oldauto;
+    }
+    if (a2) {
+      a2.maximum=o.oldmax;
+      a2.minimum=o.oldmin;
+      a2.automatic=o.oldauto;
     }
 
     o.chart.series.each(function(s) {
@@ -272,7 +297,7 @@ Tee.SeriesAnimation=function(target) {
 
   this.start=function() {
 
-    var a=this.getAxis(), c=this.chart, ss=c.series.items,
+    var a=this.getAxis(), a2=this.getOtherAxis(), c=this.chart, ss=c.series.items,
         w=c.chartRect.width, h=c.chartRect.height, t, s,
         ww=c.bounds.width, hh=c.bounds.height;
 
@@ -296,6 +321,8 @@ Tee.SeriesAnimation=function(target) {
         s.data._old=v.slice(0);
         for(tt=0; tt<len; tt++) v[tt]=0;
         a.automatic=false;
+        if (a2)
+          a2.automatic=false;
       }
       else
       if (this.kind=="left")
@@ -324,7 +351,7 @@ Tee.SeriesAnimation=function(target) {
            ctx.translate(-ww*0.5,-hh*0.5);
          }
       else
-      if (this.kind="zoomout")
+      if (this.kind=="zoomout")
          s.transform=function() {
            var ctx=this.chart.ctx;
            ctx.translate(ww*0.5,hh*0.5);
@@ -333,8 +360,11 @@ Tee.SeriesAnimation=function(target) {
          }
     }
 
-    if (this.kind=="axis")
-       changeAxis(this,a,100);
+    if (this.kind=="axis") {
+      changeAxis(this, a, 100);
+      if (a2)
+        changeAxis(this, a2, 100);
+    }
   }
 }
 
