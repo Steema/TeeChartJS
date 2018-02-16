@@ -25,6 +25,8 @@
 document.getElementsByTagName('iframe')[0].src=document.getElementsByTagName('iframe')[0].src
 
 var Chart1;
+var tip;
+
 function draw() {
   Chart1=new Tee.Chart("canvas");
   Chart1.addSeries(new Tee.Line()).addRandom(1000);
@@ -37,6 +39,39 @@ function draw() {
   Chart1.title.format.font.style="18px Verdana";
 
   Chart1.title.format.font.gradient.visible=true;
+  
+	//tooltip
+	tip=new Tee.ToolTip(Chart1);
+	//tip.format.font.style="10px Tahoma";
+	//tip.format.fill = "rgba(255,0,0,1.0)";
+	tip.findPoint = true;
+	tip.render="dom";
+	tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
+	tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
+	tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:1px; z-index:1000;";
+  
+	//"padding:4px; margin-left:4px; background-color:#FFF; border-radius:2px 2px; color:#555; z-index:1000;"
+
+	Chart1.tools.add(tip);
+
+	tip.onshow=function(tool,series,index) {
+	  if (enableCursor == false){
+		Chart1.tools.add(t);
+		enableCursor = true;
+		resize(Chart1);
+	  }
+	}
+
+	tip.ongettext=function(tool, text, series, index) {
+		var t, s="", ser;
+
+		for(t=0;t<Chart1.series.count(); t++) {
+		  if (t>0) s+="<br/>";
+		  ser=Chart1.series.items[t];
+		  s+='<font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
+		}
+		return s;
+	}
 
   changeTheme(Chart1, "minimal");
 Chart1.draw();
@@ -138,6 +173,8 @@ function resizeToolBars(){
 				<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; Chart1.draw();" checked>Legend
 				<input type="checkbox" id="logy" onclick="Chart1.axes.left.log=this.checked; Chart1.draw();">Logarithmic Y
 				<input type="checkbox" id="logx" onclick="Chart1.axes.bottom.log=this.checked; Chart1.draw();">Logarithmic X
+				<input type="checkbox" id="logx" onclick="tip.active=this.checked; Chart1.draw();" checked>Tooltip
+				<input type="checkbox" id="logx" onclick="tip.findPoint=this.checked; Chart1.draw();" checked>Tooltip find point
 			</div>					
 			</div>
 		</div>

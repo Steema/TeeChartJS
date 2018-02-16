@@ -26,6 +26,7 @@
 		
 		var Chart1;
 		var enableCursor = false;
+		var tip;
 		
 		function draw() {
 		
@@ -143,6 +144,7 @@
 		  //tooltip
 		  tip=new Tee.ToolTip(Chart1);
 		  tip.render="dom";
+		  tip.findPoint=false;
 		  tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
 		  tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
 		  tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:1px; z-index:1000;";

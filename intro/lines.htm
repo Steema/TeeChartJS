@@ -136,6 +136,7 @@
 		tip=new Tee.ToolTip(Chart1);
 		//tip.format.font.style="10px Tahoma";
 		//tip.format.fill = "rgba(255,0,0,1.0)";
+		tip.findPoint = false;
 		tip.render="dom";
 		tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
 		tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
@@ -165,7 +166,7 @@
 		    for(t=0;t<Chart1.series.count(); t++) {
 		      if (t>0) s+="<br/>";
 		      ser=Chart1.series.items[t];
-		      s+='<font face="verdana" color="darkorange" size="1"><b>'+ser.title+':</b></font> <font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
+		      s+='<font face="verdana" color="#004000" size="1"><b>'+ser.title+':</b></font> <font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
 		    }
 		    return s;
 	    }
