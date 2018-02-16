@@ -1843,7 +1843,7 @@ Tee.ToolTip=function(chart) {
   Tee.Annotation.call(this,chart);
 
   this.visible=false;
-  this.staticAtPoint = false;
+  this.findPoint = false;
 
   /**
    * @private
@@ -8055,8 +8055,17 @@ Tee.ActivityGauge = function (o, o2) {
             var tmpAngleWidth = Math.abs(this.maxDrawWidth * o[o.length - 1 - i] / this.maxValue());
             this.donutArray.push(createDonut(o[o.length - 1 - i], o2[o.length - 1 - i], tmpDonut, tmpMaxRadius, tmpAngleWidth));
         }
-    }
+        }
 
+    this.clicked = function (p) {
+        var index = -1, i = 0;
+        while (i < this.donutArray.length&&index==-1) {
+            if (index == -1 && this.donutArray[i].clicked(p) != -1)     index =  this.donutArray.length - i - 1;
+            i++;
+    }
+        return index;
+
+    }
     function createDonut(value, label, tmpDonut, maxRadius, angleWidth) {
         var donut = new Tee.Donut([value], [label]);
         donut.concentric = true;
@@ -8920,7 +8929,7 @@ var top = 3,
          if(toolTip)
          {
          tip = toolTip;
-         if (!toolTip.staticAtPoint) {
+             if (!toolTip.findPoint) {
              arrowWidth = 0;
              followCursor = true;
          }
@@ -8992,7 +9001,7 @@ var top = 3,
 
   pos: function(e){
       if(tip){
-      if (!tip.staticAtPoint) {
+          if (!tip.findPoint) {
           arrowWidth = 0;
           followCursor = true;
       }
@@ -9000,14 +9009,14 @@ var top = 3,
           arrowWidth = 8;
           followCursor = false;
       }
-         var chart = target.chart;
+             if(target){var chart = target.chart;
          var chartRect = chart.chartRect;
-         var horizontal = !chart.axes.bottom.firstSeries.yMandatory;
+             var horizontal = !chart.axes.bottom.firstSeries.yMandatory;}
          if (chart) {
 
              
 
-             if (chart.series.items[0] instanceof Tee.Pie || followCursor) {
+                 if (chart.series.items[0] instanceof Tee.Pie || followCursor||!target) {
       var d = document.documentElement,
           u = ie ? e.clientY + d.scrollTop : e.pageY,
                      l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
@@ -9071,6 +9080,17 @@ var top = 3,
                          l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
 
              }
+             }
+      else {
+          arrowWidth = 0;
+          followCursor = true;
+          var d = document.documentElement,
+             u = ie ? e.clientY + d.scrollTop : e.pageY,
+             l = ie ? e.clientX + d.scrollLeft : e.pageX - width / 2 - 10 - arrowWidth;
+          arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " " + domStylesBorderColor + " transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + (tt.getBoundingClientRect().width - arrowWidth * 2 - arrowBorderWidth / 2) + "px;}";
+          arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " " + domStylesBackgroundColor + " transparent transparent;}";
+
+      }
       if ((u-h)<0) u=h;
       if (l<0) l=0;
       
@@ -9107,7 +9127,7 @@ var top = 3,
 	      ttstyle.top = (u /*- h*/) + 'px';
 	      ttstyle.left = (l /*+ left*/) + 'px';
 	  }
-    }
+
   },
 
   fade: function(d){
