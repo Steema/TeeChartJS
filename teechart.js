@@ -1,8 +1,8 @@
 /**
  * @preserve TeeChart(tm) for JavaScript(tm)
  * @fileOverview TeeChart for JavaScript(tm)
- * v2.3 Jan 2018
- * Copyright(c) 2012-2017 by Steema Software SL. All Rights Reserved.
+ * v2.4 Feb 2018
+ * Copyright(c) 2012-2018 by Steema Software SL. All Rights Reserved.
  * http://www.steema.com
  *
  * Licensed with commercial and non-commercial attributes,
@@ -13,7 +13,7 @@
 
 /**
  * @author <a href="mailto:david@steema.com">Steema Software</a>
- * @version 2.3
+ * @version 2.4
  */
 
 /**
@@ -1838,6 +1838,7 @@ Tee.CursorTool.prototype=new Tee.Tool();
  * @property {Boolean} [autoHide=false] When true, the tooltip is automatically removed after "delay" milliseconds.
  * @property {Number} [delay=1000] Amount of milliseconds to wait before removing the last displayed tooltip (when "autoHide" is true).
  * @property {Number} [animated=100] Duration in milliseconds to animate the movement of tooltip from old to new position.
+ * @property {Boolean} [findPoint=false] When true, the tooltip jumps to the nearest point.
  */
 Tee.ToolTip=function(chart) {
   Tee.Annotation.call(this,chart);
