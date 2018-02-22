@@ -23,7 +23,7 @@
 
 <script type="text/javascript">
 var Chart1;
-var tip;
+var tip, enableCursor = false;
 
 function draw() {
   Chart1=new Tee.Chart("canvas");
@@ -51,6 +51,9 @@ function draw() {
 	//"padding:4px; margin-left:4px; background-color:#FFF; border-radius:2px 2px; color:#555; z-index:1000;"
 
 	Chart1.tools.add(tip);
+
+  	var t = new Tee.CursorTool(Chart1);
+  	t.direction="vertical";
 
 	tip.onshow=function(tool,series,index) {
 	  if (enableCursor == false){
