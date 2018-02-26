@@ -6993,6 +6993,118 @@ Tee.HorizBar.prototype.parent=Tee.CustomBar.prototype;
 
 /**
  * @constructor
+ * @augments Tee.HorizBar
+ * @class Draws a HorizBar with states in background and one limit.
+ * @property {object}[limit] limit contains the properties of the limit.
+ * @property {object}[states] states contains the properties of the states.
+ */
+Tee.Bullet = function (o, o2) {
+    Tee.HorizBar.call(this, [o[0]], o2 ? [o2[0]] : []);
+    
+    this.barSize = 25;
+    /**
+     * @property {number}[origin: 38] it contains the origin of the limit.
+     * @property {number}[width: 0.2] it contains the width of the limit.
+     * @property {number}[height: 35] it contains the height of the limit.
+     * @property {string}[color: "red"] it contains the color of the limit.
+     * @property {object}[bar: null] it contains the limit bar.
+     */
+    this.limit = {
+        origin: 38,
+        width: 0.2,
+        height: 35,
+        color: "red",
+        bar: null
+    };
+    this.marks.visible = false;
+    /**
+     * @property {array}[colors: ["#111", "#444", "#777", "#BBB", "#EEE"]] it contains the colors of the states.
+     * @property {array}[values: [10, 10, 10, 10, 10]] it contains the values of the states.
+     * @property {array}[barStates: []] it contains the bar array of the states.
+     * @property {number}[barSize: 50] it contains the size of the states.
+     * @property {boolean}[gradientVisible: false] it contains if the gradient will be visible or not.
+     */
+    this.states = {
+        colors: ["#111", "#444", "#777", "#BBB", "#EEE"],
+        values: [10, 10, 10, 10, 10],
+        barStates: [],
+        barSize: 50,
+        gradientVisible: false
+    };
+    createStatesBars(this.states, this.origin);
+    function createStatesBars(states, origin) {
+        var sumStatesValues = 0;
+        if (states.values.length > 0) {
+            states.barStates.push(createBarState(states.values[0], sumStatesValues + origin, states.barSize, states.colors[0], states.colors[0], states.gradientVisible));
+            sumStatesValues += states.values[0];
+            for (var i = 1; i < states.values.length; i++) {
+                states.barStates.push(createBarState(states.values[i], sumStatesValues + origin, states.barSize, states.colors[(i - 1) % states.colors.length], states.colors[(i) % states.values.length], states.gradientVisible));
+                sumStatesValues += states.values[i];
+            }
+        }
+    }
+
+    this.minValue = function () {
+        if (this.states.barStates.length >= 1)
+            return this.states.barStates[0].origin;
+        else
+            return 0;
+    }
+    this.maxValue = function () {
+        if (this.states.barStates.length >= 1)
+            return this.states.barStates[this.states.barStates.length - 1].data.values[0];
+        else
+            return 0;
+    }
+    function createBarState(value, origin, barSize,color1, color2, gradientVis) {
+        var values = [value + origin];
+        var bar = new Tee.HorizBar(values);
+        bar.stacked = "side";
+        bar.origin = origin;
+        bar.barSize = barSize;
+        bar.marks.visible = false;
+        bar.format.round.x = 0;
+        bar.format.round.y = 0;
+        bar.format.gradient.colors = [color1, color2];
+        if (gradientVis) {
+            bar.format.gradient.direction = "leftright";
+            bar.format.gradient.visible = true;
+        }
+        else {
+            bar.format.gradient.visible = false;
+            bar.format.fill = color2;
+            bar.palette.colors = [color2];
+        }
+        bar.format.shadow.visible = false;
+        bar.format.stroke.fill = "rgba(0,0,0,0.0)";
+        
+        return bar;
+    };
+    this.parentDraw = this.draw;
+    this.draw = function () {
+        var minVal, maxVal;
+        minVal = this.minValue();
+        maxVal = this.maxValue();
+        this.chart.zoom.reset = function () {
+            this.chart.axes.each(function () { this.automatic = true; });
+            this.chart.axes.bottom.setMinMax(minVal, maxVal);
+        }
+        this.states.barStates = [];
+        createStatesBars(this.states, this.origin);
+        for (var i = 0; i < this.states.barStates.length; i++) {
+            if (this.chart) this.states.barStates[i].setChart(this.states.barStates[i], this.chart);
+              this.states.barStates[i].draw();
+        }
+        this.limit.bar = createBarState(this.limit.width, this.limit.origin + this.origin, this.limit.height, this.limit.color, this.limit.color, false)
+        this.limit.bar.setChart(this.limit.bar, this.chart);
+        this.limit.bar.draw();
+        this.parentDraw();
+    }
+}
+Tee.Bullet.prototype = new Tee.HorizBar();
+Tee.Bullet.prototype.parent = Tee.HorizBar.prototype;
+/**
+ * @constructor
  * @augments Tee.Series
  * @class Base abstract class for line, area, scatter plots
  * @property {Tee.CustomSeries-Pointer} pointer Paints a visual representation at each point position.
