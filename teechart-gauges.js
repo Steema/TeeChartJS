@@ -250,7 +250,7 @@ Tee.CircularGauge=function(o,o2) {
     this.drawHand=function(han) {
       han.value=this.limitValue(han.value);
 
-      var ppos=this.inverted ? this.max-han.value : han.value,
+      var ppos=this.inverted ? this.max-han.value + this.min: han.value,
           handRot=(this.rotation*0.01745)+(9.4248-ta)*0.5+ta*(ppos-this.min)/range;
 
       cex=cx+rax*ce.location.x*0.005,
@@ -484,7 +484,7 @@ Tee.CircularGauge=function(o,o2) {
 
           ctx.fillStyle=f.font.fill;
 
-          var ppos= tar.inverted ? this.max-pos : pos, st;
+          var ppos = tar.inverted ? this.max - pos + this.min: pos, st;
 
           if (tar.ongetText)
              st=tar.ongetText(ppos);
@@ -655,7 +655,8 @@ Tee.CircularGauge=function(o,o2) {
 
       var v=this.min+(this.max-this.min)*res;
 
-      if (this.inverted) v=this.max-v;
+      if (this.inverted) v = this.min + (this.max - this.min) * (1-res);
+      
 
       p.value=v;
 
