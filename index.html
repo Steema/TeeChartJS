@@ -1,355 +1,824 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-   
-    <title>Tee Chart Demo</title>
-   
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-       <!-- Bootstrap -->
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Custom Theme Style -->
-    <link href="build/css/custom.min.css" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <body class="nav-md" onload="showMenu();" onresize="showMenu();" style="background-color:white">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col" id="slideMenu">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-            <table>
-                <tr><td> <a href="https://www.steema.com/" target="_blank"><img src="images/logo-steema-v3.png"></a></td>
-                <td><center><span class="closeSpan" style="cursor:pointer; color:#ffffff" onclick="closeNav()"><p id="txtCloseSpan">X</p></span></center></td></tr>
-                 
-         </table>
-            </div>
+  <title>TeeChart HTML5/JavaScript demos | Steema Software</title>
 
-            <div class="clearfix"></div>
+  <link rel="stylesheet" href="vendors/css/material.min.css">
+  <script src="vendors/js/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="vendors/jquery/dist/jquery.min.js"></script>
 
-            <br />
+  <style>
+    .demo-layout-transparent .mdl-layout__header,
+    .demo-layout-transparent .mdl-layout__drawer-button {
+      color: rgba(0,0,0,0.87);
+    }
+  </style>
 
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-              <br/>
-                <h3>THEMES INTRO</h3>
-                <ul class="nav side-menu">
-                  <li><a>Series <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="intro/lines.htm" target="frame_main" onclick="closeNav();">Lines</a></li>
-                      <li><a href="intro/bars.htm" target="frame_main" onclick="closeNav();">Bars</a></li>
-                      <li><a href="intro/areas.htm" target="frame_main" onclick="closeNav();">Areas</a></li>
-                      <li><a href="intro/pie.htm" target="frame_main" onclick="closeNav();">Pie</a></li>
-                      <li><a href="intro/points.htm" target="frame_main" onclick="closeNav();">Points</a></li>
-                      <li><a href="intro/gantt.htm" target="frame_main" onclick="closeNav();">Gantt</a></li>
-                    </ul>
-                  </li>
-                  <li><a>Features<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="intro/scroller.htm" target="frame_main" onclick="closeNav();">Scroller</a></li>
-					  <li><a href="dashboard/geo_series.htm" target="frame_main" onclick="closeNav();">Geo mapping</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="menu_section">
-                <h3>REFERENCE DEMO</h3>
-                <ul class="nav side-menu">
-                  <li><a>Series<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="series/All.htm" target="frame_main" onclick="closeNav();">All</a></li>
-                      <li><a>Line<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="basic/Basic.htm" target="frame_main" onclick="closeNav();">Basic</a></li>
-                            <li class="sub_menu" ><a href="series/line/line.htm" target="frame_main" onclick="closeNav();">Line</a></li>
-                            <li class="sub_menu" ><a href="series/line/smoothline.htm" target="frame_main" onclick="closeNav();">Smooth Line</a></li>
-                            <li class="sub_menu" ><a href="series/line/stackedline.htm" target="frame_main" onclick="closeNav();">Stacked Line</a></li>
-                            <li class="sub_menu" ><a href="series/line/linepoint.htm" target="frame_main" onclick="closeNav();">Line and Point</a></li>
-                          </ul>
-                        </li>
-                      <li><a href="series/line/point.htm" target="frame_main" onclick="closeNav();">Point XY</a></li>
-                      <li><a>Area<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="series/area/area.htm" target="frame_main" onclick="closeNav();">Area</a></li>
-                            <li class="sub_menu" ><a href="series/area/twoareas.htm" target="frame_main" onclick="closeNav();">Two Areas</a></li>
-                            <li class="sub_menu" ><a href="series/area/horizarea.htm" target="frame_main" onclick="closeNav();">Horizontal Area</a></li>
-                            <li class="sub_menu" ><a href="series/area/smootharea.htm" target="frame_main" onclick="closeNav();">Smooth Area</a></li>
-                          </ul>
-                        </li>
-                      <li><a>Bar<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="series/bar/bar.htm" target="frame_main" onclick="closeNav();">Bar</a></li>
-                            <li class="sub_menu" ><a href="series/bar/barnegative.htm" target="frame_main" onclick="closeNav();">Negative values</a></li>
-                            <li class="sub_menu" ><a href="series/bar/volume.htm" target="frame_main" onclick="closeNav();">Volume</a></li>
-                     		<li class="sub_menu"><a href="series/bar/horizbar.htm" target="frame_main" onclick="closeNav();">Horiz. Bar</a></li>
-                     		<li class="sub_menu"><a href="series/bar/horizbarstacked.htm" target="frame_main" onclick="closeNav();">Horiz. Stacked Bar</a></li>
-                            <li class="sub_menu"><a href="series/bar/bullet.htm" target="frame_main" onclick="closeNav();">Bullet</a></li>
-                          </ul>
-                        </li>
-                      <li><a>Pie<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="series/pie/pie.htm" target="frame_main" onclick="closeNav();">Pie</a></li>
-                            <li class="sub_menu" ><a href="series/pie/multipie.htm" target="frame_main" onclick="closeNav();">Multiple Pie</a></li>
-                          </ul>
-                        </li>
-                      <li><a>Donut<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="series/donut/donut.htm" target="frame_main" onclick="closeNav();">Donut</a></li>
-                            <li class="sub_menu" ><a href="series/donut/multidonut.htm" target="frame_main" onclick="closeNav();">Multiple Donut</a></li>
-                          </ul>
-                        </li>
-                      <li><a href="series/bubble/bubble.htm" target="frame_main" onclick="closeNav();">Bubble</a></li>
-                      <li><a href="series/candle/candle.htm" target="frame_main" onclick="closeNav();">Candle OHLC</a></li>
-                      <li><a href="series/gantt/gantt.htm" target="frame_main" onclick="closeNav();">Gantt</a></li>
-                      <li><a>Gauge<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="gauges/gauges.htm" target="frame_main" onclick="closeNav();">Gauge</a></li>
-                            <li class="sub_menu" ><a href="gauges/gauge_gallery.htm" target="frame_main" onclick="closeNav();">Gauge Gallery</a></li>
-                            <li class="sub_menu" ><a href="gauges/clocks.htm" target="frame_main" onclick="closeNav();">Clocks</a></li>
-                            <li class="sub_menu" ><a href="gauges/activitygauge.htm" target="frame_main" onclick="closeNav();">Activity Gauge</a></li>
-                          </ul>
-                        </li>
-                      <li><a href="series/spark/spark.htm" target="frame_main" onclick="closeNav();">Spark</a></li>
-                      <li><a>World Maps<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="series/maps/worldmap.htm" target="frame_main" onclick="closeNav();">World Maps</a></li>
-                            <li class="sub_menu" ><a href="series/maps/canvas_maps.htm" target="frame_main" onclick="closeNav();">Canvas Maps</a></li>
-                            <li class="sub_menu" ><a href="series/maps/maps_bubbles.htm" target="frame_main" onclick="closeNav();">Bubble Maps</a></li>
-							<li class="sub_menu" ><a href="series/maps/continents.htm" target="frame_main" onclick="closeNav();">Continents</a></li>
-                          </ul>
-                      </li>
-                      <li><a>Polar/Radar<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="series/polar/polar.htm" target="frame_main" onclick="closeNav();">Polar</a></li>
-                            <li class="sub_menu" ><a href="series/polar/polar_bar.htm" target="frame_main" onclick="closeNav();">Polar Bar</a></li>
-                          </ul>
-                      </li>
-                      <li><a href="series/colorgrid/colorgrid.htm" target="frame_main" onclick="closeNav();">Color Grid</a></li>
-                      <li><a href="series/surface/surface.htm" target="frame_main" onclick="closeNav();">Surface 3D</a></li>
-                      
-                    </ul>
-                  </li>
-                  <li><a>Axes<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="axes/allaxes.htm" target="frame_main" onclick="closeNav();">Axes</a></li>
-                      <li><a href="axes/centeraxes.htm" target="frame_main" onclick="closeNav();">Centred axes</a></li>
-                      <li><a href="axes/gridbands.htm" target="frame_main" onclick="closeNav();">Grid Bands</a></li>
-                      <li><a href="axes/synchro_many_charts.htm" target="frame_main" onclick="closeNav();">Synchronize</a></li>
-                      <li><a href="axes/multiple_axes.htm" target="frame_main" onclick="closeNav();">Multiple Axes</a></li>
-                      <li><a href="axes/customlabels.htm" target="frame_main" onclick="closeNav();">Custom Labels</a></li>
-                      <li><a href="axes/zoompercent.htm" target="frame_main" onclick="closeNav();">Coded zoom</a></li>
-                    </ul>
-                    </li>
-                     <li><a>Legend<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="legend/legend.htm" target="frame_main" onclick="closeNav();">Legend</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Interactivity<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="axes/zoomscroll.htm" target="frame_main" onclick="closeNav();">Mouse and Touch</a></li>
-                         <li><a href="series/seriesonclick.htm" target="frame_main" onclick="closeNav();">Series onClick</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Animations<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="animations/linefadein.htm" target="frame_main" onclick="closeNav();">Series</a></li>
-                         <li><a href="animations/sequence.htm" target="frame_main" onclick="closeNav();">Sequence</a></li>
-                         <li><a href="animations/css3_animations.htm" target="frame_main" onclick="closeNav();">CSS3 Transitions</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Data Sources<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="sources/fromarray.htm" target="frame_main" onclick="closeNav();">From Array</a></li>
-                         <li><a href="sources/FromText.htm" target="frame_main" onclick="closeNav();">From Text</a></li>
-                         <li><a href="sources/FromTable.htm" target="frame_main" onclick="closeNav();">From Table</a></li>
-                         <li><a href="series/datasource.htm" target="frame_main" onclick="closeNav();">From Series</a></li>
-                         <li><a href="sources/fromxml.htm" target="frame_main" onclick="closeNav();">From XML</a></li>
-                         <li><a href="sources/fromjson.htm" target="frame_main" onclick="closeNav();">From JSON</a></li>
-                         <li><a href="sources/realtime.htm" target="frame_main" onclick="closeNav();">Realtime</a></li>
-                           <li><a href="sources/dynamicUpdate.htm" target="frame_main" onclick="closeNav();">Dynamic Update</a></li>
-                         <li><a href="sources/fromtypedarray.htm" target="frame_main" onclick="closeNav();">From Typed Array</a></li>
-                         <li><a href="sources/datetime.htm" target="frame_main" onclick="closeNav();">DateTime Data</a></li>
-                         <li><a href="sources/fromYahooFinance.htm" target="frame_main" onclick="closeNav();">Yahoo Finance</a></li>
-                         <li><a href="sources/fromWUnderground.htm" target="frame_main" onclick="closeNav();">Weather Underground</a></li>
-                         <li><a href="sources/battery.htm" target="frame_main" onclick="closeNav();">Battery Level</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Images<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="basic/BackImage.htm" target="frame_main" onclick="closeNav();">From Array</a></li>
-                         <li><a href="export/ToPNG.htm" target="frame_main" onclick="closeNav();">To PNG and JPEG</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Editors<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="editor/ChartEditor.htm" target="frame_main" onclick="closeNav();">Chart Editor</a></li>
-                         <li><a href="editor/modaleditor.htm" target="frame_main" onclick="closeNav();">Modal Editor</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Dashboards<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="dashboard/tutorial/index.htm" target="frame_main" onclick="closeNav();">Multi-Dim Tutorial</a></li>
-                         <li><a href="dashboard/demographics.htm" target="frame_main" onclick="closeNav();">Demographics</a></li>
-                         <li><a href="dashboard/productSales.htm" target="frame_main" onclick="closeNav();">Product Sales</a></li>
-                         <li><a href="dashboard/geo_series.htm" target="frame_main" onclick="closeNav();">Geo mapping</a></li>
-                       </ul>
-                     </li>
-                     <li><a>3D<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="canvas/webgl/basic_3d.htm" target="frame_main" onclick="closeNav();">Basic 3D</a></li>
-                         <li><a href="canvas/webgl/threejs_example.htm" target="frame_main" onclick="closeNav();">Advanced</a></li>
-                         <li><a href="canvas/webgl/maps_3d.htm" target="frame_main" onclick="closeNav();">Maps 3D</a></li>
-                         <li><a href="canvas/webgl/index.htm" target="frame_main" onclick="closeNav();">WebGL™ 3D</a></li>
-                       </ul>
-                     </li>
-                     <li><a>Other<span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="extra/annotations.htm" target="frame_main" onclick="closeNav();">Annotations</a></li>
-                      <li><a href="extra/customMarksWithAnnotations.htm" target="frame_main" onclick="closeNav();">Custom Marks using Annotations</a></li>
-                      <li><a href="extra/buttons.htm" target="frame_main" onclick="closeNav();">Buttons</a></li>
-                      <li><a href="extra/ToolTips.htm" target="frame_main" onclick="closeNav();">Tool tips</a></li>
-                      <li><a href="extra/domToolTips.htm" target="frame_main" onclick="closeNav();">CSS Tool tips</a></li>
-                      <li><a href="extra/domToolTips_SubChart.htm" target="frame_main" onclick="closeNav();">Tips with Charts</a></li>
-                      <li><a>Cursor Tool<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="extra/CursorTool.htm" target="frame_main" onclick="closeNav();">Cursor Tool</a></li>
-                            <li class="sub_menu" ><a href="extra/CursorTool_Interpolate.htm" target="frame_main" onclick="closeNav();">Cursor Tool Interpolate</a></li>
-                          </ul>
-                      </li>
-                      <li><a href="extra/floorreflection.htm" target="frame_main" onclick="closeNav();">Floor reflection</a></li>
-                      <li><a>Panel<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="basic/PanelShadow.htm" target="frame_main" onclick="closeNav();">Panel</a></li>
-                            <li class="sub_menu" ><a href="basic/Transparent.htm" target="frame_main" onclick="closeNav();">Transparent</a></li>
-                            <li class="sub_menu" ><a href="basic/canvasalign.htm" target="frame_main" onclick="closeNav();">Full page align</a></li>
-                          </ul>
-                      </li>
-                      <li><a href="basic/TitleFooter.htm" target="frame_main" onclick="closeNav();">Title and Footer</a></li>
-                      <li><a href="extra/slider.htm" target="frame_main" onclick="closeNav();">Slider</a></li>
-                      <li><a>Series Scroller<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="extra/scroller.htm" target="frame_main" onclick="closeNav();">Series Scroller</a></li>
-                            <li class="sub_menu" ><a href="extra/scroller_datetime.htm" target="frame_main" onclick="closeNav();">Datetime Scroller</a></li>
-                          </ul>
-                      </li>
-                      <li><a>Canvas<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu" ><a href="canvas/custom_paint.htm" target="frame_main" onclick="closeNav();">Custom Painting</a></li>
-                            <li class="sub_menu" ><a href="canvas/size_percent_resize.htm" target="frame_main" onclick="closeNav();">Percent Size and Auto Resize</a></li>
-                          </ul>
-                      </li>
-                      
-                     </ul>
-                  </li>
-                  <li><a>Plugins<span class="fa fa-chevron-down"></span></a>
-                       <ul class="nav child_menu">
-                         <li><a href="plugins/plugins.htm" target="frame_main" onclick="closeNav();">List of Plugins</a></li>
-                         <li><a href="plugins/jquery/teechart_jquery.htm" target="frame_main" onclick="closeNav();">JQuery TeeChart</a></li>
-                         <li><a href="plugins/typescript/index.htm" target="frame_main" onclick="closeNav();">Microsoft TypeScript</a></li>
-                         <li><a href="http://www.nuget.org/packages/TeeChart.htm" target="frame_main" onclick="closeNav();">Microsoft Visual Studio</a></li>
-                         <li><a href="https://npmjs.org/package/TeeChart.htm" target="frame_main" onclick="closeNav();">Node.js package</a></li>
-                         <li><a href="extra/google_gadget.htm" target="frame_main" onclick="closeNav();">Google Gadget</a></li>
-                         <li><a href="http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart.htm" target="frame_main" onclick="closeNav();">Smart Mobile Studio</a></li>
-                         <li><a href="canvas/webgl/index.htm" target="frame_main" onclick="closeNav();">Three.js WebGL 3D</a></li>
-                       </ul>
-                     </li>
-                  </ul>
-              </div>
+  <style>
+    a {
+      cursor: pointer;
+    }
 
-            </div>
+    .mdl-collapse.mdl-collapse--opened {
+      border-top: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      margin-top: -1px;
+    }
 
-          </div>
-        </div>
-	      <div class="right_col" role="main" id="mainContainer">
-	        
-	           <span class="openSpan" style="cursor:pointer; color:#000000" onclick="openNav();"><p id="txtOpenSpan">&#8801;</p></span>
-	           <iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
-	        
-	        </div>  
-      </div>
+    .mdl-collapse.mdl-collapse--opened + .mdl-collapse.mdl-collapse--opened {
+      border-top: none;
+      margin-top: 0;
+    }
+
+    .mdl-collapse .mdl-collapse__content-wrapper {
+      overflow: hidden;
+    }
+
+    .mdl-collapse .mdl-collapse__content {
+      transition-property: margin-top;
+      transition-duration: 0.2s;
+    }
+
+    .mdl-collapse .mdl-collapse__icon {
+      transition-property: transform;
+      transition-duration: 0.2s;
+      color: rgba(0,0,0,0.3);
+
+      /* MDL should provide some facility for positioning icons inside list items so I don't have to do this */
+      position: absolute;
+      right: 6px;
+      margin-top: -3px;
+    }
+
+    .mdl-collapse.mdl-collapse--opened > .mdl-collapse__button > .mdl-collapse__icon {
+      transform: rotate(-180deg);
+    }
+
+    .mdl-collapse.mdl-collapse--opened > .mdl-collapse__content-wrapper > .mdl-collapse__content {
+      margin-top: 0 !important;
+    }
+
+    .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+        color: #73879C;
+    }
+
+    .mdl-layout__drawer {
+        color: #73879C;
+    }
+
+    .mdl-layout__drawer .mdl-navigation .mdl-navigation__link.is-selected {
+        color: teal;
+    }
+
+    .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 20px;
+    }
+
+    .mdl-collapse:not(.mdl-collapse--opened) .mdl-collapse > .mdl-collapse__button > .mdl-collapse__icon {
+      display: none;
+    }
+
+    .mdl-layout__header {
+      border-bottom: 1px solid lightgray;
+    }
+
+    h6 {
+      margin: 16px 0 8px 10px;
+    }
+
+    .mdl-layout__drawer {
+      overflow-y: scroll;
+    }
+
+    .mdl-collapse .mdl-collapse__icon {
+      right: unset;
+      left: 6px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+  </style>
+
+  <style>
+    iframe {
+      width: 100%;
+      height: 800px;
+      border-width: 0;
+    }
+  </style>
+
+  <script>
+    $(function(){
+      $('.mdl-collapse__content').each(function(){
+        var content = $(this);
+        content.css('margin-top', -content.height());
+      });
+
+      $(document.body).on('click', '.mdl-collapse__button', function(){
+        $(this).parent('.mdl-collapse').toggleClass('mdl-collapse--opened');
+      })
+    })
+  </script>
+
+  <script>
+    var JSONmenu =
+      [
+        {
+          "name": "THEMES INTRO",
+          "items": [
+            {
+              "name": "Series",
+              "items": [
+                {
+                  "name": "Lines",
+                  "url": "intro/lines.htm"
+                },
+                {
+                  "name": "Bars",
+                  "url": "intro/bars.htm"
+                },
+                {
+                  "name": "Areas",
+                  "url": "intro/areas.htm"
+                },
+                {
+                  "name": "Pie",
+                  "url": "intro/pie.htm"
+                },
+                {
+                  "name": "Points",
+                  "url": "intro/points.htm"
+                },
+                {
+                  "name": "Gantt",
+                  "url": "intro/gantt.htm"
+                }
+              ]
+            },
+            {
+              "name":  "Features",
+              "items": [
+                {
+                  "name": "Scroller",
+                  "url": "intro/scroller.htm"
+                },
+                {
+                  "name": "Geo mapping",
+                  "url": "dashboard/geo_series.htm"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "REFERENCE DEMO",
+          "items": [
+            {
+              "name": "Series",
+              "items": [
+                {
+                  "name": "All",
+                  "url": "series/All.htm"
+                },
+                {
+                  "name": "Line",
+                  "items": [
+                    {
+                      "name": "Basic",
+                      "url": "basic/Basic.htm"
+                    },
+                    {
+                      "name": "Line",
+                      "url": "series/line/line.htm"
+                    },
+                    {
+                      "name": "Smooth Line",
+                      "url": "series/line/smoothline.htm"
+                    },
+                    {
+                      "name": "Stacked Line",
+                      "url": "series/line/stackedline.htm"
+                    },
+                    {
+                      "name": "Line and Point",
+                      "url": "series/line/linepoint.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Point XY",
+                  "url": "series/line/point.htm"
+                },
+                {
+                  "name": "Area",
+                  "items": [
+                    {
+                      "name": "Area",
+                      "url": "series/area/area.htm"
+                    },
+                    {
+                      "name": "Two Areas",
+                      "url": "series/area/twoareas.htm"
+                    },
+                    {
+                      "name": "Horizontal Area",
+                      "url": "series/area/horizarea.htm"
+                    },
+                    {
+                      "name": "Smooth Area",
+                      "url": "series/area/smootharea.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Bar",
+                  "items": [
+                    {
+                      "name": "Bar",
+                      "url": "series/bar/bar.htm"
+                    },
+                    {
+                      "name": "Negative values",
+                      "url": "series/bar/barnegative.htm"
+                    },
+                    {
+                      "name": "Volume",
+                      "url": "series/bar/volume.htm"
+                    },
+                    {
+                      "name": "Horiz. Bar",
+                      "url": "series/bar/horizbar.htm"
+                    },
+                    {
+                      "name": "Horiz. Stacked Bar",
+                      "url": "series/bar/horizbarstacked.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Pie",
+                  "items": [
+                    {
+                      "name": "Pie",
+                      "url": "series/pie/pie.htm"
+                    },
+                    {
+                      "name": "Multiple Pie",
+                      "url": "series/pie/multipie.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Donut",
+                  "items": [
+                    {
+                      "name": "Donut",
+                      "url": "series/donut/donut.htm"
+                    },
+                    {
+                      "name": "Multiple Donut",
+                      "url": "series/donut/multidonut.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Bubble",
+                  "url": "series/bubble/bubble.htm"
+                },
+                {
+                  "name": "Candle OHLC",
+                  "url": "series/candle/candle.htm"
+                },
+                {
+                  "name": "Gantt",
+                  "url": "series/gantt/gantt.htm"
+                },
+                {
+                  "name": "Gauge",
+                  "items": [
+                    {
+                      "name": "Gauge",
+                      "url": "gauges/gauges.htm"
+                    },
+                    {
+                      "name": "Gauge Gallery",
+                      "url": "gauges/gauge_gallery.htm"
+                    },
+                    {
+                      "name": "Clocks",
+                      "url": "gauges/clocks.htm"
+                    },
+                    {
+                      "name": "Activity Gauge",
+                      "url": "gauges/activitygauge.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Spark",
+                  "url": "series/spark/spark.htm"
+                },
+                {
+                  "name": "World Maps",
+                  "items": [
+                    {
+                      "name": "World Maps",
+                      "url": "series/maps/worldmap.htm"
+                    },
+                    {
+                      "name": "Canvas Maps",
+                      "url": "series/maps/canvas_maps.htm"
+                    },
+                    {
+                      "name": "Bubble Maps",
+                      "url": "series/maps/maps_bubbles.htm"
+                    },
+                    {
+                      "name": "Continents",
+                      "url": "series/maps/continents.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Polar/Radar",
+                  "items": [
+                    {
+                      "name": "Polar",
+                      "url": "series/polar/polar.htm"
+                    },
+                    {
+                      "name": "Polar Bar",
+                      "url": "series/polar/polar_bar.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Color Grid",
+                  "url": "series/colorgrid/colorgrid.htm"
+                },
+                {
+                  "name": "Surface 3D",
+                  "url": "series/surface/surface.htm"
+                }
+              ]
+            },
+            {
+              "name": "Axes",
+              "items": [
+                {
+                  "name": "Axes",
+                  "url": "axes/allaxes.htm"
+                },
+                {
+                  "name": "Centred axes",
+                  "url": "axes/centeraxes.htm"
+                },
+                {
+                  "name": "Grid Bands",
+                  "url": "axes/gridbands.htm"
+                },
+                {
+                  "name": "Synchronize",
+                  "url": "axes/synchro_many_charts.htm"
+                },
+                {
+                  "name": "Multiple Axes",
+                  "url": "axes/multiple_axes.htm"
+                },
+                {
+                  "name": "Custom Labels",
+                  "url": "axes/customlabels.htm"
+                },
+                {
+                  "name": "Coded zoom",
+                  "url": "axes/zoompercent.htm"
+                }
+              ]
+            },
+            {
+              "name": "Legend",
+              "items": [
+                {
+                  "name": "Legend",
+                  "url": "legend/legend.htm"
+                }
+              ]
+            },
+            {
+              "name": "Interactivity",
+              "items": [
+                {
+                  "name": "Mouse and Touch",
+                  "url": "axes/zoomscroll.htm"
+                },
+                {
+                  "name": "Series onClick",
+                  "url": "series/seriesonclick.htm"
+                }
+              ]
+            },
+            {
+              "name": "Animations",
+              "items": [
+                {
+                  "name": "Series",
+                  "url": "animations/linefadein.htm"
+                },
+                {
+                  "name": "Sequence",
+                  "url": "animations/sequence.htm"
+                },
+                {
+                  "name": "CSS3 Transitions",
+                  "url": "animations/css3_animations.htm"
+                }
+              ]
+            },
+            {
+              "name": "Data Sources",
+              "items": [
+                {
+                  "name": "From Array",
+                  "url": "sources/fromarray.htm"
+                },
+                {
+                  "name": "From Text",
+                  "url": "sources/FromText.htm"
+                },
+                {
+                  "name": "From Table",
+                  "url": "sources/FromTable.htm"
+                },
+                {
+                  "name": "From Series",
+                  "url": "series/datasource.htm"
+                },
+                {
+                  "name": "From XML",
+                  "url": "sources/fromxml.htm"
+                },
+                {
+                  "name": "From JSON",
+                  "url": "sources/fromjson.htm"
+                },
+                {
+                  "name": "Realtime",
+                  "url": "sources/realtime.htm"
+                },
+                {
+                  "name": "Dynamic Update",
+                  "url": "sources/dynamicUpdate.htm"
+                },
+                {
+                  "name": "From Typed Array",
+                  "url": "sources/fromtypedarray.htm"
+                },
+                {
+                  "name": "DateTime Data",
+                  "url": "sources/datetime.htm"
+                },
+                {
+                  "name": "Yahoo Finance",
+                  "url": "sources/fromYahooFinance.htm"
+                },
+                {
+                  "name": "Weather Underground",
+                  "url": "sources/fromWunderground.htm"
+                },
+                {
+                  "name": "Battery Level",
+                  "url": "sources/battery.htm"
+                }
+              ]
+            },
+            {
+              "name": "Images",
+              "items": [
+                {
+                  "name": "From Array",
+                  "url": "basic/BackImage.htm"
+                },
+                {
+                  "name": "To PNG and JPEG",
+                  "url": "export/ToPNG.htm"
+                }
+              ]
+            },
+            {
+              "name": "Editors",
+              "items": [
+                {
+                  "name": "Chart Editor",
+                  "url": "editor/ChartEditor.htm"
+                },
+                {
+                  "name": "Modal Editor",
+                  "url": "editor/modaleditor.htm"
+                }
+              ]
+            },
+            {
+              "name": "Dashboards",
+              "items": [
+                {
+                  "name": "Multi-Dim Tutorial",
+                  "url": "dashboard/tutorial/index.htm"
+                },
+                {
+                  "name": "Demographics",
+                  "url": "dashboard/demographics.htm"
+                },
+                {
+                  "name": "Product Sales",
+                  "url": "dashboard/productSales.htm"
+                },
+                {
+                  "name": "Geo mapping",
+                  "url": "dashboard/geo_series.htm"
+                }
+              ]
+            },
+            {
+              "name": "3D",
+              "items": [
+                {
+                  "name": "Basic 3D",
+                  "url": "canvas/webgl/basic_3d.htm"
+                },
+                {
+                  "name": "Advanced",
+                  "url": "canvas/webgl/threejs_example.htm"
+                },
+                {
+                  "name": "Maps 3D",
+                  "url": "canvas/webgl/maps_3d.htm"
+                },
+                {
+                  "name": "WebGL™ 3D",
+                  "url": "canvas/webgl/index.htm"
+                }
+              ]
+            },
+            {
+              "name": "Other",
+              "items": [
+                {
+                  "name": "Annotations",
+                  "url": "extra/annotations.htm"
+                },
+                {
+                  "name": "Custom Marks using Annotations",
+                  "url": "extra/customMarksWithAnnotations.htm"
+                },
+                {
+                  "name": "Buttons",
+                  "url": "extra/buttons.htm"
+                },
+                {
+                  "name": "Tool tips",
+                  "url": "extra/ToolTips.htm"
+                },
+                {
+                  "name": "CSS Tool tips",
+                  "url": "extra/domToolTips.htm"
+                },
+                {
+                  "name": "Tips with Charts",
+                  "url": "extra/domToolTips_SubChart.htm"
+                },
+                {
+                  "name": "Cursor Tool",
+                  "items": [
+                    {
+                      "name": "Cursor Tool",
+                      "url": "extra/CursorTool.htm"
+                    },
+                    {
+                      "name": "Cursor Tool Interpolate",
+                      "url": "extra/CursorTool_Interpolate.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Floor reflection",
+                  "url": "extra/floorreflection.htm"
+                },
+                {
+                  "name": "Panel",
+                  "items": [
+                    {
+                      "name": "Panel",
+                      "url": "basic/PanelShadow.htm"
+                    },
+                    {
+                      "name": "Transparent",
+                      "url": "basic/Transparent.htm"
+                    },
+                    {
+                      "name": "Full page align",
+                      "url": "basic/canvasalign.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Title and Footer",
+                  "url": "basic/TitleFooter.htm"
+                },
+                {
+                  "name": "Slider",
+                  "url": "extra/slider.htm"
+                },
+                {
+                  "name": "Series Scroller",
+                  "items": [
+                    {
+                      "name": "Series Scroller",
+                      "url": "extra/scroller.htm"
+                    },
+                    {
+                      "name": "Datetime Scroller",
+                      "url": "extra/scroller_datetime.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Canvas",
+                  "items": [
+                    {
+                      "name": "Custom Painting",
+                      "url": "canvas/custom_paint.htm"
+                    },
+                    {
+                      "name": "Percent Size and Auto Resize",
+                      "url": "canvas/size_percent_resize.htm"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Plugins",
+              "items": [
+                {
+                  "name": "List of Plugins",
+                  "url": "plugins/plugins.htm"
+                },
+                {
+                  "name": "JQuery TeeChart",
+                  "url": "plugins/jquery/teechart_jquery.htm"
+                },
+                {
+                  "name": "Microsoft TypeScript",
+                  "url": "plugins/typescript/index.htm"
+                },
+                {
+                  "name": "Microsoft Visual Studio",
+                  "url": "http://www.nuget.org/packages/TeeChart.htm"
+                },
+                {
+                  "name": "Node.js package",
+                  "url": "https://npmjs.org/package/TeeChart.htm"
+                },
+                {
+                  "name": "Google Gadget",
+                  "url": "extra/google_gadget.htm"
+                },
+                {
+                  "name": "Smart Mobile Studio",
+                  "url": "http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart.htm"
+                },
+                {
+                  "name": "Three.js WebGL 3D",
+                  "url": "canvas/webgl/index.htm"
+                }
+              ]
+            }
+          ]
+        }
+      ];
+
+    var first = true;
+
+    function populateNavMenu(menu) {
+      var navMenu = document.getElementById("sidebar-menu");
+      for (var i = 0; i < menu.length; i++) {
+        var sectionTitle = document.createElement("h6");
+        sectionTitle.innerText = menu[i].name;
+        navMenu.appendChild(sectionTitle);
+
+        addNavSections(navMenu, menu[i].items);
+      }
+    }
+
+    function addNavSections(section, items, level) {
+      if (!level) level = 1;
+
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].url) {
+          var item_a = document.createElement("a");
+          item_a.href = items[i].url;
+          item_a.target = "frame_main";
+          item_a.classList.add("mdl-navigation__link");
+          item_a.style.paddingLeft = (20*level) + 8 + "px";
+          item_a.onclick = function () {
+            closeNav();
+            selectNavItem(this);
+          };
+          item_a.innerText = items[i].name;
+          section.appendChild(item_a);
+        }
+        else {
+          var collapse_div = document.createElement("div");
+          collapse_div.classList.add("mdl-collapse");
+          if (first) {
+            collapse_div.classList.add("mdl-collapse--opened");
+            first = false;
+          }
+          section.appendChild(collapse_div);
+
+          var collapse_button_a = document.createElement("a");
+          collapse_button_a.classList.add("mdl-navigation__link", "mdl-collapse__button");
+          collapse_button_a.style.paddingLeft = (20*level) + 8 + "px";
+          collapse_button_a.innerText = items[i].name;
+          collapse_div.appendChild(collapse_button_a);
+
+          var icon = document.createElement("i");
+          icon.classList.add("material-icons", "mdl-collapse__icon", "mdl-animation--default");
+          icon.style.left = (20*(level-1)) + 6 + "px";
+          icon.innerText="expand_more";
+          collapse_button_a.appendChild(icon);
+
+          var collapse_content_wrapper = document.createElement("div");
+          collapse_content_wrapper.classList.add("mdl-collapse__content-wrapper");
+          collapse_div.appendChild(collapse_content_wrapper);
+
+          var collapse_content = document.createElement("div");
+          collapse_content.classList.add("mdl-collapse__content", "mdl-animation--default");
+          collapse_content_wrapper.appendChild(collapse_content);
+
+          addNavSections(collapse_content, items[i].items, level+1);
+        }
+      }
+    }
+
+    function createMenus() {
+      populateNavMenu(JSONmenu);
+    }
+
+    function closeNav() {
+      var drawer = document.getElementsByClassName("mdl-layout__drawer")[0];
+      drawer.classList.remove("is-visible");
+      drawer.setAttribute("aria-hidden", "true");
+      document.getElementsByClassName("mdl-layout__obfuscator")[0].classList.remove("is-visible");
+    }
+
+    function selectNavItem(item) {
+      var items = document.getElementsByClassName("mdl-navigation__link");
+      for (var i=0; i<items.length; i++) {
+        items[i].classList.remove("is-selected");
+      }
+
+      item.classList.add("is-selected");
+    }
+
+  </script>
+</head>
+<body>
+<div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <!-- <span class="mdl-layout-title">Title</span>-->
+      <table style="width:100%">
+        <tr>
+          <td style="vertical-align: middle">
+            <a style="color: rgba(0,0,0,0.87);" href="#0"><img src="images/teechart-title-menu.png"/></a>
+            <a style="color: rgba(0,0,0,0.87); text-decoration: none;" href="#0"><h5 class="title" style="display: inline">HTML5/JavaScript</h5></a>
+          </td>
+          <td style="text-align:right">
+            <a style="margin: auto 20px" href="https://www.steema.com/downloads/html5"><img src="images/download.png" alt="download trial" title="download trial"></a>
+            <a style="margin: auto 20px" href="https://www.steema.com/product/html5#pricing"><img src="images/shop.png" alt="purchase" title="purchase"></a>
+            <a style="margin: auto 20px" href="https://www.steema.com"><img height="50px" src="images/SteemaLogo190x81.jpg" alt="Steema home" title="Steema home"></a>
+          </td>
+        </tr>
+      </table>
     </div>
-    <!-- jQuery -->
-    <script src="vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    
-    <script src="build/js/custom.min.js"></script>
-
-    <script type="text/javascript">
-
-    
-   var opened=false;
-
-   function showMenu(){
-      var w=window.innerWidth;
-      if(w<=991 && !opened){
-         document.getElementById("txtOpenSpan").style.display = 'block';
-          document.getElementById("slideMenu").style.visibility = 'hidden';
-         document.getElementById("slideMenu").style.width = '230px';
-          document.getElementById("mainContainer").style.width = '100%';
-          document.getElementById("mainContainer").style.margin = '0';
-          document.getElementById("mainContainer").style.paddingRight = '0';
-          document.getElementById("mainContainer").style.padding = '10px';
-          document.getElementById("txtCloseSpan").style.display = 'none';
-       }
-      else if(opened && w<=991){
-
-         document.getElementById("txtCloseSpan").style.display = 'block';
-         document.getElementById("slideMenu").style.width = '230px';
-          document.getElementById("slideMenu").style.visibility = 'visible';
-          document.getElementById("txtOpenSpan").style.display = 'none';
-          document.getElementById("mainContainer").style.width = '100%';
-          document.getElementById("mainContainer").style.marginLeft = '230px';
-      }
-      
-       else{
-
-          document.getElementById("slideMenu").style.visibility = 'visible';
-         document.getElementById("slideMenu").style.width = '230px';
-          document.getElementById("mainContainer").style.width = '100%';
-          document.getElementById("mainContainer").style.marginLeft = '230px';
-          document.getElementById("txtOpenSpan").style.display = 'none';
-          document.getElementById("txtCloseSpan").style.display = 'none';   
-          opened=false;
-       }
-   }
-   function openNav() {
-      var w = window.innerWidth;
-      if(w<=991){
-          document.getElementById("slideMenu").style.visibility = 'visible';
-         document.getElementById("slideMenu").style.width = '230px';
-          document.getElementById("txtOpenSpan").style.display = 'none';
-         document.getElementById("txtCloseSpan").style.display = 'block';
-          document.getElementById("mainContainer").style.width = '100%';
-          document.getElementById("mainContainer").style.marginLeft = '230px';
-          opened=true;
-      }
-       
-   }
-   
-   function closeNav() {
-
-         var w= window.innerWidth;
-         if(w<=991){
-          document.getElementById("slideMenu").style.visibility = 'hidden';
-         document.getElementById("slideMenu").style.width = '230px';
-          document.getElementById("mainContainer").style.width = '100%';
-          document.getElementById("mainContainer").style.margin = '0';
-          document.getElementById("mainContainer").style.paddingRight = '0';
-          document.getElementById("mainContainer").style.padding = '10px';
-          document.getElementById("txtOpenSpan").style.display = 'block';
-          opened=false;
-         }
-   }
-    </script>
-  </body>
+  </header>
+  <div class="mdl-layout__drawer">
+    <!--<span class="mdl-layout-title">Title</span>-->
+    <nav id="sidebar-menu" class="mdl-navigation"></nav>
+  </div>
+  <main class="mdl-layout__content">
+    <iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
+  </main>
+</div>
+<script>
+  createMenus();
+</script>
+</body>
 </html>
