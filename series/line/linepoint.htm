@@ -46,6 +46,7 @@ function draw() {
 	
 	Chart1.ondraw=function() {
 
+	  Chart1.ctx.save();
 	  Chart1.aspect.clipRect(Chart1.chartRect);
 		for (var i=0;i<this.series.items[0].count();i++) {
 		  var xValue;
@@ -63,6 +64,7 @@ function draw() {
 		  //or
 		  //f.rectangle(xValue-5,ys-5,10,10);
 		}
+	  Chart1.ctx.restore();
 	}			
 	  
 
