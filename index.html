@@ -705,9 +705,7 @@
           ]
         }
       ];
-
-    var first = true;
-
+    
     function populateNavMenu(menu) {
       var navMenu = document.getElementById("sidebar-menu");
       for (var i = 0; i < menu.length; i++) {
@@ -735,14 +733,18 @@
           };
           item_a.innerText = items[i].name;
           section.appendChild(item_a);
+
+          if (items[i].url === selectedSample) {
+            item_a.classList.add("is-selected");
+            $(section).parents('.mdl-collapse').each(function(){
+                var tmp = $(this);
+                tmp[0].classList.add("mdl-collapse--opened");
+            });
+          }
         }
         else {
           var collapse_div = document.createElement("div");
           collapse_div.classList.add("mdl-collapse");
-          if (first) {
-            collapse_div.classList.add("mdl-collapse--opened");
-            first = false;
-          }
           section.appendChild(collapse_div);
 
           var collapse_button_a = document.createElement("a");
@@ -790,6 +792,25 @@
       item.classList.add("is-selected");
     }
 
+    var selectedSample = "";
+
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " ")) + ".htm";
+    }
+
+    function getSample() {
+      selectedSample = getParameterByName("sample");
+      if (!selectedSample || selectedSample === "")
+          selectedSample = "dashboard/geo_series.htm";
+
+      document.getElementById("frame1").src = selectedSample;
+    }
   </script>
 </head>
 <body>
@@ -822,6 +843,7 @@
   </main>
 </div>
 <script>
+  getSample();
   createMenus();
 </script>
 </body>
