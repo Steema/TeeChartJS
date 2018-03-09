@@ -727,7 +727,15 @@
       for (var i = 0; i < items.length; i++) {
         if (items[i].url) {
           var item_a = document.createElement("a");
-          item_a.href = items[i].url;
+          if (items[i].url.includes("steema.us/joomla25"))
+            item_a.href = "http://www.steema.com/files/redirs/redirJoomla.php";
+          else if (items[i].url.includes("steema.us/drupal"))
+            item_a.href = "http://www.steema.com/files/redirs/redirDrupal.php";
+          else if (items[i].url.includes("steema.us/wp"))
+            item_a.href = "http://www.steema.com/files/redirs/redirWp.php";
+          else
+            item_a.href = items[i].url;
+
           item_a.target = "frame_main";
           item_a.classList.add("mdl-navigation__link");
           item_a.style.paddingLeft = (20*level) + 8 + "px";
