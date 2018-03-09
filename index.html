@@ -727,21 +727,19 @@
       for (var i = 0; i < items.length; i++) {
         if (items[i].url) {
           var item_a = document.createElement("a");
-          if (items[i].url.includes("steema.us/joomla25"))
-            item_a.href = "http://www.steema.com/files/redirs/redirJoomla.php";
-          else if (items[i].url.includes("steema.us/drupal"))
-            item_a.href = "http://www.steema.com/files/redirs/redirDrupal.php";
-          else if (items[i].url.includes("steema.us/wp"))
-            item_a.href = "http://www.steema.com/files/redirs/redirWp.php";
-          else
-            item_a.href = items[i].url;
+          item_a.href = items[i].url;
 
-          item_a.target = "frame_main";
+          if (item_a.hostname === window.location.hostname)
+            item_a.target = "frame_main";
+          else
+            item_a.target = "_blank";
+
           item_a.classList.add("mdl-navigation__link");
           item_a.style.paddingLeft = (20*level) + 8 + "px";
           item_a.onclick = function () {
             closeNav();
-            selectNavItem(this);
+            if (this.hostname === window.location.hostname)
+              selectNavItem(this);
           };
           item_a.innerText = items[i].name;
           section.appendChild(item_a);
