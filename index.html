@@ -102,6 +102,12 @@
       padding-top: 4px;
       padding-bottom: 4px;
     }
+
+    @media screen and (min-width: 1025px) {
+      .mdl-layout--fixed-drawer>.mdl-layout__header .mdl-layout__header-row {
+        padding-left: 8px;
+      }
+    }
   </style>
 
   <style>
@@ -669,10 +675,6 @@
               "name": "Plugins",
               "items": [
                 {
-                  "name": "List of Plugins",
-                  "url": "plugins/plugins.htm"
-                },
-                {
                   "name": "JQuery TeeChart",
                   "url": "plugins/jquery/teechart_jquery.htm"
                 },
@@ -681,24 +683,24 @@
                   "url": "plugins/typescript/index.htm"
                 },
                 {
-                  "name": "Microsoft Visual Studio",
-                  "url": "http://www.nuget.org/packages/TeeChart.htm"
-                },
-                {
-                  "name": "Node.js package",
-                  "url": "https://npmjs.org/package/TeeChart.htm"
-                },
-                {
                   "name": "Google Gadget",
                   "url": "extra/google_gadget.htm"
                 },
                 {
-                  "name": "Smart Mobile Studio",
-                  "url": "http://op4js.optimalesystemer.no/2012/04/26/steema-teechart-converted-to-smart.htm"
+                  "name": "HTML5 Builder",
+                  "url": "http://steema.com/files/public/teechart/html5/plugins/embarcadero/html5builder/demos/2012.09.30.1/client"
                 },
                 {
-                  "name": "Three.js WebGL 3D",
-                  "url": "canvas/webgl/index.htm"
+                  "name": "WordPress",
+                  "url": "http://steema.us/wp"
+                },
+                {
+                  "name": "Drupal",
+                  "url": "http://steema.us/drupal"
+                },
+                {
+                  "name": "Joomla",
+                  "url": "http://steema.us/joomla25"
                 }
               ]
             }
@@ -717,6 +719,8 @@
       }
     }
 
+    var anySelected = false;
+
     function addNavSections(section, items, level) {
       if (!level) level = 1;
 
@@ -734,7 +738,8 @@
           item_a.innerText = items[i].name;
           section.appendChild(item_a);
 
-          if (items[i].url === selectedSample) {
+          if (!anySelected && items[i].url === selectedSample) {
+            anySelected = true;
             item_a.classList.add("is-selected");
             $(section).parents('.mdl-collapse').each(function(){
                 var tmp = $(this);
@@ -801,7 +806,7 @@
           results = regex.exec(url);
       if (!results) return null;
       if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, " ")) + ".htm";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
     function getSample() {
@@ -810,6 +815,10 @@
           selectedSample = "dashboard/geo_series.htm";
 
       document.getElementById("frame1").src = selectedSample;
+    }
+
+    function cleanUrl() {
+      window.history.pushState({}, document.title, window.location.href.split("?")[0]);
     }
   </script>
 </head>
@@ -839,12 +848,13 @@
     <nav id="sidebar-menu" class="mdl-navigation"></nav>
   </div>
   <main class="mdl-layout__content">
-    <iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
+    <iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm" style="margin-left: 20px;"><p>This browser does not support iframes.</p></iframe>
   </main>
 </div>
 <script>
   getSample();
   createMenus();
+  cleanUrl();
 </script>
 </body>
 </html>
