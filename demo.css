@@ -1,4 +1,12 @@
-body{width: 100%; margin: 10px 0px 0px 0px; font-family: 'Segoe UI', Verdana, Arial; font-size: 10pt; background-color:white;}
+body{
+    width: 100%;
+    margin-top: 10px;
+    padding-left: 20px;
+    font-family: 'Segoe UI', Verdana, Arial;
+    font-size: 10pt;
+    background-color: #eeeeee;
+    color: black;
+}
 
 a:visited, a:link
 {
@@ -125,7 +133,7 @@ PRE {
 
 
 PRE.CODE {
-  font: Monospace, Courier New, Courier;
+  font-family: Monospace, Courier New, Courier;
   color: #000066;
   font-size: 110%;
   margin-left: 0px;
@@ -133,7 +141,7 @@ PRE.CODE {
 }
 
 BLOCKQUOTE.dtBlock {
-  font: Monospace, Courier New, Courier;
+  font-family: Monospace, Courier New, Courier;
   color: #000066;
   font-size: 100%;
   margin-left: 20px;
@@ -142,7 +150,7 @@ BLOCKQUOTE.dtBlock {
 }
 
 .SYNTAX {
-     font: Monospace, Courier New, Courier;
+     font-family: Monospace, Courier New, Courier;
      letter-spacing: .1em;
      background-color: #cccccc;
      color: #000000;
@@ -181,8 +189,6 @@ button{
     height:7%;
 }
 
-
-
 table .contentTable{
 	height:80%;
 	width:80%;
@@ -203,4 +209,9 @@ ul.options li {
 }
 table .alignTable, .alignTable td, .alignTable tr{
 	border:0px;
-} 
+}
+
+.row {
+    margin-right: 10px;
+    margin-left: 10px;
+}

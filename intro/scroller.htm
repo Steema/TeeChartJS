@@ -13,7 +13,6 @@
 		cursor:pointer;
 	}
 </style>
-<link rel="stylesheet" type="text/css" href="../demo.css">
 <script src="../../src/teechart.js" type="text/javascript"></script>
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../src/teechart-animations.js" type="text/javascript"></script>
@@ -26,6 +25,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Custom Theme Style -->
 <link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="../demo.css">
 
 <script type="text/javascript">
 
@@ -96,16 +96,13 @@ function draw() {
 
   
   for (t=0; t < rate.count(); t++) {
-	  var tmpVal = new Date(dates[t] * 100000);
-	  avgDates[t] = tmpVal;
+	  avgDates[t] = new Date(dates[t] * 100000);
   }
   rate.data.x = avgDates;
   //rate.data.x = dates;
   Chart1.addSeries(rate);//.format.gradient.visible=true;
-  
-  
+
   //config some series appearance characteristics
- 
   Chart1.series.items[0].pointer.width = 10;
   Chart1.series.items[0].pointer.height = 10;
   Chart1.series.items[0].pointer.style = "ellipse";
@@ -140,8 +137,8 @@ function draw() {
   Chart1.axes.bottom.format.stroke.size = 0.5;
   Chart1.axes.bottom.setMinMax(rate.data.x[138].getTime(), rate.data.x[159].getTime());
   Chart1.walls.visible=false;
+
   //Title
-  
   Chart1.title.visible = false;
   Chart1.title.text="Sales figures";
   
@@ -162,8 +159,7 @@ function draw() {
   a2.format.font.style = "12px Arial";
   a2.format.font.fill = "rgba(255,115,0,0.9)";
   a2.text = "  2012 - 2013 Source: Steema Software SL";
-  
-  
+
   Chart1.draw();  //get positions
   
   a1.position.x = Chart1.axes.bottom.calc((Chart1.axes.bottom.minimum+Chart1.axes.bottom.maximum)/2) -140;
@@ -192,7 +188,6 @@ function draw() {
   }
 
   //animation
-  
   animation = new Tee.SeriesAnimation();
   animation.duration = 1000;
   animation.kind = "each";
@@ -233,8 +228,6 @@ function draw() {
   scroller.panel.format.gradient.direction = "topbottom";
   scroller.panel.format.stroke.fill = "rgba(255,165,0,0.5)";
   scroller.panel.format.stroke.size = 0;
-  
-  
 
   Chart1.ondraw=function() {
 		resizeScroller(scroller);
@@ -262,118 +255,34 @@ function allTime(){
 	  Chart1.draw();
 	  scroller.draw();
 }
-function resize(chart) {
 
-	if(chart!=null){
-		var canvas = chart.canvas;
-		startWidth = 1000;
-		startHeight = 400;
-		 
-		var w = startWidth;
-		var h = startHeight;
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-			w = window.innerWidth;
-			h = window.innerHeight;
-			if(w<=991){
-				canvas.style.width="" + w + "px";
-				canvas.style.height="" + w*startHeight/startWidth + "px";
-			}
-			else{
-				canvas.style.width = "" + startWidth + "px";
-				canvas.style.height = "" + startHeight + "px";
-				chart.bounds.width = startWidth;
-				chart.bounds.height = startHeight;
-			}
-			chart.draw();
-		}
-		else{
-			if ((window.innerWidth) < startWidth)
-			  w = window.innerWidth;
-			else
-			  w = startWidth;
-			  
-			if ((window.innerHeight) < startHeight)
-			  h = window.innerHeight;
-			else
-			  h = startHeight;
-		  
-		  canvas.setAttribute('width', "" + w + "px");
-		  canvas.setAttribute('height', "" + h + "px");
-		
-		  canvas.style.width = "" + w + "px";
-		  canvas.style.height = "" + h + "px";
-		
-		  chart.bounds.width = w;
-		  chart.bounds.height = h;
-	
-		  chart.draw();
-		}	
-	}
+function resize(chart) {
+  if (chart != null) {
+    var w = parseInt(window.getComputedStyle(chart.canvas.parentElement, null).width, 10);
+    chart.canvas.setAttribute('width', w + "px");
+    chart.bounds.width = w;
+
+    chart.draw();
+  }
 }
 
 function resizeScroller(aScroller) {
+  if (aScroller != null) {
+    var w = parseInt(window.getComputedStyle(aScroller.canvas.parentElement, null).width, 10);
+    w -= parseInt(aScroller.canvas.style.marginLeft, 10);
+    w -= w * aScroller.target.panel.margins.right * 0.01;
 
-	if(aScroller!=null){
-		var canvas = aScroller.canvas;
-		
-		startWidth = 935;
-		startHeight = 60;
-	  
-		var w = startWidth;
-		var h = startHeight;
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	
-		w = window.innerWidth;
-		if(w<=991){
-			canvas.style.width="" + w + "px";
-			canvas.style.height="" + w*startHeight/startWidth + "px";
-			aScroller.bounds.width = w;
-			aScroller.bounds.height = w*startHeight/startWidth;
-			aScroller.setBounds(0,0,canvas.width,canvas.width*startHeight/startWidth);
-		}
-		else{
-			canvas.style.width = "" + startWidth + "px";
-			canvas.style.height = "" + startHeight + "px";
-			aScroller.bounds.width = startWidth;
-			aScroller.bounds.height = startHeight;
-			aScroller.setBounds(0,0,canvas.width,h);
-		}
-		aScroller.draw();
-		}
-		else{
-			if ((window.innerWidth) < startWidth)
-			  w = window.innerWidth;
-			else
-			  w = startWidth;
-		  canvas.setAttribute('width', "" + w + "px");
-		  canvas.setAttribute('height', "" + h + "px");
-		  canvas.style.width = "" + w + "px";
-		  canvas.style.height = "" + h + "px";
-	  	  aScroller.bounds.x=0;
-		  aScroller.bounds.y=0;
-		  aScroller.bounds.width=w;
-		  aScroller.bounds.height=h;
-		  aScroller.setBounds(0,0,w,h);
-		  aScroller.draw();
-		}
-	}
-}
+    aScroller.canvas.setAttribute('width', w + "px");
+    aScroller.bounds.width = w;
+    aScroller.setBounds(0, 0, w, 100);
 
-
-function resizeToolBar(){
-	var toolbar1 = document.getElementById("toolbar1");
-	var w = window.innerWidth;
-	if(w<=954){
-		toolbar1.style.width = "" + w + "px";
-	}
-	else{
-		toolbar1.style.width = "" + w - 230 + "px";
-	}
+    aScroller.draw();
+  }
 }
 
 </script>
 </head>
-<body id="chartView" onload="draw();resizeScroller(scroller);resize(Chart1);resizeToolBar();" onresize="resize(Chart1);resizeScroller(scroller);resizeToolBar();">
+<body id="chartView" onload="draw();resizeScroller(scroller);resize(Chart1);" onresize="resize(Chart1);resizeScroller(scroller);">
 	<div class="right_col" role="main">
 		<div class="page-title">
 			<div class="title_left">
@@ -381,9 +290,6 @@ function resizeToolBar(){
 			</div>
 		</div>
 		<div class="clearfix"></div>
-	
-	
-			
 		<div class="row" id="toolbar1">
 			<div id="canvasPanel" class="x_panel">
 				<div class="x_title">
@@ -419,11 +325,5 @@ function resizeToolBar(){
 			</div>
 		<div class="clearfix"></div>
 	</div>
-	<!-- jQuery -->
-    <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="../3rd_party/build/js/custom.min.js"></script>	
-	
 </body>
 </html>
