@@ -2,6 +2,7 @@ body{
     width: 100%;
     margin-top: 10px;
     padding-left: 20px;
+    padding-right: 20px;
     font-family: 'Segoe UI', Verdana, Arial;
     font-size: 10pt;
     background-color: #eeeeee;
@@ -212,6 +213,6 @@ table .alignTable, .alignTable td, .alignTable tr{
 }
 
 .row {
-    margin-right: 10px;
-    margin-left: 10px;
+    margin-right: 0;
+    margin-left: 0;
 }

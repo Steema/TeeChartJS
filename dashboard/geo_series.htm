@@ -1,307 +1,1048 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
+    <title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
 
-<meta charset="UTF-8"/>	
-<!--[if lt IE 9]>
-    <script src="../../../src/excanvas/excanvas_text.js"></script>
-    <script src="../../../src/excanvas/canvas.text.js"></script>
-<![endif]-->
+    <meta charset="UTF-8"/>
+    <!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+    <![endif]-->
 
-<link rel="stylesheet" type="text/css" href="../demo.css">
-<script src="../../src/teechart.js" type="text/javascript"></script>
-<script src="../../src/teechart-extras.js" type="text/javascript"></script>
-<script src="../theme.js" type="text/javascript"></script>
+    <script src="../../src/teechart.js" type="text/javascript"></script>
+    <script src="../../src/teechart-extras.js" type="text/javascript"></script>
+    <script src="../theme.js" type="text/javascript"></script>
 
-<script src="../../src/teechart-maps.js" type="text/javascript"></script>
-<script src="../../src/teechart-data.js" type="text/javascript"></script>
+    <script src="../../src/teechart-maps.js" type="text/javascript"></script>
+    <script src="../../src/teechart-data.js" type="text/javascript"></script>
 
-<script src="tutorial/tee-data-utils.js" type="text/javascript"></script>
+    <script src="tutorial/tee-data-utils.js" type="text/javascript"></script>
+    <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
 
-<style>
+    <!-- Bootstrap -->
+    <link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom Theme Style -->
+    <link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../demo.css">
 
-.mapPart{
-	width:70%
-}
-.mapTxtPart{
-	width:30%;
-}
-.map {
-  border-color:red;
-  border-style:hidden;
-  border-width:2px;
-  border-radius:10px;
-  background-color:white;
-}
+    <style>
 
-.map polygon:hover { opacity:0.5; stroke:red }
-.map polygon { stroke:#C5DFF8; stroke-width: 0.5em; cursor:pointer; }
+        .mapPart {
+            width: 70%
+        }
 
-.teetip { background-color:#C5DFF8 !important; border:1px solid white;}
-#usa{
-	text-align:right;
-}
-#usa.map polygon {
-  stroke: #FFFFFF;
-  stroke-width: 0.5em;
-  fill: silver;
-}
+        .mapTxtPart {
+            width: 30%;
+        }
 
-</style>
+        .map {
+            border-color: red;
+            border-style: hidden;
+            border-width: 2px;
+            border-radius: 10px;
+            background-color: white;
+        }
 
+        .map polygon:hover {
+            opacity: 0.5;
+            stroke: red
+        }
 
-<script type="text/javascript">
+        .map polygon {
+            stroke: #C5DFF8;
+            stroke-width: 0.5em;
+            cursor: pointer;
+        }
 
-var USAValues=[
-    { year: 2000,
-      values: { AL:17.0, AK:12.0, AZ:19.0, AR:15.0, CA:21.0, CO:12.0, CT:21.0, DE:21.0, DC:16.0, FL:19.0, GA:15.0, HI:13.0, ID:13.0, IL:14.0, IN:18.0,
-                IA:20.0, KS:16.0, KY:18.0, LA:21.0, ME:19.0, MD:14.0, MA:15.0, MI:16.0, MN:13.0, MS:15.0, MO:18.0, MT:14.0, NE:12.0, NV:19.0, NH:20.0,
-                NJ:13.0, NM:14.0, NY:15.0, NC:12.0, ND:12.0, OH:20.0, OK:21.0, OR:13.0, PA:15.0, RI:15.0, SC:17.0, SD:14.0, TN:19.0, TX:16.0, UT:18.0,
-                VT:12.0, VA:13.0, WA:16.0, WV:20.0, WI:19.0, WY:12.0 }
-    },
-    { year: 2001,
-      values: { AL:18.0, AK:15.0, AZ:13.0, AR:17.0, CA:17.0, CO:16.0, CT:13.0, DE:16.0, DC:21.0, FL:14.0, GA:16.0, HI:15.0, ID:20.0, IL:19.0, IN:14.0,
-                IA:15.0, KS:15.0, KY:14.0, LA:20.0, ME:20.0, MD:17.0, MA:16.0, MI:17.0, MN:20.0, MS:15.0, MO:20.0, MT:13.0, NE:16.0, NV:16.0, NH:18.0,
-                NJ:18.0, NM:19.0, NY:21.0, NC:16.0, ND:19.0, OH:13.0, OK:13.0, OR:18.0, PA:18.0, RI:21.0, SC:19.0, SD:21.0, TN:13.0, TX:12.0, UT:18.0,
-                VT:14.0, VA:21.0, WA:19.0, WV:21.0, WI:13.0, WY:11.0 }
-    },
-    { year: 2002,
-      values: { AL:14.0, AK:18.0, AZ:13.0, AR:20.0, CA:14.0, CO:13.0, CT:21.0, DE:14.0, DC:19.0, FL:20.0, GA:21.0, HI:18.0, ID:14.0, IL:21.0, IN:13.0,
-                IA:16.0, KS:17.0, KY:20.0, LA:19.0, ME:21.0, MD:15.0, MA:17.0, MI:16.0, MN:19.0, MS:16.0, MO:12.0, MT:18.0, NE:19.0, NV:17.0, NH:16.0,
-                NJ:12.0, NM:18.0, NY:14.0, NC:13.0, ND:15.0, OH:15.0, OK:12.0, OR:20.0, PA:15.0, RI:20.0, SC:15.0, SD:17.0, TN:16.0, TX:14.0, UT:17.0,
-                VT:19.0, VA:16.0, WA:20.0, WV:12.0, WI:20.0, WY:19.0 }
-    },
-    { year: 2003,
-      values: { AL:16.0, AK:14.0, AZ:12.0, AR:14.0, CA:16.0, CO:14.0, CT:15.0, DE:14.0, DC:13.0, FL:19.0, GA:15.0, HI:21.0, ID:12.0, IL:17.0, IN:21.0,
-                IA:20.0, KS:14.0, KY:14.0, LA:14.0, ME:13.0, MD:15.0, MA:15.0, MI:12.0, MN:17.0, MS:13.0, MO:21.0, MT:17.0, NE:14.0, NV:18.0, NH:16.0,
-                NJ:21.0, NM:19.0, NY:18.0, NC:16.0, ND:21.0, OH:14.0, OK:14.0, OR:20.0, PA:13.0, RI:21.0, SC:16.0, SD:15.0, TN:18.0, TX:17.0, UT:20.0,
-                VT:18.0, VA:12.0, WA:16.0, WV:19.0, WI:13.0, WY:16.0 }
-    },
-    { year: 2004,
-      values: { AL:14.0, AK:20.0, AZ:16.0, AR:18.0, CA:14.0, CO:14.0, CT:14.0, DE:18.0, DC:15.0, FL:18.0, GA:15.0, HI:13.0, ID:18.0, IL:14.0, IN:20.0,
-                IA:12.0, KS:18.0, KY:14.0, LA:14.0, ME:18.0, MD:19.0, MA:18.0, MI:16.0, MN:19.0, MS:19.0, MO:12.0, MT:19.0, NE:17.0, NV:20.0, NH:15.0,
-                NJ:21.0, NM:15.0, NY:19.0, NC:12.0, ND:12.0, OH:18.0, OK:13.0, OR:18.0, PA:17.0, RI:16.0, SC:20.0, SD:18.0, TN:17.0, TX:12.0, UT:13.0,
-                VT:18.0, VA:18.0, WA:12.0, WV:18.0, WI:18.0, WY:14.0 }
-    },
-    { year: 2005,
-      values: { AL:12.0, AK:19.0, AZ:16.0, AR:21.0, CA:18.0, CO:21.0, CT:21.0, DE:14.0, DC:20.0, FL:18.0, GA:13.0, HI:19.0, ID:20.0, IL:17.0, IN:12.0,
-                IA:17.0, KS:14.0, KY:16.0, LA:12.0, ME:12.0, MD:19.0, MA:19.0, MI:21.0, MN:17.0, MS:13.0, MO:17.0, MT:20.0, NE:12.0, NV:20.0, NH:19.0,
-                NJ:19.0, NM:21.0, NY:16.0, NC:19.0, ND:13.0, OH:12.0, OK:16.0, OR:15.0, PA:20.0, RI:13.0, SC:15.0, SD:18.0, TN:12.0, TX:18.0, UT:12.0,
-                VT:20.0, VA:12.0, WA:18.0, WV:12.0, WI:16.0, WY:18.0 }
-    },
-    { year: 2006,
-      values: { AL:17.0, AK:14.0, AZ:15.0, AR:12.0, CA:16.0, CO:20.0, CT:16.0, DE:12.0, DC:13.0, FL:20.0, GA:19.0, HI:12.0, ID:15.0, IL:18.0, IN:12.0,
-                IA:19.0, KS:16.0, KY:16.0, LA:19.0, ME:14.0, MD:16.0, MA:21.0, MI:12.0, MN:17.0, MS:12.0, MO:19.0, MT:18.0, NE:21.0, NV:12.0, NH:21.0,
-                NJ:12.0, NM:20.0, NY:15.0, NC:21.0, ND:19.0, OH:20.0, OK:14.0, OR:13.0, PA:19.0, RI:14.0, SC:16.0, SD:14.0, TN:14.0, TX:20.0, UT:12.0,
-                VT:15.0, VA:16.0, WA:18.0, WV:14.0, WI:20.0, WY:15.0 }
-    },
-    { year: 2007,
-      values: { AL:21.0, AK:19.0, AZ:21.0, AR:21.0, CA:19.0, CO:21.0, CT:12.0, DE:18.0, DC:21.0, FL:15.0, GA:20.0, HI:17.0, ID:15.0, IL:15.0, IN:16.0,
-                IA:16.0, KS:15.0, KY:12.0, LA:18.0, ME:13.0, MD:15.0, MA:16.0, MI:18.0, MN:12.0, MS:12.0, MO:15.0, MT:20.0, NE:20.0, NV:12.0, NH:20.0,
-                NJ:15.0, NM:21.0, NY:16.0, NC:16.0, ND:14.0, OH:19.0, OK:18.0, OR:19.0, PA:14.0, RI:20.0, SC:16.0, SD:17.0, TN:17.0, TX:13.0, UT:16.0,
-                VT:15.0, VA:18.0, WA:21.0, WV:14.0, WI:13.0, WY:14.0 }
-    },
-    { year: 2008,
-      values: { AL:18.0, AK:19.0, AZ:16.0, AR:18.0, CA:19.0, CO:19.0, CT:17.0, DE:17.0, DC:21.0, FL:13.0, GA:21.0, HI:14.0, ID:19.0, IL:13.0, IN:16.0,
-                IA:14.0, KS:17.0, KY:21.0, LA:18.0, ME:20.0, MD:15.0, MA:12.0, MI:21.0, MN:19.0, MS:14.0, MO:12.0, MT:14.0, NE:21.0, NV:21.0, NH:18.0,
-                NJ:16.0, NM:16.0, NY:16.0, NC:14.0, ND:15.0, OH:18.0, OK:19.0, OR:18.0, PA:20.0, RI:17.0, SC:18.0, SD:19.0, TN:21.0, TX:14.0, UT:15.0,
-                VT:12.0, VA:20.0, WA:19.0, WV:14.0, WI:13.0, WY:20.0 }
-    },
-    { year: 2009,
-      values: { AL:17.0, AK:17.0, AZ:15.0, AR:14.0, CA:14.0, CO:17.0, CT:18.0, DE:18.0, DC:21.0, FL:21.0, GA:16.0, HI:14.0, ID:13.0, IL:17.0, IN:13.0,
-                IA:21.0, KS:18.0, KY:18.0, LA:21.0, ME:14.0, MD:13.0, MA:16.0, MI:14.0, MN:17.0, MS:16.0, MO:12.0, MT:13.0, NE:12.0, NV:15.0, NH:17.0,
-                NJ:17.0, NM:21.0, NY:20.0, NC:12.0, ND:15.0, OH:15.0, OK:12.0, OR:12.0, PA:14.0, RI:18.0, SC:17.0, SD:12.0, TN:20.0, TX:17.0, UT:18.0,
-                VT:19.0, VA:13.0, WA:16.0, WV:15.0, WI:12.0, WY:12.0 }
-    },
-    { year: 2010,
-      values: { AL:19.0, AK:16.0, AZ:12.0, AR:15.0, CA:19.0, CO:21.0, CT:17.0, DE:12.0, DC:15.0, FL:21.0, GA:19.0, HI:16.0, ID:16.0, IL:13.0, IN:14.0,
-                IA:17.0, KS:19.0, KY:21.0, LA:21.0, ME:13.0, MD:14.0, MA:14.0, MI:18.0, MN:12.0, MS:20.0, MO:21.0, MT:17.0, NE:14.0, NV:17.0, NH:13.0,
-                NJ:14.0, NM:15.0, NY:21.0, NC:20.0, ND:17.0, OH:14.0, OK:16.0, OR:17.0, PA:16.0, RI:21.0, SC:15.0, SD:19.0, TN:19.0, TX:18.0, UT:15.0,
-                VT:19.0, VA:17.0, WA:13.0, WV:16.0, WI:23.0, WY:16.0 }
-    },
-    { year: 2011,
-      values: { AL:18.0, AK:13.0, AZ:17.0, AR:21.0, CA:16.0, CO:16.0, CT:21.0, DE:15.0, DC:13.0, FL:20.0, GA:20.0, HI:17.0, ID:20.0, IL:12.0, IN:14.0,
-                IA:17.0, KS:17.0, KY:16.0, LA:21.0, ME:14.0, MD:19.0, MA:12.0, MI:18.0, MN:18.0, MS:20.0, MO:13.0, MT:16.0, NE:12.0, NV:20.0, NH:18.0,
-                NJ:12.0, NM:20.0, NY:15.0, NC:20.0, ND:16.0, OH:19.0, OK:21.0, OR:18.0, PA:12.0, RI:19.0, SC:13.0, SD:15.0, TN:18.0, TX:17.0, UT:18.0,
-                VT:19.0, VA:21.0, WA:20.0, WV:14.0, WI:13.0, WY:17.0 }
-    },
-    { year: 2012,
-      values: { AL:12.0, AK:19.0, AZ:14.0, AR:20.0, CA:12.0, CO:21.0, CT:15.0, DE:12.0, DC:19.0, FL:21.0, GA:21.0, HI:12.0, ID:12.0, IL:21.0, IN:20.0,
-                IA:20.0, KS:17.0, KY:13.0, LA:19.0, ME:15.0, MD:18.0, MA:14.0, MI:19.0, MN:19.0, MS:12.0, MO:16.0, MT:17.0, NE:16.0, NV:19.0, NH:12.0,
-                NJ:13.0, NM:17.0, NY:16.0, NC:12.0, ND:14.0, OH:17.0, OK:16.0, OR:14.0, PA:15.0, RI:18.0, SC:19.0, SD:19.0, TN:19.0, TX:17.0, UT:18.0,
-                VT:13.0, VA:18.0, WA:15.0, WV:18.0, WI:17.0, WY:14.0 }
-    }
-  ];
+        .teetip {
+            background-color: #C5DFF8 !important;
+            border: 1px solid white;
+        }
 
-var Engine=new Tee.Data(),
-      Data=Engine.addDataSet("USA", USAValues),
-        Years=Data.addDimension("Years", "values", "year"),
-          States=Years.addDimension("USA States"),
-            Degree=States.addMetric("Degrees");
+        #usa {
+            text-align: right;
+        }
 
-var USAMap, Legend;
+        #usa.map polygon {
+            stroke: #FFFFFF;
+            stroke-width: 0.5em;
+            fill: silver;
+        }
+    </style>
 
-// Query average of Temperatures (Degree) of a given Year, grouped by USA State:
+    <script type="text/javascript">
 
-function fillMap(year) {
-    Years.selected=year;  // select a specific Year
+      var USAValues = [
+        {
+          year: 2000,
+          values: {
+            AL: 17.0,
+            AK: 12.0,
+            AZ: 19.0,
+            AR: 15.0,
+            CA: 21.0,
+            CO: 12.0,
+            CT: 21.0,
+            DE: 21.0,
+            DC: 16.0,
+            FL: 19.0,
+            GA: 15.0,
+            HI: 13.0,
+            ID: 13.0,
+            IL: 14.0,
+            IN: 18.0,
+            IA: 20.0,
+            KS: 16.0,
+            KY: 18.0,
+            LA: 21.0,
+            ME: 19.0,
+            MD: 14.0,
+            MA: 15.0,
+            MI: 16.0,
+            MN: 13.0,
+            MS: 15.0,
+            MO: 18.0,
+            MT: 14.0,
+            NE: 12.0,
+            NV: 19.0,
+            NH: 20.0,
+            NJ: 13.0,
+            NM: 14.0,
+            NY: 15.0,
+            NC: 12.0,
+            ND: 12.0,
+            OH: 20.0,
+            OK: 21.0,
+            OR: 13.0,
+            PA: 15.0,
+            RI: 15.0,
+            SC: 17.0,
+            SD: 14.0,
+            TN: 19.0,
+            TX: 16.0,
+            UT: 18.0,
+            VT: 12.0,
+            VA: 13.0,
+            WA: 16.0,
+            WV: 20.0,
+            WI: 19.0,
+            WY: 12.0
+          }
+        },
+        {
+          year: 2001,
+          values: {
+            AL: 18.0,
+            AK: 15.0,
+            AZ: 13.0,
+            AR: 17.0,
+            CA: 17.0,
+            CO: 16.0,
+            CT: 13.0,
+            DE: 16.0,
+            DC: 21.0,
+            FL: 14.0,
+            GA: 16.0,
+            HI: 15.0,
+            ID: 20.0,
+            IL: 19.0,
+            IN: 14.0,
+            IA: 15.0,
+            KS: 15.0,
+            KY: 14.0,
+            LA: 20.0,
+            ME: 20.0,
+            MD: 17.0,
+            MA: 16.0,
+            MI: 17.0,
+            MN: 20.0,
+            MS: 15.0,
+            MO: 20.0,
+            MT: 13.0,
+            NE: 16.0,
+            NV: 16.0,
+            NH: 18.0,
+            NJ: 18.0,
+            NM: 19.0,
+            NY: 21.0,
+            NC: 16.0,
+            ND: 19.0,
+            OH: 13.0,
+            OK: 13.0,
+            OR: 18.0,
+            PA: 18.0,
+            RI: 21.0,
+            SC: 19.0,
+            SD: 21.0,
+            TN: 13.0,
+            TX: 12.0,
+            UT: 18.0,
+            VT: 14.0,
+            VA: 21.0,
+            WA: 19.0,
+            WV: 21.0,
+            WI: 13.0,
+            WY: 11.0
+          }
+        },
+        {
+          year: 2002,
+          values: {
+            AL: 14.0,
+            AK: 18.0,
+            AZ: 13.0,
+            AR: 20.0,
+            CA: 14.0,
+            CO: 13.0,
+            CT: 21.0,
+            DE: 14.0,
+            DC: 19.0,
+            FL: 20.0,
+            GA: 21.0,
+            HI: 18.0,
+            ID: 14.0,
+            IL: 21.0,
+            IN: 13.0,
+            IA: 16.0,
+            KS: 17.0,
+            KY: 20.0,
+            LA: 19.0,
+            ME: 21.0,
+            MD: 15.0,
+            MA: 17.0,
+            MI: 16.0,
+            MN: 19.0,
+            MS: 16.0,
+            MO: 12.0,
+            MT: 18.0,
+            NE: 19.0,
+            NV: 17.0,
+            NH: 16.0,
+            NJ: 12.0,
+            NM: 18.0,
+            NY: 14.0,
+            NC: 13.0,
+            ND: 15.0,
+            OH: 15.0,
+            OK: 12.0,
+            OR: 20.0,
+            PA: 15.0,
+            RI: 20.0,
+            SC: 15.0,
+            SD: 17.0,
+            TN: 16.0,
+            TX: 14.0,
+            UT: 17.0,
+            VT: 19.0,
+            VA: 16.0,
+            WA: 20.0,
+            WV: 12.0,
+            WI: 20.0,
+            WY: 19.0
+          }
+        },
+        {
+          year: 2003,
+          values: {
+            AL: 16.0,
+            AK: 14.0,
+            AZ: 12.0,
+            AR: 14.0,
+            CA: 16.0,
+            CO: 14.0,
+            CT: 15.0,
+            DE: 14.0,
+            DC: 13.0,
+            FL: 19.0,
+            GA: 15.0,
+            HI: 21.0,
+            ID: 12.0,
+            IL: 17.0,
+            IN: 21.0,
+            IA: 20.0,
+            KS: 14.0,
+            KY: 14.0,
+            LA: 14.0,
+            ME: 13.0,
+            MD: 15.0,
+            MA: 15.0,
+            MI: 12.0,
+            MN: 17.0,
+            MS: 13.0,
+            MO: 21.0,
+            MT: 17.0,
+            NE: 14.0,
+            NV: 18.0,
+            NH: 16.0,
+            NJ: 21.0,
+            NM: 19.0,
+            NY: 18.0,
+            NC: 16.0,
+            ND: 21.0,
+            OH: 14.0,
+            OK: 14.0,
+            OR: 20.0,
+            PA: 13.0,
+            RI: 21.0,
+            SC: 16.0,
+            SD: 15.0,
+            TN: 18.0,
+            TX: 17.0,
+            UT: 20.0,
+            VT: 18.0,
+            VA: 12.0,
+            WA: 16.0,
+            WV: 19.0,
+            WI: 13.0,
+            WY: 16.0
+          }
+        },
+        {
+          year: 2004,
+          values: {
+            AL: 14.0,
+            AK: 20.0,
+            AZ: 16.0,
+            AR: 18.0,
+            CA: 14.0,
+            CO: 14.0,
+            CT: 14.0,
+            DE: 18.0,
+            DC: 15.0,
+            FL: 18.0,
+            GA: 15.0,
+            HI: 13.0,
+            ID: 18.0,
+            IL: 14.0,
+            IN: 20.0,
+            IA: 12.0,
+            KS: 18.0,
+            KY: 14.0,
+            LA: 14.0,
+            ME: 18.0,
+            MD: 19.0,
+            MA: 18.0,
+            MI: 16.0,
+            MN: 19.0,
+            MS: 19.0,
+            MO: 12.0,
+            MT: 19.0,
+            NE: 17.0,
+            NV: 20.0,
+            NH: 15.0,
+            NJ: 21.0,
+            NM: 15.0,
+            NY: 19.0,
+            NC: 12.0,
+            ND: 12.0,
+            OH: 18.0,
+            OK: 13.0,
+            OR: 18.0,
+            PA: 17.0,
+            RI: 16.0,
+            SC: 20.0,
+            SD: 18.0,
+            TN: 17.0,
+            TX: 12.0,
+            UT: 13.0,
+            VT: 18.0,
+            VA: 18.0,
+            WA: 12.0,
+            WV: 18.0,
+            WI: 18.0,
+            WY: 14.0
+          }
+        },
+        {
+          year: 2005,
+          values: {
+            AL: 12.0,
+            AK: 19.0,
+            AZ: 16.0,
+            AR: 21.0,
+            CA: 18.0,
+            CO: 21.0,
+            CT: 21.0,
+            DE: 14.0,
+            DC: 20.0,
+            FL: 18.0,
+            GA: 13.0,
+            HI: 19.0,
+            ID: 20.0,
+            IL: 17.0,
+            IN: 12.0,
+            IA: 17.0,
+            KS: 14.0,
+            KY: 16.0,
+            LA: 12.0,
+            ME: 12.0,
+            MD: 19.0,
+            MA: 19.0,
+            MI: 21.0,
+            MN: 17.0,
+            MS: 13.0,
+            MO: 17.0,
+            MT: 20.0,
+            NE: 12.0,
+            NV: 20.0,
+            NH: 19.0,
+            NJ: 19.0,
+            NM: 21.0,
+            NY: 16.0,
+            NC: 19.0,
+            ND: 13.0,
+            OH: 12.0,
+            OK: 16.0,
+            OR: 15.0,
+            PA: 20.0,
+            RI: 13.0,
+            SC: 15.0,
+            SD: 18.0,
+            TN: 12.0,
+            TX: 18.0,
+            UT: 12.0,
+            VT: 20.0,
+            VA: 12.0,
+            WA: 18.0,
+            WV: 12.0,
+            WI: 16.0,
+            WY: 18.0
+          }
+        },
+        {
+          year: 2006,
+          values: {
+            AL: 17.0,
+            AK: 14.0,
+            AZ: 15.0,
+            AR: 12.0,
+            CA: 16.0,
+            CO: 20.0,
+            CT: 16.0,
+            DE: 12.0,
+            DC: 13.0,
+            FL: 20.0,
+            GA: 19.0,
+            HI: 12.0,
+            ID: 15.0,
+            IL: 18.0,
+            IN: 12.0,
+            IA: 19.0,
+            KS: 16.0,
+            KY: 16.0,
+            LA: 19.0,
+            ME: 14.0,
+            MD: 16.0,
+            MA: 21.0,
+            MI: 12.0,
+            MN: 17.0,
+            MS: 12.0,
+            MO: 19.0,
+            MT: 18.0,
+            NE: 21.0,
+            NV: 12.0,
+            NH: 21.0,
+            NJ: 12.0,
+            NM: 20.0,
+            NY: 15.0,
+            NC: 21.0,
+            ND: 19.0,
+            OH: 20.0,
+            OK: 14.0,
+            OR: 13.0,
+            PA: 19.0,
+            RI: 14.0,
+            SC: 16.0,
+            SD: 14.0,
+            TN: 14.0,
+            TX: 20.0,
+            UT: 12.0,
+            VT: 15.0,
+            VA: 16.0,
+            WA: 18.0,
+            WV: 14.0,
+            WI: 20.0,
+            WY: 15.0
+          }
+        },
+        {
+          year: 2007,
+          values: {
+            AL: 21.0,
+            AK: 19.0,
+            AZ: 21.0,
+            AR: 21.0,
+            CA: 19.0,
+            CO: 21.0,
+            CT: 12.0,
+            DE: 18.0,
+            DC: 21.0,
+            FL: 15.0,
+            GA: 20.0,
+            HI: 17.0,
+            ID: 15.0,
+            IL: 15.0,
+            IN: 16.0,
+            IA: 16.0,
+            KS: 15.0,
+            KY: 12.0,
+            LA: 18.0,
+            ME: 13.0,
+            MD: 15.0,
+            MA: 16.0,
+            MI: 18.0,
+            MN: 12.0,
+            MS: 12.0,
+            MO: 15.0,
+            MT: 20.0,
+            NE: 20.0,
+            NV: 12.0,
+            NH: 20.0,
+            NJ: 15.0,
+            NM: 21.0,
+            NY: 16.0,
+            NC: 16.0,
+            ND: 14.0,
+            OH: 19.0,
+            OK: 18.0,
+            OR: 19.0,
+            PA: 14.0,
+            RI: 20.0,
+            SC: 16.0,
+            SD: 17.0,
+            TN: 17.0,
+            TX: 13.0,
+            UT: 16.0,
+            VT: 15.0,
+            VA: 18.0,
+            WA: 21.0,
+            WV: 14.0,
+            WI: 13.0,
+            WY: 14.0
+          }
+        },
+        {
+          year: 2008,
+          values: {
+            AL: 18.0,
+            AK: 19.0,
+            AZ: 16.0,
+            AR: 18.0,
+            CA: 19.0,
+            CO: 19.0,
+            CT: 17.0,
+            DE: 17.0,
+            DC: 21.0,
+            FL: 13.0,
+            GA: 21.0,
+            HI: 14.0,
+            ID: 19.0,
+            IL: 13.0,
+            IN: 16.0,
+            IA: 14.0,
+            KS: 17.0,
+            KY: 21.0,
+            LA: 18.0,
+            ME: 20.0,
+            MD: 15.0,
+            MA: 12.0,
+            MI: 21.0,
+            MN: 19.0,
+            MS: 14.0,
+            MO: 12.0,
+            MT: 14.0,
+            NE: 21.0,
+            NV: 21.0,
+            NH: 18.0,
+            NJ: 16.0,
+            NM: 16.0,
+            NY: 16.0,
+            NC: 14.0,
+            ND: 15.0,
+            OH: 18.0,
+            OK: 19.0,
+            OR: 18.0,
+            PA: 20.0,
+            RI: 17.0,
+            SC: 18.0,
+            SD: 19.0,
+            TN: 21.0,
+            TX: 14.0,
+            UT: 15.0,
+            VT: 12.0,
+            VA: 20.0,
+            WA: 19.0,
+            WV: 14.0,
+            WI: 13.0,
+            WY: 20.0
+          }
+        },
+        {
+          year: 2009,
+          values: {
+            AL: 17.0,
+            AK: 17.0,
+            AZ: 15.0,
+            AR: 14.0,
+            CA: 14.0,
+            CO: 17.0,
+            CT: 18.0,
+            DE: 18.0,
+            DC: 21.0,
+            FL: 21.0,
+            GA: 16.0,
+            HI: 14.0,
+            ID: 13.0,
+            IL: 17.0,
+            IN: 13.0,
+            IA: 21.0,
+            KS: 18.0,
+            KY: 18.0,
+            LA: 21.0,
+            ME: 14.0,
+            MD: 13.0,
+            MA: 16.0,
+            MI: 14.0,
+            MN: 17.0,
+            MS: 16.0,
+            MO: 12.0,
+            MT: 13.0,
+            NE: 12.0,
+            NV: 15.0,
+            NH: 17.0,
+            NJ: 17.0,
+            NM: 21.0,
+            NY: 20.0,
+            NC: 12.0,
+            ND: 15.0,
+            OH: 15.0,
+            OK: 12.0,
+            OR: 12.0,
+            PA: 14.0,
+            RI: 18.0,
+            SC: 17.0,
+            SD: 12.0,
+            TN: 20.0,
+            TX: 17.0,
+            UT: 18.0,
+            VT: 19.0,
+            VA: 13.0,
+            WA: 16.0,
+            WV: 15.0,
+            WI: 12.0,
+            WY: 12.0
+          }
+        },
+        {
+          year: 2010,
+          values: {
+            AL: 19.0,
+            AK: 16.0,
+            AZ: 12.0,
+            AR: 15.0,
+            CA: 19.0,
+            CO: 21.0,
+            CT: 17.0,
+            DE: 12.0,
+            DC: 15.0,
+            FL: 21.0,
+            GA: 19.0,
+            HI: 16.0,
+            ID: 16.0,
+            IL: 13.0,
+            IN: 14.0,
+            IA: 17.0,
+            KS: 19.0,
+            KY: 21.0,
+            LA: 21.0,
+            ME: 13.0,
+            MD: 14.0,
+            MA: 14.0,
+            MI: 18.0,
+            MN: 12.0,
+            MS: 20.0,
+            MO: 21.0,
+            MT: 17.0,
+            NE: 14.0,
+            NV: 17.0,
+            NH: 13.0,
+            NJ: 14.0,
+            NM: 15.0,
+            NY: 21.0,
+            NC: 20.0,
+            ND: 17.0,
+            OH: 14.0,
+            OK: 16.0,
+            OR: 17.0,
+            PA: 16.0,
+            RI: 21.0,
+            SC: 15.0,
+            SD: 19.0,
+            TN: 19.0,
+            TX: 18.0,
+            UT: 15.0,
+            VT: 19.0,
+            VA: 17.0,
+            WA: 13.0,
+            WV: 16.0,
+            WI: 23.0,
+            WY: 16.0
+          }
+        },
+        {
+          year: 2011,
+          values: {
+            AL: 18.0,
+            AK: 13.0,
+            AZ: 17.0,
+            AR: 21.0,
+            CA: 16.0,
+            CO: 16.0,
+            CT: 21.0,
+            DE: 15.0,
+            DC: 13.0,
+            FL: 20.0,
+            GA: 20.0,
+            HI: 17.0,
+            ID: 20.0,
+            IL: 12.0,
+            IN: 14.0,
+            IA: 17.0,
+            KS: 17.0,
+            KY: 16.0,
+            LA: 21.0,
+            ME: 14.0,
+            MD: 19.0,
+            MA: 12.0,
+            MI: 18.0,
+            MN: 18.0,
+            MS: 20.0,
+            MO: 13.0,
+            MT: 16.0,
+            NE: 12.0,
+            NV: 20.0,
+            NH: 18.0,
+            NJ: 12.0,
+            NM: 20.0,
+            NY: 15.0,
+            NC: 20.0,
+            ND: 16.0,
+            OH: 19.0,
+            OK: 21.0,
+            OR: 18.0,
+            PA: 12.0,
+            RI: 19.0,
+            SC: 13.0,
+            SD: 15.0,
+            TN: 18.0,
+            TX: 17.0,
+            UT: 18.0,
+            VT: 19.0,
+            VA: 21.0,
+            WA: 20.0,
+            WV: 14.0,
+            WI: 13.0,
+            WY: 17.0
+          }
+        },
+        {
+          year: 2012,
+          values: {
+            AL: 12.0,
+            AK: 19.0,
+            AZ: 14.0,
+            AR: 20.0,
+            CA: 12.0,
+            CO: 21.0,
+            CT: 15.0,
+            DE: 12.0,
+            DC: 19.0,
+            FL: 21.0,
+            GA: 21.0,
+            HI: 12.0,
+            ID: 12.0,
+            IL: 21.0,
+            IN: 20.0,
+            IA: 20.0,
+            KS: 17.0,
+            KY: 13.0,
+            LA: 19.0,
+            ME: 15.0,
+            MD: 18.0,
+            MA: 14.0,
+            MI: 19.0,
+            MN: 19.0,
+            MS: 12.0,
+            MO: 16.0,
+            MT: 17.0,
+            NE: 16.0,
+            NV: 19.0,
+            NH: 12.0,
+            NJ: 13.0,
+            NM: 17.0,
+            NY: 16.0,
+            NC: 12.0,
+            ND: 14.0,
+            OH: 17.0,
+            OK: 16.0,
+            OR: 14.0,
+            PA: 15.0,
+            RI: 18.0,
+            SC: 19.0,
+            SD: 19.0,
+            TN: 19.0,
+            TX: 17.0,
+            UT: 18.0,
+            VT: 13.0,
+            VA: 18.0,
+            WA: 15.0,
+            WV: 18.0,
+            WI: 17.0,
+            WY: 14.0
+          }
+        }
+      ];
 
-    // Query by States
-    var values = Engine.query(States, Degree), v=values[0].values;
+      var Engine = new Tee.Data(),
+        Data = Engine.addDataSet("USA", USAValues),
+        Years = Data.addDimension("Years", "values", "year"),
+        States = Years.addDimension("USA States"),
+        Degree = States.addMetric("Degrees");
 
-    // Clear map values
-    USAMap.values={}
+      var USAMap, Legend, Chart1, Chart2;
 
-    // Set each State result value
-    for (var t=0; t<v.length; t++)
-      USAMap.values[v[t].id] = v[t].value;
+      // Query average of Temperatures (Degree) of a given Year, grouped by USA State:
 
-    // Tell the map to colorize according to values:
-    //var palette = USAMap.applyPalette([ "#F0F0F0", "#C0C0C0", "#A0A0A0", "#808080", "#606060", "#404040" ]);
-    //var palette = USAMap.applyPalette([ "#FF9999", "#663399", "#CCFFFF", "#FFFFCC", "#660066", "#8080FF" ]);
-    var palette = USAMap.applyPalette([ "#6EC5B8","#C7BAA7","#978B7D","#DC5C05","#FFAC00","#E8D0A9" ]);
+      function fillMap(year) {
+        Years.selected = year;  // select a specific Year
 
-    // Use the color palette to fill a <table> with mouse over:
-    Legend = new Engine.MapLegend(palette, document.getElementById("legend"));
-}
+        // Query by States
+        var values = Engine.query(States, Degree), v = values[0].values;
 
-function draw() {
+        // Clear map values
+        USAMap.values = {}
 
-    // Show average of temperatures by each Year:
-    Degree.measure="average";
+        // Set each State result value
+        for (var t = 0; t < v.length; t++)
+          USAMap.values[v[t].id] = v[t].value;
 
-    var Chart1=Engine.Chart("canvas1", Years.title);
-    Chart1.setSeriesStyle(Tee.Line);
-	Chart1.panel.margins.right=10;
-	
-	Chart1.legend.visible=false;
+        // Tell the map to colorize according to values:
+        //var palette = USAMap.applyPalette([ "#F0F0F0", "#C0C0C0", "#A0A0A0", "#808080", "#606060", "#404040" ]);
+        //var palette = USAMap.applyPalette([ "#FF9999", "#663399", "#CCFFFF", "#FFFFCC", "#660066", "#8080FF" ]);
+        //var palette = USAMap.applyPalette([ "#6EC5B8","#C7BAA7","#978B7D","#DC5C05","#FFAC00","#E8D0A9" ]);
+        var palette = USAMap.applyPalette(["#313695", "#4575B4", "#74ADD1", "#ABD9EA", "#E0F3F9", "#FFFFBF", "#FEE090", "#FDAE61", "#F46D43", "#D73027", "#A50026"]);
 
-    Chart1.onnewseries=function(chart,series) { series.smooth=0.5; }
-
-    var years=Years.getIds(), old=0,
-        slider=Engine.slider(Chart1, years, 10,10,110,20);
-
-    Chart1.title.text=States.title + " " + years[old];
-    Chart1.fill(Years, Degree);
-	
-	changeTheme(Chart1, "minimal");
-
-    USAMap=new Tee.USAMap("usa");
-
-    fillMap(USAValues[0].year);
-
-    USAMap.addZoomButtons();
-
-    var Chart2=Engine.Chart("canvas2", States.title);
-    Chart2.setSeriesStyle(Tee.Area);
-    Chart2.animateChanges=true;
-	changeTheme(Chart2, "minimal");
-	
-	Chart2.fill(Years, Degree, true);
-	Chart2.draw();
-
-    Chart2.onnewseries=function(chart,series) {
-       series.smooth=0.5;
-       series.origin=5;
-       series.useOrigin=true;
-       series.format.gradient.visible=true;
-       series.format.gradient.direction="bottomtop";
-	   series.format.stroke.fill="white";
-    }
-	
-	var selectedState="";
-    
-    USAMap.onhover=function(id) {
-       if (selectedState !== id) {
-           selectedState=id;
-		   
-           var old=Years.selected;
-           Years.selected=null;
-             States.selected=[id];
-               Chart2.fill(Years, Degree, true);
-             States.selected=null;
-           Years.selected=old;
-           Chart2.title.text=USAMap.labels[id];
-
-           Chart2.zoom.reset();
-           Chart2.draw();
-           Legend.highlight(USAMap.values[id], "2px solid orange");
-       }
-    }
-
-    USAMap.onhoverout=function(id) {
-      if (selectedState !== id) {
-        selectedState=id;
-        Legend.highlight();
+        // Use the color palette to fill a <table> with mouse over:
+        Legend = new Engine.MapLegend(palette, document.getElementById("legend"));
       }
-    }
 
-    slider.onChanging=function(slider,value) {
-      value=value | 0;
+      var enableCursor = false;
 
-      if (value != old) {
-        old=value;
-        fillMap(years[old], true);
-        Chart1.title.text=States.title + " " + years[old];
+      function draw() {
+        // Show average of temperatures by each Year:
+        Degree.measure = "average";
+
+        Chart1 = Engine.Chart("canvas1", Years.title);
+        Chart1.setSeriesStyle(Tee.Line);
+        Chart1.panel.margins.right = 10;
+
+        Chart1.legend.visible = false;
+
+        Chart1.onnewseries = function (chart, series) {
+          series.smooth = 0.5;
+        }
+
+        var years = Years.getIds(), old = 0;
+
+        Chart1.title.text = States.title + " " + years[old];
+        Chart1.fill(Years, Degree);
+
+        changeTheme(Chart1, "minimal");
+
+        USAMap = new Tee.USAMap("usa");
+
+        fillMap(USAValues[0].year);
+
+        USAMap.addZoomButtons();
+
+        Chart2 = Engine.Chart("canvas2", "");
+        Chart2.setSeriesStyle(Tee.Area);
+        Chart2.animateChanges = true;
+        changeTheme(Chart2, "minimal");
+
+        Chart2.onnewseries = function (chart, series) {
+          series.smooth = 0.5;
+          series.origin = 5;
+          series.useOrigin = true;
+          series.format.gradient.visible = true;
+          series.format.gradient.direction = "bottomtop";
+          series.format.stroke.fill = "white";
+          series.format.gradient.colors = USAMap.palette.slice(6);
+        }
+
+        Chart2.tools.items[0].autoHide = true;
+
+        var selectedState = "";
+
+        USAMap.onhover = function (id) {
+          if (selectedState !== id) {
+            selectedState = id;
+
+            var old = Years.selected;
+            Years.selected = null;
+            States.selected = [id];
+            Chart2.fill(Years, Degree, true);
+            States.selected = null;
+            Years.selected = old;
+            Chart2.title.text = USAMap.labels[id];
+
+            Chart2.zoom.reset();
+            Chart2.draw();
+            Legend.highlight(USAMap.values[id], "2px solid orange");
+          }
+        }
+
+        USAMap.onhoverout = function (id) {
+          if (selectedState !== id) {
+            selectedState = id;
+            Legend.highlight();
+          }
+        }
+
+        var t = new Tee.CursorTool(Chart1);
+        t.direction = "vertical";
+
+        Chart1.mousemove = function (p) {
+          if (!enableCursor) {
+            Chart1.tools.add(t);
+            enableCursor = true;
+            resize(Chart1);
+          }
+        }
+
+        var tip = Chart1.tools.items[0];
+        tip.autoHide = true;
+        tip.ongettext = function (tool, text, series, index) {
+          index = index | 0;
+
+          if (index !== old) {
+            old = index;
+            fillMap(years[old], true);
+            this.chart.title.text = States.title + " " + years[old];
+            this.chart.draw();
+          }
+
+          return text;
+        }
       }
-      return value;
-    }
-    
-    
-}
-function resize(){
-	var geoMap = document.getElementById("usa");
-	var canvas1 = document.getElementById("canvas1");
-	var canvas2 = document.getElementById("canvas2");
-	var startWidthC1 = 600;
-	var startWidthC2 = 500;
-	var startHeightC = 200;
-	var startWidthGeoMap = 600;
-	var startHeightGeoMap =300;
-	var w = window.innerWidth;
-	var h = window.innerHeight;
 
-	resizeElement(geoMap, startWidthGeoMap, startHeightGeoMap, 50);
-	resizeElement(canvas1, startWidthC1, startHeightC, 40);
-	resizeElement(canvas2, startWidthC2, startHeightC, 40);
-	
-	function resizeElement(element,startWidth, startHeight, perc){
-		if(w<=600){
-			element.style.width="" + w*perc/100 + "px";
-			element.style.height="" + w*startHeight/startWidth*perc/100 + "px";
-		}
-		else{
-			element.style.width = "" + startWidth+ "px";
-			element.style.height = "" + startHeight+ "px";
-		}
-	}
-}
-</script>
+      function resize(element) {
+        if (element != null) {
+          var w = parseInt(window.getComputedStyle(element.canvas.parentElement, null).width, 10);
+
+          if (element.canvas) element.canvas.width = w;
+          if (element.bounds) element.bounds.width = w;
+
+          if (typeof element.draw === "function") element.draw();
+        }
+      }
+
+      function showHide(el) {
+        var selectorsDiv = $(el).closest('.x_panel').children('.x_content')[0];
+        var icon = $(el).children('i')[0];
+
+        if (selectorsDiv.style.display === "none") {
+          selectorsDiv.style.display = "block";
+          icon.classList.add('fa-chevron-up');
+          icon.classList.remove('fa-chevron-down');
+        }
+        else {
+          selectorsDiv.style.display = "none";
+          icon.classList.add('fa-chevron-down');
+          icon.classList.remove('fa-chevron-up');
+        }
+      }
+    </script>
 </head>
-<body onload="draw();resize()" onresize="resize();" style="backgorund-color:white;">
+<body onload="draw();resize(Chart1);resize(Chart2);" onresize="resize(Chart1);resize(Chart2);">
 
-<table style="position:absolute; left:5px; top:5px; border: 0px solid white; width:80%"><tr style="border:1px solid black;"><td bgcolor="#FFFFFF" style="font-size:16px;" colspan=2>TeeChart Geo Mapping example: USA - Average Temperatures Degrees Celsius</td></tr>
+<div class="right_col" role="main">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>TeeChart Geo Mapping example: USA - Average Temperatures <span
+                    class="smallLetters">Degrees Celsius</span></h3>
+        </div>
+    </div>
+    <div class="row" style="margin-right: 20px">
+        <div class="x_panel" style="margin-left: 10px;">
+            <div class="x_title">
+                <h2><span class="smallLetters">Move mouse over USA map to show values for selected State</span></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="row">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        Temperatures
+                        <br>Based on query of average Temperatures (Degrees Celsius) of a given Year, grouped by USA
+                        State.
+                    </div>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <svg id="usa" width="100%" height="300"></svg>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <table id="legend"
+                               style="position:relative; left:0; top:0; width:100%; font-size:12px; border: 2px solid white;"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><span class="smallLetters">Move mouse over the chart to change the year</span></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="canvas1" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><span class="smallLetters">Move mouse over USA map to show values for selected State</span></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <canvas id="canvas2" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-<tr style="border-top:1pt solid black;"><td style=" border-right:1pt solid white;">
-  <div style="float:left;">
-  Move mouse over USA map to show values for selected State:<br/><br/>
-  <svg id="usa" width="600" height="300"></svg>
-  </div>
-</td><td class="mapTxtPart" style="font-size:14px; background-color:#FFFFFF; padding-left:5px; padding-right:5px;"><div style="color:#FFFFFF">Temperatures</div><br>Based on query of average Temperatures (Degrees Celsius) of a given Year, grouped by USA State.</td></tr>
-
-<tr style="border:1pt solid #AAAAAA;"  ><td style="border-right:1pt solid white;">
-  <div style="float:left;">
-    <canvas id="canvas1" width="600" height="200"></canvas>&nbsp;&nbsp;
-    </td>
-    <td>
-    <canvas id="canvas2" width="500" height="200"></canvas>
-  </div>
-</td></tr>
-<tr style="border:1pt solid #AAAAAA;"><td style="border:0px solid white;" colspan=2>
-  <table style="position:relative; left:0px; top:0px; width:100%; font-size:12px; border: 2px solid white;" id="legend"></table>
-</td></tr>  
-</table>
 </body>
 </html>
