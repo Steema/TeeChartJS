@@ -17,7 +17,8 @@
 <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../src/teechart-animations.js" type="text/javascript"></script>
 <script src="../../src/date.format.js" type="text/javascript"></script>
-<script src="../../demos/theme.js" type="text/javascript"></script>
+<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+<script src="../demo.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
@@ -230,9 +231,8 @@ function draw() {
   scroller.panel.format.stroke.size = 0;
 
   Chart1.ondraw=function() {
-		resizeScroller(scroller);
-  }  
-  resize(Chart1);
+    resizeScroller(scroller);
+  }
 }
 
 function oneWeek(){
@@ -256,16 +256,6 @@ function allTime(){
 	  scroller.draw();
 }
 
-function resize(chart) {
-  if (chart != null) {
-    var w = parseInt(window.getComputedStyle(chart.canvas.parentElement, null).width, 10);
-    chart.canvas.setAttribute('width', w + "px");
-    chart.bounds.width = w;
-
-    chart.draw();
-  }
-}
-
 function resizeScroller(aScroller) {
   if (aScroller != null) {
     var w = parseInt(window.getComputedStyle(aScroller.canvas.parentElement, null).width, 10);
@@ -282,7 +272,7 @@ function resizeScroller(aScroller) {
 
 </script>
 </head>
-<body id="chartView" onload="draw();resizeScroller(scroller);resize(Chart1);" onresize="resize(Chart1);resizeScroller(scroller);">
+<body id="chartView" onload="draw();resizeScroller(scroller);" onresize="resizeScroller(scroller);">
 	<div class="right_col" role="main">
 		<div class="page-title">
 			<div class="title_left">
@@ -295,7 +285,7 @@ function resizeScroller(aScroller) {
 				<div class="x_title">
 					<h2><span class="smallLetters">Scroller</span></h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
 						</li>
 						<li><a class="close-link"><i class="fa fa-close"></i></a>
 						</li>

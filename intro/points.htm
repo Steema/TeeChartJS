@@ -13,6 +13,8 @@
 	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
 	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
 	<script src="../../src/date.format.js" type="text/javascript"></script>
+	<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../demo.js" type="text/javascript"></script>
 	<!-- Bootstrap -->
 	<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Font Awesome -->
@@ -29,7 +31,6 @@
 		var tip;
 		
 		function draw() {
-		
 		  //init chart
 		  Chart1=new Tee.Chart("canvas");
 		  
@@ -60,36 +61,31 @@
 						  
 		  Chart1.addSeries(points1).pointer.visible=true;
 		  Chart1.addSeries(points2).pointer.visible=true;
-		  
-		  
+
 		  //function series
 		  var avg = new Tee.Line();
 		  avg.title = "Average";
 		  var avgVals = new Array();
 		  
-		  for (i = 0; i < points1.data.x.length; i++)
-		  {
+		  for (var i = 0; i < points1.data.x.length; i++)
 		    avgVals[i] = (points1.data.values[i]+points2.data.values[i]) / 2;
-		  }
 		  
 		  avg.data.values = avgVals;
 		  avg.data.x = points1.data.x;
 		  avg.format.stroke.size=2;
 		  avg.smooth=0.5;
 		  Chart1.addSeries(avg);
-		  
-		
+
 		  //config some series appearance characteristics
-		  for (i = 0; i < 2; i++)
-		  {
-		  Chart1.series.items[i].pointer.width = 10;
-		  Chart1.series.items[i].pointer.height = 10;
-		  Chart1.series.items[i].pointer.style="ellipse";
-		  Chart1.series.items[i].pointer.format.stroke.size = 4;
-		  Chart1.series.items[i].pointer.format.stroke.fill = "white";
-		  Chart1.series.items[i].pointer.format.shadow.visible=false;
-		  Chart1.series.items[i].format.stroke.size = 2;
-		  Chart1.series.items[i].format.shadow.visible=false;
+		  for (var i = 0; i < 2; i++) {
+			  Chart1.series.items[i].pointer.width = 10;
+			  Chart1.series.items[i].pointer.height = 10;
+			  Chart1.series.items[i].pointer.style="ellipse";
+			  Chart1.series.items[i].pointer.format.stroke.size = 4;
+			  Chart1.series.items[i].pointer.format.stroke.fill = "white";
+			  Chart1.series.items[i].pointer.format.shadow.visible=false;
+			  Chart1.series.items[i].format.stroke.size = 2;
+			  Chart1.series.items[i].format.shadow.visible=false;
 		  }
 		  
 		  //Axes
@@ -157,10 +153,9 @@
 		  t.direction="vertical";
 		  
 		  tip.onshow=function(tool,series,index) {
-			  if (enableCursor == false){
+			  if (!enableCursor){
 				Chart1.tools.add(t);
 				enableCursor = true;
-				resize(Chart1);
 			  }
 		  }		  
 		  
@@ -176,11 +171,10 @@
 			    return s;
 		  }
 		
-		  changeTheme(top.topTheme);
+		  changePointsTheme(top.topTheme);
 		  //changePalette(top.topPalette);
 		  
 		  //animation
-		  
 		  animation=new Tee.SeriesAnimation();
 		  animation.duration=1500;
 		  animation.kind="each";
@@ -193,155 +187,51 @@
 		  animation.items.push(fadeAnimation);
 		  
 		  animation.animate(Chart1);
-
-		  resize(Chart1);
 		}
 
-        function resize(chart){
-          if (chart!=null){
-            var w = parseInt(window.getComputedStyle(chart.canvas.parentElement, null).width, 10);
-            chart.canvas.setAttribute('width', w + "px");
-            chart.bounds.width = w;
-
-            chart.draw();
-          }
-        }
+		function changePointsTheme(aTheme) {
+		   changeTheme(aTheme);
 		
-		function changeTheme(aTheme)
-		{
-		   Chart1.applyTheme(aTheme);
-		
-		   if (aTheme == "dark")
-		   {
+		   if (aTheme === "dark") {
 		     a1.format.font.fill = "white"; 
 			 a2.format.font.fill = "lightblue";
 			 if (Chart1.series.items.length > 0) {
-			  for (var i = 0; i < Chart1.series.items.length; i++)
-			  {
+			  for (var i = 0; i < Chart1.series.items.length; i++) {
 			    Chart1.series.items[i].pointer.format.stroke.size = 3;
 		        Chart1.series.items[i].pointer.format.stroke.fill = "white"; 
 			  }
 			}
 		   }
-		   else if ((aTheme == "daybreak") || (aTheme == "twilight"))
-		   {
-		     if (aTheme == "twilight") {
+		   else if ((aTheme === "daybreak") || (aTheme === "twilight")) {
+		     if (aTheme === "twilight") {
 		       a1.format.font.fill = "white"; 
 			   a2.format.font.fill = "lightblue"; 
 			 }  
-			 else
-			 {
+			 else {
 			   a1.format.font.fill = "rgba(0,0,0,0.6)";
 			   a2.format.font.fill = "darkblue";  
 			 }
 			 if (Chart1.series.items.length > 0) {
-			  for (var i = 0; i < Chart1.series.items.length; i++)
-			  {
+			  for (var i = 0; i < Chart1.series.items.length; i++) {
 			    Chart1.series.items[i].pointer.format.stroke.size = 1;
-		        Chart1.series.items[i].pointer.format.stroke.fill = "rgba(224,224,224,0.6)"; 
+		        Chart1.series.items[i].pointer.format.stroke.fill = "rgba(224,224,224,0.6)";
 			  }
 			}  
 		   }
-		   else
-		   {
+		   else {
 		     a1.format.font.fill = "rgba(0,0,0,0.6)";
 			 a2.format.font.fill = "darkblue";
 			 if (Chart1.series.items.length > 0) {
-			  for (var i = 0; i < Chart1.series.items.length; i++)
-			  {
+			  for (var i = 0; i < Chart1.series.items.length; i++) {
 			    Chart1.series.items[i].pointer.format.stroke.size = 3;
 		        Chart1.series.items[i].pointer.format.stroke.fill = "white"; 
 			  }
 			}
 		   }
-			 
-		  resize(Chart1);
 		}
-		
-		function changePalette(palette)
-		{
-		   Chart1.applyPalette(palette);
-		   resize(Chart1);
-		}
-		
-	</script>
-	<script type="text/javascript">
-		function changeThemeToDefault(){
-			changeTheme("minimal");
-			changePalette("seaWash");
-		}
-	
-	</script>
-	<script type="text/javascript">
-		function changeBackground(aTheme){
-			if(aTheme=="dark")
-				changeBackgroundToDark();
-			else
-				changeBackgroundToWhite();
-		}
-        function changeBackgroundToDark(){
-          document.body.style.backgroundColor = "#0C0C0C";
-          document.body.style.color = "white";
-          document.getElementById("theme").style.backgroundColor="#0C0C0C";
-          document.getElementById("palette").style.backgroundColor="#0C0C0C";
-          document.getElementById("canvasPanel").style.backgroundColor="#0C0C0C";
-          document.getElementById("optionPanel").style.backgroundColor="#0C0C0C";
-        }
-        function changeBackgroundToWhite(){
-          document.body.style.backgroundColor = "rgb(212, 212, 212)";
-          document.body.style.color = "black";
-          document.getElementById("theme").style.backgroundColor="#ffffff";
-          document.getElementById("palette").style.backgroundColor="#ffffff";
-          document.getElementById("canvasPanel").style.backgroundColor="#ffffff";
-          document.getElementById("optionPanel").style.backgroundColor="#ffffff";
-        }
-	</script>
-
-	<script>
-	function resizeToolBars(){
-		var toolbar1 = document.getElementById("toolbar1");
-		var toolbar2 = document.getElementById("toolbar2");
-		var w = window.innerWidth;
-		if(w<=954){
-			toolbar1.style.width = "" + w + "px";
-			toolbar2.style.width = "" + w + "px";
-		}
-		else{
-			toolbar1.style.width = "" + w - 230 + "px";
-			toolbar2.style.width = "" + w -230 + "px";
-		}
-	}
-	function showHide1(){
-		var selectorsDiv = document.getElementById("selectorsDiv");
-		var icon=document.getElementById("icon1");
-		if(selectorsDiv.style.display=="none"){
-			selectorsDiv.style.display="block";
-			icon.classList.add('fa-chevron-up');
-			icon.classList.remove('fa-chevron-down');
-		}
-		else{
-			selectorsDiv.style.display="none";
-			icon.classList.add('fa-chevron-down');
-			icon.classList.remove('fa-chevron-up');
-		}
-	}
-	function showHide2(){
-		var canvasDiv = document.getElementById("canvasDiv");
-		var icon = document.getElementById("icon2");
-		if(canvasDiv.style.display=="none"){
-			canvasDiv.style.display="block";
-			icon.classList.add('fa-chevron-up');
-			icon.classList.remove('fa-chevron-down');
-		}
-		else{
-			canvasDiv.style.display="none";
-			icon.classList.add('fa-chevron-down');
-			icon.classList.remove('fa-chevron-up');
-		}
-	}
 	</script>
 </head>
-<body  id="chartView"  onload="draw();changeThemeToDefault();" onresize="resize(Chart1);">
+<body onload="draw();changeThemeToDefault();">
 <div class="right_col" role="main">
 		<div class="page-title">
 			<div class="title_left">
@@ -350,22 +240,22 @@
 		</div>
 		<div class="clearfix"></div>
 	
-		<div class="row" id="toolbar1">
+		<div class="row">
 			<div id="optionPanel" class="x_panel">
 			<div class="x_title">
 				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link" onclick="showHide1();"><i id="icon1" class="fa fa-chevron-up"></i></a>
+					<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
 					</li>
 					<li><a class="close-link"><i class="fa fa-close"></i></a>
 					</li>
 				</ul>
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content" id="selectorsDiv">
+			<div class="x_content">
 				<p>
 	     		Theme:
-         		<select id="theme"  onchange="changeTheme(this.value);changeBackground(this.value);" onload="changeBackgound(this.value);">
+         		<select id="theme" onchange="changePointsTheme(this.value);changeBackground(this.value);" onload="changeBackgound(this.value);">
 		             <option value="">Default</option>
 		             <option value="dark">Dark</option>
 		             <option value="daybreak">Daybreak</option>    
@@ -374,7 +264,7 @@
 		             <option value="twilight">Twilight</option>  
          		</select>
 	     		Palette:
-	        	<select id="palette"  onchange="changePalette(this.value);">
+	        	<select id="palette" onchange="changePalette(this.value);">
 		             <option value="">Default</option>
 		             <option value="cool">Cool</option> 
 		             <option value="excel">Microsoft Excel (TM)</option>  
@@ -391,19 +281,19 @@
 			</div>
 		</div>
 			
-		<div class="row" id="toolbar2">
+		<div class="row">
 			<div id="canvasPanel" class="x_panel">
 				<div class="x_title">
 					<h2><span class="smallLetters">Points</span></h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide2();"><i id="icon2" class="fa fa-chevron-up"></i></a>
+						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
 						</li>
 						<li><a class="close-link"><i class="fa fa-close"></i></a>
 						</li>
 					</ul>
 				<div class="clearfix"></div>
 				</div>
-				<div class="x_content" id="canvasDiv">
+				<div class="x_content">
 					<canvas id="canvas" width="1000" height="400">
 					</canvas>					
 				</div>

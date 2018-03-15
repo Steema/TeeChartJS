@@ -11,13 +11,13 @@
 
     <script src="../../src/teechart.js" type="text/javascript"></script>
     <script src="../../src/teechart-extras.js" type="text/javascript"></script>
-    <script src="../theme.js" type="text/javascript"></script>
 
     <script src="../../src/teechart-maps.js" type="text/javascript"></script>
     <script src="../../src/teechart-data.js" type="text/javascript"></script>
 
     <script src="tutorial/tee-data-utils.js" type="text/javascript"></script>
     <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+    <script src="../demo.js" type="text/javascript"></script>
 
     <!-- Bootstrap -->
     <link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -848,7 +848,8 @@
         Chart1 = Engine.Chart("canvas1", Years.title);
         Chart1.setSeriesStyle(Tee.Line);
         Chart1.panel.margins.right = 10;
-
+        Chart1.scroll.enabled = false;
+        Chart1.zoom.enabled = false;
         Chart1.legend.visible = false;
 
         Chart1.onnewseries = function (chart, series) {
@@ -860,8 +861,6 @@
         Chart1.title.text = States.title + " " + years[old];
         Chart1.fill(Years, Degree);
 
-        changeTheme(Chart1, "minimal");
-
         USAMap = new Tee.USAMap("usa");
 
         fillMap(USAValues[0].year);
@@ -871,7 +870,8 @@
         Chart2 = Engine.Chart("canvas2", "");
         Chart2.setSeriesStyle(Tee.Area);
         Chart2.animateChanges = true;
-        changeTheme(Chart2, "minimal");
+        Chart2.scroll.enabled = false;
+        Chart2.zoom.enabled = false;
 
         Chart2.onnewseries = function (chart, series) {
           series.smooth = 0.5;
@@ -919,7 +919,6 @@
           if (!enableCursor) {
             Chart1.tools.add(t);
             enableCursor = true;
-            resize(Chart1);
           }
         }
 
@@ -938,36 +937,9 @@
           return text;
         }
       }
-
-      function resize(element) {
-        if (element != null) {
-          var w = parseInt(window.getComputedStyle(element.canvas.parentElement, null).width, 10);
-
-          if (element.canvas) element.canvas.width = w;
-          if (element.bounds) element.bounds.width = w;
-
-          if (typeof element.draw === "function") element.draw();
-        }
-      }
-
-      function showHide(el) {
-        var selectorsDiv = $(el).closest('.x_panel').children('.x_content')[0];
-        var icon = $(el).children('i')[0];
-
-        if (selectorsDiv.style.display === "none") {
-          selectorsDiv.style.display = "block";
-          icon.classList.add('fa-chevron-up');
-          icon.classList.remove('fa-chevron-down');
-        }
-        else {
-          selectorsDiv.style.display = "none";
-          icon.classList.add('fa-chevron-down');
-          icon.classList.remove('fa-chevron-up');
-        }
-      }
     </script>
 </head>
-<body onload="draw();resize(Chart1);resize(Chart2);" onresize="resize(Chart1);resize(Chart2);">
+<body onload="draw();changeThemeToDefault();">
 
 <div class="right_col" role="main">
     <div class="page-title">

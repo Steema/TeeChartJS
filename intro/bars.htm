@@ -13,6 +13,8 @@
 	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
 	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
 	<script src="../../src/date.format.js" type="text/javascript"></script>
+	<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../demo.js" type="text/javascript"></script>
 	<!-- Bootstrap -->
 	<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Font Awesome -->
@@ -23,11 +25,9 @@
 	<link rel="stylesheet" type="text/css" href="../demo.css">
 
 	<script type="text/javascript">
-		
 		var Chart1;
 		
 		function draw() {
-		
 		  //init chart
 		  Chart1=new Tee.Chart("canvas");
 		  
@@ -50,8 +50,7 @@
 		  Chart1.addSeries(bar2);
 		
 		  //config some series appearance characteristics
-		  for (i = 0; i < 2; i++)
-		  {
+		  for (i = 0; i < 2; i++) {
 			  Chart1.series.items[i].format.gradient.visible = false;
 			  Chart1.series.items[i].format.stroke.fill = "rgba(0,0,0,0.0)";
 			  Chart1.series.items[i].format.shadow.visible=false;
@@ -124,100 +123,12 @@
 			    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ index.toFixed(0)+'</strong></font>';
 		        s =	s +'<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';  
 			return s;
-		  }  
-		
-		 
-		  resize(Chart1);
+		  }
 		}
-		
-		function changeTheme(aTheme)
-		{
-		   Chart1.applyTheme(aTheme);
-		   resize(Chart1);
-		}
-		
-		function changePalette(palette)
-		{
-		   Chart1.applyPalette(palette);
-		   resize(Chart1);
-		}
-
-        function resize(chart){
-          if (chart!=null){
-            var w = parseInt(window.getComputedStyle(chart.canvas.parentElement, null).width, 10);
-            chart.canvas.setAttribute('width', w + "px");
-            chart.bounds.width = w;
-
-            chart.draw();
-          }
-        }
-		
-	</script>
-	<script type="text/javascript">
-		function changeBackground(aTheme){
-			if(aTheme=="dark")
-				changeBackgroundToDark();
-			else
-				changeBackgroundToWhite();
-		}
-
-        function changeBackgroundToDark(){
-          document.body.style.backgroundColor = "#0C0C0C";
-          document.body.style.color = "white";
-          document.getElementById("theme").style.backgroundColor="#0C0C0C";
-          document.getElementById("palette").style.backgroundColor="#0C0C0C";
-          document.getElementById("canvasPanel").style.backgroundColor="#0C0C0C";
-          document.getElementById("optionPanel").style.backgroundColor="#0C0C0C";
-        }
-        function changeBackgroundToWhite(){
-          document.body.style.backgroundColor = "rgb(212, 212, 212)";
-          document.body.style.color = "black";
-          document.getElementById("theme").style.backgroundColor="#ffffff";
-          document.getElementById("palette").style.backgroundColor="#ffffff";
-          document.getElementById("canvasPanel").style.backgroundColor="#ffffff";
-          document.getElementById("optionPanel").style.backgroundColor="#ffffff";
-        }
-	</script>
-	<script type="text/javascript">
-		function changeThemeToDefault(){
-			changeTheme("minimal");
-			changePalette("seaWash");
-		}
-	
 	</script>
 
-	<script>
-	function showHide1(){
-		var selectorsDiv = document.getElementById("selectorsDiv");
-		var icon=document.getElementById("icon1");
-		if(selectorsDiv.style.display=="none"){
-			selectorsDiv.style.display="block";
-			icon.classList.add('fa-chevron-up');
-			icon.classList.remove('fa-chevron-down');
-		}
-		else{
-			selectorsDiv.style.display="none";
-			icon.classList.add('fa-chevron-down');
-			icon.classList.remove('fa-chevron-up');
-		}
-	}
-	function showHide2(){
-		var canvasDiv = document.getElementById("canvasDiv");
-		var icon = document.getElementById("icon2");
-		if(canvasDiv.style.display=="none"){
-			canvasDiv.style.display="block";
-			icon.classList.add('fa-chevron-up');
-			icon.classList.remove('fa-chevron-down');
-		}
-		else{
-			canvasDiv.style.display="none";
-			icon.classList.add('fa-chevron-down');
-			icon.classList.remove('fa-chevron-up');
-		}
-	}
-	</script>
 </head>
-<body  id="chartView"  onload="draw();changeThemeToDefault();" onresize="resize(Chart1);">
+<body onload="draw();changeThemeToDefault();">
 <div class="right_col" role="main">
 		<div class="page-title">
 			<div class="title_left">
@@ -226,22 +137,22 @@
 		</div>
 		<div class="clearfix"></div>
 	
-		<div class="row" id="toolbar1">
+		<div class="row">
 			<div id="optionPanel" class="x_panel">
 			<div class="x_title">
 				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
 				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link" onclick="showHide1();"><i id="icon1" class="fa fa-chevron-up"></i></a>
+					<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
 					</li>
 					<li><a class="close-link"><i class="fa fa-close"></i></a>
 					</li>
 				</ul>
 				<div class="clearfix"></div>
 			</div>
-			<div class="x_content" id="selectorsDiv">
+			<div class="x_content">
 				<p>
 	     		Theme:
-         		<select id="theme"  onchange="changeTheme(this.value);changeBackground(this.value);" onload="changeBackgound(this.value);">
+         		<select id="theme" onchange="changeTheme(this.value);changeBackground(this.value);" onload="changeBackground(this.value);">
 		             <option value="">Default</option>
 		             <option value="dark">Dark</option>
 		             <option value="daybreak">Daybreak</option>    
@@ -250,7 +161,7 @@
 		             <option value="twilight">Twilight</option>  
          		</select>
 	     		Palette:
-	        	<select id="palette"  onchange="changePalette(this.value);">
+	        	<select id="palette" onchange="changePalette(this.value);">
 		             <option value="">Default</option>
 		             <option value="cool">Cool</option> 
 		             <option value="excel">Microsoft Excel (TM)</option>  
@@ -267,19 +178,19 @@
 			</div>
 		</div>
 			
-		<div class="row" id="toolbar2">
+		<div class="row">
 			<div id="canvasPanel" class="x_panel">
 				<div class="x_title">
 					<h2><span class="smallLetters">Bars</span></h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide2();"><i id="icon2" class="fa fa-chevron-up"></i></a>
+						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
 						</li>
 						<li><a class="close-link"><i class="fa fa-close"></i></a>
 						</li>
 					</ul>
 				<div class="clearfix"></div>
 				</div>
-				<div class="x_content" id="canvasDiv">
+				<div class="x_content">
 					<canvas id="canvas" width="1000" height="400">
 					</canvas>				
 				</div>
