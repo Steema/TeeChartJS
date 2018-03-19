@@ -66,6 +66,16 @@
 		
 		  gantt.data.completion=[20, 40, 10, 75, 55, 60, 25];
 		
+		  gantt.addNextTask(0,1);
+		  gantt.addNextTask(0,3);
+		  gantt.addNextTask(2,0);
+		  gantt.addNextTask(5,3);
+		  gantt.addNextTask(3,4);
+		  gantt.addNextTask(6,3);
+		  //gantt.addNextTask(3,6);
+		  gantt.nextTasksStrokeStyle = "Grey";//Black is default
+		  gantt.nextTasksPosition = "back";//back, front
+
 		  gantt.completion=new Tee.Format(gantt.chart);
 		  gantt.completion.stroke.fill="";
 		  //gantt.completion.shadow.visible=true;
