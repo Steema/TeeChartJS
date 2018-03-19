@@ -307,65 +307,68 @@
 		<div class="clearfix"></div>
 	
 		<div class="row">
-			<div id="optionPanel" class="x_panel">
-			<div class="x_title">
-				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
-				<ul class="nav navbar-right panel_toolbox">
-					<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
-					</li>
-					<li><a class="close-link"><i class="fa fa-close"></i></a>
-					</li>
-				</ul>
-				<div class="clearfix"></div>
-			</div>
-			<div class="x_content">
-				<p>
-	     		Theme:
-         		<select id="theme" onchange="changeGanttTheme(this.value);changeBackground(this.value);" onload="changeBackground(this.value);">
-		             <option value="">Default</option>
-		             <option value="dark">Dark</option>
-		             <option value="daybreak">Daybreak</option>    
-		             <option value="excel">Microsoft Excel (TM)</option>
-		             <option value="minimal" selected>Minimal</option>  
-		             <option value="twilight">Twilight</option>  
-         		</select>
-	     		Palette:
-	        	<select id="palette" onchange="changePalette(this.value);">
-		             <option value="">Default</option>
-		             <option value="cool">Cool</option> 
-		             <option value="excel">Microsoft Excel (TM)</option>  
-		             <option value="onBlack">On Black</option>
-		             <option value="opera">Opera</option>
-		             <option value="rainbow">Rainbow</option>
-		             <option value="redRiver">Red River</option>
-		             <option value="seaWash" selected>Sea Wash</option>
-		             <option value="warm">Warm</option>  
-		             <option value="windowsxp">Windows XP</option>
-	         	</select>
-	         	</p>
-			</div>					
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="optionPanel" class="x_panel">
+					<div class="x_title">
+						<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<p>
+						Theme:
+						<select id="theme" onchange="changeGanttTheme(this.value);changeBackground(this.value);" onload="changeBackground(this.value);">
+							 <option value="">Default</option>
+							 <option value="dark">Dark</option>
+							 <option value="daybreak">Daybreak</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="minimal" selected>Minimal</option>
+							 <option value="twilight">Twilight</option>
+						</select>
+						Palette:
+						<select id="palette" onchange="changePalette(this.value);">
+							 <option value="">Default</option>
+							 <option value="cool">Cool</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="onBlack">On Black</option>
+							 <option value="opera">Opera</option>
+							 <option value="rainbow">Rainbow</option>
+							 <option value="redRiver">Red River</option>
+							 <option value="seaWash" selected>Sea Wash</option>
+							 <option value="warm">Warm</option>
+							 <option value="windowsxp">Windows XP</option>
+						</select>
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 			
 		<div class="row">
-			<div id="canvasPanel" class="x_panel">
-				<div class="x_title">
-					<h2><span class="smallLetters">Gantt</span></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
-						</li>
-					</ul>
-				<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="canvas" width="1000" height="400">
-					</canvas>		
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="canvasPanel" class="x_panel">
+					<div class="x_title">
+						<h2><span class="smallLetters">Gantt</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+					<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<canvas id="canvas" height="400">
+						</canvas>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="clearfix"></div>
 	</div>
 </body>
 </HTML>

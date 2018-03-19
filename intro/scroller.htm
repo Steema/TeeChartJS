@@ -272,15 +272,16 @@ function resizeScroller(aScroller) {
 
 </script>
 </head>
-<body id="chartView" onload="draw();resizeScroller(scroller);" onresize="resizeScroller(scroller);">
-	<div class="right_col" role="main">
-		<div class="page-title">
-			<div class="title_left">
-				<h3>TeeChart for JavaScript <span class="smallLetters">Scroller</span></h3>
-			</div>
+<body onload="draw();resizeScroller(scroller);" onresize="resizeScroller(scroller);">
+<div class="right_col" role="main">
+	<div class="page-title">
+		<div class="title_left">
+			<h3>TeeChart for JavaScript <span class="smallLetters">Scroller</span></h3>
 		</div>
-		<div class="clearfix"></div>
-		<div class="row" id="toolbar1">
+	</div>
+	<div class="clearfix"></div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div id="canvasPanel" class="x_panel">
 				<div class="x_title">
 					<h2><span class="smallLetters">Scroller</span></h2>
@@ -290,30 +291,31 @@ function resizeScroller(aScroller) {
 						<li><a class="close-link"><i class="fa fa-close"></i></a>
 						</li>
 					</ul>
-				<div class="clearfix"></div>
+					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-				<div>
 					<div>
-						<span style="color:black;">Zoom: </span>
-						<span class="clicker" onclick="oneWeek();" style="color:black;">1W</span>
-						<span class="clicker" onclick="oneMonth();" style="color:black;">1M</span>
-						<span class="clicker" onclick="threeMonth();" style="color:black;">3M</span>
-						<span class="clicker" onclick="allTime();" style="color:black;">All</span>
+						<div>
+							<span style="color:black;">Zoom: </span>
+							<span class="clicker" onclick="oneWeek();" style="color:black;">1W</span>
+							<span class="clicker" onclick="oneMonth();" style="color:black;">1M</span>
+							<span class="clicker" onclick="threeMonth();" style="color:black;">3M</span>
+							<span class="clicker" onclick="allTime();" style="color:black;">All</span>
+						</div>
+						<canvas id="canvas" height="400">
+							This browser does not seem to support HTML5 Canvas.
+						</canvas>
+						<br/>
+						<canvas id="canvas2" height="60" style="margin-left:48px;">
+							This browser does not seem to support HTML5 Canvas.
+						</canvas>
+						<br><span id="dataRange" style="margin-left:48px; color:rgba(255,85,0,0.8);"/>
 					</div>
-					<canvas id="canvas" width="1000" height="400">
-					This browser does not seem to support HTML5 Canvas.
-					</canvas>
-					<br/>
-					<canvas id="canvas2" width="935" height="60" style="margin-left:48px;" >
-					This browser does not seem to support HTML5 Canvas.
-					</canvas>
-					<br><span id="dataRange" style="margin-left:48px; color:rgba(255,85,0,0.8);"/>
-			</div>
-				<div></div></div>			
+					<div></div>
 				</div>
 			</div>
-		<div class="clearfix"></div>
+		</div>
 	</div>
+</div>
 </body>
 </html>
