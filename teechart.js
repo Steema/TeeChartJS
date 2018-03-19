@@ -8281,6 +8281,9 @@ Tee.Gantt=function(o,o2) {
   this.hover.enabled=true;
   this.hover.round.x=this.hover.round.y=8;
 
+  this.nextTasks = [];
+  this.nextTasksStrokeStyle = "Black";
+  this.nextTasksPosition = "back";//back, front
   this.colorEach="yes";
 
   this.data.start=this.data.values;
@@ -8297,6 +8300,10 @@ Tee.Gantt=function(o,o2) {
   f.gradient.visible=true;
 
   var r=new Rectangle(), _h;
+
+  this.addNextTask = function (point1, point2) {
+      this.nextTasks.push([point1, point2]);
+  }
 
   this.addRandom=function(count) {
     if (!count) count=5;
@@ -8356,8 +8363,12 @@ Tee.Gantt=function(o,o2) {
   this.draw=function() {
     var len=this.data.values.length, t, ff,
         hover=this.hover,
-        oldFill=hover.fill;
-
+          oldFill = hover.fill,
+          c = this.chart.ctx,
+          punts = [];
+      if (this.nextTasksPosition == "back") {
+          drawLines(this);
+      }
     _h=this.notmandatory.calcSize(this.height*0.01);
 
     for(t=0; t<len; t++)
@@ -8368,6 +8379,31 @@ Tee.Gantt=function(o,o2) {
       }
 
     hover.fill=oldFill;
+    if (this.nextTasksPosition == "front") {
+        drawLines(this);
+    }
+    function drawLines(gantt) {
+        for (var i = 0; i < gantt.nextTasks.length; i++) {
+
+            c.beginPath();
+            c.strokeStyle = "Grey";//gantt.nextTasksStrokeStyle;
+            c.lineWidth = 2;
+            c.fillStyle = "000000";
+            punts.push(Math.round(gantt.chart.axes.bottom.calc(gantt.data.end[gantt.nextTasks[i][0]])));
+            punts.push(Math.round(gantt.chart.axes.left.calc(gantt.data.x[gantt.nextTasks[i][0]])));
+            punts.push(Math.round(gantt.chart.axes.bottom.calc(gantt.data.start[gantt.nextTasks[i][1]])));
+            punts.push(Math.round(gantt.chart.axes.left.calc(gantt.data.x[gantt.nextTasks[i][1]])));
+            
+            c.moveTo(punts[0], punts[1]);
+            c.lineTo(punts[0] - ((punts[0] - punts[2]) / 2), punts[1]);
+            c.lineTo(punts[0] - ((punts[0] - punts[2]) / 2), punts[3]);
+            c.lineTo(punts[2], punts[3]);
+
+            c.stroke();
+            
+            punts = [];
+        }
+    }
   }
 
   this.horizMargins=function(p) {
