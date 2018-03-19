@@ -8386,7 +8386,7 @@ Tee.Gantt=function(o,o2) {
         for (var i = 0; i < gantt.nextTasks.length; i++) {
 
             c.beginPath();
-            c.strokeStyle = "Grey";//gantt.nextTasksStrokeStyle;
+            c.strokeStyle = gantt.nextTasksStrokeStyle;
             c.lineWidth = 2;
             c.fillStyle = "000000";
             punts.push(Math.round(gantt.chart.axes.bottom.calc(gantt.data.end[gantt.nextTasks[i][0]])));
