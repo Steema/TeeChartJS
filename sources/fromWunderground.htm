@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Weather Undeground WUnderground.com Example</title>
+<meta charset="UTF-8"/>
+
+<!--[if lt IE 9]>
+    <script src="../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<script src="../../src/teechart.js" type="text/javascript"></script>
+<script src="../demo.js" type="text/javascript"></script>
+<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../src/teechart-table.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<!-- NProgress -->
+<!-- Custom Theme Style -->
+<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript">
+
+var Highs, Lows,
+    cityItems=["San Francisco","CA/San_Francisco",
+               "New York","NY/New_York",
+               "Girona","Spain/Girona",
+               "Tokyo","Japan/Tokyo"],
+    city=0;
+
+function draw() {
+
+  var chart=new Tee.Chart("highCanvas");
+  chart.title.text="Weather Forecast - High Temperatures";
+  Highs=chart.addSeries(new Tee.Bar());
+  Highs.marks.style="value";
+  chart.legend.position="bottom";
+
+  chart=new Tee.Chart("lowCanvas");
+  chart.title.text="Weather Forecast - Low Temperatures";
+  Lows=chart.addSeries(new Tee.Bar());
+  Lows.marks.style="value";
+  chart.legend.position="bottom";
+
+  addCities("cities",cityItems);
+
+  loadWeather(Highs, Lows, city);
+}
+
+function addCities(form,items) {
+  var f=document.getElementById(form), t=0, l=items.length, input, label;
+
+  while(t<l) {
+    input=document.createElement("input");
+    input.setAttribute("type","radio");
+    input.setAttribute("name","city");
+    input.setAttribute("value",t);
+    input.setAttribute("id","item"+t);
+
+    if (t==0)
+      input.defaultChecked=true;
+
+    input.onclick=function() {
+      city=this.value;
+      loadWeather(Highs, Lows, city);
+    }
+
+    f.appendChild(input);
+
+    label=document.createElement("label");
+    label.setAttribute("for","item"+t);
+    label.textContent=items[t];
+    f.appendChild(label);
+
+    t+=2;
+  }
+}
+
+function showError(status,text) {
+   document.getElementById('fail').textContent='Failed to load data: '+status.toFixed(0)+' '+text;
+}
+
+function loadWeather(highs, lows, city) {
+
+  city=parseInt(city);
+
+  Tee.doHttpRequest(this, "http://api.wunderground.com/api/04509e16bafe0a38/forecast10day/q/"+cityItems[city+1]+".json",
+
+     function(target, response) {
+
+       if (response==="") {
+         showError(0, "Empty response. Cross-origin not allowed.");
+         return;
+       }
+
+       var data=JSON.parse(response),
+           days=data.forecast.simpleforecast.forecastday,
+           day;
+
+           highs.data.values=[];
+           highs.data.labels=[];
+
+           lows.data.values=[];
+           lows.data.labels=[];
+
+           for (var t=0; t<days.length; t++) {
+              day=days[t];
+
+              highs.data.values.push(parseFloat(day.high.celsius));
+              highs.data.labels.push(day.date.weekday);
+
+              lows.data.values.push(parseFloat(day.low.celsius));
+              lows.data.labels.push(day.date.weekday);
+           }
+
+           highs.chart.footer.text=cityItems[city];
+           lows.chart.footer.text=cityItems[city];
+
+           highs.chart.draw();
+           lows.chart.draw();
+     },
+     function(status,text) { showError(status,text); });
+}
+
+function resize(chart){
+	if (chart!=null){
+		var startWidth=400;
+		var startHeight=400;
+		var w;
+		var h;
+		var canvas = chart.canvas;
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			
+			w = window.innerWidth;
+			h = window.innerHeight;
+			if(w<=991){
+				canvas.style.width="" + w*0.9 + "px";
+				canvas.style.height="" + w*0.9*startHeight/startWidth + "px";
+			}
+			else{
+				canvas.style.width = "" + startWidth + "px";
+				canvas.style.height = "" + startHeight + "px";
+				chart.bounds.width = startWidth;
+				chart.bounds.height = startHeight;
+			}
+			chart.draw();	 
+		}
+		else{
+			w = startWidth;
+			h = startHeight;
+			
+			if ((window.innerWidth - canvas.offsetLeft - 20) < startWidth)
+				w = window.innerWidth - canvas.offsetLeft - 20;
+			else
+				w = startWidth;
+				  
+			if ((window.innerWidth * startHeight / startWidth) < startHeight)
+				h =window.innerWidth * startHeight / startWidth;
+			else
+				h = startHeight;
+			
+			canvas.setAttribute('width', ""+w+"px");
+			
+			canvas.setAttribute('height', ""+h+"px");
+			
+			canvas.style.width=""+w+"px";
+			canvas.style.height=""+h+"px";
+			
+			chart.bounds.width=w;
+			chart.bounds.height=h;
+			
+			chart.draw();
+		}
+	}	
+}
+function resizeToolBar(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar1.style.width = "" + w + "px";
+	}
+	else{
+		toolbar1.style.width = "" + w - 230 + "px";
+	}
+}
+</script>
+</head>
+<body onload="draw();resize(Highs.chart);resize(Lows.chart);resizeToolBar();" onresize="resize(Highs.chart);resize(Lows.chart);resizeToolBar();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Weather Underground</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Weather Underground</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					
+					<span id="fail" style="color:red;"></SPAN>
+					
+					<form id="cities"></form><br/><br/>
+					
+					<canvas id="highCanvas" width="400" height="400">This browser does not seem to support HTML5 Canvas.</canvas>
+					<canvas id="lowCanvas" width="400" height="400"></canvas>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		
+	</div>
+
+	
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("fromWunderground.htm", "_blank");
+	}
+	
+	</script>
+	<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../3rd_party/build/js/custom.min.js"></script>
+
+</body>
+</html>

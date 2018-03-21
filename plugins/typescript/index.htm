@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart for Microsoft TypeScript basic example</title>
+<meta charset="UTF-8"/>
+
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" type="text/css" href="../../demo.css">
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demo.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../../src/teechart-gauges.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Custom Theme Style -->
+<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<script src="typescript_test.js" type="text/javascript"></script>
+
+</head>
+
+<body onload="Tee.createChart('canvas1').draw(); Tee.createGauge('canvas2').draw();">
+
+
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">TypeScript</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+			<img src="../../images/logo-steema-v3.png">
+			<a href="http://www.steema.com/teechart/html5">www.steema.com</a>
+			&nbsp;&nbsp;
+			<img src="../../images/html5.png">
+			<img src="../../images/typescript-logo-426x188.png" width="213px" height="94px">
+			
+			<br/>
+			
+			This example was been compiled with TypeScript "tsc" compiler, using the<br/>
+			TeeChart declarative modules (<a href="https://github.com/davidberneda/DefinitelyTyped/blob/master/Definitions/teechart.d.ts">teechart.d.ts</a>).  See this demo *.ts sources <a href="#ts_src">below</a>.<br/>
+			<a id="ts_src">
+			</a>
+	
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+			<div class="x_title">
+				<h2><span class="smallLetters">Lines</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<canvas id="canvas1" width="600" height="400">
+				This browser does not seem to support HTML5 Canvas.
+				</canvas>
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Gauge</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<center>
+						<canvas id="canvas2" width="600" height="400"></canvas>
+					</center>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="row" id="toolbar3">
+			<div class="x_panel">
+			<div class="x_title">
+				<h2><span class="smallLetters">Code</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<b>TypeScript source code for this example:</b><br/>
+				<pre>
+				/// &lt;reference path="teechart.d.ts" /&gt;
+				/// &lt;reference path="teechart-gauges.d.ts" /&gt;
+				
+				module Tee {
+				
+				  export function createChart(canvas:string):IChart {
+				    var chart1 = new Chart(canvas);
+				
+				    var series1 = new Line([4,10,8,20]);
+				    series1.smooth=0.5;
+				
+				    chart1.addSeries(series1);
+				
+				    chart1.title.text="Hello TypeScript !";
+				    chart1.footer.text="I am a TeeChart !";
+				
+				    series1.format.fill = "green";
+				    series1.pointer.visible=true;
+				    series1.colorEach="no";
+				
+				    series1.marks.visible=true;
+				    series1.marks.format.gradient.visible=true;
+				
+				    chart1.canvas.width = 800;
+				    chart1.bounds.width = 800;
+				
+				
+				    var series2 = new Line();
+				    series2.addRandom(4, 20);
+				    chart1.addSeries(series2);
+				
+				    return chart1;
+				  }
+				
+				  export function createGauge(canvas:string):IChart {
+				    var chart1 = new Chart(canvas),
+				        gauge1 = <ICircularGauge> chart1.addSeries(new CircularGauge());
+				
+				    gauge1.units.text="Gauge";
+				
+				    chart1.panel.transparent=true;
+				    chart1.title.visible=false;
+				
+				    gauge1.value=42;
+				
+				    return chart1;
+				  }
+				}
+				</pre>
+			</div>					
+			</div>
+		</div>
+		
+		
+	</div>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("index.htm", "_blank");
+	}
+	
+	</script>
+	<!-- jQuery -->
+    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../../3rd_party/build/js/custom.min.js"></script>
+</body>
+</html>
+

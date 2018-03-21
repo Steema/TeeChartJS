@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TeeChart JavaScript Lines Example</title>
+	<meta charset="UTF-8"/>
+	<!--[if lt IE 9]>
+	    <script src="../../src/excanvas/excanvas_text.js"></script>
+	    <script src="../../src/excanvas/canvas.text.js"></script>
+	<![endif]-->
+	<meta charset="UTF-8"/>
+	<script src="../../src/teechart.js" type="text/javascript"></script>
+	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
+	<script src="../../src/date.format.js" type="text/javascript"></script>
+    <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../demo.js" type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	
+	<script type="text/javascript">
+	
+	var Chart1;
+	var a1;
+	var enableCursor = false;
+	
+	function draw() {
+		//init chart
+		Chart1=new Tee.Chart("canvas");
+		
+		Chart1.panel.margins.top = 12;
+		
+		//can add your own colour scheme in here, ie. the colours taken by Series added to the Chart in
+		//palette order  ..eg.
+		/*Chart1.palette.colors=[ "#FF9999","#663399","#CCFFFF","#FFFFCC","#660066","#8080FF","#CC6600",
+		  "#FFCCCC","#800000","#FF00FF","#00FFFF","#FFFF00","#800080","#000080","#808000","#FF0000",
+		  "#FFCC00","#FFFFCC","#CCFFCC","#00FFFF","#FFCC99","#CC99FF"];*/
+		
+		//add series and data
+		var line1 = new Tee.Line();
+		line1.title = "Apples";
+		line1.data.values = [5,3,2,7,1,6,4,5,1,0,10,7,11,15];
+		var line2 = new Tee.Line();
+		line2.title = "Pears";
+		line2.data.values = [7,1,5,1,0,10,6,3,2,7,11,4,5,3];
+		
+		line1.data.x = [new Date(2012, 9, 1),new Date(2012, 10, 1),new Date(2012, 11, 1),new Date(2012, 12, 1),new Date(2013, 1, 1)
+		                ,new Date(2013, 2, 1),new Date(2013, 3, 1),new Date(2013, 4, 1),new Date(2013, 5, 1),new Date(2013, 6, 1)
+				  ,new Date(2013, 7, 1),new Date(2013, 8, 1),new Date(2013, 9, 1),new Date(2013, 10, 1)];
+				  
+		line2.data.x = line1.data.x; 
+				  
+		Chart1.addSeries(line1).pointer.visible=true;
+		Chart1.addSeries(line2).pointer.visible=true;
+		
+		//config some series appearance characteristics
+		for (i = 0; i < 2; i++)
+		{
+			Chart1.series.items[i].pointer.width = 20;
+			Chart1.series.items[i].pointer.height = 20;
+			Chart1.series.items[i].pointer.style="ellipse";
+			Chart1.series.items[i].pointer.format.stroke.size = 4;
+			Chart1.series.items[i].pointer.format.stroke.fill = "white";
+			Chart1.series.items[i].pointer.format.shadow.visible=false;
+			Chart1.series.items[i].format.stroke.size = 10;
+			Chart1.series.items[i].format.shadow.visible=false;
+			Chart1.series.items[i].hover.stroke.fill = "rgba(255,255,128,1.0)";
+		}
+		//Axes
+		Chart1.axes.left.title.text="$ 000s";
+		Chart1.axes.left.labels.roundFirst=true;
+		Chart1.axes.bottom.labels.roundFirst=true;
+		Chart1.axes.bottom.title.text="Bottom Axis";
+		Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
+		Chart1.axes.bottom.title.format.font.setSize(20);
+		Chart1.axes.bottom.title.visible=false;
+		Chart1.axes.left.title.visible=false;
+		 
+		Chart1.axes.bottom.labels.dateFormat = "mm/yy";
+		//Chart1.axes.bottom.increment=30;
+		Chart1.axes.left.increment=3;
+		Chart1.axes.left.setMinMax(-1, 16);
+		Chart1.axes.left.grid.format.stroke.size = 1;
+		Chart1.axes.left.ticks.visible=false;
+		Chart1.axes.left.format.stroke.fill = "rgba(0,0,0,0.0)";
+		Chart1.axes.bottom.format.stroke.size = 1;
+		
+		//Title
+		Chart1.title.visible = false;
+		Chart1.title.text="Sales figures";
+		
+		//Legend
+		//Chart1.legend.position="right";
+		Chart1.legend.fontColor = false;
+		
+		// annotation (alternative title)
+		a1=new Tee.Annotation(Chart1);
+		a1.format.fill = "rgba(0,0,0,0.0)";
+		a1.format.stroke.fill="rgba(0,0,0,0.0)";
+		a1.format.font.style="20px Tahoma";
+		a1.format.font.fill = "rgba(0,0,0,0.6)";
+		a1.text="Sales figures";
+		Chart1.draw();  //get position
+		a1.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
+		a1.position.y = 8;
+		
+		Chart1.tools.add(a1);
+		
+		//tooltip
+		tip=new Tee.ToolTip(Chart1);
+		//tip.format.font.style="10px Tahoma";
+		//tip.format.fill = "rgba(255,0,0,1.0)";
+		tip.findPoint = false;
+		tip.render="dom";
+		tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
+		tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
+		tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:1px; z-index:1000;";
+	  
+	  	//"padding:4px; margin-left:4px; background-color:#FFF; border-radius:2px 2px; color:#555; z-index:1000;"
+	
+		Chart1.tools.add(tip);
+	
+	  	//tip.onshow=function(tool,series,index) { scaling=2; poindex=index; }
+		tip.onhide=function() { scaling=0; poindex=-1; }
+		
+		var t = new Tee.CursorTool(Chart1);
+		t.direction="vertical";
+		
+		tip.onshow=function(tool,series,index) {
+		  if (!enableCursor){
+		    Chart1.tools.add(t);
+			enableCursor = true;
+		  }
+		}
+  
+		tip.ongettext=function(tool, text, series, index) {
+		    var t, s="", ser;
+
+		    for(t=0;t<Chart1.series.count(); t++) {
+		      if (t>0) s+="<br/>";
+		      ser=Chart1.series.items[t];
+		      s+='<font face="verdana" color="#004000" size="1"><b>'+ser.title+':</b></font> <font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
+		    }
+		    return s;
+	    }
+		
+		//animation
+		animation = new Tee.SeriesAnimation();
+		animation.duration = 900;
+		animation.kind = "all";
+		fadeAnimation = new Tee.FadeAnimation();
+		fadeAnimation.duration = 500;
+		fadeAnimation.fade.series = true;
+		fadeAnimation.fade.marks = true;
+		animation.mode = "linear"; 
+		fadeAnimation.mode = "linear";
+		animation.items.push(fadeAnimation);
+		
+		animation.animate(Chart1);
+	}
+	</script>
+</head>
+<body onload="draw();changeThemeToDefault();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Lines</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="optionPanel" class="x_panel">
+					<div class="x_title">
+						<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content" id="selectorsDiv">
+						<ul class="options">
+						<li>Theme:
+						<select id="theme" onchange="changeTheme(this.value);changeBackground(this.value);" onload="changeBackgound(this.value);">
+							 <option value="">Default</option>
+							 <option value="dark">Dark</option>
+							 <option value="daybreak">Daybreak</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="minimal" selected>Minimal</option>
+							 <option value="twilight">Twilight</option>
+						</select></li>
+						<li>Palette:
+						<select id="palette" onchange="changePalette(this.value);">
+							 <option value="">Default</option>
+							 <option value="cool">Cool</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="onBlack">On Black</option>
+							 <option value="opera">Opera</option>
+							 <option value="rainbow">Rainbow</option>
+							 <option value="redRiver">Red River</option>
+							 <option value="seaWash" selected>Sea Wash</option>
+							 <option value="warm">Warm</option>
+							 <option value="windowsxp">Windows XP</option>
+						</select></li></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="canvasPanel" class="x_panel">
+					<div class="x_title">
+						<h2><span class="smallLetters">Lines</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+					<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<canvas id="canvas" height="400">
+						</canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,384 @@
+﻿<!DOCTYPE html>
+<html>
+<HEAD>
+<title>TeeChart JavaScript Gantt Series Example</TITLE>
+	<meta charset="UTF-8"/>
+	
+	<!--[if lt IE 9]>
+	    <script src="../../src/excanvas/excanvas_text.js"></script>
+	    <script src="../../src/excanvas/canvas.text.js"></script>
+	<![endif]-->
+	
+	<!--<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link rel="stylesheet" href="css/darknessmod.css" />-->
+
+	<script src="../../src/teechart.js" type="text/javascript"></script>
+	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
+	<script src="../../src/date.format.js" type="text/javascript"></script>
+	<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../demo.js" type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+
+	<script type="text/javascript">
+		var Chart1, gantt;
+		    
+		var mouseDown = false;
+		var procPoint = false;
+		var pIdx = -1;
+		var startPIdx = -1;
+		var oldValue;
+		var startPoint;
+		var pxOffset;
+		var featureColor = "darkgray";
+		
+		function draw() {
+		  Chart1=new Tee.Chart("canvas");
+		
+		  Chart1.zoom.enabled=true;
+		
+		  // Create series:
+		  gantt=Chart1.addSeries(new Tee.Gantt());
+		
+		  // Sample data:
+		
+		  gantt.add(0, "Production", new Date(2012, 5, 21), new Date(2012, 5, 29) );
+		  gantt.add(1, "Marketing", new Date(2012, 9, 3), new Date(2012, 11, 10) );
+		  gantt.add(2, "Approve", new Date(2012, 3, 13), new Date(2012, 3, 31) );
+		  gantt.add(3, "Prototype", new Date(2012, 6, 7), new Date(2012, 7, 5) );
+		  gantt.add(4, "Evaluation", new Date(2012, 10, 11), new Date(2012, 11, 5) );
+		  gantt.add(5, "Design", new Date(2012, 4, 2), new Date(2012, 4, 29) );
+		  gantt.add(2, "Testing", new Date(2012, 9, 1), new Date(2012, 11, 7) );
+		  
+		  gantt.format.round = false;
+		  gantt.format.shadow.visible=false;
+		
+		  // Example:
+		  // Add custom data to display at each gantt bar, for example: "Completion %"
+		
+		  gantt.data.completion=[20, 40, 10, 75, 55, 60, 25];
+		
+		  gantt.addNextTask(0,1);
+		  gantt.addNextTask(0,3);
+		  gantt.addNextTask(2,0);
+		  gantt.addNextTask(5,3);
+		  gantt.addNextTask(3,4);
+		  gantt.addNextTask(6,3);
+		  //gantt.addNextTask(3,6);
+		  gantt.nextTasksStrokeStyle = "Grey";//Black is default
+		  gantt.nextTasksPosition = "back";//back, front
+
+		  gantt.completion=new Tee.Format(gantt.chart);
+		  gantt.completion.stroke.fill="";
+		  //gantt.completion.shadow.visible=true;
+		  //gantt.completion.gradient.visible=true;
+		  gantt.completion.fill = "rgba(255,255,255,0)";
+		  //gantt.completion.fill = "white";
+		  gantt.completion.visible=true;
+		  gantt.completion.font.fill="white";
+		  gantt.completion.font.shadow.visible=true;
+		
+		  var originalScale;
+		  // Use the series onDraw event to paint completion data:
+		
+		  gantt.ondraw=function(g) {
+		    if (!g.completion.visible) return;
+		
+		    if(!originalScale) originalScale = g.chart.axes.left.scale;
+              
+		      /*it change font size depending of the actual scale from gantt*/
+		    g.completion.font.style = 28 * (1.5 - originalScale / g.chart.axes.left.scale) + "px Tahoma";
+		    var r={ x:0,y:0,width:0,height:0 },
+		        t=0,
+		        len=g.count();
+		
+		    g.completion.round=g.format.round;
+		    g.completion.font.prepare();
+		
+		    for(; t<len; t++) {
+		
+		      // Calculate bounds of each gantt bar:
+		
+		      g.bounds(t,r);
+		      r.y+=5;
+			  r.x+=11;
+		      r.height-=8;
+		      r.width=r.width*g.data.completion[t]*0.01;
+		
+		      // Draw completion bar:
+		
+		      g.completion.rectangle(r);
+		
+		      // Paint % text:
+		
+		      r.y+= 0.5*(r.height+g.completion.font.getSize());
+		      g.completion.drawText(r,g.data.completion[t]+"%");
+		      r.y-=r.height*0.5;
+		    }
+		  }
+		  
+		  /*gantt.onclick=function(series,index,x,y) {
+		    window.status = ("Clicked point: "+index);
+		  }*/
+		  
+		  Chart1.mousemove=function(p) {
+		    if (mouseDown && procPoint && (gantt.clicked(p) == -1)) {
+		      if ((pIdx !=-1) && (mouseDown == true))
+			  {  
+			     resizeGantt(p);
+			  }	  
+			}
+		  }
+		  
+		  gantt.mousemove=function(p) {
+			
+			pIdx = gantt.clicked(p);
+			
+			if (pIdx !=-1)
+			  startPIdx = pIdx;
+			
+			if (((pIdx !=-1) || (startPIdx != -1)) && (mouseDown == true))
+			{ 
+			  resizeGantt(p);
+			}
+			else
+		      Chart1.newCursor = "default";
+		
+		  }
+		  
+		  Chart1.mouseup=function(event) {
+		    mouseDown = false;
+			procPoint = false;
+			pIdx = -1;
+			startPIdx = -1;
+			Chart1.newCursor = "default";
+		  }
+		  
+		  gantt.mouseup=function() {
+		    mouseDown = false;
+			procPoint = false;
+			pIdx = -1;
+			startPIdx = -1;
+			Chart1.newCursor = "default";
+		  }
+		  
+		  var d1 = new Tee.DragTool(Chart1);
+		  d1.series = gantt;
+		 
+		  Chart1.tools.add(d1);
+		  
+		  d1.onchanging=function(obj,value) {
+		
+			startPoint = d1.Point;
+			pIdx = d1.target.index;
+			
+			if (mouseDown == false)
+			  pxOffset = d1.Point.x - Chart1.axes.bottom.calc(gantt.data.start[pIdx]);
+			
+			mouseDown = true;
+			
+			var d = new Date();
+			d.setTime(value);
+		
+			return gantt.data.values[d1.target.index];
+		    
+		  }
+		
+		  // Example, change a specific gantt bar color:
+		  //gantt.palette.colors=new Array();
+		  //gantt.palette.colors[3]="orange";
+		
+		  // Cosmetics:
+		
+		  gantt.height=70; // 70% height
+		  gantt.colorEach="yes";
+		  gantt.format.gradient.visible = false;
+		  gantt.marks.visible=false;
+		  gantt.marks.format.transparency=0.1;
+		  gantt.format.stroke.fill="rgba(255,255,255,1)";
+		
+		  // Chart options:
+		  Chart1.title.text="project planner";
+		
+		  Chart1.scroll.direction="both";
+		  Chart1.zoom.direction="both";
+		
+		  Chart1.legend.visible=false;
+		
+		  Chart1.axes.bottom.title.text="Time";
+		  Chart1.axes.bottom.labels.dateFormat="mediumDate";
+		
+		  Chart1.axes.left.title.text="Task";
+		  Chart1.axes.left.grid.centered=true;
+		  Chart1.axes.left.increment=1;
+		  Chart1.axes.left.labels.labelStyle="text";
+		
+		  // Custom draw text on chart:
+		  Chart1.ondraw=function() {
+		    var MSECSDAY=86400000,
+		        a=Chart1.axes.bottom,
+		        days=Math.round((a.maximum-a.minimum)/MSECSDAY);
+		
+		    Chart1.ctx.fillStyle = featureColor;		
+		    Chart1.ctx.textAlign="start";
+		    Chart1.ctx.fillText("Total Range: "+days+" days",20,10);
+		  }
+		
+		  //top.changePalette(top.topPalette);
+		  
+		  //animation
+		  animation=new Tee.SeriesAnimation();
+		  fadeAnimation=new Tee.FadeAnimation();
+		  fadeAnimation.duration=500;
+		  fadeAnimation.fade.series=true;
+		  fadeAnimation.fade.marks=true;
+		  fadeAnimation.mode = "linear";
+		  animation.items.push(fadeAnimation);
+		    
+		  animation.animate(Chart1);
+		}
+		
+		function resizeGantt(p)
+		{
+		  var startVal = new Date();
+		  var endVal = new Date();
+		  
+		  if (pIdx ==-1)
+			pIdx = startPIdx;
+			
+		  startVal = gantt.data.start[pIdx];
+		  endVal = gantt.data.end[pIdx];
+			
+		  tolerance = 15; //pixels mouse tolerance for end grab
+			
+		  startPixel = Chart1.axes.bottom.calc(startVal);
+		  endPixel = Chart1.axes.bottom.calc(endVal);
+		
+		  procPoint = true;
+		  var d = new Date();
+		  d.setTime(Chart1.axes.bottom.fromPos(p.x));
+		  
+		  if (Math.abs(p.x-startPixel)<tolerance)
+		  {
+			gantt.data.start[pIdx] = d;
+			Chart1.newCursor="col-resize";
+		  }
+		  else if (Math.abs(p.x-endPixel)<tolerance)
+		  {
+			gantt.data.end[pIdx] = d;
+			Chart1.newCursor="col-resize";
+		  }
+		  else {
+			Chart1.newCursor = "pointer";
+			var startD = new Date(); 
+			var endD = new Date();
+			var tmpD = new Date();
+			var tmpD2 = new Date();
+			
+			barWidth = endVal - startVal;
+			newPxPosStart = p.x - pxOffset;
+			newStartVal = Chart1.axes.bottom.fromPos(newPxPosStart);
+			//window.status = "p.x : " + p.x;
+			gantt.data.start[pIdx] = newStartVal;
+			gantt.data.end[pIdx] = newStartVal + barWidth;
+		  }
+		}
+
+        function changeGanttTheme(aTheme) {
+          changeTheme(aTheme);
+
+          if (aTheme === "dark") {
+            featureColor = "white";  //for Chart1.ctx
+          }
+          else {
+            if (aTheme === "twilight")
+              featureColor = "white";
+            else
+              featureColor = "rgba(124,124,124,0.6)";
+          }
+        }
+	</script>
+</HEAD>
+<body onload="draw();changeThemeToDefault();">
+<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Gantt</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="optionPanel" class="x_panel">
+					<div class="x_title">
+						<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<p>
+						Theme:
+						<select id="theme" onchange="changeGanttTheme(this.value);changeBackground(this.value);" onload="changeBackground(this.value);">
+							 <option value="">Default</option>
+							 <option value="dark">Dark</option>
+							 <option value="daybreak">Daybreak</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="minimal" selected>Minimal</option>
+							 <option value="twilight">Twilight</option>
+						</select>
+						Palette:
+						<select id="palette" onchange="changePalette(this.value);">
+							 <option value="">Default</option>
+							 <option value="cool">Cool</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="onBlack">On Black</option>
+							 <option value="opera">Opera</option>
+							 <option value="rainbow">Rainbow</option>
+							 <option value="redRiver">Red River</option>
+							 <option value="seaWash" selected>Sea Wash</option>
+							 <option value="warm">Warm</option>
+							 <option value="windowsxp">Windows XP</option>
+						</select>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="canvasPanel" class="x_panel">
+					<div class="x_title">
+						<h2><span class="smallLetters">Gantt</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+					<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<canvas id="canvas" height="400">
+						</canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</HTML>
