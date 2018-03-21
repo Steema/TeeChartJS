@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TeeChart HTML5/JavaScript demos | Steema Software</title>
+
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="3rd_party/material/css/material.min.css">
+  <script src="3rd_party/material/js/material.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+  <style>
+    .demo-layout-transparent .mdl-layout__header,
+    .demo-layout-transparent .mdl-layout__drawer-button {
+      color: rgba(0,0,0,0.87);
+    }
+
+    a {
+      cursor: pointer;
+    }
+
+    .mdl-collapse.mdl-collapse--opened {
+      border-top: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      margin-top: -1px;
+    }
+
+    .mdl-collapse.mdl-collapse--opened + .mdl-collapse.mdl-collapse--opened {
+      border-top: none;
+      margin-top: 0;
+    }
+
+    .mdl-collapse .mdl-collapse__content-wrapper {
+      overflow: hidden;
+    }
+
+    .mdl-collapse .mdl-collapse__content {
+      transition-property: margin-top;
+      transition-duration: 0.2s;
+    }
+
+    .mdl-collapse .mdl-collapse__icon {
+      transition-property: transform;
+      transition-duration: 0.2s;
+      color: rgba(0,0,0,0.3);
+
+      /* MDL should provide some facility for positioning icons inside list items so I don't have to do this */
+      position: absolute;
+      right: 6px;
+      margin-top: -3px;
+    }
+
+    .mdl-collapse.mdl-collapse--opened > .mdl-collapse__button > .mdl-collapse__icon {
+      transform: rotate(-180deg);
+    }
+
+    .mdl-collapse.mdl-collapse--opened > .mdl-collapse__content-wrapper > .mdl-collapse__content {
+      margin-top: 0 !important;
+    }
+
+    .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+        color: #73879C;
+    }
+
+    .mdl-layout__drawer {
+        color: #73879C;
+    }
+
+    .mdl-layout__drawer .mdl-navigation .mdl-navigation__link.is-selected {
+        color: teal;
+    }
+
+    .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 20px;
+    }
+
+    .mdl-collapse:not(.mdl-collapse--opened) .mdl-collapse > .mdl-collapse__button > .mdl-collapse__icon {
+      display: none;
+    }
+
+    .mdl-layout__header {
+      border-bottom: 1px solid lightgray;
+    }
+
+    h6 {
+      margin: 16px 0 8px 10px;
+    }
+
+    .mdl-layout__drawer {
+      overflow-y: scroll;
+    }
+
+    .mdl-collapse .mdl-collapse__icon {
+      right: unset;
+      left: 6px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+
+    @media screen and (min-width: 1025px) {
+      .mdl-layout--fixed-drawer>.mdl-layout__header .mdl-layout__header-row {
+        padding-left: 8px;
+      }
+    }
+
+    iframe {
+      width: 100%;
+      height: 800px;
+      border-width: 0;
+    }
+
+    .mdl-layout__content {
+      background-color: #eeeeee;
+    }
+  </style>
+
+  <script>
+    $(function(){
+      $('.mdl-collapse__content').each(function(){
+        var content = $(this);
+        content.css('margin-top', -content.height());
+      });
+
+      $(document.body).on('click', '.mdl-collapse__button', function(){
+        $(this).parent('.mdl-collapse').toggleClass('mdl-collapse--opened');
+      })
+    })
+  </script>
+
+  <script>
+    var JSONmenu =
+      [
+        {
+          "name": "THEMES INTRO",
+          "items": [
+            {
+              "name": "Series",
+              "items": [
+                {
+                  "name": "Lines",
+                  "url": "intro/lines.htm"
+                },
+                {
+                  "name": "Bars",
+                  "url": "intro/bars.htm"
+                },
+                {
+                  "name": "Areas",
+                  "url": "intro/areas.htm"
+                },
+                {
+                  "name": "Pie",
+                  "url": "intro/pie.htm"
+                },
+                {
+                  "name": "Points",
+                  "url": "intro/points.htm"
+                },
+                {
+                  "name": "Gantt",
+                  "url": "intro/gantt.htm"
+                }
+              ]
+            },
+            {
+              "name":  "Features",
+              "items": [
+                {
+                  "name": "Scroller",
+                  "url": "intro/scroller.htm"
+                },
+                {
+                  "name": "Geo mapping",
+                  "url": "dashboard/geo_series.htm"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "REFERENCE DEMO",
+          "items": [
+            {
+              "name": "Series",
+              "items": [
+                {
+                  "name": "Line",
+                  "items": [
+                    {
+                      "name": "Basic",
+                      "url": "basic/Basic.htm"
+                    },
+                    {
+                      "name": "Line",
+                      "url": "series/line/line.htm"
+                    },
+                    {
+                      "name": "Smooth Line",
+                      "url": "series/line/smoothline.htm"
+                    },
+                    {
+                      "name": "Stacked Line",
+                      "url": "series/line/stackedline.htm"
+                    },
+                    {
+                      "name": "Line and Point",
+                      "url": "series/line/linepoint.htm"
+                    },
+                    {
+                      "name": "High and Low",
+                      "url": "series/line/highlow.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Point XY",
+                  "url": "series/line/point.htm"
+                },
+                {
+                  "name": "Area",
+                  "items": [
+                    {
+                      "name": "Area",
+                      "url": "series/area/area.htm"
+                    },
+                    {
+                      "name": "Two Areas",
+                      "url": "series/area/twoareas.htm"
+                    },
+                    {
+                      "name": "Horizontal Area",
+                      "url": "series/area/horizarea.htm"
+                    },
+                    {
+                      "name": "Smooth Area",
+                      "url": "series/area/smootharea.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Bar",
+                  "items": [
+                    {
+                      "name": "Bar",
+                      "url": "series/bar/bar.htm"
+                    },
+                    {
+                      "name": "Negative values",
+                      "url": "series/bar/barnegative.htm"
+                    },
+                    {
+                      "name": "Volume",
+                      "url": "series/bar/volume.htm"
+                    },
+                    {
+                      "name": "Horiz. Bar",
+                      "url": "series/bar/horizbar.htm"
+                    },
+                    {
+                      "name": "Horiz. Stacked Bar",
+                      "url": "series/bar/horizbarstacked.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Pie",
+                  "items": [
+                    {
+                      "name": "Pie",
+                      "url": "series/pie/pie.htm"
+                    },
+                    {
+                      "name": "Multiple Pie",
+                      "url": "series/pie/multipie.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Donut",
+                  "items": [
+                    {
+                      "name": "Donut",
+                      "url": "series/donut/donut.htm"
+                    },
+                    {
+                      "name": "Multiple Donut",
+                      "url": "series/donut/multidonut.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Bubble",
+                  "url": "series/bubble/bubble.htm"
+                },
+                {
+                  "name": "Candle OHLC",
+                  "url": "series/candle/candle.htm"
+                },
+                {
+                  "name": "Gantt",
+                  "url": "series/gantt/gantt.htm"
+                },
+                {
+                  "name": "Gauge",
+                  "items": [
+                    {
+                      "name": "Gauge",
+                      "url": "gauges/gauges.htm"
+                    },
+                    {
+                      "name": "Gauge Gallery",
+                      "url": "gauges/gauge_gallery.htm"
+                    },
+                    {
+                      "name": "Clocks",
+                      "url": "gauges/clocks.htm"
+                    },
+                    {
+                      "name": "Activity Gauge",
+                      "url": "gauges/activitygauge.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Spark",
+                  "url": "series/spark/spark.htm"
+                },
+                {
+                  "name": "World Maps",
+                  "items": [
+                    {
+                      "name": "World Maps",
+                      "url": "series/maps/worldmap.htm"
+                    },
+                    {
+                      "name": "Canvas Maps",
+                      "url": "series/maps/canvas_maps.htm"
+                    },
+                    {
+                      "name": "Bubble Maps",
+                      "url": "series/maps/maps_bubbles.htm"
+                    },
+                    {
+                      "name": "Continents",
+                      "url": "series/maps/continents.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Polar/Radar",
+                  "items": [
+                    {
+                      "name": "Polar",
+                      "url": "series/polar/polar.htm"
+                    },
+                    {
+                      "name": "Polar Bar",
+                      "url": "series/polar/polar_bar.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Color Grid",
+                  "url": "series/colorgrid/colorgrid.htm"
+                },
+                {
+                  "name": "Surface 3D",
+                  "url": "series/surface/surface.htm"
+                }
+              ]
+            },
+            {
+              "name": "Axes",
+              "items": [
+                {
+                  "name": "Axes",
+                  "url": "axes/allaxes.htm"
+                },
+                {
+                  "name": "Centred axes",
+                  "url": "axes/centeraxes.htm"
+                },
+                {
+                  "name": "Grid Bands",
+                  "url": "axes/gridbands.htm"
+                },
+                {
+                  "name": "Synchronize",
+                  "url": "axes/synchro_many_charts.htm"
+                },
+                {
+                  "name": "Multiple Axes",
+                  "url": "axes/multiple_axes.htm"
+                },
+                {
+                  "name": "Custom Labels",
+                  "url": "axes/customlabels.htm"
+                },
+                {
+                  "name": "Coded zoom",
+                  "url": "axes/zoompercent.htm"
+                }
+              ]
+            },
+            {
+              "name": "Legend",
+              "items": [
+                {
+                  "name": "Legend",
+                  "url": "legend/legend.htm"
+                }
+              ]
+            },
+            {
+              "name": "Interactivity",
+              "items": [
+                {
+                  "name": "Mouse and Touch",
+                  "url": "axes/zoomscroll.htm"
+                },
+                {
+                  "name": "Series onClick",
+                  "url": "series/seriesonclick.htm"
+                }
+              ]
+            },
+            {
+              "name": "Animations",
+              "items": [
+                {
+                  "name": "Series",
+                  "url": "animations/linefadein.htm"
+                },
+                {
+                  "name": "Sequence",
+                  "url": "animations/sequence.htm"
+                },
+                {
+                  "name": "CSS3 Transitions",
+                  "url": "animations/css3_animations.htm"
+                }
+              ]
+            },
+            {
+              "name": "Data Sources",
+              "items": [
+                {
+                  "name": "From Array",
+                  "url": "sources/fromarray.htm"
+                },
+                {
+                  "name": "From Text",
+                  "url": "sources/FromText.htm"
+                },
+                {
+                  "name": "From Table",
+                  "url": "sources/FromTable.htm"
+                },
+                {
+                  "name": "From Series",
+                  "url": "series/datasource.htm"
+                },
+                {
+                  "name": "From XML",
+                  "url": "sources/fromxml.htm"
+                },
+                {
+                  "name": "From JSON",
+                  "url": "sources/fromjson.htm"
+                },
+                {
+                  "name": "Realtime",
+                  "url": "sources/realtime.htm"
+                },
+                {
+                  "name": "Dynamic Update",
+                  "url": "sources/dynamicUpdate.htm"
+                },
+                {
+                  "name": "From Typed Array",
+                  "url": "sources/fromtypedarray.htm"
+                },
+                {
+                  "name": "DateTime Data",
+                  "url": "sources/datetime.htm"
+                },
+                {
+                  "name": "Yahoo Finance",
+                  "url": "sources/fromYahooFinance.htm"
+                },
+                {
+                  "name": "Weather Underground",
+                  "url": "sources/fromWunderground.htm"
+                },
+                {
+                  "name": "Battery Level",
+                  "url": "sources/battery.htm"
+                }
+              ]
+            },
+            {
+              "name": "Images",
+              "items": [
+                {
+                  "name": "From Array",
+                  "url": "basic/BackImage.htm"
+                },
+                {
+                  "name": "To PNG and JPEG",
+                  "url": "export/ToPNG.htm"
+                }
+              ]
+            },
+            {
+              "name": "Editors",
+              "items": [
+                {
+                  "name": "Chart Editor",
+                  "url": "editor/ChartEditor.htm"
+                },
+                {
+                  "name": "Modal Editor",
+                  "url": "editor/modaleditor.htm"
+                }
+              ]
+            },
+            {
+              "name": "Dashboards",
+              "items": [
+                {
+                  "name": "Multi-Dim Tutorial",
+                  "url": "dashboard/tutorial/index.htm"
+                },
+                {
+                  "name": "Demographics",
+                  "url": "dashboard/demographics.htm"
+                },
+                {
+                  "name": "Product Sales",
+                  "url": "dashboard/productSales.htm"
+                },
+                {
+                  "name": "Geo mapping",
+                  "url": "dashboard/geo_series.htm"
+                }
+              ]
+            },
+            {
+              "name": "3D",
+              "items": [
+                {
+                  "name": "Basic 3D",
+                  "url": "canvas/webgl/basic_3d.htm"
+                },
+                {
+                  "name": "Advanced",
+                  "url": "canvas/webgl/threejs_example.htm"
+                },
+                {
+                  "name": "Maps 3D",
+                  "url": "canvas/webgl/maps_3d.htm"
+                },
+                {
+                  "name": "WebGL™ 3D",
+                  "url": "canvas/webgl/index.htm"
+                }
+              ]
+            },
+            {
+              "name": "Other",
+              "items": [
+                {
+                  "name": "Annotations",
+                  "url": "extra/annotations.htm"
+                },
+                {
+                  "name": "Custom Marks using Annotations",
+                  "url": "extra/customMarksWithAnnotations.htm"
+                },
+                {
+                  "name": "Buttons",
+                  "url": "extra/buttons.htm"
+                },
+                {
+                  "name": "Tool tips",
+                  "url": "extra/ToolTips.htm"
+                },
+                {
+                  "name": "CSS Tool tips",
+                  "url": "extra/domToolTips.htm"
+                },
+                {
+                  "name": "Tips with Charts",
+                  "url": "extra/domToolTips_SubChart.htm"
+                },
+                {
+                  "name": "Cursor Tool",
+                  "items": [
+                    {
+                      "name": "Cursor Tool",
+                      "url": "extra/CursorTool.htm"
+                    },
+                    {
+                      "name": "Cursor Tool Interpolate",
+                      "url": "extra/CursorTool_Interpolate.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Floor reflection",
+                  "url": "extra/floorreflection.htm"
+                },
+                {
+                  "name": "Panel",
+                  "items": [
+                    {
+                      "name": "Panel",
+                      "url": "basic/PanelShadow.htm"
+                    },
+                    {
+                      "name": "Transparent",
+                      "url": "basic/Transparent.htm"
+                    },
+                    {
+                      "name": "Full page align",
+                      "url": "basic/canvasalign.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Title and Footer",
+                  "url": "basic/TitleFooter.htm"
+                },
+                {
+                  "name": "Slider",
+                  "url": "extra/slider.htm"
+                },
+                {
+                  "name": "Series Scroller",
+                  "items": [
+                    {
+                      "name": "Series Scroller",
+                      "url": "extra/scroller.htm"
+                    },
+                    {
+                      "name": "Datetime Scroller",
+                      "url": "extra/scroller_datetime.htm"
+                    }
+                  ]
+                },
+                {
+                  "name": "Canvas",
+                  "items": [
+                    {
+                      "name": "Custom Painting",
+                      "url": "canvas/custom_paint.htm"
+                    },
+                    {
+                      "name": "Percent Size and Auto Resize",
+                      "url": "canvas/size_percent_resize.htm"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Plugins",
+              "items": [
+                {
+                  "name": "JQuery TeeChart",
+                  "url": "plugins/jquery/teechart_jquery.htm"
+                },
+                {
+                  "name": "Microsoft TypeScript",
+                  "url": "plugins/typescript/index.htm"
+                },
+                {
+                  "name": "Google Gadget",
+                  "url": "extra/google_gadget.htm"
+                },
+                {
+                  "name": "HTML5 Builder",
+                  "url": "../../plugins/embarcadero/html5builder/demos/2012.09.30.1/client"
+                },
+                {
+                  "name": "WordPress",
+                  "url": "http://steema.us/wp"
+                },
+                {
+                  "name": "Drupal",
+                  "url": "http://steema.us/drupal"
+                },
+                {
+                  "name": "Joomla",
+                  "url": "http://steema.us/joomla25"
+                }
+              ]
+            }
+          ]
+        }
+      ];
+    
+    function populateNavMenu(menu) {
+      var navMenu = document.getElementById("sidebar-menu");
+      for (var i = 0; i < menu.length; i++) {
+        var sectionTitle = document.createElement("h6");
+        sectionTitle.innerText = menu[i].name;
+        navMenu.appendChild(sectionTitle);
+
+        addNavSections(navMenu, menu[i].items);
+      }
+    }
+
+    var anySelected = false;
+
+    function addNavSections(section, items, level) {
+      if (!level) level = 1;
+
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].url) {
+          var item_a = document.createElement("a");
+          item_a.href = items[i].url;
+
+          if (item_a.hostname === window.location.hostname)
+            item_a.target = "frame_main";
+          else
+            item_a.target = "_blank";
+
+          item_a.classList.add("mdl-navigation__link");
+          item_a.style.paddingLeft = (20*level) + 8 + "px";
+          item_a.onclick = function () {
+            closeNav();
+            if (this.hostname === window.location.hostname)
+              selectNavItem(this);
+          };
+          item_a.innerText = items[i].name;
+          section.appendChild(item_a);
+
+          if (!anySelected && items[i].url === selectedSample) {
+            anySelected = true;
+            item_a.classList.add("is-selected");
+            $(section).parents('.mdl-collapse').each(function(){
+                var tmp = $(this);
+                tmp[0].classList.add("mdl-collapse--opened");
+            });
+          }
+        }
+        else {
+          var collapse_div = document.createElement("div");
+          collapse_div.classList.add("mdl-collapse");
+          section.appendChild(collapse_div);
+
+          var collapse_button_a = document.createElement("a");
+          collapse_button_a.classList.add("mdl-navigation__link", "mdl-collapse__button");
+          collapse_button_a.style.paddingLeft = (20*level) + 8 + "px";
+          collapse_button_a.innerText = items[i].name;
+          collapse_div.appendChild(collapse_button_a);
+
+          var icon = document.createElement("i");
+          icon.classList.add("material-icons", "mdl-collapse__icon", "mdl-animation--default");
+          icon.style.left = (20*(level-1)) + 6 + "px";
+          icon.innerText="expand_more";
+          collapse_button_a.appendChild(icon);
+
+          var collapse_content_wrapper = document.createElement("div");
+          collapse_content_wrapper.classList.add("mdl-collapse__content-wrapper");
+          collapse_div.appendChild(collapse_content_wrapper);
+
+          var collapse_content = document.createElement("div");
+          collapse_content.classList.add("mdl-collapse__content", "mdl-animation--default");
+          collapse_content_wrapper.appendChild(collapse_content);
+
+          addNavSections(collapse_content, items[i].items, level+1);
+        }
+      }
+    }
+
+    function createMenus() {
+      populateNavMenu(JSONmenu);
+    }
+
+    function closeNav() {
+      var drawer = document.getElementsByClassName("mdl-layout__drawer")[0];
+      drawer.classList.remove("is-visible");
+      drawer.setAttribute("aria-hidden", "true");
+      document.getElementsByClassName("mdl-layout__obfuscator")[0].classList.remove("is-visible");
+    }
+
+    function selectNavItem(item) {
+      var items = document.getElementsByClassName("mdl-navigation__link");
+      for (var i=0; i<items.length; i++) {
+        items[i].classList.remove("is-selected");
+      }
+
+      item.classList.add("is-selected");
+    }
+
+    var selectedSample = "";
+
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function getSample() {
+      selectedSample = getParameterByName("sample");
+      if (!selectedSample || selectedSample === "")
+          selectedSample = "dashboard/geo_series.htm";
+
+      document.getElementById("frame1").src = selectedSample;
+    }
+
+    function cleanUrl() {
+      window.history.pushState({}, document.title, window.location.href.split("?")[0]);
+    }
+  </script>
+</head>
+<body>
+<div class="demo-layout-transparent mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-layout__header--transparent">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <!-- <span class="mdl-layout-title">Title</span>-->
+      <table style="width:100%">
+        <tr>
+          <td>
+            <img src="images/teechart-title-menu.png"/>
+          </td>
+          <td style="text-align:right">
+            <a style="margin: auto 20px" href="https://www.steema.com/downloads/html5"><img src="images/download.png" alt="download trial" title="download trial"></a>
+            <a style="margin: auto 20px" href="https://www.steema.com/product/html5#pricing"><img src="images/shop.png" alt="purchase" title="purchase"></a>
+            <a style="margin: auto 20px" href="https://www.steema.com"><img src="images/SteemaLogo117x50.jpg" alt="Steema home" title="Steema home"></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <!--<span class="mdl-layout-title">Title</span>-->
+    <nav id="sidebar-menu" class="mdl-navigation"></nav>
+  </div>
+  <main class="mdl-layout__content">
+    <iframe id="frame1" name="frame_main" src="dashboard/geo_series.htm"><p>This browser does not support iframes.</p></iframe>
+  </main>
+</div>
+<script>
+  getSample();
+  createMenus();
+  cleanUrl();
+</script>
+</body>
+</html>

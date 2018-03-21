@@ -1,0 +1,22 @@
+/*
+ TeeChart(tm) for JavaScript(tm)
+ @fileOverview TeeChart for JavaScript(tm)
+ v2.4 Feb 2018
+ Copyright(c) 2012-2018 by Steema Software SL. All Rights Reserved.
+ http://www.steema.com
+
+ Licensed with commercial and non-commercial attributes,
+ specifically: http://www.steema.com/licensing/html5
+
+ JavaScript is a trademark of Oracle Corporation.
+*/
+var Tee=Tee||{};
+(function(){"undefined"!==typeof exports&&(exports.Tee=Tee);Tee.FadeAnimation=function(e){Tee.Animation.call(this,e);this.kind="in";var f=this,c;this.fade={};this.setTransp=function(b){"out"==f.kind&&(b=1-b);c.legend&&(f.chart.legend.format.transparency=b);c.walls&&(f.chart.walls.transparency=b);c.series&&f.chart.series.each(function(a){a.format.transparency=b});c.marks&&f.chart.series.each(function(a){a.marks.transparency=b});c.title&&(f.chart.title.format.transparency=b);c.axes&&(f.chart.axes.transparency=
+b);c.panel&&(f.chart.panel.format.transparency=b)};this.start=function(){c=this.fade;this.setTransp(1)};this.stop=function(){this.setTransp(0)};this.doStep=function(b){f.setTransp(1-b)}};Tee.FadeAnimation.prototype=new Tee.Animation;Tee.SeriesAnimation=function(e){function f(a,b,c){b.automatic=!1;var d=.5*(a.oldmin+a.oldmax);a=.5*(a.oldmax-a.oldmin);b.maximum=d+c*a;b.minimum=d-c*a}Tee.Animation.call(this,e);e instanceof Tee.Series?(this.series=e,this.chart=e.chart):this.series=null;this.oldmax=this.oldmin=
+0;this.oldauto=!0;var c=1,b=this;this.kind="axis";this.getAxis=function(){var a=this.series||this.chart.series.firstVisible();return a?a.mandatoryAxis:null};this.getOtherAxis=function(){var a=this.series||this.chart.series.firstVisible();if(a)if(a.yMandatory){if("both"===a.vertAxis)return this.chart.axes.right}else{if("both"===a.horizAxis)return this.chart.axes.top}else return null};this.doStep=function(a){var k=b.getAxis(),g=b.getOtherAxis();k&&(k.automatic=!1);g&&(g.automatic=!1);"axis"==b.kind?
+(f(b,k,1+100*(1-a)),g&&f(b,g,1+100*(1-a))):b.chart.series.each(function(d){if(!b.series||b.series===d){var g=d.data.values,f=d.data._old,k=g.length;if(d instanceof Tee.ActivityGauge)d.maxDrawWidth=d.maxWidth*a;else if(d instanceof Tee.Pie)d.rotation=360*(1-a),c=a;else if("each"==b.kind){var e=k*a|0;for(d=0;d<e;d++)g[d]=f[d];e<k&&(g[e]=f[e]*(k*a-e))}else if("all"==b.kind)for(d=0;d<k;d++)g[d]=f[d]*a;else"axis"!=b.kind&&(c=a)}})};this.stop=function(){this.doStep(1);var a=b.getAxis(),c=b.getOtherAxis();
+a&&(a.maximum=b.oldmax,a.minimum=b.oldmin,a.automatic=b.oldauto);c&&(c.maximum=b.oldmax,c.minimum=b.oldmin,c.automatic=b.oldauto);b.chart.series.each(function(a){a.transform&&(a.transform=null);"each"!=b.kind&&"all"!=b.kind||!a.data._old||(a.data.values=a.data._old,a.data._old=null)})};this.start=function(){var a=this.getAxis(),b=this.getOtherAxis(),g=this.chart,d=g.series.items,e=g.chartRect.width,p=g.chartRect.height,l=g.bounds.width,m=g.bounds.height;if(0===d.length)return!1;this.oldmin=a.minimum;
+this.oldmax=a.maximum;this.oldauto=a.automatic;for(g=0;g<d.length;g++){var h=d[g];if(!this.series||this.series===h)if(h instanceof Tee.Pie)h.transform=function(){this.chart.ctx.scale(c,c)};else if("each"==this.kind||"all"==this.kind){var n=h.data.values,q=n.length;h.data._old=n.slice(0);for(h=0;h<q;h++)n[h]=0;a.automatic=!1;b&&(b.automatic=!1)}else"left"==this.kind?h.transform=function(){this.chart.ctx.translate(-e*(1-c),0)}:"right"==this.kind?h.transform=function(){this.chart.ctx.translate(e*(1-
+c),0)}:"x"==this.kind?h.transform=function(){this.chart.ctx.scale(c,1)}:"y"==this.kind?h.transform=function(){this.chart.ctx.scale(1,c)}:"top"==this.kind?h.transform=function(){this.chart.ctx.translate(0,-p*(1-c))}:"bottom"==this.kind?h.transform=function(){this.chart.ctx.translate(0,p*(1-c))}:"zoomin"==this.kind?h.transform=function(){var a=this.chart.ctx;a.translate(.5*l,.5*m);a.scale(c,c);a.translate(.5*-l,.5*-m)}:"zoomout"==this.kind&&(h.transform=function(){var a=this.chart.ctx;a.translate(.5*
+l,.5*m);a.scale(2-c,2-c);a.translate(.5*-l,.5*-m)})}"axis"==this.kind&&(f(this,a,100),b&&f(this,b,100))}};Tee.SeriesAnimation.prototype=new Tee.Animation;Tee.MarksAnimation=function(e){function f(a,c,d){return c<=b.current?d:""}Tee.Animation.call(this,e);e&&e instanceof Tee.Series?(this.series=e,this.chart=e.chart):this.series=null;this.current=-1;var c=this.series.marks,b=this,a;this.start=function(){a=c.ongettext;c.ongettext=f};this.stop=function(){c.ongettext=a;this.current=-1};this.doStep=function(a){b.current=
+b.series.data.values.length*a|0}};Tee.MarksAnimation.prototype=new Tee.Animation}).call(this);

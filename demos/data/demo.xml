@@ -1,0 +1,5 @@
+<series name="Friends" color="Blue" metric="Quantity">
+  <point name="Facebook" value="123"/>
+  <point name="Twitter" value="456"/>
+  <point name="Google+" value="789"/>
+</series>

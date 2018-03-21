@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<meta name="Author" content="Steema Software" />
+<meta name="Generator" content="Steema" />
+<meta name="description" content="OLAP Pivot-table MultiDimensional Charting TeeChart JavaScript, Steema Software, Charting, Gauge and Map components for developers, JavaScript charts for financial, scientific and business applications - TeeChart for Javascript - HTML5, JavaScript Chart Library for use with the JavaScript and HTML5 Canvas" />
+<meta name="keywords" content="JQuery, Chart Component, TeeChart for Javascript - HTML5, JavaScript Chart, Free version, JS Chart, Data Visualization, Chart, Graph, Map, Gauge, Dashboard, Datamining, OLAP, Pivot tables, Charting Component, Chart Control, Chart Library, Mobile applications" />
+</head>
+
+<body style="font-family:tahoma">
+
+<h2>Version 2.1 - Release Notes</h2>
+<br/>
+<a href="http://bugs.teechart.net/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&chfield=resolution&chfieldfrom=2017-07-12&chfieldto=2017-10-020&chfieldvalue=FIXED&product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=FIXED">Release notes - bug tracker</a>
+<br/><br/>
+<b>Bugfixes/changes:</b>
+<br/>
+<br/>
+<ul>[No Bug ID] improvements to demos.</ul>
+<ul>[No Bug ID] Axis labelling improvements for small value number ranges.</ul>
+<ul>Default hover appearance changed.</ul>
+<ul>Improvements to Tooltip feedback on movement.</ul>
+<ul>[B1919] Maximum right tooltip x position not correctly adjusted for offset. Fixed.</ul>
+<ul>[B1925] UK not correctly included in map of europe. Fixed.</ul>
+<br/>
+<br/>
+<h2>Version 2.0 - Release Notes</h2>
+<br/>
+<b>Bugfixes/changes:</b>
+<br/>
+<br/>
+<ul>[No Bug ID] improvements to demos. Redimensioned and improved compatibility across browsers & platforms. Menu system foldable for smaller screens.</ul>
+<ul>[No Bug ID] improvements to axis labelling.</ul>
+<ul>[B1886] - Single value chart not correctly plotting axis. Fixed.</ul>
+<ul>[B1853] - Incorrect margins when having two Bar series, one without values. Fixed.</ul>
+
+<b>New Features</b>
+<br/>
+<br/>
+<ul>[No Bug ID] new touch events for zoom and scroll with tactile devices..</ul>
+<ul>[No Bug ID] new touch-slide sensitivity for tee slider in tectile devices.</ul>
+<ul>[No Bug ID] new touch sensitivity for Gauges.</ul>
+<br>
+
+<h2>Version 1.9 - Release Notes</h2>
+<br/>
+<b>Bugfixes/changes:</b>
+<br/>
+<br/>
+<ul>[No Bug ID] Added image-repeat for fill render (BarSeries patterns, etc).</ul>
+<ul>[B1275] - Tools. Having two charts with tooltips, moving the mouse on the second shows a tooltip in the first. Fixed.</ul>
+<ul>[B1517] - Series. Support different origins in a Bar series.</ul>
+<ul>[B1537] - Series. ColorEach doesn't work for Bar series when the gradient is disabled. Fixed.</ul>
+<ul>[B1538] - Series. Combining stacked and non stacked series doesn't work. Fixed.</ul>
+<ul>[B1552] - Tools. ToolTip traverses out of the chart if you scroll the page. Fixed.</ul>
+<ul>[B1541] - Series. Bars have a wrong width when stacked in SideAll mode and they have a unique value. Fixed.</ul>
+<ul>[B1542] - Axes. Having some bar series with a single point, with x value and sideAll, only the first axis label is drawn. Fixed.</ul>
+<ul>[No ID] - TypeScript Definition file updated to TeeChart v1.9.</ul>
+
+<b>New Features</b>
+<br/>
+<br/>
+<ul>[B731] - ShowInLegend. ShowInLegend property to hide a series from the legend.</ul>
+<ul>[B1112] - RoundFirst  (axis label) New property for Axis Labels. roundFirst.<br>
+             Default True<br>
+             Example Chart1.axes.left.labels.roundFirst = false;</ul>
+<ul>[B869] - Legend	Add support to configure hover font color for Legend</ul>
+<ul>[No Bug ID] New feature demo. Please note, not suitable for use with Google Chrome when launched from a local disk. Works fine for all browsers when launched via a http server.</ul>
+
+
+<br/>
+<br/>
+
+<h2>Version 1.8 - Release Notes</h2>
+<br/>
+<b>Fixes:</b>
+<br/>
+<br/>
+<ul>[No Bug ID] Modifications to teechart-3D.js unit, bringing it into line with 
+   latest version of WebGL <a href="https://get.webgl.org/">https://get.webgl.org/</a>).<br>
+</ul>
+<br/>
+<br/>
+
+<h2>Version 1.7 - Release Notes</h2>
+<br/>
+<b>New Features:</b>
+<br/>
+<br/>
+<ul>
+<li>New InvertedStairs property.</li>
+<li>Pattern support added for Bar Series.</li>
+<li>Significant space added between the groups of bars when sideAll.</li>
+<li>OnBeforeDraw Series event added to support custom output between Axes and Series.</li>
+</ul>
+<br>
+<b>Fixes:</b>
+<br/>
+<ul>1. [B835] Scrolled (divved or sectioned) chart canvas returns incorrect mouseover x,y. Fixed.<br/>
+2. [B843 - TF77016692] Hang when dragging a point that shares the YValue with another point. Fixed.<br/>
+3. [No Bug ID] Marks insuffiently clipped for Bar Series. Fixed.<br/>
+4. [B865] Would like Series Marks, extreme to Axis bounds to be moved wholly within Axis space. Fix applies particularly to Tooltip texts.<br/>
+</ul>
+<br/>
+<br/>
+
+<h2>Version 1.6 - Release Notes</h2>
+<br/>
+<b>New Features:</b>
+<br/>
+<br/>
+<ul>
+<li>New inflateMargins property added for Pointer.</li>
+</ul>
+<br>
+<b>Fixes:</b>
+<br/>
+<ul>1. [B407]
+    Using more than 1 Bar-Series in 3D-Charts (with three.js) the 
+   1st series not displaying. Fixed.<br/>
+   2. [B558]
+    International thousand/decimal setup breaks size calcs under
+    some format conditions causing sporadic wider labels and
+    incorrect sizing calcs. Fixed.<br/>
+3. [B7]
+    Adding a title to a vertical axis in a 3D chart crashes it. Now
+    fixed.<br/>
+4.[B583]
+    Zero only value series causing Axes to inhibit width allowance 
+    for Axis Title. Fixed.<br/>
+5. [B593] 
+    WebGL Chart drops first item from Legend when set to 
+    transparent. Fixed.<br/>
+6. [B592]
+    WebGL Legend contents inconsistently spaced.<br/>
+7. [B672]
+    Null values within the values should be ignored when calculating 
+    the ranges. Fixed.<br/>
+8. [B688]
+   Labels Rotation offsets aren't perfectly calculated. Fixed.<br/>
+9. [B686]
+   When adding axes on the right side, there is not enough space 
+   preserved for the axis name. Fixed.<br/>
+10.[B458]
+   Theme not being applied to custom axes. Corrected.
+   </ul>
+<br/>
+<br/>
+
+<h2>Version 1.5 - Release Notes</h2>
+<br/>
+<b>New Features:</b>
+<br/>
+<br/>
+
+<ul>
+<li>New chart themes. See <a href="intro/index.html">demo</a>.</li>
+<li>New chart palettes. See <a href="intro/index.html">demo</a>.</li>
+<li>New Line series "treatNulls" property 
+   (default = 'dontPaint', and also supported: 'skip')</li>
+</ul>
+<br/>
+<br/>
+
+
+<h2>Version 1.4 - Release Notes</h2>
+<br/>
+<b>New Features:</b>
+<br/>
+<br/>
+
+<ul>
+<li>WebGL 3D support using <a href="https://github.com/mrdoob/three.js">Three.js</a> library. <a href="canvas/webgl/threejs_example.htm">See demo</a></li>
+<li>Tee.Surface series style. (Requires WebGL&trade;) <a href="series/surface/surface.htm">See demo</a></li>
+<li>Tee.Polar series style. <a href="series/polar/polar.htm">See demo</a></li>
+<li>Tee.ColorGrid series (Heatmap). <a href="series/colorgrid/colorgrid.htm">See demo</a></li>
+</ul>
+
+<br/>
+<b>Geo Maps:</b>
+<br/>
+<ul>
+<li>Tee.Map series for HTML5 Canvas. <a href="series/maps/canvas_maps.htm">See demo</a></li>
+<li>More maps included (Europe, Africa, Asia, Australia, South America, etc)</li>
+<li>3D Maps using WebGL&trade;, and HTML5 GeoLocation API. <a href="canvas/webgl/maps_3d.htm">See demo</a></li>
+</ul>
+
+<b>New scripts:</b>
+<br/>
+<br/>
+<ul>
+<li>teechart-3d.js:  Includes WebGL&trade; and Three.js support, 3D Surface series.</li>
+</ul>
+
+<br/> 
+<b>Other:</b>
+<br/>
+<ul>
+<li>CSS3 Animations. <a href="animations/css3_animations.htm">See demo</a></li>
+<li>New Chart Generator example, online chart creator. <a href="generator/index.html">Run</a></li>
+<li>New Rectangle class "offset" function (x,y)</li>
+<li>Updated loadJSON example supporting multiple series, x values, colors, etc. <a href="sources/fromjson.htm">See demo</a></li>
+<li>Mouse wheel support to zoom chart data (Chart1.zoom.wheel=true). Default false.</li>
+<li>New Chart1.zoom.keepAspect property (default false), to maintain "width to height" proportions on zooming.</li>
+<li>New Bar and HorizBar series stacked "side" mode (for 3D only).</li>
+<li>New series pointer style modes (3D only):  cone, sphere and cylinder.</li>
+<li>Tee.Animation boolean "loop" property (default false).</li>
+<li>Unit and Coverage testing, using QUnit and Blanket.js. &nbsp;<a href="tests/index.html">Run</a></li>
+<li>Refactoring and JSHint conformance.</li>
+</ul>
+
+<b>Fixes:</b>
+<br/>
+<ul>
+Safari / WebKit exception when drawing dashed lines<br/>
+Fixed trunc of first axis label with very small float numbers.<br/>
+Fixed display of Pie slices with negative values.<br/>
+Improved clipping of chart data rectangle area, using chart axes stroke size.<br/>
+Several fixes for Internet Explorer 8.<br/>
+</ul>
+<br/>
+<br/>
+
+<h2>Version 1.3 - Release Notes</h2>
+<br/>
+<b>New Features:</b>
+<br/>
+<br/>
+Tee.Data script for multi-dimensional charting and pivot-tables. See <a href="dashboard/tutorial/index.htm">Tutorial and demos</a>.<br/>
+Tee.Map geo charting (World, Europe, USA States, etc) for SVG and Canvas. See <a href="series/maps/worldmap.htm">demo</a><br/>
+Initial support for Microsoft Windows 8 RT JavaScript applications<br/>
+Microsoft TypeScript definitions for TeeChart. <a href="plugins/typescript/index.htm">See Demo</a>&nbsp;&nbsp;<a target="_blank" href="https://github.com/davidberneda/DefinitelyTyped/blob/master/Definitions/teechart.d.ts">Definitions</a><br/>
+<br/>
+<b>New Features in Tee.Animations:</b>
+<br/>
+<br>
+New Tee.SeriesAnimation "kind" styles. See <a href="animations/linefadein.htm">demo</a><br/>
+Multiple-series now supported in Tee.SeriesAnimation.<br/>
+New sequential/parallel animations. See <a href="animations/sequence.htm">demo</a><br/>
+New Animation "mode" property (default "linear", can be "exponential")<br/>
+New FadeAnimation and MarksAnimation objects. See <a href="animations/sequence.htm">demo</a><br/>
+<br/>
+<b>New Features in Tee.ToolTip:</b>
+<br/>
+<br/>
+New "render" property (default "dom") to switch between using canvas-painted tips or DOM HTML divs.<br/>
+Embedding charts inside mouse tips. See <a href="extra/domToolTips_SubChart.htm">demo</a><br/>
+<br/>
+<b>New Features in Chart Legend:</b>
+<br/>
+<br/>
+Two-column support, and left/right text alignment per column<br/>
+New Legend.margin property (default 5, percentage of legend size).<br/>
+New Legend.symbol.style property (default "rectangle", can be "line")<br/>
+<br/>
+<b>New Features in Tee.Slider:</b>
+<br/>
+<br/>
+Slider (scrollbar) now supports mouse click/touch at scrollbar background (clickAt function)<br/>
+<br/>
+<b>New Features in Gauges:</b>
+<br/>
+<br/>
+Support for multiple gauge "hands" (Gauge1.hands[] property, and addHand function)<br/>
+New Gauge1.animate property to perform animations when Gauge1.value is changed using setValue<br/>
+New Tee.Clock object to create live watches using Tee.Gauge. See <a href="gauges/clocks.htm">demo</a><br/>
+<br/>
+New Gauge1.ticksBack and minorBack "radius" property (default 0).<br/>
+New Gauge1.minor.shape property (default "", can be "ellipse")<br/>
+New Gauge1.format.padding property (default 0.5%)<br/>
+
+<br/>
+<b>Other new Features:</b>
+<br/>
+<br/>
+Chart.Zoom.onreset event (called after dragging up-left)<br/>
+Axis.Labels.wordWrap property (default "no", can be "auto" / "yes" / "no")<br/>
+Axis.Labels.valueFormat property, to use native toLocaleString to format numeric labels<br/>
+Axis.Labels.ongetlabel event to allow custom text and formatting for individual labels. See <a href="axes/customlabels.htm">demo</a><br/>
+Series.Marks.showZero property to not paint zero-value marks. (default true)<br/>
+Improved "null" and NaN Series points support (null / NaN points aren't displayed).<br/>
+Series.isNull(index) function, returns true if index'th point is null<br/>
+Series.valueFormat property, to use native toLocaleString to format numeric marks<br/>
+Series.markPos(index, point) function, returns p.x and p.y position for index'th mark<br/>
+Chart.Axes.transparency property (default 0 opaque, from 0 to 1)<br/>
+Bar and HorizBar series barStyle property (default "bar", can be "ellipse" or "line")<br/>
+Bar and HorizBar series Marks.location property (default "end", can be "center" or "start")<br/>
+<br/>
+<b>Changes:</b>
+<br/>
+<br/>
+Animation objects have been moved to "teechart-animations.js" script.<br/>
+Improved support for Internet Explorer v8 and v7 using ExCanvas<br/>
+Removed tooltip.js script. It is now included inside teechart.js.<br/>
+<br/>
+<b>Fixes:</b>
+<br/>
+<br/>
+Format.Font transparency fixed (when drawing text over already-transparent content)<br/>
+<br/>
+
+<h2>Version 1.2 - Release Notes</h2>
+<br/>
+<b>New Features:</b>
+<br/>
+<br/>
+Axis Labels new "ongetlabel" event to supply custom label texts and formatting. (See <a href="axes/customlabels.htm">demo</a>)<br/>
+Bar and HorizBar series: New "offset" percentage property to customize bar positions. (Series1.offset=25;) <br/>
+Canvas dashed lines, now supported in Chrome/Canary browsers (Chart1.panel.format.border.dash=[2,2];)<br/>
+New Title and Footer "expand" boolean property, to align title backgrounds to panel (See <a href="basic/TitleFooter.htm">demo</a>)<br/>
+<br/>
+<b>Changes:</b>
+<br/>
+<br/>
+Tee.Chart "onDraw" event method has been renamed to "ondraw" (all lowercase).<br/>
+Bar and HorizBar series: default "barSize" value changed from 100% to 70%.<br/>
+<br/>
+<br/>
+<b>Fixes:</b>
+<br/>
+<br/>
+Bar and HorizBar series, fixed several bugs using properties: "useOrigin", "sideMargins".<br/>
+Axis Grid "centered" did not paint the first grid line (the one closer to axis minimum).<br/>
+<br/>
+<br/>
+<h2>Version 1.1 - Release Notes</h2>
+<br/>
+<b>JQuery Plugin:</b><br/>
+<br/>
+Initial version of a JQuery plugin. <a href="plugins/jquery/teechart_jquery.htm">Example</a>.
+<br/>
+<br/>
+<b>New Series Styles:</b>
+<ul>
+<li><a href="series/bar/volume.htm">Volume</a></li>
+<li><a href="series/gantt/gantt.htm">Gantt</a></li>
+<li><a href="gauges/gauges.htm">Gauges</a></li>
+</ul>
+<br/>
+<b>Node.js:</b><br/><br/>
+Source code teechart.js is <a href="http://search.npmjs.org/#/TeeChart">node-compatible</a> (identical at client and server).
+<br/>
+<br/>
+<b>New properties:</b><br/>
+<br/>
+Format.Gradient.offset (x y) (default 0,0) Applies to radial gradients only (direction="radial")<br/>
+DragTool.series (default null) Defines a single series to drag. When null, all series can be dragged.<br/>
+CursorTool.followMouse (boolean) (default true) Moving the mouse also moves the cursor.<br/>
+ToolTip.autoRedraw (boolean) (default true) When the tooltip hides automatically, also repaint the chart.<br/>
+SeriesAnimation.kind (string) (default "axis") Additional animation styles ("left", "top" or "axis")<br/>
+Chart.Zoom.direction (string) (default "both") Allow zoom in "horizontal", "vertical" or "both" directions.<br/>
+Axis.custom (boolean) (default false) Enables <a href="axes/multiple_axes.htm">unlimited custom axis</a> in the same chart, using the new Axes "add" method.<br/>
+Axis.start (percent) (default 0) Defines the starting position of axis, as percentage on chart width or height.<br/>
+Axis.end (percent) (default 100) Defines the ending position of axis, as percentage on chart width or height.<br/>
+CustomSeries.hover.line (boolean) (default false) When true, enables mouse hover effect on lines connecting series pointers.<br/>
+<br/>
+<br/>
+<b>Other changes:</b><br/>
+<br/>
+Format.ellipse now uses arc method instead of bezierCurve.<br/>
+Improvements in date-time axis labelling.<br/>
+Axis handling of NaN and -NaN values.<br/>
+Fixed bug (endless loop) when painting axis labels with very small data values.<br/>
+Legend highlights items on mouse over.<br/>
+Mouse capture on Firefox (allows scrolling or zooming chart dragging the mouse outside chart bounds).<br/>
+<br/>
+<br/>
+<b>New functions:</b><br/>
+<br/>
+function pointInLine(point, lineStart, lineEnd, tolerance)<br/>
+&nbsp;&nbsp;  Returns true when point {xy} is over line segment.
+<br/><br/>
+Chart1.axes.add(horiz {true or false}, other {true of false})<br/>
+&nbsp;&nbsp;  Adds a new custom axis (horizontal or vertical) at left/bottom or top/left edge.<br/>
+<br/>
+</body>
+</html>

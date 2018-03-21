@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Pie Example</title>
+	<meta charset="UTF-8"/>
+	
+	<!--[if lt IE 9]>
+	    <script src="../../src/excanvas/excanvas_text.js"></script>
+	    <script src="../../src/excanvas/canvas.text.js"></script>
+	<![endif]-->
+
+	<script src="../../src/teechart.js" type="text/javascript"></script>
+	<script src="../../src/teechart-extras.js" type="text/javascript"></script>
+	<script src="../../src/teechart-animations.js" type="text/javascript"></script>
+	<script src="../../src/date.format.js" type="text/javascript"></script>
+	<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../demo.js" type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+
+	<script type="text/javascript">
+		
+		var Chart1;
+		var featureColor;
+		
+		function draw() {
+		  //init chart
+		  Chart1=new Tee.Chart("canvas");
+		  
+		  Chart1.panel.margins.top = 12;
+		
+		  /*Chart1.palette.colors=[ "#FF9999","#663399","#CCFFFF","#FFFFCC","#660066","#8080FF","#CC6600",
+		    "#FFCCCC","#800000","#FF00FF","#00FFFF","#FFFF00","#800080","#000080","#808000","#FF0000",
+		    "#FFCC00","#FFFFCC","#CCFFCC","#00FFFF","#FFCC99","#CC99FF"];*/
+		
+		  //add series and data
+		  var pie1 = new Tee.Pie();
+		  pie1.title = "Apples";
+		  pie1.data.values = [15,17,12,19,30,41];
+		  
+		  pie1.data.labels =  [ "jan","feb","mar","apr","may","jun" ];
+		  pie1.explode = [4,4,3,5,8,0];
+		  Chart1.axes.bottom.labelStyle="text";
+						  
+		  Chart1.addSeries(pie1);
+		
+		  //config some series appearance characteristics
+		  for (i = 0; i < 1; i++)
+		  {
+			  Chart1.series.items[i].format.gradient.visible = false;
+			  Chart1.series.items[i].format.gradient.colors=["rgba(204,204,204,1)","white","white"];
+		
+			  Chart1.series.items[i].format.stroke.fill = "white"; // "rgba(0,0,0,0.0)";
+			  Chart1.series.items[i].format.shadow.visible=false;
+			  Chart1.series.items[i].marks.arrow.length = -85;
+			  Chart1.series.items[i].marks.arrow.stroke.fill = "rgba(0,0,0,0.0)";
+			  Chart1.series.items[i].marks.format.fill = "rgba(0,0,0,0.0)";
+			  Chart1.series.items[i].marks.format.font.style="bold 13px Arial";
+			  Chart1.series.items[i].marks.format.font.fill = "rgb(0,0,0)";
+			  Chart1.series.items[i].marks.format.stroke.fill = "rgba(0,0,0,0.0)";
+		  }
+		
+		  //Title
+		  Chart1.title.visible = true;
+		  Chart1.title.text=" "; //"Sales figures";
+		  Chart1.footer.visible = true;
+		  Chart1.footer.text=" "; //"Sales figures";
+		  
+		  //Legend
+		  Chart1.legend.title.visible = true;
+		  Chart1.legend.title.format.font.fill = "rgba(0,0,0,0.6)";
+		  Chart1.legend.title.format.font.setSize(18);
+		  Chart1.legend.format.font.setSize(15);
+		  Chart1.legend.format.font.shadow.visible=false;
+		  Chart1.legend.format.shadow.visible=false;
+		  Chart1.legend.title.text = "\n$ 000s";
+		  Chart1.legend.position="left";
+		
+		  // annotation (alternative title)
+		  a1=new Tee.Annotation(Chart1);
+		  a1.format.fill = "rgba(0,0,0,0.0)";
+		  a1.format.stroke.fill="rgba(0,0,0,0.0)";
+		  a1.format.font.style="20px Tahoma";
+		  a1.format.font.fill = "rgba(0,0,0,0.6)";
+		  a1.text="Sales figures";
+		  Chart1.draw();  //get position
+		  a1.position.x = 8;
+		  a1.position.y = 34;
+		  
+		  Chart1.tools.add(a1);
+		
+		  //animation
+		  animation=new Tee.SeriesAnimation();
+		  animation.duration=900;
+		  animation.kind="all";
+		  fadeAnimation=new Tee.FadeAnimation();
+		  fadeAnimation.duration=500;
+		  fadeAnimation.fade.series=true;
+		  fadeAnimation.fade.marks=true;
+		  animation.mode = "linear"; 
+		  fadeAnimation.mode = "linear";
+		  animation.items.push(fadeAnimation);
+		  
+		  animation.animate(Chart1);
+		
+		  var myFormat = new Tee.Format(Chart1);
+		  featureColor = "darkGray";
+		
+		  Chart1.ondraw=function() {
+		     myFormat.stroke.size = 1;
+			 myFormat.stroke.fill = featureColor;
+		     myFormat.rectangle(20,29, 230, 1);
+		  }
+		}
+
+		function changePieTheme(aTheme) {
+		   changeTheme(aTheme);
+		
+		   if (aTheme === "dark") {
+			 Chart1.legend.title.format.font.fill = "lightgray";
+			 featureColor = "lightgray";
+		   }
+		   else if (aTheme === "twilight") {
+			 Chart1.legend.title.format.font.fill = "lightgray";
+			 featureColor = "lightgray";
+		   }   
+		   else {
+			 Chart1.legend.title.format.font.fill = "rgba(0,0,0,0.6)";
+			 featureColor = "darkGray";
+		   }
+		}
+	</script>
+
+</head>
+<body onload="draw();changeThemeToDefault();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Pie</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="optionPanel" class="x_panel">
+					<div class="x_title">
+						<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<p>
+						Theme:
+						<select id="theme" onchange="changePieTheme(this.value);changeBackground(this.value);" onload="changeBackground(this.value);">
+							 <option value="">Default</option>
+							 <option value="dark">Dark</option>
+							 <option value="daybreak">Daybreak</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="minimal" selected>Minimal</option>
+							 <option value="twilight">Twilight</option>
+						</select>
+						Palette:
+						<select id="palette" onchange="changePalette(this.value);">
+							 <option value="">Default</option>
+							 <option value="cool">Cool</option>
+							 <option value="excel">Microsoft Excel (TM)</option>
+							 <option value="onBlack">On Black</option>
+							 <option value="opera">Opera</option>
+							 <option value="rainbow">Rainbow</option>
+							 <option value="redRiver">Red River</option>
+							 <option value="seaWash">Sea Wash</option>
+							 <option value="warm" selected>Warm</option>
+							 <option value="windowsxp">Windows XP</option>
+						</select>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<div id="canvasPanel" class="x_panel">
+					<div class="x_title">
+						<h2><span class="smallLetters">Pie</span></h2>
+						<ul class="nav navbar-right panel_toolbox">
+							<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+							</li>
+							<li><a class="close-link"><i class="fa fa-close"></i></a>
+							</li>
+						</ul>
+					<div class="clearfix"></div>
+					</div>
+					<div class="x_content">
+						<canvas id="canvas" height="400">
+						</canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Polar and Radar Series Example</title>
+
+<meta charset="UTF-8"/>
+<!--[if lt IE 9]>
+    <script src="../../../src/excanvas/excanvas_text.js"></script>
+    <script src="../../../src/excanvas/canvas.text.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="../../demo.css">
+<script src="../../../src/teechart.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../demo.js" type="text/javascript"></script>
+<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<!-- Bootstrap -->
+<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Custom Theme Style -->
+<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+
+<script type="text/javascript">
+var Chart1;
+function draw() {
+  Chart1=new Tee.Chart("canvas");
+
+  var polar1 = Chart1.addSeries(new Tee.Polar()),
+      polar2 = Chart1.addSeries(new Tee.Polar());
+
+  polar1.addRandom(20);
+  polar2.addRandom(6);
+
+  // optional degree (0 to 360) point positions:
+
+  polar2.data.x=[10,30,90,110,270,300];
+
+  polar1.pointer.style="ellipse";
+  polar2.pointer.style="ellipse";
+
+  // PENDING FEATURES:
+
+  //polar1.stacked="yes";
+  //polar2.stacked="yes";
+  //polar1.smooth=0.5;
+
+  polar1.format.transparency=0.2;
+  polar2.format.transparency=0.2;
+  
+  // Cosmetics:
+
+  Chart1.title.text="Polar Chart";
+  Chart1.walls.back.format.gradient.visible=true;
+  
+  Chart1.panel.format.gradient.colors=["rgba(255,255,255,1)","rgba(255,255,255,1)"];
+  Chart1.panel.format.gradient.visible=true;
+  Chart1.panel.format.shadow.visible=false;
+  Chart1.panel.format.stroke.fill="";
+  Chart1.panel.format.round.x=0;
+  Chart1.panel.format.round.y=0;  
+  
+  Chart1.tools.add(new Tee.ToolTip(Chart1));
+  //
+  Chart1.draw();
+
+  addSlider("rotation1", polar1);
+  addSlider("rotation2", polar2);
+
+  addSlider("axisrotation", Chart1.axes.bottom);
+}
+
+function addSlider(canvas, target) {
+  var s=Tee.SliderControl(canvas);
+
+  s.min=0;
+  s.max=360;
+  s.position=0;
+  s.thumbSize=16;
+
+  s.chart.draw();
+
+  s.onChanging=function(slider,value) {
+    target.rotation=value;
+    target.chart.draw();
+  }
+}
+
+function resize(chart){
+
+	if (chart!=null){
+		var startWidth=600;
+		var startHeight=400;
+		var w;
+		var h;
+		var canvas = chart.canvas;
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			
+			w = window.innerWidth;
+			h = window.innerHeight;
+			if(w<=991){
+				canvas.style.width="" + w*0.9 + "px";
+				canvas.style.height="" + w*0.9*startHeight/startWidth + "px";
+			}
+			else{
+				canvas.style.width = "" + startWidth + "px";
+				canvas.style.height = "" + startHeight + "px";
+				chart.bounds.width = startWidth;
+				chart.bounds.height = startHeight;
+			}
+			chart.draw();	 
+		}
+		else{
+			w = startWidth;
+			h = startHeight;
+			
+			if ((window.innerWidth - canvas.offsetLeft - 20) < startWidth)
+				w = window.innerWidth - canvas.offsetLeft - 20;
+			else
+				w = startWidth;
+				  
+			if ((window.innerWidth * startHeight / startWidth) < startHeight)
+				h =window.innerWidth * startHeight / startWidth;
+			else
+				h = startHeight;
+			
+			canvas.setAttribute('width', ""+w+"px");
+			
+			canvas.setAttribute('height', ""+h+"px");
+			
+			canvas.style.width=""+w+"px";
+			canvas.style.height=""+h+"px";
+			
+			chart.bounds.width=w;
+			chart.bounds.height=h;
+			
+			chart.draw();
+		}
+	}	
+}
+function resizeSliders(){
+	var slider1 = document.getElementById("rotation1");
+	var slider2 = document.getElementById("rotation2");
+	var slider3 = document.getElementById("axisrotation");
+	var w = window.innerWidth;
+	if(w <= 710){
+		slider1.style.width = "" + w*0.25 + "px";
+		slider2.style.width = "" + w*0.25 + "px";
+		slider3.style.width = "" + w*0.25 + "px";
+	}else{
+		slider1.style.width = "" + 200 + "px";
+		slider2.style.width = "" + 200 + "px";
+		slider3.style.width = "" + 200 + "px";
+	}
+}
+function resizeToolBars(){
+	var toolbar1 = document.getElementById("toolbar1");
+	var toolbar2 = document.getElementById("toolbar2");
+	var w = window.innerWidth;
+	if(w<=954){
+		toolbar1.style.width = "" + w + "px";
+		toolbar2.style.width = "" + w + "px";
+	}
+	else{
+		toolbar1.style.width = "" + w - 230 + "px";
+		toolbar2.style.width = "" + w - 230 + "px";
+	}
+}
+</script>
+</head>
+<body onload="resizeSliders();draw();resize(Chart1);resizeToolBars();" onresize="resize(Chart1);resizeToolBars();resizeSliders();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Polar</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row" id="toolbar1">
+			<div class="x_panel">
+			<div class="x_title">
+				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<table width="70%" class="alignTable"><tr>
+				<td>
+				<input type="checkbox" id="series1" name="series1" onclick="Chart1.series.items[0].visible= this.checked; 
+				Chart1.draw();" checked>Series1
+				 <input type="checkbox" id="marks1" onclick="Chart1.series.items[0].marks.visible= this.checked; Chart1.draw();">Marks
+				 <input type="checkbox" id="fill1" onclick="Chart1.series.items[0].format.fill= this.checked ? Chart1.palette.get(0) : ''; 
+				Chart1.draw();" checked>Fill
+				<br/>
+				 <input type="checkbox" id="origin1" onclick="Chart1.series.items[0].useOrigin= this.checked; 
+				Chart1.draw();">Use Origin 0
+				 <input type="checkbox" id="pointer1" onclick="Chart1.series.items[0].pointer.visible= this.checked; 
+				Chart1.draw();" checked>Pointers
+				 <br/>
+				 <canvas id="rotation1" width="200" height="30"></canvas>
+				 <br/>
+				 <br/>
+				 </td><td>
+				 <input type="checkbox" id="series2" name="series2" onclick="Chart1.series.items[1].visible= this.checked; 
+				Chart1.draw();" checked>Series2
+				 <input type="checkbox" id="marks2" onclick="Chart1.series.items[1].marks.visible= this.checked; 
+				Chart1.draw();">Marks
+				 <input type="checkbox" id="fill2" onclick="Chart1.series.items[1].format.fill= this.checked ? Chart1.palette.get(1) : ''; 
+				Chart1.draw();" checked>Fill
+				 <br/>
+				 <input type="checkbox" id="origin2" onclick="Chart1.series.items[1].useOrigin= this.checked; 
+				Chart1.draw();">Use Origin 0
+				 <input type="checkbox" id="pointer2" onclick="Chart1.series.items[1].pointer.visible= this.checked; 
+				Chart1.draw();" checked>Pointers
+				 <br/>
+				 <canvas id="rotation2" width="200" height="30"></canvas>
+				 <br/>
+				 <br/>
+				 </td><td>
+				 <input type="checkbox" id="transp" onclick="Chart1.walls.back.visible=this.checked; 
+				Chart1.draw();" checked>Background
+				 <input type="checkbox" id="gradient1" onclick="Chart1.walls.back.format.gradient.visible= this.checked; 
+				Chart1.draw();" checked>Gradient
+				 <br/>
+				 <input type="checkbox" id="shadow" onclick="Chart1.series.each(function(s){s.format.shadow.visible= document.getElementById('shadow').checked;}); 
+				Chart1.draw();">Shadows
+				<input type="checkbox" id="legend" onclick="Chart1.legend.visible=this.checked; 
+				Chart1.draw();" checked>Legend
+				 <br/>
+				 <br/>
+				 </td><td>
+				 <input type="checkbox" id="axes" onclick="Chart1.axes.visible=this.checked; 
+				Chart1.draw();" checked>Axes
+				 <input type="checkbox" id="degrees" onclick="Chart1.series.items[0].notmandatory.visible=this.checked; 
+				Chart1.draw();" checked>Degrees
+				 <input type="checkbox" id="griddegrees" onclick="Chart1.series.items[0].notmandatory.grid.visible=this.checked; 
+				Chart1.draw();" checked>Grid
+				 <br/>
+				 <input type="checkbox" id="values" onclick="Chart1.series.items[0].mandatoryAxis.visible=this.checked; 
+				Chart1.draw();" checked>Values
+				 <input type="checkbox" id="gridvalues" onclick="Chart1.series.items[0].mandatoryAxis.grid.visible=this.checked; 
+				Chart1.draw();" checked>Grid
+				 <br/>
+				 <br/>
+				 Axis rotation:
+				 <br/>
+				 <canvas id="axisrotation" width="200" height="30"></canvas>
+				 </td>
+				 </tr>
+				 </table>
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Polar</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<center>
+					<br><canvas id="canvas" width="600" height="400">
+					This browser does not seem to support HTML5 Canvas.
+					</canvas>
+					</center>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		
+	</div>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("polar.htm", "_blank");
+	}
+	
+	</script>
+	<!-- jQuery -->
+    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../../3rd_party/build/js/custom.min.js"></script>
+</body>
+</html>

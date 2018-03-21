@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="StyleSheet" href="tee-data-utils.css" type="text/css" />
+</head>
+
+<body style='font-family:Tahoma; font-size:12px'>
+
+ <table class='teetable'>
+ <tr>
+   <th>Dimensions</th>
+   <th>Metrics</th>
+   <th>Sort</th>
+   <th>Filter</th>
+   <th>Style</th>
+ </tr>
+ <tr>
+  <td>
+   <select id="dimension1" onchange="Editor.setDimension1(this.value)"></select>
+   <select id="dimdate1" onchange="Editor.setDimDate1(this.value);" style="display:none;"></select>
+
+   <label for='nulls1' id='nulls1label'>
+   <input type="checkbox" id="nulls1" onclick="Editor.setDimNulls1(this.checked)" checked/>Nulls
+   </label>
+
+  </td>
+
+  <td>
+     <select id="metrics" onchange="Editor.setMetric(this.value)"></select>
+  </td>
+
+  <td>
+     <select id="sort" onchange="Editor.setSortBy(this.value);">
+       <option value="" selected>None</option>
+       <option value="values">By Values</option>
+       <option value="labels">By Text</option>
+     </select>
+  </td>
+
+  <td>
+   <select id="filterdim" onchange="Editor.setFilterDim(this.value);"></select>
+  </td>
+
+  <td>
+     <select id="style" onchange="Editor.setSeriesStyle(this.value);">
+       <option value="auto" selected>Auto</option>
+       <option value="Tee.Bar">Bar</option>
+       <option value="Tee.Area">Area</option>
+       <option value="Tee.Pie">Pie</option>
+       <option value="Tee.Donut">Donut</option>
+       <option value="Tee.HorizBar">Horizontal Bar</option>
+       <option value="Tee.HorizArea">Horizontal Area</option>
+       <option value="Tee.Line">Line</option>
+       <option value="Tee.PointXY">Point XY</option>
+     </select>
+
+     <label for='marks' id='markslabel'>
+     <input type="checkbox" id="marks" onclick="var c=this.checked; Editor.chart.series.each(function(s) { s.marks.visible=c; }); Editor.chart.draw();" checked/>Marks
+     </label>
+
+  </td>
+
+ </tr>
+
+ <tr>
+  <td>
+   <select id="dimension2" onchange="Editor.setDimension2(this.value)"></select>
+   <select id="dimdate2" onchange="Editor.setDimDate2(this.value)" style="display:none;"></select>
+
+   <label for='nulls2' id='nulls2label'>
+   <input type="checkbox" id="nulls2" onclick="Editor.setDimNulls2(this.checked);" checked/>Nulls
+   </label>
+
+  </td>
+  <td>
+     <select id="measure" onchange="Editor.setMetricMeasure(this.value);">
+      <option value="sum" selected>Sum</option>
+      <option value="average">Average</option>
+      <option value="high">High</option>
+      <option value="low">Low</option>
+      <option value="count">Count</option>
+     </select>
+  </td>
+  <td>
+     <select id="order" onchange="Editor.setSortOrder(this.value);" style="display:none;">
+       <option value="ascending">Ascending</option>
+       <option value="descending" selected>Descending</option>
+     </select>
+  </td>
+  <td>
+   <div id="filterdatediv" style="display:none;">
+   <select id="filterdate" onchange="Editor.setFilterDate(this.value);"></select>
+   <br/>
+   </div>
+
+   <select id="filterinclude" onchange="Editor.setFilterInclude(this.value);">
+     <option value="include" selected>Include</option>
+     <option value="exclude">Exclude</option>
+   </select>
+   <br/>
+   <select id="filtervalue" onchange="Editor.setFilterValue(this.value);"></select>
+  </td>
+
+  <td>
+  <label id='stacklabel' for='stack'>Stacked:</label>
+      <select id="stack" onchange="Editor.setStack(this.value);">
+         <option value="no">No</option>
+         <option value="yes" selected>Yes</option>
+         <option value="100">100%</option>
+         <option value="sideAll">Side</option>
+      </select>
+  </td>
+ </tr>
+
+ <tr>
+   <td>
+    &nbsp;
+    <img id="switchdim" style="cursor:pointer;" src="swap.jpg" onclick="Editor.switchDimensions()"/>
+   </td>
+   <td></td>
+   <td>
+     <div id="sortSeriesdiv">
+       2n Dimension:<br/>
+       <select id="sortSeries" onchange="Editor.setSortSeries(this.value);">
+         <option value="">None</option>
+         <option value="ascending" selected>Ascending</option>
+         <option value="descending">Descending</option>
+       </select>
+     </div>
+   </td>
+   <td>
+   </td>
+   <td>
+      <label for='smooth' id='smoothlabel'>
+      <input type="checkbox" id="smooth" onclick="Editor.setSmooth(this.checked);" checked/>Smooth
+      </label>
+
+      <input type="checkbox" id="stroked" onclick="Editor.setStroke(this.checked);">Stroked
+      <br/>
+
+      <label for='animated' id='animlabel'>
+      <input type="checkbox" id="animated" onclick="Editor.chart.animation.active=this.checked;" checked/>Animated:
+      </label>
+
+      <select id="animstyle" onchange="Editor.chart.animation.kind=this.value;">
+         <option value="all">All</option>
+         <option value="bottom">Bottom</option>
+         <option value="each">Each</option>
+         <option value="left">Left</option>
+         <option value="right">Right</option>
+         <option value="top">Top</option>
+         <option value="zoomin" selected>Zoom in</option>
+         <option value="zoomout">Zoom out</option>
+      </select>
+   </td>
+ </tr>
+ </table>
+
+
+ <button type="button" onclick="Editor.showHidePanel(this,'scatterpanel'); Editor.checkScatter();" style="display:none">Scatter XY</button>
+ <span id="scatterpanel" style="display:none;">
+   <select id="scatter1" onchange="refreshScatter();"></select>
+ </span>
+
+
+</body>
+</html>
