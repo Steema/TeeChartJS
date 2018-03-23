@@ -1,22 +1,52 @@
-function changeTheme(aTheme) {
-  $('canvas').each(function () {
-    if ($(this)[0].chart) {
-      var chart = $(this)[0].chart;
-      chart.applyTheme(aTheme);
+// sets the aTheme to the aChart
+// when aChart isn't defined, it searches for all the charts in the document and applies the aTheme to all
+function changeTheme(aChart, aTheme) {
+  if ((aTheme === undefined) && (typeof aChart === 'string')) {
+    aTheme = aChart;
+    aChart = undefined;
+  }
 
-      for (var i = 0; i < chart.series.count(); i++) {
-        if ((chart.series.items[i].pointer) && (chart.series.items[i].pointer.format))
-          chart.series.items[i].pointer.format.stroke.fill = "white";
+  var target = [];
+
+  if (aChart && (aChart instanceof Tee.Chart))
+    target.push(aChart);
+  else {
+    $('canvas').each(function () {
+      if ($(this)[0].chart) {
+        target.push($(this)[0].chart);
       }
+    })
+  }
+
+  $(target).each(function () {
+    var chart = $(this)[0];
+    chart.applyTheme(aTheme);
+
+    for (var i = 0; i < chart.series.count(); i++) {
+      if ((chart.series.items[i].pointer) && (chart.series.items[i].pointer.format))
+        chart.series.items[i].pointer.format.stroke.fill = "white";
     }
   })
 }
 
-function changePalette(palette) {
-  $('canvas').each(function () {
-    if ($(this)[0].chart)
-      $(this)[0].chart.applyPalette(palette);
-  })
+// sets the aPalette to the aChart
+// when aChart isn't defined, it searches for all the charts in the document and applies the aPalette to all
+function changePalette(aChart, aPalette) {
+  if ((aPalette === undefined) && (typeof aChart === 'string')) {
+    aPalette = aChart;
+    aChart = undefined;
+  }
+
+  var target = [];
+
+  if (aChart && (aChart instanceof Tee.Chart))
+    target.push(aChart);
+  else {
+    $(target).each(function () {
+      var chart = $(this)[0];
+      chart.applyPalette(aPalette);
+    })
+  }
 }
 
 function changeThemeToDefault() {
@@ -54,8 +84,14 @@ function resize(element) {
     var w = 0;
 
     if (element.canvas) {
-      w = parseInt(window.getComputedStyle(element.canvas.parentElement, null).width, 10) | w;
+      var xContent = $(element.canvas).closest('.x_content')[0];
+      w = parseInt(window.getComputedStyle(xContent, null).width, 10) | w;
       element.canvas.width = w;
+
+      var parent = element.canvas.parentElement;
+      if ((xContent !== parent) && (parent.style)) {
+        parent.style.width = w + "px";
+      }
     }
 
     if (element.bounds)

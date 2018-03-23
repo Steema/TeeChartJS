@@ -216,3 +216,7 @@ table .alignTable, .alignTable td, .alignTable tr{
     margin-right: 0;
     margin-left: 0;
 }
+
+.panel_toolbox>li {
+    float: right;
+}
