@@ -35,6 +35,10 @@ function draw() {
   Chart1.legend.format.stroke.fill="black";
   Chart1.legend.transparent=false;
   Chart1.legend.visible=true;
+
+  var offset = (Chart1.axes.left.maximum - Chart1.axes.left.minimum) / 10;
+  Chart1.axes.left.setMinMax(Chart1.axes.left.minimum - offset, Chart1.axes.left.maximum + offset);
+
   Chart1.draw();
 }
 
