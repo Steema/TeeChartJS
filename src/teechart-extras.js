@@ -126,7 +126,7 @@ Tee.drawSpline=function(ctx,pts,t,move,closed){
 }
 
 function modCustomAxes(c,featureColor,defaultStrokeColor) {
-  	for (var i = 0; i < c.axes.items.length; i++) {
+  for (var i = 0; i < c.axes.items.length; i++) {
 	  if (i>3){
 		c.axes.items[i].labels.format.font.setSize(11);
 		c.axes.items[i].format.stroke.fill = defaultStrokeColor;
@@ -312,26 +312,18 @@ function daybreakTheme(c) {
 				c.series.items[i].pointer.format.stroke.fill = backBlendColor;
 			}
 	  }
-  }  
-  
+  }
+
   //axes
-  c.axes.left.format.stroke.fill = darkContrastColor;
-  c.axes.bottom.format.stroke.fill = featureColor;
-  c.axes.left.labels.format.font.setSize(11);
-  c.axes.bottom.labels.format.font.setSize(11);
-  c.axes.left.labels.format.font.fill = darkContrastColor;
-  c.axes.bottom.labels.format.font.fill = featureColor;
-  c.axes.left.title.format.font.fill = darkContrastColor;
-  c.axes.left.title.format.font.setSize(20);  
-  c.axes.bottom.title.format.font.fill = featureColor;
-  c.axes.bottom.title.format.font.setSize(20);
-  c.axes.bottom.grid.visible=false;
-  c.axes.left.grid.visible=true;
-  c.axes.left.grid.format.stroke.fill = "silver";
-  c.axes.bottom.grid.format.stroke.fill = "silver";  
-  
-   if (c.axes.items.length > 0) {
-    modCustomAxes(c,featureColor,defaultStrokeColor)
+  for (var i=0; i<c.axes.items.length; i++) {
+    var a = c.axes.items[i];
+    a.format.stroke.fill = darkContrastColor;
+    a.labels.format.font.setSize(11);
+    a.labels.format.font.fill = featureColor;
+    a.title.format.font.setSize(20);
+    a.title.format.font.fill = featureColor;
+    a.grid.visible=i<3;
+    a.grid.format.stroke.fill = "silver";
   }
   
   //legend
@@ -381,17 +373,15 @@ function minimalTheme(c) {
   }
   
   //axes
-  c.axes.left.format.stroke.fill = defaultStrokeColor;
-  c.axes.bottom.format.stroke.fill = defaultStrokeColor;
-  c.axes.left.format.stroke.fill = invisibleStrokeColor;
-  c.axes.left.labels.format.font.setSize(14);
-  c.axes.bottom.labels.format.font.setSize(14);
-  c.axes.left.labels.format.font.fill = featureColor;
-  c.axes.bottom.labels.format.font.fill = featureColor;
-  c.axes.left.title.format.font.fill = featureColor;
-  c.axes.left.title.format.font.setSize(20);  
-  c.axes.bottom.title.format.font.fill = featureColor;
-  c.axes.bottom.title.format.font.setSize(20);
+  for (var i=0; i<c.axes.items.length; i++) {
+    var a = c.axes.items[i];
+    a.format.stroke.fill = defaultStrokeColor;
+    a.labels.format.font.setSize(14);
+    a.labels.format.font.fill = featureColor;
+    a.title.format.font.setSize(20);
+    a.title.format.font.fill = featureColor;
+  }
+
   /*c.series.each(function(series) {
     series.notmandatory.grid.visible=false;
   });*/  

@@ -109,9 +109,8 @@
 		
 		      g.bounds(t,r);
 		      r.y+=5;
-			  r.x+=11;
 		      r.height-=8;
-		      r.width=r.width*g.data.completion[t]*0.01;
+		      r.width=g.mandatoryAxis.calcSize(g.data.end[t]-g.data.start[t]);
 		
 		      // Draw completion bar:
 		

@@ -9,6 +9,8 @@
 <![endif]-->
 <script type="text/javascript" src="../../../src/teechart.js"></script>
 <script type="text/javascript" src="../../../src/teechart-maps.js"></script>
+<script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+<script src="../../demo.js" type="text/javascript"></script>
 <!-- Bootstrap -->
 <link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
@@ -16,41 +18,37 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Custom Theme Style -->
 <link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 
 <title>TeeChart HTML5 Canvas Charting for JavaScript Geo World Map Example</title>
 
 <style>
 .map {
-  border-color:red;
-  border-style:solid;
-  border-width:3px;
+  border: 0 solid;
   border-radius:10px;
-  background-color:white;
+  background-color:lightgray;
+  fill: white;
 }
 
 .map polygon:hover { opacity:0.5; }
 .map polygon { stroke:orange; cursor:pointer; }
 .map .button:hover { opacity: 0.75; }
+.map .button {
+	fill: black;
 }
 
 #usa.map polygon {
-  stroke: yellow;
-  fill: silver;
+  stroke: black;
+  stroke-width: 0.5px;
 }
 
 #world.map {
-  background-color:black;
+  background-color:#97CAEF;
 }
 
 #world.map polygon {
   stroke: orange;
-  fill: white;
   stroke-width: 0.1px;
-}
-
-.x_panel{
-	background-color:#BE4410;
 }
 </style>
 
@@ -58,16 +56,13 @@
 "use strict";
 
 function fillMap(){
-  var flag=document.getElementById("flag");
-
   var world=new Tee.WorldMap("world");
 
-  world.values={ SE:1234, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 }
+  world.values={ SE:1234, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 };
   world.applyPalette(["#EEEE90", "#DDDD90", "#CCCCA0", "#BBBBA0", "#AAAAA0", "#9999A0", "#8888A0"]);
 
   world.onclick=function(id, item) {
      showLabel(world, id);
-     flag.src="flags/"+id+".png";
   }
 
   world.addZoomButtons();
@@ -75,17 +70,16 @@ function fillMap(){
   var usa=new Tee.USAMap("usa");
 
   usa.values={ AR: 1234, CA: 2312, NY: 4578 }
-  usa.applyPalette(["red", "orange", "yellow", "green"]);
+  usa.applyPalette(["#EEEE90", "#DDDD90", "#CCCCA0", "#BBBBA0", "#AAAAA0", "#9999A0", "#8888A0"]);
 
   usa.addZoomButtons();
   
   usa.onclick=function(id, item) {
      showLabel(usa, id);
-     flag.src="flags/US.png";
   }
 
   // Change a State color by code:
-  usa.find("WY").style.fill="lime";
+  usa.find("WY").style.fill="#CCFFCC";
 
   //var a=<animate attributeName="fill" dur="5s" values="#ff8; #f88; #f8f; #88f; #8ff; #8f8" repeatCount="indefinite"/>
   //var a=new Tee.Animation(function(f) { } );
@@ -95,56 +89,14 @@ function fillMap(){
         value=(typeof map.values[id] === 'undefined') ? "" : map.values[id];
 
     label+=" <span style='color:white'>"+value+'</p>';
-    document.getElementById("label").innerHTML = label;
+    //document.getElementById("label").innerHTML = label;
   }
-
-}
-function resizeToolBars(){
-	var toolbar1 = document.getElementById("toolbar1");
-	var toolbar2 = document.getElementById("toolbar2");
-	var w = window.innerWidth;
-	if(w<=954){
-		toolbar1.style.width = "" + w + "px";
-		toolbar2.style.width = "" + w + "px";
-	}
-	else{
-		toolbar1.style.width = "" + w - 230 + "px";
-		toolbar2.style.width = "" + w - 230 + "px";
-	}
-}
-
-function showHide1(){
-	var map1 = document.getElementById("worldMap");
-	if(map1.style.display=="none"){
-		map1.style.display="block";
-		document.getElementById("icon1").classList.add('fa-chevron-up');
-		document.getElementById("icon1").classList.remove('fa-chevron-down');
-	}
-	else{
-		map1.style.display="none";
-		document.getElementById("icon1").classList.add('fa-chevron-down');
-		document.getElementById("icon1").classList.remove('fa-chevron-up');
-	}
-}
-function showHide2(){
-	var map2 = document.getElementById("usaMap");
-	if(map2.style.display=="none"){
-		map2.style.display="block";
-		document.getElementById("icon2").classList.add('fa-chevron-up');
-		document.getElementById("icon2").classList.remove('fa-chevron-down');
-	}
-	else{
-		map2.style.display="none";
-		document.getElementById("icon2").classList.add('fa-chevron-down');
-		document.getElementById("icon2").classList.remove('fa-chevron-up');
-	}
 }
 </script>
 
 </head>
 
-<body style="height:100%; font-family:Tahoma; background-color:#BE4410" onload="fillMap();resizeToolBars();" onresize="resizeToolBars();">
-	
+<body style="height:100%;" onload="fillMap();">
 	<div class="right_col" role="main">
 		<div class="page-title">
 			<div class="title_left">
@@ -153,50 +105,37 @@ function showHide2(){
 		</div>
 		<div class="clearfix"></div>
 	
-		<div class="row" id="toolbar1">
+		<div class="row">
 			<div class="x_panel">
 				<div class="x_title" >
 					<h2><span class="smallLetters">World Map</span></h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide1();"><i id="icon1" class="fa fa-chevron-up"></i></a>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
 						</li>
 					</ul>
 				<div class="clearfix"></div>
 				</div>
 				<div class="x_content" id="worldMap">
-					<svg id="world" class="map" width="65%" height="75%"/>
+					<svg id="world" class="map" width="100%" height="75%"></svg>
 				</div>
 			</div>
 		</div>
 		<div class="clearfix"></div>
-		<div class="row" id="toolbar2">
+		<div class="row">
 			<div class="x_panel">
 				<div class="x_title">
 					<h2><span class="smallLetters">USA Map</span></h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide2();"><i id="icon2" class="fa fa-chevron-up"></i></a>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						<li><a class="collapse-link" onclick="showHide(this);"><i  class="fa fa-chevron-up"></i></a>
 						</li>
 					</ul>
 				<div class="clearfix"></div>
 				</div>
 				<div class="x_content" id="usaMap">
-					<svg id="usa" class="map" width="30%" height="45%"/>
+					<svg id="usa" class="map" width="100%" height="45%"></svg>
 				</div>
 			</div>
 		</div>
-		<div class="clearfix"></div>
-		
 	</div>
-	<script type="text/javascript">
-	function openSample() {
-	    window.open("worldmap.htm", "_blank");
-	}
-	
-	</script>
-	
 </body>
 </html>

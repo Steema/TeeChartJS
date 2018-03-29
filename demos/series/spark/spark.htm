@@ -10,10 +10,11 @@
     <script src="../../../src/excanvas/canvas.text.js"></script>
 <![endif]-->
 
-<link rel="stylesheet" type="text/css" href="../../demo.css">
 <script src="../../../src/teechart.js" type="text/javascript"></script>
 <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+<script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
 <script src="../../demo.js" type="text/javascript"></script>
+
 <!-- Bootstrap -->
 <link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
@@ -23,6 +24,7 @@
 <link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../../demo.css">
 
 <script type="text/javascript">
 
@@ -44,13 +46,10 @@ function cleanChart(c) {
 }
 
 function draw() {
-
   var c, chart, pie, bar, seriesBar, seriesPie, cursor;
 
   for(c=1; c<=5; c++) {
-
      // Lines
-
      chart=new Tee.Chart("c"+c);
      cleanChart(chart);
 
@@ -63,7 +62,6 @@ function draw() {
      chart.draw();
 
      // Pie
-
      pie=new Tee.Chart("p"+c);
      cleanChart(pie);
 
@@ -81,7 +79,6 @@ function draw() {
      pie.draw();
 
      // Bars
-
      bar=new Tee.Chart("b"+c);
      cleanChart(bar);
 
@@ -95,66 +92,79 @@ function draw() {
      bar.draw();
   }
 }
-function resizeToolBar(){
-	var toolbar = document.getElementById("toolbar");
-	var w = window.innerWidth;
-	if(w<=954){
-		toolbar.style.width = "" + w + "px";
-	}
-	else{
-		toolbar.style.width = "" + w - 230 + "px";
-	}
+
+function resizeSparkLines() {
+    var canvas = $('canvas')[0];
+    var xContentStyle = window.getComputedStyle(canvas.closest('.x_content'), null);
+    var w = parseFloat(xContentStyle.width);
+    w -= parseFloat(xContentStyle.paddingLeft) + parseFloat(xContentStyle.paddingRight) + parseFloat(xContentStyle.borderLeftWidth) + parseFloat(xContentStyle.borderRightWidth);
+
+    $(canvas.parentElement).siblings().each(function () {
+        w -= parseFloat(window.getComputedStyle($(this)[0], null).width);
+	});
+
+    var parentStyle = window.getComputedStyle(canvas.parentElement, null);
+    w -= parseFloat(parentStyle.paddingLeft) + parseFloat(parentStyle.paddingRight) + parseFloat(parentStyle.borderLeftWidth) + parseFloat(parentStyle.borderRightWidth);
+    w -= 20;
+
+    $('canvas[id^="c"]').each(function () {
+        var chart = $(this)[0].chart;
+        if (chart) {
+            chart.canvas.width = w;
+            chart.bounds.width = w;
+            chart.draw();
+		}
+    })
 }
+
+$(function () {
+    $(window).unbind("load");
+    $(window).unbind("resize");
+
+    $(window).load(function () {
+        resizeSparkLines();
+    });
+
+    $(window).resize(function () {
+        if( navigator.platform && !/iPad|iPhone|iPod/.test(navigator.platform) )
+            resizeSparkLines();
+    })
+});
+
 </script>
 </head>
 
-<body onload="draw();resizeToolBar();" onresize="resizeToolBar();">
-<div class="right_col" role="main">
+<body onload="draw();">
+	<div class="right_col" role="main">
 		<div class="page-title">
 			<div class="title_left">
 				<h3>TeeChart for JavaScript <span class="smallLetters">Spark</span></h3>
 			</div>
 		</div>
 		<div class="clearfix"></div>
-		<div class="row" id="toolbar">
+		<div class="row">
 			<div class="x_panel">
 				<div class="x_title">
 					<h2><span class="smallLetters">Spark</span></h2>
 					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-						</li>
-						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						<li><a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
 						</li>
 					</ul>
-				<div class="clearfix"></div>
+					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<table>
-					<tr><th>Name</th><th>Performance</th><th>Energy</th><th> </th></tr>
+					<table style="width: 100%">
+					<tr><th>Name</th><th>Performance</th><th>Energy</th><th>Power</th></tr>
 					
-					<tr><td>Engine 0</td><td><canvas id="c1" width="200" height="30"></canvas></td><td><center><canvas id="p1" width="30" height="30"></canvas></center></td><td><center><canvas id="b1" width="30" height="30"></canvas></center></td></tr>
-					<tr><td>Engine 1</td><td><canvas id="c2" width="200" height="30"></canvas></td><td><center><canvas id="p2" width="30" height="30"></canvas></center></td><td><center><canvas id="b2" width="30" height="30"></canvas></center></td></tr>
-					<tr><td>Engine 2</td><td><canvas id="c3" width="200" height="30"></canvas></td><td><center><canvas id="p3" width="30" height="30"></canvas></center></td><td><center><canvas id="b3" width="30" height="30"></canvas></center></td></tr>
-					<tr><td>Engine 3</td><td><canvas id="c4" width="200" height="30"></canvas></td><td><center><canvas id="p4" width="30" height="30"></canvas></center></td><td><center><canvas id="b4" width="30" height="30"></canvas></center></td></tr>
-					<tr><td>Engine 4</td><td><canvas id="c5" width="200" height="30"></canvas></td><td><center><canvas id="p5" width="30" height="30"></canvas></center></td><td><center><canvas id="b5" width="30" height="30"></canvas></center></td></tr>
+					<tr><td>Engine 0</td><td><canvas id="c1" height="30"></canvas></td><td><canvas id="p1" width="30" height="30"></canvas></td><td><canvas id="b1" width="30" height="30"></canvas></td></tr>
+					<tr><td>Engine 1</td><td><canvas id="c2" height="30"></canvas></td><td><canvas id="p2" width="30" height="30"></canvas></td><td><canvas id="b2" width="30" height="30"></canvas></td></tr>
+					<tr><td>Engine 2</td><td><canvas id="c3" height="30"></canvas></td><td><canvas id="p3" width="30" height="30"></canvas></td><td><canvas id="b3" width="30" height="30"></canvas></td></tr>
+					<tr><td>Engine 3</td><td><canvas id="c4" height="30"></canvas></td><td><canvas id="p4" width="30" height="30"></canvas></td><td><canvas id="b4" width="30" height="30"></canvas></td></tr>
+					<tr><td>Engine 4</td><td><canvas id="c5" height="30"></canvas></td><td><canvas id="p5" width="30" height="30"></canvas></td><td><canvas id="b5" width="30" height="30"></canvas></td></tr>
 					</table>
 				</div>
 			</div>
 		</div>
-		<div class="clearfix"></div>
-		
 	</div>
-	<script type="text/javascript">
-	function openSample() {
-	    window.open("spark.htm", "_blank");
-	}
-	
-	</script>
-	<!-- jQuery -->
-    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="../../3rd_party/build/js/custom.min.js"></script>
-	
 </body>
 </html>

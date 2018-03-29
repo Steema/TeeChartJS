@@ -81,30 +81,33 @@ function changeBackgroundToWhite() {
 
 function resize(element) {
   if (element != null) {
-    var w = 0;
+    var w = 0, xContent, canvas, chart;
 
-    if (element.canvas) {
-      var xContent = $(element.canvas).closest('.x_content')[0];
-      w = parseInt(window.getComputedStyle(xContent, null).width, 10) | w;
-      element.canvas.width = w;
+    if (element instanceof HTMLCanvasElement) {
+      canvas = element;
 
-      var parent = element.canvas.parentElement;
-      if ((xContent !== parent) && (parent.style)) {
-        parent.style.width = w + "px";
+      if (canvas.chart instanceof Tee.Chart) {
+        chart = canvas.chart;
+
+        xContent = $(canvas).closest('.x_content')[0];
+        w = parseFloat(window.getComputedStyle(xContent, null).width) | w;
+
+        /*var parent = element.canvas.parentElement;
+        if ((xContent !== parent) && (parent.style)) {
+          parent.style.width = w + "px";
+        }*/
+
+        canvas.width = w;
+        chart.bounds.width = w;
+        chart.draw();
       }
     }
-
-    if (element.bounds)
-      element.bounds.width = w;
-
-    if (typeof element.draw === "function") element.draw();
   }
 }
 
-function resizeAllCharts() {
-  $('canvas').each(function () {
-    if ($(this)[0].chart)
-      resize($(this)[0].chart);
+function resizeAll() {
+  $('canvas').each(function() {
+    resize(this);
   })
 }
 
@@ -124,13 +127,81 @@ function showHide(element) {
   }
 }
 
+function resizeWithTextArea(canvas) {
+  var xContentStyle = window.getComputedStyle(canvas.closest('.x_content'), null);
+  var w = parseFloat(xContentStyle.width);
+  w -= parseFloat(xContentStyle.paddingLeft) + parseFloat(xContentStyle.paddingRight) + parseFloat(xContentStyle.borderLeftWidth) + parseFloat(xContentStyle.borderRightWidth);
+
+  var siblingStyle = window.getComputedStyle($(canvas).siblings('div').children('textarea')[0].parentElement, null);
+  var h = Math.max(parseFloat(siblingStyle.height), 200);
+  w -= parseFloat(siblingStyle.width) + 10;
+  var chart = $(canvas)[0].chart;
+  if (chart) {
+    chart.canvas.width = w;
+    chart.bounds.width = w;
+    chart.canvas.height = h;
+    chart.bounds.height = h;
+    chart.draw();
+  }
+}
+
+function resizeAllWithTextAreas() {
+  $('canvas').each(function () {
+    resizeWithTextArea(this);
+  })
+}
+
+function withTextAreas() {
+  var result = false;
+
+  $('canvas').each(function() {
+    if ($(this).siblings('div').children('textarea').length > 0)
+      result = true;
+  });
+
+  return result;
+}
+
 $(function () {
+  var textAreas = withTextAreas();
+
   $(window).load(function () {
-    resizeAllCharts();
+    if (textAreas)
+      resizeAllWithTextAreas();
+    else
+      resizeAll();
   })
 
   $(window).resize(function () {
     if( navigator.platform && !/iPad|iPhone|iPod/.test(navigator.platform) )
-      resizeAllCharts();
+      if (textAreas)
+        resizeAllWithTextAreas();
+      else
+        resizeAll();
   })
+
+  // Resize the charts when resizing the textareas
+  if (textAreas) {
+    var $textareas = $('textarea');
+    $textareas.data('width', $textareas.width());
+    $textareas.data('height', $textareas.height());
+
+    $textareas.mousedown(function () {
+      $(this).data('resizing', true);
+    });
+
+    $(window).mouseup(function () {
+      $('textarea').data('resizing', false);
+    });
+
+    $textareas.mousemove(function () {
+      var $this = $(this);
+      if ($this.data('resizing') &&
+        (($this.width() !== $this.data('width')) || ($this.height() !== $this.data('height')))) {
+        resizeWithTextArea($this.parent().siblings('canvas')[0]);
+      }
+      $this.data('width', $this.width());
+      $this.data('hright', $this.height());
+    });
+  }
 });
