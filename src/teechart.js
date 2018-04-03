@@ -1842,7 +1842,16 @@ Tee.CursorTool.prototype=new Tee.Tool();
  */
 Tee.ToolTip=function(chart) {
   Tee.Annotation.call(this,chart);
-
+  this.pointer = {
+      fill: "Green",
+      firstCircleRadius: "2",
+      secondCircleRadius: "5",
+      visible: false,
+      firstCircleOpacity: "1",
+      secondCircleOpacity: "0.4",
+      animationVisible: true,
+      animationDuration: 200
+  };
   this.visible=false;
   this.findPoint = false;
 
@@ -9061,6 +9070,8 @@ var top = 3,
     arrowStyleAfter,
     arrowBorderWidth,
     tip,
+    previousIndex,
+    previousNearestSeries,
     domStylesBorderColor,
     domStylesBackgroundColor,
     arrowBorderRadius,
@@ -9069,6 +9080,7 @@ var top = 3,
     tt,
     ttstyle,
     h,
+    animation,
     target,
     ie = ((typeof document!=='undefined') && document.all) ? true : false,
     width;
@@ -9158,13 +9170,14 @@ var top = 3,
           arrowWidth = 8;
           followCursor = false;
       }
-             if(target){var chart = target.chart;
-         var chartRect = chart.chartRect;
-             var horizontal = !chart.axes.bottom.firstSeries.yMandatory;}
+
+          if (target) {
+              var chart = target.chart;
+              var chartRect = chart.chartRect;
+              var horizontal = chart.axes.bottom.firstSeries ? !chart.axes.bottom.firstSeries.yMandatory : false;
+          }
          if (chart) {
-
-             
-
+                 chart.draw();
                  if (chart.series.items[0] instanceof Tee.Pie || followCursor||!target) {
       var d = document.documentElement,
           u = ie ? e.clientY + d.scrollTop : e.pageY,
@@ -9201,7 +9214,7 @@ var top = 3,
                  var l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - tt.getBoundingClientRect().width / 2 - marginLeft - arrowBorderWidth/2);
 
 
-                 if ((l + width / 2) > chartRect.width) {
+                     if (((l + width / 2) - chartRect.x) > chartRect.width) {
                      u = Math.round(point.y + window.scrollY + chart.canvas.getBoundingClientRect().top - tt.getBoundingClientRect().height - arrowWidth * 2 - marginTop + arrowBorderWidth / 2);
                      l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - tt.getBoundingClientRect().width - marginLeft);
                      ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px 0px " + arrowBorderRadius + "px";
@@ -9209,7 +9222,7 @@ var top = 3,
                      arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " " + domStylesBackgroundColor + " transparent transparent;}";
                      
                  }
-                 else if (l < chartRect.x) {
+                     else if ((l-width/2) < chartRect.x) {
                      l = Math.round(point.x + window.scrollX + chart.canvas.getBoundingClientRect().left - marginLeft);
                      u = Math.round(point.y + window.scrollY + chart.canvas.getBoundingClientRect().top - tt.getBoundingClientRect().height - arrowWidth*2 - marginTop + arrowBorderWidth/2);
                      ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px "+ arrowBorderRadius + "px 0px";
@@ -9220,7 +9233,11 @@ var top = 3,
                      ttstyle.borderRadius = arrowBorderRadius + "px " + arrowBorderRadius + "px " + arrowBorderRadius + "px " + arrowBorderRadius + "px";
                      arrowStyleBefore.innerHTML = ".teetiparrow{width:0;height:0;border: " + arrowWidth + "px solid;position: absolute;content: '';border-color: " + domStylesBorderColor + " transparent transparent transparent;bottom: -" + arrowWidth * 2 + "px;left: " + ((tt.getBoundingClientRect().width / 2) - (arrowWidth)) + "px;}";
                      arrowStyleAfter.innerHTML = ".teetiparrow:after{content: ' ';position: absolute;width: 0;height: 0;left: -" + (arrowWidth - arrowBorderWidth / 2) + "px;bottom: " + (arrowBorderWidth - (arrowWidth - 1)) + "px; border: " + (arrowWidth - arrowBorderWidth / 2) + "px solid;border-color: " + domStylesBackgroundColor + " transparent transparent transparent;}";
+                     }
                  }
+                 if (tip && tip.pointer.visible) {
+                     drawPoint();
+                     u -= tip.pointer.secondCircleRadius > tip.pointer.firstCircleRadius ? tip.pointer.secondCircleRadius : tip.pointer.firstCircleRadius;
              }
              }
              else {
@@ -9275,8 +9292,87 @@ var top = 3,
 	  else {
 	      ttstyle.top = (u /*- h*/) + 'px';
 	      ttstyle.left = (l /*+ left*/) + 'px';
+      }
+
+
+
+      function animatePointer(point, c) {
+          var pointer = tip.pointer;
+          animation = new Tee.Animation(tip, function (f) {
+              if (f < 1) {
+                  tip.chart.draw();
+                  drawPointAt(point, pointer.secondCircleRadius*f, pointer.fill, pointer.secondCircleOpacity, c);
+                  drawPointAt(point, pointer.firstCircleRadius * f, pointer.fill, pointer.firstCircleOpacity, c);
+              }
+          });
+          animation.onstop = function () {          
+            tip.chart.draw();
+            drawPointAt(point, pointer.secondCircleRadius, pointer.fill, pointer.secondCircleOpacity, c);
+            drawPointAt(point, pointer.firstCircleRadius, pointer.fill, pointer.firstCircleOpacity, c);
+          }
+          animation.duration = pointer.animationDuration;
+          animation.animate();
+      }
+      function drawPointAt(point, size, color, opacity, c) {
+          c.strokeStyle = color;
+          c.fillStyle = color;
+          c.globalAlpha = opacity;
+          c.lineWidth = size;
+          c.beginPath();
+          c.ellipse(point.x, point.y, size/2, size/2, 0, 0, 7, false);
+          c.stroke();
+      }
+      function drawPoint() {
+          if (e.target.chart) {
+              e.target.chart.draw();
+              var index;
+              var point = new Point();
+              var distance, minDistance;
+              var nearestSeries;
+              var pointer = tip.pointer;
+              var color = tip.pointer.fill;
+              if (!horizontal) index = Math.round(chart.axes.bottom.fromSizeCalcIndex(e.clientX - chart.canvas.getBoundingClientRect().left - chart.axes.bottom.startPos));
+              else index = Math.round(chart.axes.left.fromPos(e.layerY));
+              if (e.target == chart.canvas) {
+                  for (var n = 0; n < chart.series.items.length; n++) {
+                      if (!horizontal) distance = Math.abs(chart.series.items[n].data.values[index] - chart.axes.left.fromPos(e.layerY));
+                      else distance = Math.abs(chart.series.items[n].data.values[index] - chart.axes.bottom.fromPos(e.layerX));
+                      if (n == 0) {
+                          minDistance = distance;
+                          chart.series.items[n].calc(index, point);
+                          nearestSeries = chart.series.items[n];
+                      }
+                      else if (distance < minDistance) {
+                          chart.series.items[n].calc(index, point);
+                          minDistance = distance;
+                          nearestSeries = chart.series.items[n];
+                      }
+                  }
+              }
+              
+              var c = (e.target.chart.ctx);
+              if (!previousNearestSeries) {
+                  previousNearestSeries = nearestSeries;
+              }
+              else if (index != -1 && previousNearestSeries != nearestSeries) {
+                  previousNearestSeries = nearestSeries;
+                  if (pointer.animationVisible)
+                      animatePointer(point, c);//here will go the animation
 	  }
 
+              if (index != -1 && !previousIndex || index == -1) {
+                  previousIndex = index;
+              }
+              else if (index != -1 && previousIndex != index) {
+                  previousIndex = index;
+                  if(pointer.animationVisible)
+                    animatePointer(point,c);//here will go the animation
+              }
+
+              drawPointAt(point, pointer.secondCircleRadius, pointer.fill, pointer.secondCircleOpacity, c);
+              drawPointAt(point, pointer.firstCircleRadius, pointer.fill, pointer.firstCircleOpacity, c);
+          }
+      }
   },
 
   fade: function(d){
@@ -9313,6 +9409,8 @@ var top = 3,
       if (tt) {
         clearInterval(tt.timer);
         tt.timer = setInterval(function(){Tee.DOMTip.fade(-1)},timer);
+        if (target&&target.chart)
+            target.chart.draw();
       }
   }
  };
