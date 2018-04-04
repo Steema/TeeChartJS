@@ -1,5 +1,6 @@
-[![TeeChart](https://raw.githubusercontent.com/wiki/Steema/TeeChartJS/teechart.png)
-![JavaScript](https://raw.githubusercontent.com/wiki/Steema/TeeChartJS/teechart_html5.png)](https://www.steema.com/product/html5)
+<a href="https://www.steema.com/product/html5">
+<img align="right" src="http://www.teechart.net/img/logos/teechart_html5.png">
+</a>
 
 100% JavaScript charting library using the HTML5 Canvas.
 
