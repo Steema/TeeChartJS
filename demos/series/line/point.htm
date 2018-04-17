@@ -42,7 +42,9 @@ function draw() {
 
     annot.text="Clicked point: "+index+"\nX: "+xValue+"\nValue: "+series.data.values[index].toFixed(series.decimals);
     changeTheme(Chart1, "minimal");
-    
+    var p = new Tee.Point();
+    xy.calc(index, p);
+    annot.moveTo(p.x-annot.bounds.width/2,p.y-annot.bounds.height-xy.pointer.height/2-xy.format.stroke.size);
 	Chart1.draw();
   }
 
