@@ -109,7 +109,7 @@ function loadWeather(highs, lows, city) {
   city=parseInt(city);
   setTitles();
 
-  Tee.doHttpRequest(this, "http://api.wunderground.com/api/04509e16bafe0a38/forecast10day/q/"+cityItems[city+1]+".json",
+  Tee.doHttpRequest(this, "https://api.wunderground.com/api/04509e16bafe0a38/forecast10day/q/"+cityItems[city+1]+".json",
 
      function(target, response) {
 
