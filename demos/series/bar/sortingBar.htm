@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Bars Example</title>
+	<meta charset="UTF-8"/>
+	
+	<!--[if lt IE 9]>
+	    <script src="../../src/excanvas/excanvas_text.js"></script>
+	    <script src="../../src/excanvas/canvas.text.js"></script>
+	<![endif]-->
+
+	<script src="../../../src/teechart.js" type="text/javascript"></script>
+	<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+	<script src="../../../src/teechart-animations.js" type="text/javascript"></script>
+	<script src="../../../src/date.format.js" type="text/javascript"></script>
+	<script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../../demo.js" type="text/javascript"></script>
+	<!-- Bootstrap -->
+	<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../demo.css">
+
+	<script type="text/javascript">
+        var Chart1, sortedValues, values, animation;
+		function draw() {
+		  //init chart
+		  Chart1=new Tee.Chart("canvas");
+		  
+		  Chart1.panel.margins.top = 12;
+		
+		  //add series and data
+		  var bar1 = new Tee.Bar();
+		  bar1.title = "Values";
+		  //values = [5, 2, 1, 4, 10, 11, 15];
+		  //sortedValues = [1, 2, 4, 5, 10, 11, 15];
+		  
+
+		    var range1 = 20;
+		    bar1.data.values[0] = Math.random() * range1 + 5;
+		    bar1.data.labels[0] = "A";
+
+		    for (var t = 1; t < 26; t++) {
+		        var av1 = bar1.data.values[t - 1] + (Math.random() * range1) - (range1 * 0.5);
+
+		        if (av1 < 0) av1 = av1 * -1; if (av1 > 100) av1 = av1 - 20;
+		        bar1.data.values[t] = av1
+		        bar1.data.labels[t] = String.fromCharCode(65 + t);
+		    }
+		    bar1.sortedOptions.sortingAnimationType = "horizontalchange";
+		    bar1.sortedOptions.sortedDrawAnimation.duration = 1000;
+		    Chart1.axes.bottom.labelStyle="text";
+						  
+		    Chart1.addSeries(bar1);
+		  
+		
+		    //config some series appearance characteristics
+		    for (i = 0; i < 1; i++) {
+			    Chart1.series.items[i].format.gradient.visible = false;
+			    Chart1.series.items[i].format.stroke.fill = "rgba(0,0,0,0.0)";
+			    Chart1.series.items[i].format.shadow.visible=false;
+			    Chart1.series.items[i].marks.visible = false;
+			    Chart1.series.items[i].barSize = 80;
+			    Chart1.series.items[i].hover = false;
+		    }
+		  
+		    //Axes
+		    Chart1.axes.left.title.text="Values";
+		    Chart1.axes.left.labels.roundFirst=true;
+		    Chart1.axes.bottom.labels.roundFirst=true;
+		    Chart1.axes.bottom.title.text="Labels";
+		    Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
+		    Chart1.axes.bottom.title.format.font.setSize(20);
+		    //Chart1.axes.bottom.title.visible=false;  
+		    //Chart1.axes.left.increment=3;
+		    Chart1.axes.left.grid.format.stroke.size = 1;
+		    Chart1.axes.left.ticks.visible=false;
+		    Chart1.axes.left.format.stroke.fill = "rgba(0,0,0,0.0)";
+		    Chart1.axes.bottom.format.stroke.size = 1;
+		    //Title
+		    Chart1.title.visible = false;
+		    Chart1.title.text="Sorting Bar";
+		  
+		    //Legend
+		    Chart1.legend.position="left";
+		    // annotation (alternative title)
+		    a1=new Tee.Annotation(Chart1);
+		    a1.format.fill = "rgba(0,0,0,0.0)";
+		    a1.format.stroke.fill="rgba(0,0,0,0.0)";
+		    a1.format.font.style="20px Tahoma";
+		    a1.format.font.fill = "rgba(0,0,0,0.6)";
+		    a1.text="Sales figures";
+		    Chart1.draw();  //get position
+		    a1.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
+		    a1.position.y = 8;
+		    Chart1.tools.add(a1);
+		    //animation
+		    animation=new Tee.SeriesAnimation();
+		    animation.duration=900;
+		    animation.kind="each";
+		    fadeAnimation=new Tee.FadeAnimation();
+		    fadeAnimation.duration=500;
+		    fadeAnimation.fade.series=true;
+		    fadeAnimation.fade.marks = true;
+		    animation.mode = "linear"; 
+		    fadeAnimation.mode = "linear";
+		    animation.items.push(fadeAnimation);
+		    animation.animate(Chart1);
+		    //tooltip
+		    tip=new Tee.ToolTip(Chart1);
+		    tip.render="dom";
+		    tip.autoHide=true;
+		    tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
+		    tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
+		    tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:1px; z-index:1000;";
+		
+		  Chart1.tools.add(tip);
+		  tip.onhide=function() { scaling=0; poindex=-1; }
+		  tip.ongettext=function( tool, text, series, index) { 
+		    var s = '<font face="verdana" color="black" size="1"><strong>'+ series.title+'</strong></font>';
+			    s = s + '<br/><font face="verdana" color="darkblue" size="1">Series point: <strong>'+ series.data.labels[index] +'</strong></font>';
+		        s =	s +'<br/><font face="verdana" color="red" size="1">Value: '+series.data.values[index].toFixed(2)+'</font>';  
+			return s;
+		  }
+		  changeTheme("minimal");
+		  Chart1.palette.colors = ["#5CB2E1"];//["darkgrey", "grey", "black", "grey"];
+            
+		}
+		function drawSortedValues(sorted) {
+		    if(animation&&!animation.running) Chart1.series.items[0].drawSortedValues(sorted);
+		}
+	</script>
+
+</head>
+<body onload="draw();">
+<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Bars</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row">
+			<div id="optionPanel" class="x_panel">
+			<div class="x_title">
+				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<p>
+	     		    Animation Type: 
+         		    <select id="theme" onchange="Chart1.series.items[0].sortedOptions.sortingAnimationType = this.value;">
+                         <option value="horizontalchange" selected>Horizontal Animation</option>
+		                 <option value="verticalchange">Vertical Animation</option>
+         		    </select>
+	     		    <input type="checkbox" onchange="drawSortedValues(this.checked)" /> Sort values
+                    <input type="checkbox" onchange="Chart1.series.items[0].sortedOptions.ascending = this.checked;" checked /> Ascending
+	         	</p>
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Bars</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<canvas id="canvas" width="1000" height="400">
+					</canvas>				
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</body>
+</html>

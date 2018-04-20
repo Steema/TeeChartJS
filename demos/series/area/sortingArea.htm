@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>TeeChart JavaScript Area Example</title>
+
+	<meta charset="UTF-8"/>
+
+	<!--[if lt IE 9]>
+	    <script src="../../src/excanvas/excanvas_text.js"></script>
+	    <script src="../../src/excanvas/canvas.text.js"></script>
+	<![endif]-->
+
+	<script src="../../../src/teechart.js" type="text/javascript"></script>
+	<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+	<script src="../../../src/teechart-animations.js" type="text/javascript"></script>
+	<script src="../../../src/date.format.js" type="text/javascript"></script>
+	<script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+	<script src="../../demo.js" type="text/javascript"></script>
+	<!--  Bootstrap -->
+	<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../../demo.css">
+
+	<script type="text/javascript">
+		var Chart1;
+		var a1;
+		var enableCursor = false;
+		var animation;
+		
+		function draw() {
+		  //init chart
+		  Chart1=new Tee.Chart("canvas");
+		  
+		    Chart1.panel.margins.top = 12;
+		  
+		    //can add your own colour scheme in here, ie. the colours taken by Series added to the Chart in
+		    //palette order  ..eg.
+		    /*Chart1.palette.colors=[ "#FF9999","#663399","#CCFFFF","#FFFFCC","#660066","#8080FF","#CC6600",
+		    "#FFCCCC","#800000","#FF00FF","#00FFFF","#FFFF00","#800080","#000080","#808000","#FF0000",
+		    "#FFCC00","#FFFFCC","#CCFFCC","#00FFFF","#FFCC99","#CC99FF"];*/
+		
+		    //add series and data
+		    var area1 = new Tee.Area();
+		    area1.title = "Value";
+		  
+		    area1.format.fill = "rgba(199,75,0)";
+		  
+		    var range1 = 20;
+		    area1.data.values[0] = Math.random() * range1 + 5;
+		    area1.data.labels[0] = "A";
+		
+		    for (var t=1; t< 26; t++) {
+		        var av1 = area1.data.values[t-1] + (Math.random()*range1) - (range1*0.5);
+			 
+			    if (av1 < 0) av1 = av1 * -1; if (av1 > 100) av1 = av1 - 20;
+			    area1.data.values[t] = av1
+			    area1.data.labels[t] = String.fromCharCode(65 + t);
+		    }
+						  
+		    Chart1.addSeries(area1); //.pointer.visible=true;
+		    //config some series appearance characteristics
+            Chart1.series.items[0].format.stroke.fill = Chart1.series.items[0].format.fill;
+            Chart1.series.items[0].format.stroke.size = 2;
+            Chart1.series.items[0].format.shadow.visible=false;
+            Chart1.series.items[0].format.transparency=0.12;
+            Chart1.series.items[0].smooth=0.1;
+            Chart1.series.items[0].hover = false;
+		  
+		  
+		    //Axes
+		    Chart1.axes.left.title.text="$ 000s";
+		    Chart1.axes.left.title.visible=false;
+		    Chart1.axes.left.labels.roundFirst=true;
+		    Chart1.axes.bottom.labels.roundFirst=true;
+		    Chart1.axes.bottom.title.text="Labels";
+		    Chart1.axes.bottom.title.format.font.fill = "rgba(0,0,0,0.6)";
+		    Chart1.axes.bottom.title.format.font.setSize(14);
+		    Chart1.axes.bottom.labels.dateFormat = "mm/yy";
+		    Chart1.axes.left.increment=20;
+		    Chart1.axes.left.setMinMax(0, 50);
+		    Chart1.axes.left.grid.format.stroke.size = 1;
+		    Chart1.axes.left.ticks.visible=false;
+		    Chart1.axes.left.format.stroke.fill = "rgba(0,0,0,0.0)";
+		    Chart1.axes.bottom.format.stroke.size = 1;
+		
+		    //Title
+		    Chart1.title.visible = false;
+		  
+		  //Legend
+		  //Chart1.legend.position="left";
+		
+		  // annotation (alternative title)
+		  a1=new Tee.Annotation(Chart1);
+		  a1.format.fill = "rgba(0,0,0,0.0)";
+		  a1.format.stroke.fill="rgba(0,0,0,0.0)";
+		  a1.format.font.style="20px Tahoma";
+		  a1.format.font.fill = "rgba(0,0,0,0.6)";
+		  a1.text="Sorting area";
+		
+		  Chart1.draw();  //get positions
+		  a1.position.x = Chart1.axes.bottom.calc(Chart1.axes.bottom.minimum);
+		  a1.position.y = 8;
+		  Chart1.tools.add(a1);
+		  
+		  //tooltip
+		  tip=new Tee.ToolTip(Chart1);
+		  tip.render="dom";
+		  tip.domStyle = "padding-left:8px; padding-right:8px; padding-top:0px; padding-bottom:4px; margin-left:5px; margin-top:0px; ";
+		  tip.domStyle = tip.domStyle + "background-color:#FCFCFC; border-radius:4px 4px; color:#FFF; ";
+		  tip.domStyle = tip.domStyle + "border-style:solid;border-color:#A3A3AF;border-width:1px; z-index:1000;";
+
+		  tip.pointer.visible = true;
+		  tip.pointer.fill = "rgb(30,80,100)";
+		  tip.pointer.firstCircleRadius = 3;
+		  tip.pointer.secondCircleRadius = 7;
+		  tip.pointer.firstCircleOpacity = 1;
+		  tip.pointer.secondCircleOpacity = 0.5;
+		  tip.pointer.animationVisible = true;
+		  tip.pointer.animationDuration = 500;
+		  Chart1.tools.add(tip);
+		
+		  tip.onhide=function() { scaling=0; poindex=-1; }
+		  
+		  tip.onshow=function(tool,series,index) {
+			  if (enableCursor == false){
+				Chart1.tools.add(t);
+				enableCursor = true;
+				Chart1.draw();
+			  }
+		  }		  
+
+		  tip.ongettext=function(tool, text, series, index) {
+			    var t, s="", ser;
+
+			    for(t=0;t<Chart1.series.count(); t++) {
+			      if (t>0) s+="<br/>";
+			      ser=Chart1.series.items[t];
+			      s+='<font face="verdana" color="darkorange" size="1"><b>'+ser.title+':</b></font> <font face="verdana" color="red" size="1">'+ser.data.values[index].toFixed(2)+'</font>';
+			    }
+			    return s;
+		  }
+		  //top.changePalette(top.topPalette);
+		
+		  //animation
+		  animation=new Tee.SeriesAnimation();
+		  animation.duration=1700;
+		  animation.kind="all";
+		  animation.mode = "linear"; 
+		  
+		  animation.animate(Chart1);
+		}
+	</script>
+</head>
+<body onload="draw();changeThemeToDefault();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for JavaScript <span class="smallLetters">Sorting Area</span></h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row">
+			<div id="optionPanel" class="x_panel">
+			<div class="x_title">
+				<h2>Options <span class="smallLetters">Change the aspect of the Chart</span></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li><a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<p>
+                    <input type="checkbox" onchange="if(!animation.running)Chart1.series.items[0].drawSortedValues(this.checked)" /> Sort values
+                    <input type="checkbox" onchange="Chart1.series.items[0].sortedOptions.ascending = this.checked;" checked /> Ascending
+	         	</p>
+			</div>					
+			</div>
+		</div>
+			
+		<div class="row">
+			<div id="canvasPanel" class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">Sorting Area</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content" id="canvasDiv">
+					<canvas id="canvas" width="1000" height="600">
+					</canvas>					
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</body>
+</html>
