@@ -4671,6 +4671,18 @@ Tee.Series=function(o,o2) {
   this.chart=null;
   this.data={ values:[], labels:[], source:null }
 
+  this.sortedOptions = {
+      sortedDrawAnimation: new Tee.Animation(),
+      sortedValues: [],
+      sortedValuesIndices: [],
+      originalValues: [],
+      sortedLabels: [],
+      originalLabels: [],
+      sorted: false,
+      ascending: true,
+      sorting:false,
+      sortingAnimationType:"verticalchange"
+  };
   this.yMandatory=true;
   this.horizAxis="bottom";
   this.vertAxis="left";
@@ -4680,7 +4692,8 @@ Tee.Series=function(o,o2) {
 
   var f=this.format=new Tee.Format(this.chart),
       ho=this.hover=new Tee.Format(this.chart), s=ho.shadow;
-
+  this.sortedOptions.sortedDrawAnimation.duration = 500;
+  this.sortedOptions.sortedDrawAnimation.mode = "linear";
   f.fill="";
   f.stroke.fill="";
   this.visible=true;
@@ -4710,6 +4723,66 @@ Tee.Series=function(o,o2) {
 
   this._paintAxes=true;
   this._paintWalls=true;
+
+  this.sortValues = function () {
+      this.sortedOptions.sorting = true;
+      var indices = [], values = this.data.values, ascending = this.sortedOptions.ascending;
+      this.sortedOptions.sortedLabels = [];
+      for (var i = 0; i < this.data.values.length;i++){
+          indices.push(i);
+      }
+      indices.sort(function (a, b) { return ascending ? values[a] - values[b] : values[b] - values[a] });
+      this.sortedOptions.originalValues = this.data.values.slice();
+      this.sortedOptions.originalLabels = this.data.labels.slice();
+      for (var i = 0; i < indices.length; i++) {
+          this.sortedOptions.sortedLabels.push(this.data.labels[indices[i]] ? this.data.labels[indices[i]] : indices[i]);
+      }
+      this.sortedOptions.sortedValuesIndices = indices;
+      this.sortedOptions.sortedValues = this.data.values.slice().sort(function (a, b) { return ascending ? a - b : b - a });
+      this.sortedOptions.sorting = false;
+      return this.sortedOptions.sortedValues.slice();
+    
+  }
+
+  this.drawSortedValues = function (sorted) {
+      var animation = this.sortedOptions.sortedDrawAnimation;
+      if (this.sortedOptions.sorted != sorted&&!this.sortedOptions.sorting&&animation&&!animation.running) {
+          this.sortedOptions.sorted = sorted;
+          var data = this.data;
+          if (sorted) this.sortValues();
+          var prevValues = sorted ? this.sortedOptions.originalValues.slice() : this.sortedOptions.sortedValues.slice();
+          var values = this.data.values;
+          var endValues = sorted ? this.sortedOptions.sortedValues.slice() : this.sortedOptions.originalValues.slice();
+
+          if ((!(values.length == endValues.length && values.every(function (v, i) { return v === endValues[i] })))) {
+
+              animation.chart = this.chart;
+
+              animation.doStep = function (f) {
+                  if (f < 1) {
+                      for (var i = 0; i < prevValues.length; i++) {
+                          values[i] = prevValues[i] + (endValues[i] - prevValues[i]) * f;
+                      }
+                  }
+              }
+
+              animation.onstop = function () {
+                  for (var i = 0; i < prevValues.length; i++) {
+                      values[i] = endValues[i];
+                  }
+                  animation.running = false;
+              }
+
+              animation.onstart = function () {
+                  animation.running = true;
+              }
+              animation.animate();
+          }
+          this.data.labels = sorted ? this.sortedOptions.sortedLabels.slice() : this.sortedOptions.originalLabels.slice();
+          this.chart.draw();
+          
+      }
+  }
 
   this.init=function(o,o2) {
     if (typeof(o)==="object") {
@@ -6426,7 +6499,7 @@ Tee.CustomBar=function(o,o2) {
   this.offset=0; // %
   this.barSize=70; // %
   this.barStyle="bar"; // "ellipse"
-
+  var percent = 1;
   var f=this.format;
   f.fill="";
   f.stroke.fill="black";
@@ -6590,6 +6663,76 @@ Tee.CustomBar=function(o,o2) {
   
   var hasPaintedOver = false;
 
+  this.drawSortedValues = function (sorted) {
+      var animation = this.sortedOptions.sortedDrawAnimation;
+      if (this.sortedOptions.sorted != sorted && !this.sortedOptions.sorting && animation && !animation.running) {
+          
+          this.sortedOptions.sorted = sorted;
+          var data = this.data;
+          if (this.sortedOptions.sorted) this.sortValues();
+              
+          var prevValues = this.sortedOptions.sorted ? this.sortedOptions.originalValues.slice() : this.sortedOptions.sortedValues.slice();
+          var values = this.data.values;
+          var endValues = this.sortedOptions.sorted ? this.sortedOptions.sortedValues.slice() : this.sortedOptions.originalValues.slice();
+
+          var series = this;
+          var sortedOptions = this.sortedOptions;
+          animation.chart = this.chart;
+          if (sortedOptions.sortingAnimationType == "horizontalchange") {
+              animation.doStep = function (f) {
+                //do with draw
+                  if (f < 1) {
+                      percent = f;
+                      series.draw();
+                  }
+              }
+
+              animation.onstop = function () {
+                  percent = 1;
+                  if (sortedOptions.sorted)
+                      for (var i = 0; i < prevValues.length; i++) {
+                          values[i] = endValues[i];
+                      }
+                  //animation.running = false;
+              }
+              animation.onstart = function () {
+                  if (!sortedOptions.sorted)
+                      for (var i = 0; i < prevValues.length; i++) {
+                          values[i] = endValues[i];
+                      }
+                  //animation.running = true;
+              }
+          }
+          else {
+              animation.doStep = function (f) {
+                  //do with draw
+                  if (f < 1) {
+                      for (var i = 0; i < prevValues.length; i++) {
+                          values[i] = prevValues[i] + (endValues[i] - prevValues[i]) * f;
+                      }
+                  }
+              }
+
+              animation.onstop = function () {
+                  percent = 1;
+                  for (var i = 0; i < prevValues.length; i++) {
+                      values[i] = endValues[i];
+                  }
+                  animation.running = false;
+              }
+              animation.onstart = function () {
+                  animation.running = true;
+              }
+
+          }
+          animation.animate();
+
+          this.data.labels = this.sortedOptions.sorted ? this.sortedOptions.sortedLabels.slice() : this.sortedOptions.originalLabels.slice();
+        
+          
+          this.chart.draw();
+      }
+  }
   this.draw=function() {
     var len=this.data.values.length;
 
@@ -6618,6 +6761,16 @@ Tee.CustomBar=function(o,o2) {
       for(var t=0; t<len; t++)
       if (!this.isNull(t)) {
         this.calcStackPos(t,p);
+          
+          
+          var sortedP = new Tee.Point();
+          
+          if (percent < 1) {
+              this.calcStackPos(this.sortedOptions.sortedValuesIndices.findIndex(function (x) { return x == t }), sortedP);
+              if (this.sortedOptions.sorted) p.x = (-p.x + sortedP.x) * percent + p.x;
+              else p.x = (p.x - sortedP.x) * percent + sortedP.x;
+
+          }
         this.calcBarBounds(p,bar,offset,originPos instanceof Array? originPos[t]: originPos);
         var pointPainted = this.drawBar(bar, _styles ? _styles[t] : null);
 
