@@ -1,22 +1,31 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-    <title>TeeChart for jQuery example</title>
+    <title>TeeChart for jQuery example with Theme</title>
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
 
-    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/teechart.js" type="text/javascript"></script>
-    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/teechart-extras.js" type="text/javascript"></script>
-    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/teechart-gauges.js" type="text/javascript"></script>
-    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/date.format.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="../../demo.css">
+    <script src="../../../src/teechart.js" type="text/javascript"></script>
+    <script src="../../../src/teechart-extras.js" type="text/javascript"></script>
+    <script src="../../../src/teechart-gauges.js" type="text/javascript"></script>
+    <script src="../../../src/date.format.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="jquery.teechart.js"></script>
+	
+	<!-- Bootstrap -->
+	<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Custom Theme Style -->
+	<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">	
 
     <script type="text/javascript">
         $(document).ready(function () {
-                $("#canvas1").teechart({
+                $("#canvas").teechart({
                     series: [
                         {
                             type: "bar",
@@ -198,228 +207,323 @@
                     }
             });
 			
-			$("#canvas1").getChart().applyTheme("minimal");
+			$("#canvas").getChart().applyTheme("minimal");
 
             $("#AddSeries").bind("click", function () {
                 var s = new Tee.Line([2, 4, 5, 6, 4, 7]);
-                $("#canvas1").getChart().addSeries(s);
+                $("#canvas").getChart().addSeries(s);
 				s.smooth=1/2;
                 s.format.stroke.size=4;
-                $("#canvas1").getChart().draw();
+                $("#canvas").getChart().draw();
             });
         });
+		
+		
+    function resize(){
+    	
+    	var startWidth=600;
+    	var startHeight=400;
+    	var w;
+    	var h;
+    	var canvas = document.getElementById("canvas");
+   		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+   			w = window.innerWidth;
+   			h = window.innerHeight;
+   			if(w<=991){
+   				canvas.style.width="" + w + "px";
+   				canvas.style.height="" + w*startHeight/startWidth + "px";
+   			}
+   			else{
+   				canvas.style.width = "" + startWidth + "px";
+   				canvas.style.height = "" + startHeight + "px";
+   			}
+   		}
+   		else{
+   			w = startWidth;
+   			h = startHeight;
+   			
+   			if ((window.innerWidth) < startWidth)
+   				w = window.innerWidth;
+   			else
+   				w = startWidth;
+   				  
+   			if ((window.innerWidth * startHeight / startWidth) < startHeight)
+   				h =window.innerWidth * startHeight / startWidth;
+   			else
+   				h = startHeight;
+   			
+   			canvas.style.width=""+w+"px";
+   			canvas.style.height=""+h+"px";
+    	}	
+    }
+
+    function resizeToolBar(){
+    	var toolbar1 = document.getElementById("toolbar1");
+    	var w = window.innerWidth;
+    	if(w<=954){
+    		toolbar1.style.width = "" + w + "px";
+    	}
+    	else{
+    		toolbar1.style.width = "" + w - 230 + "px";
+    	}
+    }
+	function showHide1(){
+		var canvasDiv = document.getElementById("canvasDiv");
+		var icon=document.getElementById("icon1");
+		if(canvasDiv.style.display=="none"){
+			canvasDiv.style.display="block";
+			icon.classList.add('fa-chevron-up');
+			icon.classList.remove('fa-chevron-down');
+		}
+		else{
+			canvasDiv.style.display="none";
+			icon.classList.add('fa-chevron-down');
+			icon.classList.remove('fa-chevron-up');
+		}
+	}
+	
     </script>
 </head>
+    <body onload="resize();resizeToolBar();" onresize="resize();resizeToolBar();">
+	<div class="right_col" role="main">
+		<div class="page-title">
+			<div class="title_left">
+				<h3>TeeChart for jQuery example</h3>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	
+		<div class="row" id="toolbar2">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2><span class="smallLetters">JQuery, TeeChart Theme applied</span></h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link" onclick="showHide1();"><i id="icon1" class="fa fa-chevron-up"></i></a>
+						</li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a>
+						</li>
+					</ul>
+				<div class="clearfix"></div>
+				</div>
+				<div class="x_content" id="canvasDiv">
+					<canvas id="canvas" width="600" height="400">
+					This browser does not seem to support HTML5 Canvas.
+					</canvas>
+					  <br/>
 
-<body>
- <br/><br/>
-
-  <canvas id="canvas1" width="800" height="400">
-  This browser does not seem to support HTML5 Canvas.
-  </canvas>
-
-  <br/>
-
-  <button id="AddSeries">Add Line Series</button>
+					<button id="AddSeries">Add Line Series</button>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+ 
+        <br/><br/>
   
-  <br/><br/>
-  code:<br/>
-  <table cellpadding="15" style="border: 1px solid darkgray;">
-  <tr><td bgcolor="#EFFFFF"><pre>
-$(document).ready(function () {
-		$("#canvas1").teechart({
-			series: [
-				{
-					type: "bar",
-					colorEach: "yes",
-					marks: {
-						style: "index",
-						visible: true
-					},
-					data: {
-						values: [5, 3, 2, 7, 1, 6],
-						labels: ["Production","Marketing","Approvals","Prototype","Evaluation","Design","Testing"],
-					},
-					options: {
-						useOrigin: true,
-						origin: 5,
+        <div>
+		  code:<br/>
+		  <pre>
+	$(document).ready(function () {
+			$("#canvas").teechart({
+				series: [
+					{
+						type: "bar",
+						colorEach: "yes",
+						marks: {
+							style: "index",
+							visible: true
+						},
+						data: {
+							values: [5, 3, 2, 7, 1, 6],
+							labels: ["Production","Marketing","Approvals","Prototype","Evaluation","Design","Testing"],
+						},
+						options: {
+							useOrigin: true,
+							origin: 5,
+						}
 					}
-				}
-			],
-			tools: [
-				{
-					active: true,
-					type: "annotation",
-					options: {
-						text: 'ANNOTATION 1',
+				],
+				tools: [
+					{
+						active: true,
+						type: "annotation",
+						options: {
+							text: 'ANNOTATION 1',
+							format: {
+								fill: 'yellow',
+								transparency: 0.5,
+								font: {
+									style: '18px Arial',
+									fill: 'black'
+								},
+								gradient: {
+									colors: ['yellow', 'olive'],
+									visible: true
+								},
+								stroke: {
+									size: 0.5,
+									cap: 'butt',
+									join: 'round',
+									visible: true,
+									fill: 'black'
+								}
+							},
+							
+							position: [20,15],
+							transparent: false,
+							visible: true
+						}
+					},
+				],
+				chart: {
+					footer: {
+						text: 'Departments',
 						format: {
 							fill: 'yellow',
-							transparency: 0.5,
+							transparency: 0.6
+						},
+						transparent: false,
+						visible: true
+					},
+					/*panel: {
+						transparent: false,
+						format: {
+							fill: "white",
+							gradient: {
+								colors: ['silver', 'red'],
+								visible: true
+							}
+						}
+					},*/
+					title: {
+						text: 'jQuery formatted TeeChart',
+						format: {
+
+							transparency: 0.1,
 							font: {
-								style: '18px Arial',
-								fill: 'black'
+								style: '30px Arial',
+								fill: 'green'
 							},
 							gradient: {
-								colors: ['yellow', 'olive'],
-								visible: true
+								colors: ['yellow', 'red'],
+								visible: false
 							},
 							stroke: {
-								size: 0.5,
+								size: 4,
 								cap: 'butt',
 								join: 'round',
 								visible: true,
 								fill: 'black'
 							}
 						},
-						
-						position: [20,15],
 						transparent: false,
 						visible: true
-					}
-				},
-			],
-			chart: {
-				footer: {
-					text: 'Departments',
-					format: {
-						fill: 'yellow',
-						transparency: 0.6
 					},
-					transparent: false,
-					visible: true
-				},
-				/*panel: {
-					transparent: false,
-					format: {
-						fill: "white",
-						gradient: {
-							colors: ['silver', 'red'],
-							visible: true
-						}
-					}
-				},*/
-				title: {
-					text: 'jQuery formatted TeeChart',
-					format: {
-
-						transparency: 0.1,
-						font: {
-							style: '30px Arial',
-							fill: 'green'
-						},
-						gradient: {
-							colors: ['yellow', 'red'],
-							visible: false
-						},
-						stroke: {
-							size: 4,
+					legend: {
+						align: 10,
+						dividing: {
+							size: 1,
 							cap: 'butt',
 							join: 'round',
 							visible: true,
-							fill: 'black'
-						}
-					},
-					transparent: false,
-					visible: true
-				},
-				legend: {
-					align: 10,
-					dividing: {
-						size: 1,
-						cap: 'butt',
-						join: 'round',
-						visible: true,
-						fill: 'red'
-					},
-					fontColor: true,
-					legendStyle: "values",
-					textStyle: "valuelabel",
-					position: "right",
-					padding: 10,
-					symbol:  {
-						height: 4,
-						width: 6,
-						stroke: {
-								size: 0.5
+							fill: 'red'
 						},
-						visible: true,
-						padding: 15,
-						format: {
-							fill: "silver",
-							transparency: 0.2
-						}
-					},
-					title: {
-						text: 'Legend',
-						format: {
-							fill: 'blue',
-							transparency: 1.0, //hide
-							font: {
-								style: '16px Verdana',
-								fill: 'black'
-							},
-							gradient: {
-								colors: ['black', 'white'],
-								visible: false
-							},
+						fontColor: true,
+						legendStyle: "values",
+						textStyle: "valuelabel",
+						position: "right",
+						padding: 10,
+						symbol:  {
+							height: 4,
+							width: 6,
 							stroke: {
-								size: 0.5,
-								cap: "butt",
-								join: "round",
-								visible: true,
-								fill: "black"
+									size: 0.5
+							},
+							visible: true,
+							padding: 15,
+							format: {
+								fill: "silver",
+								transparency: 0.2
 							}
+						},
+						title: {
+							text: 'Legend',
+							format: {
+								fill: 'blue',
+								transparency: 1.0, //hide
+								font: {
+									style: '16px Verdana',
+									fill: 'black'
+								},
+								gradient: {
+									colors: ['black', 'white'],
+									visible: false
+								},
+								stroke: {
+									size: 0.5,
+									cap: "butt",
+									join: "round",
+									visible: true,
+									fill: "black"
+								}
+							},
+							transparent: false,
+							visible: true
 						},
 						transparent: false,
 						visible: true
 					},
-					transparent: false,
-					visible: true
-				},
-				walls: {
-					right: {
-						visible: false,
-						format: {
-							fill: "green",
-							gradient: {
-								colors: ['yellow', 'red'],
-								visible: false
-							}
-						},
-						bounds: [10, 10, 100, 100]
-					}
-				},
-				zoom: {
-					enabled: true,
-					mouseButton: 0,
-					direction: "horizontal",
-					format: {
-						fill: "rgba(255,0,0,0.5)",
-						stroke: {
-							size: 20,
-							fill: "green"
+					walls: {
+						right: {
+							visible: false,
+							format: {
+								fill: "green",
+								gradient: {
+									colors: ['yellow', 'red'],
+									visible: false
+								}
+							},
+							bounds: [10, 10, 100, 100]
 						}
+					},
+					zoom: {
+						enabled: true,
+						mouseButton: 0,
+						direction: "horizontal",
+						format: {
+							fill: "rgba(255,0,0,0.5)",
+							stroke: {
+								size: 20,
+								fill: "green"
+							}
+						}
+					},
+					scroll: {
+						enabled: true,
+						mouseButton: 2,
+						direction: "horizontal"
 					}
-				},
-				scroll: {
-					enabled: true,
-					mouseButton: 2,
-					direction: "horizontal"
 				}
-			}
-	});
-	
-	$("#canvas1").getChart().applyTheme("minimal");
+		});
+		
+		$("#canvas").getChart().applyTheme("minimal");
 
-	$("#AddSeries").bind("click", function () {
-		var s = new Tee.Line([2, 4, 5, 6, 4, 7]);
-		$("#canvas1").getChart().addSeries(s);
-		s.smooth=1/2;
-		s.format.stroke.size=4;
-		$("#canvas1").getChart().draw();
+		$("#AddSeries").bind("click", function () {
+			var s = new Tee.Line([2, 4, 5, 6, 4, 7]);
+			$("#canvas").getChart().addSeries(s);
+			s.smooth=1/2;
+			s.format.stroke.size=4;
+			$("#canvas").getChart().draw();
+		});
 	});
-});
-  
-  </pre></td></tr></table>
+		  
+		  </pre>
+	    </div>
+	</div>
+	<script type="text/javascript">
+	function openSample() {
+	    window.open("themed.htm", "_blank");
+	}
+	
+	</script>  
 </body>
 </html>
