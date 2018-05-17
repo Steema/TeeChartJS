@@ -1,0 +1,425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>TeeChart for jQuery example</title>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
+
+    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/teechart.js" type="text/javascript"></script>
+    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/teechart-extras.js" type="text/javascript"></script>
+    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/teechart-gauges.js" type="text/javascript"></script>
+    <script src="http://www.steema.com/files/public/teechart/html5/latest/src/date.format.js" type="text/javascript"></script>
+
+    <script type="text/javascript" src="jquery.teechart.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+                $("#canvas1").teechart({
+                    series: [
+                        {
+                            type: "bar",
+                            colorEach: "yes",
+                            marks: {
+                                style: "index",
+                                visible: true
+                            },
+                            data: {
+                                values: [5, 3, 2, 7, 1, 6],
+                                labels: ["Production","Marketing","Approvals","Prototype","Evaluation","Design","Testing"],
+                            },
+                            options: {
+                                useOrigin: true,
+                                origin: 5,
+                            }
+                        }
+                    ],
+                    tools: [
+                        {
+                            active: true,
+                            type: "annotation",
+                            options: {
+                                text: 'ANNOTATION 1',
+                                format: {
+                                    fill: 'yellow',
+                                    transparency: 0.5,
+                                    font: {
+                                        style: '18px Arial',
+                                        fill: 'black'
+                                    },
+                                    gradient: {
+                                        colors: ['yellow', 'olive'],
+                                        visible: true
+                                    },
+                                    stroke: {
+                                        size: 0.5,
+                                        cap: 'butt',
+                                        join: 'round',
+                                        visible: true,
+                                        fill: 'black'
+                                    }
+                                },
+                                
+                                position: [20,15],
+                                transparent: false,
+                                visible: true
+                            }
+                        },
+                    ],
+                    chart: {
+                        footer: {
+                            text: 'Departments',
+                            format: {
+                                fill: 'yellow',
+                                transparency: 0.6
+                            },
+                            transparent: false,
+                            visible: true
+                        },
+                        /*panel: {
+                            transparent: false,
+                            format: {
+                                fill: "white",
+                                gradient: {
+                                    colors: ['silver', 'red'],
+                                    visible: true
+                                }
+                            }
+                        },*/
+                        title: {
+                            text: 'jQuery formatted TeeChart',
+                            format: {
+
+                                transparency: 0.1,
+                                font: {
+                                    style: '30px Arial',
+                                    fill: 'green'
+                                },
+                                gradient: {
+                                    colors: ['yellow', 'red'],
+                                    visible: false
+                                },
+                                stroke: {
+                                    size: 4,
+                                    cap: 'butt',
+                                    join: 'round',
+                                    visible: true,
+                                    fill: 'black'
+                                }
+                            },
+                            transparent: false,
+                            visible: true
+                        },
+                        legend: {
+                            align: 10,
+                            dividing: {
+                                size: 1,
+                                cap: 'butt',
+                                join: 'round',
+                                visible: true,
+                                fill: 'red'
+                            },
+                            fontColor: true,
+                            legendStyle: "values",
+                            textStyle: "valuelabel",
+                            position: "right",
+                            padding: 10,
+                            symbol:  {
+                                height: 4,
+                                width: 6,
+								stroke: {
+                                        size: 0.5
+								},
+                                visible: true,
+                                padding: 15,
+                                format: {
+                                    fill: "silver",
+                                    transparency: 0.2
+                                }
+                            },
+                            title: {
+                                text: 'Legend',
+                                format: {
+                                    fill: 'blue',
+                                    transparency: 1.0, //hide
+                                    font: {
+                                        style: '16px Verdana',
+                                        fill: 'black'
+                                    },
+                                    gradient: {
+                                        colors: ['black', 'white'],
+                                        visible: false
+                                    },
+                                    stroke: {
+                                        size: 0.5,
+                                        cap: "butt",
+                                        join: "round",
+                                        visible: true,
+                                        fill: "black"
+                                    }
+                                },
+                                transparent: false,
+                                visible: true
+                            },
+                            transparent: false,
+                            visible: true
+                        },
+                        walls: {
+                            right: {
+                                visible: false,
+                                format: {
+                                    fill: "green",
+                                    gradient: {
+                                        colors: ['yellow', 'red'],
+                                        visible: false
+                                    }
+                                },
+                                bounds: [10, 10, 100, 100]
+                            }
+                        },
+                        zoom: {
+                            enabled: true,
+                            mouseButton: 0,
+                            direction: "horizontal",
+                            format: {
+                                fill: "rgba(255,0,0,0.5)",
+                                stroke: {
+                                    size: 20,
+                                    fill: "green"
+                                }
+                            }
+                        },
+                        scroll: {
+                            enabled: true,
+                            mouseButton: 2,
+                            direction: "horizontal"
+                        }
+                    }
+            });
+			
+			$("#canvas1").getChart().applyTheme("minimal");
+
+            $("#AddSeries").bind("click", function () {
+                var s = new Tee.Line([2, 4, 5, 6, 4, 7]);
+                $("#canvas1").getChart().addSeries(s);
+				s.smooth=1/2;
+                s.format.stroke.size=4;
+                $("#canvas1").getChart().draw();
+            });
+        });
+    </script>
+</head>
+
+<body>
+ <br/><br/>
+
+  <canvas id="canvas1" width="800" height="400">
+  This browser does not seem to support HTML5 Canvas.
+  </canvas>
+
+  <br/>
+
+  <button id="AddSeries">Add Line Series</button>
+  
+  <br/><br/>
+  code:<br/>
+  <table cellpadding="15" style="border: 1px solid darkgray;">
+  <tr><td bgcolor="#EFFFFF"><pre>
+$(document).ready(function () {
+		$("#canvas1").teechart({
+			series: [
+				{
+					type: "bar",
+					colorEach: "yes",
+					marks: {
+						style: "index",
+						visible: true
+					},
+					data: {
+						values: [5, 3, 2, 7, 1, 6],
+						labels: ["Production","Marketing","Approvals","Prototype","Evaluation","Design","Testing"],
+					},
+					options: {
+						useOrigin: true,
+						origin: 5,
+					}
+				}
+			],
+			tools: [
+				{
+					active: true,
+					type: "annotation",
+					options: {
+						text: 'ANNOTATION 1',
+						format: {
+							fill: 'yellow',
+							transparency: 0.5,
+							font: {
+								style: '18px Arial',
+								fill: 'black'
+							},
+							gradient: {
+								colors: ['yellow', 'olive'],
+								visible: true
+							},
+							stroke: {
+								size: 0.5,
+								cap: 'butt',
+								join: 'round',
+								visible: true,
+								fill: 'black'
+							}
+						},
+						
+						position: [20,15],
+						transparent: false,
+						visible: true
+					}
+				},
+			],
+			chart: {
+				footer: {
+					text: 'Departments',
+					format: {
+						fill: 'yellow',
+						transparency: 0.6
+					},
+					transparent: false,
+					visible: true
+				},
+				/*panel: {
+					transparent: false,
+					format: {
+						fill: "white",
+						gradient: {
+							colors: ['silver', 'red'],
+							visible: true
+						}
+					}
+				},*/
+				title: {
+					text: 'jQuery formatted TeeChart',
+					format: {
+
+						transparency: 0.1,
+						font: {
+							style: '30px Arial',
+							fill: 'green'
+						},
+						gradient: {
+							colors: ['yellow', 'red'],
+							visible: false
+						},
+						stroke: {
+							size: 4,
+							cap: 'butt',
+							join: 'round',
+							visible: true,
+							fill: 'black'
+						}
+					},
+					transparent: false,
+					visible: true
+				},
+				legend: {
+					align: 10,
+					dividing: {
+						size: 1,
+						cap: 'butt',
+						join: 'round',
+						visible: true,
+						fill: 'red'
+					},
+					fontColor: true,
+					legendStyle: "values",
+					textStyle: "valuelabel",
+					position: "right",
+					padding: 10,
+					symbol:  {
+						height: 4,
+						width: 6,
+						stroke: {
+								size: 0.5
+						},
+						visible: true,
+						padding: 15,
+						format: {
+							fill: "silver",
+							transparency: 0.2
+						}
+					},
+					title: {
+						text: 'Legend',
+						format: {
+							fill: 'blue',
+							transparency: 1.0, //hide
+							font: {
+								style: '16px Verdana',
+								fill: 'black'
+							},
+							gradient: {
+								colors: ['black', 'white'],
+								visible: false
+							},
+							stroke: {
+								size: 0.5,
+								cap: "butt",
+								join: "round",
+								visible: true,
+								fill: "black"
+							}
+						},
+						transparent: false,
+						visible: true
+					},
+					transparent: false,
+					visible: true
+				},
+				walls: {
+					right: {
+						visible: false,
+						format: {
+							fill: "green",
+							gradient: {
+								colors: ['yellow', 'red'],
+								visible: false
+							}
+						},
+						bounds: [10, 10, 100, 100]
+					}
+				},
+				zoom: {
+					enabled: true,
+					mouseButton: 0,
+					direction: "horizontal",
+					format: {
+						fill: "rgba(255,0,0,0.5)",
+						stroke: {
+							size: 20,
+							fill: "green"
+						}
+					}
+				},
+				scroll: {
+					enabled: true,
+					mouseButton: 2,
+					direction: "horizontal"
+				}
+			}
+	});
+	
+	$("#canvas1").getChart().applyTheme("minimal");
+
+	$("#AddSeries").bind("click", function () {
+		var s = new Tee.Line([2, 4, 5, 6, 4, 7]);
+		$("#canvas1").getChart().addSeries(s);
+		s.smooth=1/2;
+		s.format.stroke.size=4;
+		$("#canvas1").getChart().draw();
+	});
+});
+  
+  </pre></td></tr></table>
+</body>
+</html>
