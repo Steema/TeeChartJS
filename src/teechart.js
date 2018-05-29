@@ -5785,7 +5785,11 @@ Tee.Chart=function(canvas,data,type)
   if (c.__webgl || (c.clientWidth===0))
     this.bounds=new Rectangle(0,0,c.width,c.height);
   else
+  {
     this.bounds=new Rectangle(0,0,c.clientWidth,c.clientHeight);
+	c.width = c.clientWidth;
+	c.height = c.clientHeight;	
+  }
 
   this.chartRect=new Rectangle();
   this.chartRect.automatic=true;
