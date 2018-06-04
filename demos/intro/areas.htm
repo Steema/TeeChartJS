@@ -30,6 +30,27 @@
 		var a1;
 		var enableCursor = false;
 		
+		function changeTheme(aTheme)
+		{
+		   Chart1.applyTheme(aTheme);
+		   
+		   for (i = 0; i < 2; i++)
+			{
+				Chart1.series.items[i].pointer.format.stroke.fill = "white";
+			}
+			 
+			resize(Chart1);
+			Chart1.draw();
+		}
+		
+		function changePalette(palette)
+		{
+			Chart1.applyPalette(palette);
+			resize(Chart1);
+			Chart1.draw();
+		}
+		
+		
 		function draw() {
 		  //init chart
 		  Chart1=new Tee.Chart("canvas");
