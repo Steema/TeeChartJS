@@ -6347,6 +6347,10 @@ Tee.Chart=function(canvas,data,type)
    */
   this.draw=function(ctx) {
 
+   this.bounds = new Rectangle(0,0,c.clientWidth,c.clientHeight - 10);
+   c.width = this.bounds.width;
+   c.height = this.bounds.height;
+  
    var series=this.series, r=this.chartRect;
 
    this.ctx = ctx || (this.canvas.getContext ? this.canvas.getContext("2d") : null); //,{alpha:false} (opaque canvas)
