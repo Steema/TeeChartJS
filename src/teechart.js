@@ -6138,8 +6138,8 @@ Tee.Chart=function(canvas,data,type)
       // IE < 9 : "fromElement"
       var target = event.target || event.fromElement;
 
-      if (target && target.setCapture)
-          target.setCapture();
+      if (target && target.setPointerCapture && event.pointerId)
+          target.setPointerCapture(event.pointerId);
     }
 
     return !done;
@@ -6194,8 +6194,8 @@ Tee.Chart=function(canvas,data,type)
     // IE < 9 : "fromElement"
     var target = event.target || event.fromElement;
 
-    if (target && target.releaseCapture)
-        target.releaseCapture();
+    if (target && target.releasePointerCapture && event.pointerId)
+        target.releasePointerCapture(event.pointerId);
   }
 
 
@@ -6222,9 +6222,9 @@ Tee.Chart=function(canvas,data,type)
   }
   */
 
-  c.onmousedown = c.ontouchstart = this.domousedown;
-  c.onmouseup = c.ontouchend = this.domouseup;
-  c.onmousemove = c.ontouchmove = this.domousemove;
+  c.onpointerdown = c.ontouchstart = this.domousedown;
+  c.onpointerup = c.ontouchend = this.domouseup;
+  c.onpointermove = c.ontouchmove = this.domousemove;
 
   // Mouse wheel default to zoom / unzoom axes:
 
