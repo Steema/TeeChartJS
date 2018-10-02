@@ -2526,6 +2526,23 @@ function Axis(chart,horizontal,otherSide) {
 
   this.maxLabelDepth = 0;
 
+  function NumberFormatOptions() {
+    this.localeMatcher;
+    this.style;
+    this.currency;
+    this.currencyDisplay;
+    this.useGrouping;
+    this.minimumIntegerDigits;
+    this.minimumFractionDigits;
+    this.maximumFractionDigits;
+    this.minimumSignificantDigits;
+    this.maximumSignificantDigits;
+  }
+
+  function FormatValueOptions() {
+    this.locales;
+    this.options = new NumberFormatOptions();
+  };
   /**
    * @constructor
    * @public
@@ -2593,10 +2610,14 @@ function Axis(chart,horizontal,otherSide) {
          this._text=s;
     }
 
-    
-    this.formatValueString=function(value)
-    {
-			if (this.valueFormat){
+    this.valueFormat = new FormatValueOptions();
+
+    this.formatValueString=function(value) {
+			if (this.valueFormat) {
+			  if ((this.valueFormat.locales) || (this.valueFormat.options)) {
+          return value.toLocaleString(this.valueFormat.locales, this.valueFormat.options);
+        }
+
 				var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1); 
 				
 				var AmountWithCommas = (value * 1).toLocaleString();
@@ -2616,7 +2637,7 @@ function Axis(chart,horizontal,otherSide) {
 					return intPart + DecimalSeparator + decPart;
 				else
 					return intPart;
-          }
+			}
 			else
 				return value.toFixed(this.decimals);
     }
