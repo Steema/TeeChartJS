@@ -15,6 +15,7 @@ Steema Software opensourced the library on march 2018 but still offers [paid sup
 ## Resources
 * ### [Tutorials](https://github.com/Steema/TeeChartJS/wiki)
 * ### [API Reference](http://teechart.net/docs/TeeChartHTML5Reference.htm)
+* ### [Issue Tracker](http://bugs.teechart.net/buglist.cgi?product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=---)
 
 <p align="center">
 <a href="https://www.steema.com/">
