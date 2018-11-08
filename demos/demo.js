@@ -1,32 +1,13 @@
 // sets the aTheme to the aChart
-// when aChart isn't defined, it searches for all the charts in the document and applies the aTheme to all
-function changeTheme(aChart, aTheme) {
-  if ((aTheme === undefined) && (typeof aChart === 'string')) {
-    aTheme = aChart;
-    aChart = undefined;
-  }
-
-  var target = [];
-
-  if (aChart && (aChart instanceof Tee.Chart))
-    target.push(aChart);
-  else {
-    $('canvas').each(function () {
-      if ($(this)[0].chart) {
-        target.push($(this)[0].chart);
-      }
-    })
-  }
-
-  $(target).each(function () {
-    var chart = $(this)[0];
-    chart.applyTheme(aTheme);
-
-    for (var i = 0; i < chart.series.count(); i++) {
-      if ((chart.series.items[i].pointer) && (chart.series.items[i].pointer.format))
-        chart.series.items[i].pointer.format.stroke.fill = "white";
-    }
-  })
+function changeTheme(chart, aTheme)
+{
+   chart.applyTheme(aTheme);
+   
+   for (var i = 0; i < chart.series.count(); i++)
+   {
+     if ((chart.series.items[i].pointer) && (chart.series.items[i].pointer.format))
+       chart.series.items[i].pointer.format.stroke.fill = "white";
+   }
 }
 
 // sets the aPalette to the aChart
