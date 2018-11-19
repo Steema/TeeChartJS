@@ -54,12 +54,12 @@ function draw() {
 function changeMap(value) {
   if (value==='world') {
      map.setMap(new Tee.WorldMap());
-     map.svg.values={ SE:1234, GB:600, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 }
+     //map.svg.values={ SE:1234, GB:600, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 }
   }
   else
   if (value==='usa') {
      map.setMap(new Tee.USAMap());
-     map.svg.values={ CA:1234, KY:600, NY:3822, IN:2102, AZ:1600, NV:3000, OH:1300, TX: 2700, FL:3300, NE:1510, MS:100 }
+     //map.svg.values={ CA:1234, KY:600, NY:3822, IN:2102, AZ:1600, NV:3000, OH:1300, TX: 2700, FL:3300, NE:1510, MS:100 }
   }
   else
   {
@@ -68,7 +68,7 @@ function changeMap(value) {
     else
        map.setMap(new Tee.Europe27Map());
 
-    map.svg.values={ SP:1234, GB:600, IT:3822, FI:2102, GR:1600, RU:3000, PT:1300, FR: 2700, DE:3300, NE:1510, DK:100 }
+    //map.svg.values={ SP:1234, GB:600, IT:3822, FI:2102, GR:1600, RU:3000, PT:1300, FR: 2700, DE:3300, NE:1510, DK:100 }
   }
 
   // Example:

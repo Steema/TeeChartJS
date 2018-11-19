@@ -279,13 +279,15 @@ function allTime(){
 
 function resizeScroller(aScroller) {
   if (aScroller != null) {
-    var w = parseInt(window.getComputedStyle(aScroller.canvas.parentElement, null).width, 10);
-    w -= parseInt(aScroller.canvas.style.marginLeft, 10);
-    w -= w * aScroller.target.panel.margins.right * 0.01;
-
+    var chart = aScroller.target;
+    var parentStyle = window.getComputedStyle(chart.canvas.parentElement, null);
+    var w = Math.floor(chart.canvas.parentElement.offsetWidth-(parseFloat(parentStyle.paddingLeft)+parseFloat(parentStyle.paddingRight)+parseFloat(parentStyle.borderLeftWidth)+parseFloat(parentStyle.borderRightWidth)));
+    w -= Math.floor(chart.canvas.width - chart.chartRect.getRight()) - 5;
+	var h = 100;
+    var l = chart.chartRect.x;
     aScroller.canvas.setAttribute('width', w + "px");
-    aScroller.bounds.width = w;
-    aScroller.setBounds(0, 0, w, 100);
+    aScroller.canvas.setAttribute('height', h + "px");
+    aScroller.setBounds(l, 0, w - l - 5, h);
 
     aScroller.draw();
   }
@@ -325,7 +327,7 @@ function resizeScroller(aScroller) {
 							This browser does not seem to support HTML5 Canvas.
 						</canvas>
 						<br/>
-						<canvas id="canvas2" height="60" style="margin-left:48px;">
+						<canvas id="canvas2" height="60">
 							This browser does not seem to support HTML5 Canvas.
 						</canvas>
 						<br><span id="dataRange" style="margin-left:48px; color:rgba(255,85,0,0.8);"/>
