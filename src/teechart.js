@@ -6355,7 +6355,9 @@ Tee.Chart=function(canvas,data,type)
    if (!ctx)
       throw "Canvas does not provide Context";
 
-   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+   if (this instanceof Tee.Scroller) {
+     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+   }
 
    if (r.automatic)
        r.setFrom(this.bounds);
