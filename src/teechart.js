@@ -4402,6 +4402,7 @@ function Marks(series,chart) {
   this.series=series;
 
   var arrow=this.arrow=new Tee.Format(chart);
+  arrow.visible=true;
   arrow.length=10;
   arrow.underline=false;
   arrow.z=0.5;
@@ -4502,54 +4503,52 @@ function Marks(series,chart) {
 
       this.draw();
 
-      var r=this.bounds, m=this.series.yMandatory;
+      if (arrow.visible) {
+        var r = this.bounds, m = this.series.yMandatory;
 
-      var rbot=inverted ? r.y : r.getBottom(), c=this.chart.ctx,
+        var rbot = inverted ? r.y : r.getBottom(), c = this.chart.ctx,
           is3d = this.chart.aspect.view3d;
 
-      if (m) {
+        if (m) {
 
-        if (is3d) {
-           var rr={ x:x-3, y:rbot, width:6, height: y-rbot};
+          if (is3d) {
+            var rr = {x: x - 3, y: rbot, width: 6, height: y - rbot};
 
-           arrow.z=this.format.z-arrow.depth*0.5;
+            arrow.z = this.format.z - arrow.depth * 0.5;
 
-           arrow.cylinder(rr, 1, true);
-           arrow.draw(this.chart.ctx, null, rr);
+            arrow.cylinder(rr, 1, true);
+            arrow.draw(this.chart.ctx, null, rr);
 
-           return;
-        }
-        else
-        {
+            return;
+          } else {
+            c.beginPath();
+
+            c.moveTo(x, rbot);
+            c.lineTo(x, y);
+
+            if (arrow.underline) {
+              c.moveTo(r.x, rbot);
+              c.lineTo(r.x + r.width, rbot);
+            }
+          }
+        } else {
+          var py = r.y + (r.height * 0.5);
+
           c.beginPath();
+          c.moveTo(x, py);
 
-          c.moveTo(x,rbot);
-          c.lineTo(x,y);
+          if (inverted) r.x += r.width;
+          c.lineTo(r.x, py);
 
           if (arrow.underline) {
-            c.moveTo(r.x,rbot);
-            c.lineTo(r.x+r.width,rbot);
+            c.moveTo(r.x, r.y + r.height);
+            c.lineTo(r.x + (inverted ? -r.width : r.width), r.y + r.height);
           }
         }
+
+        arrow.stroke.prepare();
+        c.stroke();
       }
-      else
-      {
-        var py=r.y+(r.height*0.5);
-
-        c.beginPath();
-        c.moveTo(x,py);
-
-        if (inverted) r.x+=r.width;
-        c.lineTo(r.x,py);
-
-        if (arrow.underline) {
-          c.moveTo(r.x,r.y+r.height);
-          c.lineTo(r.x+ (inverted ? -r.width : r.width),r.y+r.height);
-        }
-      }
-
-      arrow.stroke.prepare();
-      c.stroke();
     }
   }
 }
