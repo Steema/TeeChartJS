@@ -2853,8 +2853,8 @@ function Axis(chart,horizontal,otherSide) {
           for (var t = 0, le = f.data.labels.length; t < le; t++) {
 
               s = f.data.labels[t];
-              if (this.ongetlabel)
-                  s = this.ongetlabel(t, s);
+              if (l.ongetlabel)
+                  s = l.ongetlabel(t, s);
 
               if (s)
                   w = Math.max(w, wordWrap ? calcWordWrap(l.format, s) : l.format.textWidth(s));
