@@ -108,8 +108,8 @@ function addSampleData(index) {
 				
 				<br/>
 				<b>Axes:</b><br/>
-				<input type="checkbox" name="invV" onclick="Chart1.axes.left.inverted= this.checked; Chart1.draw();">Inverted Vert.
-				<input type="checkbox" name="invH" onclick="Chart1.axes.bottom.inverted= this.checked; Chart1.draw();">Inverted Horiz.
+				<input type="checkbox" name="invV" onclick="Chart1.axes.left.inverted=Chart1.axes.right.inverted=this.checked; Chart1.draw();">Inverted Vert.
+				<input type="checkbox" name="invH" onclick="Chart1.axes.bottom.inverted=Chart1.axes.top.inverted=this.checked; Chart1.draw();">Inverted Horiz.
 				<br/>
 				<b>Sample data:</b><br/>
 				<form action="">
