@@ -7939,7 +7939,7 @@ Tee.Pie=function(o,o2) {
   }
 
   this.fill=function(i) {
-    return this.getFillStyle(this.chart.chartRect,this.getFill(i));
+    return this.getFillStyle(new Tee.Rectangle(center.x-radius, center.y-radius, radius * 2, radius * 2),this.getFill(i));
   }
 
   this.slices=function(shadow) {
