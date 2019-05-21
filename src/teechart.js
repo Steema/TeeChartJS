@@ -3641,13 +3641,14 @@ Axis.draw=function() {
 
 	//guarantee centre label for one-value axes.
     if (Math.abs(this.maximum-this.minimum) <= 0.000000001 /*widen beyond this.minAxisRange*/)
-	{
-	   if (Math.abs(this.minimum) < 0.000000001) 	
-		 this.setMinMax(this.minimum-0.00000001,this.maximum+0.00000001);
-	   else
-	     this.setMinMax(this.minimum-(this.minimum/10000000),this.maximum+(this.maximum/10000000));
-	   if (this.chart != null)
-	     this.chart.draw();
+    {
+        var diff = (Math.abs(this.minimum) < 0.000000001) ? 0.00000001 : this.minimum / 10000000;
+
+        if ((this.minimum != this.minimum - diff) || (this.maximum != this.minimum + diff)) {
+            this.setMinMax(this.minimum - diff, this.maximum + diff);
+            if (this.chart != null)
+                this.chart.draw();
+        }
 	}
 	
     if (this.format.stroke.fill!=="")
