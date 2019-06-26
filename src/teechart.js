@@ -3507,8 +3507,6 @@ function Axis(chart,horizontal,otherSide) {
 
 Axis.adjustRect=function() {
 
-  if (!this.visible) return;
-
   var s=0, l=this.labels,
       b=this.chart.chartRect,
       ti=this.title,
@@ -3516,6 +3514,8 @@ Axis.adjustRect=function() {
 
   // Recalc firstSeries even if this axis is not visible:
   this.firstSeries=this.hasAnySeries();
+
+  if (!this.visible) return;
 
   if (this.firstSeries && this.visible) {
 
