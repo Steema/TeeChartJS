@@ -7839,6 +7839,7 @@ Tee.Pie=function(o,o2) {
   this.marks.visible=true;
 
   this.concentric=false;
+  this.clockwise=true;
 
  /**
   * @returns {Number} Returns the index'th pie slice value.
@@ -7900,7 +7901,8 @@ Tee.Pie=function(o,o2) {
   this.slice=function(c,index) {
     var p=new Point();
 
-    endAngle += Math.PI * 2 * (Math.abs(this.data.values[index]) / total) / (360 / this.angleWidth);
+    var a = Math.PI * 2 * (Math.abs(this.data.values[index]) / total) / (360 / this.angleWidth);
+    endAngle += this.clockwise ? a : -a;
     center.x=piex;
     center.y=piey;
     this.calcCenter(index,radius,(angle+endAngle)*0.5,center);
@@ -7921,13 +7923,13 @@ Tee.Pie=function(o,o2) {
     else
     {
       c.beginPath();
-      c.moveTo(p.x,p.y);
-      c.arc(center.x,center.y,radius,angle,endAngle,false);
+      c.moveTo(p.x, p.y);
+      c.arc(center.x,center.y,radius,angle,endAngle,!this.clockwise);
 
       if (this.donut!==0) {
         calcPos(endAngle,p);
         c.lineTo(p.x,p.y);
-        c.arc(center.x,center.y,donutRadius,endAngle,angle,true);
+        c.arc(center.x,center.y,donutRadius,endAngle,angle,!this.clockwise);
       }
 
       c.closePath();
@@ -8033,7 +8035,7 @@ Tee.Pie=function(o,o2) {
 
   this.drawMarks=function() {
     var endAngle=Math.PI*this.rotation/180.0, angle=endAngle, mid,
-        v=this.data.values, len=v.length, index, t;
+        v=this.data.values, len=v.length, index, t, a;
 
     this.marks.format.z = 0.5;
 
@@ -8042,7 +8044,8 @@ Tee.Pie=function(o,o2) {
       index= sorted ? sorted[t] : t;
 
       if (!this.isNull(index)) {
-        endAngle+=Math.PI*2*(Math.abs(v[index]) /total);
+        a=Math.PI*2*(Math.abs(v[index]) / total);
+        endAngle+=this.clockwise?a:-a;
         mid=(angle+endAngle)*0.5;
         center.x=piex;
         center.y=piey;
