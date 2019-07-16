@@ -7929,7 +7929,7 @@ Tee.Pie=function(o,o2) {
       if (this.donut!==0) {
         calcPos(endAngle,p);
         c.lineTo(p.x,p.y);
-        c.arc(center.x,center.y,donutRadius,endAngle,angle,!this.clockwise);
+        c.arc(center.x,center.y,donutRadius,endAngle,angle,this.clockwise);
       }
 
       c.closePath();
