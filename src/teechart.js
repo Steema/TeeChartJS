@@ -8201,10 +8201,6 @@ Tee.Area=function(o,o2) {
 
       c.closePath();
 
-      var g=f.gradient;
-      if (g.visible)
-        g.colors[g.colors.length-1]=f.fill;
-
       this.bounds(r);
 
       if (c.__webgl)
