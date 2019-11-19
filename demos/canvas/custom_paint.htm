@@ -23,12 +23,13 @@
 <script type="text/javascript">
 
 var Chart1;
+var myFormat;
 
 function draw() {
   Chart1=new Tee.Chart("canvas");
   Chart1.addSeries(new Tee.Line([50,30,20,70,10,60,40,50,10,0,100]) ).format.stroke.size=4;
 
-  var myFormat = new Tee.Format(Chart1);
+  myFormat = new Tee.Format(Chart1);
   myFormat.gradient.visible=true;
   myFormat.gradient.colors=["white","lime"];
   myFormat.transparency=0.3;
@@ -58,6 +59,7 @@ function resize(chart){
 		var w;
 		var h;
 		var canvas = chart.canvas;
+		
 		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 			
 			w = window.innerWidth;
@@ -102,6 +104,22 @@ function resize(chart){
 		}
 	}	
 }
+
+function hideShowPoly()
+{
+  if (myFormat == null)
+  {
+    myFormat = new Tee.Format(Chart1);
+    myFormat.gradient.visible=true;
+    myFormat.gradient.colors=["white","lime"];
+    myFormat.transparency=0.3;
+  }
+  else
+    myFormat = null; 
+	
+  Chart1.draw();
+}
+
 function resizeToolBar(){
 	var toolbar1 = document.getElementById("toolbar1");
 	var w = window.innerWidth;
@@ -139,12 +157,13 @@ function resizeToolBar(){
 					This browser does not seem to support HTML5 Canvas.
 					</canvas>
 				</div>
+					
+				<input type="button" value="togglePoly" onclick="hideShowPoly()"></input>
 			</div> 
 		</div>
 		<div class="clearfix"></div>
 		
 	</div>
-	
 	<script type="text/javascript">
 	function openSample() {
 	    window.open("custom_paint.htm", "_blank");
