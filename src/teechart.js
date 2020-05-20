@@ -5758,8 +5758,6 @@ Tee.Chart=function(canvas,data,type)
    */
   this.isMozilla=(typeof window !== 'undefined') && window.mozRequestAnimationFrame;
 
-  this.language = window.navigator.userLanguage || window.navigator.language;
-
   if (canvas) {
     if ((typeof HTMLCanvasElement!=="undefined") && (canvas instanceof HTMLCanvasElement))
        this.canvas=canvas;
