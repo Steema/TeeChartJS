@@ -56,8 +56,7 @@ Tee.ColorGrid=function(o,o2) {
          style.msInterpolationMode = smooth ? "bicubic" : "nearest-neighbor";
     }
 
-    ctx.mozImageSmoothingEnabled=smooth;
-    ctx.webkitImageSmoothingEnabled=smooth;
+    ctx.imageSmoothingEnabled=smooth;
   }
 
   function square(x) { return x*x; }
