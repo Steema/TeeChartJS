@@ -56,8 +56,7 @@ Tee.ColorGrid=function(o,o2) {
          style.msInterpolationMode = smooth ? "bicubic" : "nearest-neighbor";
     }
 
-    ctx.mozImageSmoothingEnabled=smooth;
-    ctx.webkitImageSmoothingEnabled=smooth;
+    ctx.imageSmoothingEnabled=smooth;
   }
 
   function square(x) { return x*x; }
@@ -2178,7 +2177,8 @@ Tee.Three=function(id) {
 
   if (renderer) {
     //scene.fog = new THREE.FogExp2( 0x999999, 0.00025 );
-    //scene.fog = new THREE.Fog( 0x999999, 1000, 10000 );
+
+    //scene.fog = new THREE.Fog( 0x999999, 1000, 10000 );
 
     renderer.setSize(width, height);
 
@@ -2274,7 +2274,8 @@ Tee.Three=function(id) {
     var trackBall=this.trackBall = null;
 
     this.setCamera(true);
-    this.createTrackball();
+
+    this.createTrackball();
   }
   
   this.needsRender = true;
