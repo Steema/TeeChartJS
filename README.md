@@ -1,5 +1,5 @@
 <a href="https://www.steema.com/product/html5">
-<img align="right" src="http://www.teechart.net/img/logos/teechart_html5.png">
+<img align="right" src="https://www.steema.com/img/logos/teechart_html5.png">
 </a>
 
 100% JavaScript charting library using the HTML5 Canvas.
@@ -14,8 +14,8 @@ Steema Software opensourced the library on march 2018 but still offers [paid sup
 
 ## Resources
 * ### [Tutorials](https://github.com/Steema/TeeChartJS/wiki)
-* ### [API Reference](http://teechart.net/docs/TeeChartHTML5Reference.htm)
-* ### [Issue Tracker](http://bugs.teechart.net/buglist.cgi?product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=---)
+* ### [API Reference](https://www.steema.com/docs/TeeChartHTML5Reference.htm)
+* ### [Issue Tracker](http://bugs.steema.com/buglist.cgi?product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=---)
 
 <p align="center">
 <a href="https://www.steema.com/">
