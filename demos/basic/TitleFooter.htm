@@ -30,14 +30,22 @@ function draw() {
 
   Chart1.title.text="Title Text";
   Chart1.title.format.font.style="18px Verdana";
-//  Chart1.title.margins.right=20;
+
+  Chart1.subtitle.text="Subtitle Text";
+  Chart1.subtitle.format.font.style="14px Verdana";
+  Chart1.subtitle.format.font.shadow.visible = false;
 
   Chart1.footer.text="Footer Text";
   Chart1.footer.format.font.style="18px Verdana";
-  Chart1.footer.format.fill="black";
+  Chart1.footer.format.font.fill = "rgba(124,124,144,0.9)";
+  Chart1.footer.format.font.shadow.visible = false;
+
+  Chart1.subfooter.text="Subfooter Text";
+  Chart1.subfooter.format.font.style="14px Verdana";
+  Chart1.subfooter.format.font.shadow.visible = false;
 
   changeTheme(Chart1, "minimal");
-Chart1.draw();
+  Chart1.draw();
 }
 
 function setRound(round) {

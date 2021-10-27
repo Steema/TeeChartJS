@@ -5940,8 +5940,14 @@ Tee.Chart=function(canvas,data,type)
   this.title.text="TeeChart";
   this.title.format.z=1;
 
+  this.subtitle=new Title(this, "blue");
+  this.subtitle.format.z=1;
+
   this.footer=new Title(this, "red");
   this.footer.format.z=0;
+
+  this.subfooter=new Title(this, "red");
+  this.subfooter.format.z=0;
 
   this.zoom=new Zoom(this);
   this.scroll=new Scroll(this);
@@ -6391,7 +6397,9 @@ Tee.Chart=function(canvas,data,type)
       this.panel.margins.apply(r);
 
    this.title.tryDraw(true);
-   this.footer.tryDraw(false);
+   this.subtitle.tryDraw(true);
+   this.subfooter.tryDraw(false);
+   this.footer.tryDraw(false);   
 
    series.beforeDraw();
 
