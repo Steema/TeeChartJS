@@ -6398,8 +6398,8 @@ Tee.Chart=function(canvas,data,type)
 
    this.title.tryDraw(true);
    this.subtitle.tryDraw(true);
-   this.subfooter.tryDraw(false);
-   this.footer.tryDraw(false);   
+   this.footer.tryDraw(false); 
+   this.subfooter.tryDraw(false);  
 
    series.beforeDraw();
 
