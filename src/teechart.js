@@ -1898,59 +1898,57 @@ Tee.ToolTip=function(chart) {
   var redraw=function(args) {
     if (args) args[0].hide();
   }
+
   this.mousemove=function(p) {
-
-    var li=this.chart.series, len=li.count(), ser=null, index=-1; 
+    var li=this.chart.series, len=li.count(), ser=null, index=-1;
     if (this.chart.chartRect.contains(p))
-    for (var t=len-1; t>=0; t--) {
-      var s=li.items[t];
+      for (var t=len-1; t>=0; t--) {
+        var s=li.items[t];
 
-      if (s.visible) {
-	    index=s.clicked(p);
+        if (s.visible) {
+          index=s.clicked(p);
           if ((index == -1) && (s.continuous)) {
-    		index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
-              var distance, oldDistance;
-              for (var n = 0; n < len; n++) {
-                  distance = Math.abs(li.items[n].data.values[index] - this.chart.axes.left.fromPos(p.y));
-                  if (n == 0) {
-                      oldDistance = distance;
-                      s = li.items[n];
-                  }
-                  else if(distance<oldDistance){
-                      s = li.items[n];
-                  }
+            index = Math.round(this.chart.axes.bottom.fromSizeCalcIndex(p.x-this.chart.axes.bottom.startPos));
+            var distance, oldDistance;
+            for (var n = 0; n < len; n++) {
+              distance = Math.abs(li.items[n].data.values[index] - this.chart.axes.left.fromPos(p.y));
+              if (n == 0) {
+                oldDistance = distance;
+                s = li.items[n];
               }
+              else if(distance<oldDistance){
+                s = li.items[n];
+              }
+            }
           }
 
-        if (index!=-1) {
-          ser=s;
-          break;
+          if (index!=-1) {
+            ser=s;
+            break;
+          }
         }
       }
-    }
-    else
-	    index=-1;
-    if (index==-1) {
-      this.hide();
+      else
+        index=-1;
 
-      this.currentIndex=-1;
-      this.currentSeries=null;
-    }
-    else
-    if ((index != this.currentIndex) || (ser!=this.currentSeries)) {
+      if (index==-1) {
+        this.hide();
+        this.currentIndex=-1;
+        this.currentSeries=null;
+      }
+      else if ((index != this.currentIndex) || (ser!=this.currentSeries)) {
+        this.currentIndex=index;
+        this.currentSeries=ser;
 
-      this.currentIndex=index;
-      this.currentSeries=ser;
+        if (ser) {
+          this.refresh(ser,index);
 
-      if (ser) {
-        this.refresh(ser,index);
-
-        if (this.autoHide && (this.delay > 0)) {
-           clearTimeout(this.timID);
-           this.timID=window.setTimeout(redraw, this.delay, [this]);
+          if (this.autoHide && (this.delay > 0)) {
+            clearTimeout(this.timID);
+            this.timID=window.setTimeout(redraw, this.delay, [this]);
+          }
         }
       }
-    }
   }
 
   var o=null;
@@ -2526,6 +2524,23 @@ function Axis(chart,horizontal,otherSide) {
 
   this.maxLabelDepth = 0;
 
+  function NumberFormatOptions() {
+    this.localeMatcher;
+    this.style;
+    this.currency;
+    this.currencyDisplay;
+    this.useGrouping;
+    this.minimumIntegerDigits;
+    this.minimumFractionDigits;
+    this.maximumFractionDigits;
+    this.minimumSignificantDigits;
+    this.maximumSignificantDigits;
+  }
+
+  function FormatValueOptions() {
+    this.locales;
+    this.options = new NumberFormatOptions();
+  };
   /**
    * @constructor
    * @public
@@ -2593,10 +2608,14 @@ function Axis(chart,horizontal,otherSide) {
          this._text=s;
     }
 
-    
-    this.formatValueString=function(value)
-    {
-			if (this.valueFormat){
+    this.valueFormat = new FormatValueOptions();
+
+    this.formatValueString=function(value) {
+			if (this.valueFormat) {
+			  if ((this.valueFormat.locales) || (this.valueFormat.options)) {
+          return value.toLocaleString(this.valueFormat.locales, this.valueFormat.options);
+        }
+
 				var DecimalSeparator = Number("1.2").toLocaleString().substr(1,1); 
 				
 				var AmountWithCommas = (value * 1).toLocaleString();
@@ -2616,7 +2635,7 @@ function Axis(chart,horizontal,otherSide) {
 					return intPart + DecimalSeparator + decPart;
 				else
 					return intPart;
-          }
+			}
 			else
 				return value.toFixed(this.decimals);
     }
@@ -2628,36 +2647,33 @@ function Axis(chart,horizontal,otherSide) {
       var v=trunc(value), s, data;
 
       if (this._text && (v==value)) {
-
          data=this._text.data;
 
          if (data.x) v=data.x.indexOf(v);
-     
-     var li=chart.series.items, t, ser;
+         var li=chart.series.items, t, ser;
 
-     //specific case: check for non-std sideAll labelling
-     if ((li.length > 0) && (li[0] instanceof Tee.Bar) 
+         //specific case: check for non-std sideAll labelling
+        if ((li.length > 0) && (li[0] instanceof Tee.Bar)
                 && (li[0].stacked == "sideAll")) {
-       s= data.labels[value];
-     }
-     else {       
-      s= data.labels[v];
-     }
+          s= data.labels[value];
+        }
+        else {
+          s= data.labels[v];
+        }
 
-         // Last resort, try to find labels from any series in axis:
+        // Last resort, try to find labels from any series in axis:
+        if (!s) {
+          for(t=0; ser=li[t++];)
+            if (ser!=this._text) {
+              if (ser.visible && ser.associatedToAxis(axis)) {
+                s=ser.data.labels[v];
+                if (s) break;
+              }
+            }
 
-         if (!s) {
-       for(t=0; ser=li[t++];)
-       if (ser!=this._text) {
-       if (ser.visible && ser.associatedToAxis(axis)) {
-         s=ser.data.labels[v];
-         if (s) break;
-       }
-         }
-
-           if (s === undefined)
+            if (s === undefined)
               s="";
-         }
+        }
       }
       else
       if (axis.dateTime) {
@@ -3363,7 +3379,7 @@ function Axis(chart,horizontal,otherSide) {
   }
 
   this.drawLabels=function() {
-	var v=this.roundMin(), r=new Rectangle(), c=this.axisPos, l=this.labels;
+	  var v=this.roundMin(), r=new Rectangle(), c=this.axisPos, l=this.labels;
     //var v=(this.minimum<this.maximum) ? this.roundMin() : this.minimum, r=new Rectangle(), c=this.axisPos, l=this.labels;
 
     l.maxWidth=0;
@@ -3407,7 +3423,6 @@ function Axis(chart,horizontal,otherSide) {
       this.drawLabel(v,r);
       v += this.increm;
     }
-
   }
 
  /**
