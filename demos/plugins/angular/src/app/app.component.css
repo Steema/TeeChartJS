@@ -1,0 +1,29 @@
+.layout {
+  padding: 2rem;
+  text-align: center;
+}
+
+a:visited,
+a:link {
+  color: #4473bb;
+  font-size: medium;
+}
+
+canvas {
+  border-radius: 8px;
+  border: #efefef solid 1px;
+  background-color: #efefef;
+  padding: 2rem;
+}
+
+pre {
+  text-align: start;
+  padding: 2rem 8rem;
+  font-family: "Courier New", Verdana, Arial;
+  font-size: 12pt;
+  color: darkblue;
+  background-color: #efefef;
+  border-radius: 8px;
+  width: min-content;
+  margin: auto;
+}

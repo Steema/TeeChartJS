@@ -1,87 +1,86 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>TeeChart JavaScript Volume Bar Series Example</title>
-<meta charset="UTF-8"/>
+  <head>
+    <title>TeeChart JavaScript Volume Bar Series Example</title>
+    <meta charset="UTF-8" />
 
-<!--[if lt IE 9]>
-    <script src="../../../src/excanvas/excanvas_text.js"></script>
-    <script src="../../../src/excanvas/canvas.text.js"></script>
-<![endif]-->
+    <!--[if lt IE 9]>
+      <script src="../../../src/excanvas/excanvas_text.js"></script>
+      <script src="../../../src/excanvas/canvas.text.js"></script>
+    <![endif]-->
 
-<script src="../../../src/teechart.js" type="text/javascript"></script>
-<script src="../../../src/teechart-extras.js" type="text/javascript"></script>
-<script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
-<script src="../../demo.js" type="text/javascript"></script>
+    <script src="../../../src/teechart.js" type="text/javascript"></script>
+    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+    <script src="../../demo.js" type="text/javascript"></script>
 
-<!-- Bootstrap -->
-<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
-<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
-<!-- NProgress -->
-<!-- Custom Theme Style -->
-<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <!-- Custom Theme Style -->
+    <link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../../demo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../demo.css" />
 
-<script type="text/javascript">
-var Chart1;
+    <script type="text/javascript">
+      var Chart1
 
-function draw() {
-  Chart1=new Tee.Chart("canvas");
+      function draw() {
+        Chart1 = new Tee.Chart('canvas')
 
-  // Create series:
-  var volume=Chart1.addSeries(new Tee.Volume());
+        // Create series:
+        var volume = Chart1.addSeries(new Tee.Volume())
 
-  volume.hover.stroke.fill="black"; 
-  volume.hover.stroke.size=1;
-  // Random data:
+        volume.hover.stroke.fill = 'black'
+        volume.hover.stroke.size = 1
+        // Random data:
 
-  var value=Math.random()*10;
-  for(var t=0; t<200; t++) {
-    value+=Math.random()*20-10;
-    volume.data.values.push(value);
-  }
+        var value = Math.random() * 10
+        for (var t = 0; t < 200; t++) {
+          value += Math.random() * 20 - 10
+          volume.data.values.push(value)
+        }
 
-  // Cosmetics:
+        // Cosmetics:
 
-  Chart1.legend.visible=false;
-  Chart1.axes.bottom.title.text="Session";
-  Chart1.axes.bottom.grid.visible=false;
-  Chart1.axes.left.title.text="Quantity";
-  Chart1.title.text="Volume Series";
+        Chart1.legend.visible = false
+        Chart1.axes.bottom.title.text = 'Session'
+        Chart1.axes.bottom.grid.visible = false
+        Chart1.axes.left.title.text = 'Quantity'
+        Chart1.title.text = 'Volume Series'
 
-  changeTheme(Chart1, "minimal");
+        changeTheme(Chart1, 'minimal')
 
-  Chart1.draw();
-}
-</script>
-</head>
-<body onload="draw();">
-	<div class="right_col" role="main">
-		<div class="page-title">
-			<div class="title_left">
-				<h3>TeeChart for JavaScript <span class="smallLetters">Volume</span></h3>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-		<div class="row" id="toolbar1">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2><span class="smallLetters">Volume</span></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
-						</li>
-					</ul>
-				<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<canvas id="canvas" height="500">
-					</canvas>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+        Chart1.draw()
+      }
+    </script>
+  </head>
+  <body onload="draw();">
+    <div class="right_col" role="main">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>TeeChart for JavaScript <span class="smallLetters">Volume</span></h3>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row" id="toolbar1">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><span class="smallLetters">Volume</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <canvas id="canvas" height="500"> </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

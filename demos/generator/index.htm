@@ -7,14 +7,14 @@
 
 <link rel="stylesheet" href="../../jquery/css/ui-lightness/jquery-ui-1.8.17.custom.css">
 <script src="../../jquery/js/jquery-1.7.1.min.js" type="text/javascript"></script>
-<script src="../../jquery/js/jquery-ui-1.8.17.custom.min.js" type="text/javascript"></script>
+<script src="../../jquery/js/jquery-ui-1.8.17.custom.min.js" type="text/javascript"></script>
+
 <script src="../canvas/webgl/threejs/three.min.js" type="text/javascript"></script>
 <script src="../canvas/webgl/threejs/Detector.js" type="text/javascript"></script>
 <script src="../canvas/webgl/threejs/TrackballControls.js" type="text/javascript"></script>
 <script src="../canvas/webgl/fonts/helvetiker_font/helvetiker_regular.typeface.js"></script>
 
 <script src="../../src/teechart.js" type="text/javascript"></script>
-<script src="../../src/teechart-extras.js" type="text/javascript"></script>
 <script src="../../src/teechart-table.js" type="text/javascript"></script>
 <script src="../../src/teechart-3d.js" type="text/javascript"></script>
 
@@ -359,7 +359,8 @@ function draw() {
   Chart1.onhover=Table1.hoverCell;
 
   slider2=new accordion.slider("slider2");
-  slider2.init("slider2",0,"open");
+  slider2.init("slider2",0,"open");
+
   refreshChart();
 
   container=document.getElementById("container");
@@ -378,10 +379,16 @@ function draw() {
    .button()
    .click(function() {
    $( "#editor" ).dialog( "open" );
-  });  $( "#doedit2" )   .button()
+  });
+  $( "#doedit2" )
+   .button()
    .click(function() {
    $( "#editor" ).dialog( "open" );
-  });  tips();}
+  });
+
+  tips();
+}
+
 function refreshSize() {
   document.getElementById('size').innerHTML=Chart1.bounds.width+' x '+Chart1.bounds.height;
 }
@@ -568,7 +575,11 @@ function tips() {
     tip.onhide=function() {
       Tee.DOMTip.hide();
     }
-    tip.ongettext=function(tool,text) {      return "";    }    */  }
+    tip.ongettext=function(tool,text) {
+      return "";
+    }
+    */
+  }
 
   if (tip)
     tip.enabled=t;

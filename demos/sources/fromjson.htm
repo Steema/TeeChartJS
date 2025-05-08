@@ -1,101 +1,99 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>TeeChart JavaScript JSON to Series Example</title>
-<meta charset="UTF-8"/>
+  <head>
+    <title>TeeChart JavaScript JSON to Series Example</title>
+    <meta charset="UTF-8" />
 
-<!--[if lt IE 9]>
-    <script src="../../src/excanvas/excanvas_text.js"></script>
-    <script src="../../src/excanvas/canvas.text.js"></script>
-<![endif]-->
+    <!--[if lt IE 9]>
+      <script src="../../src/excanvas/excanvas_text.js"></script>
+      <script src="../../src/excanvas/canvas.text.js"></script>
+    <![endif]-->
 
-<script src="../../src/teechart.js" type="text/javascript"></script>
-<script src="../../src/teechart-extras.js" type="text/javascript"></script>
-<script src="../../src/teechart-table.js" type="text/javascript"></script>
-<script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
-<script src="../demo.js" type="text/javascript"></script>
+    <script src="../../src/teechart.js" type="text/javascript"></script>
+    <script src="../../src/teechart-table.js" type="text/javascript"></script>
+    <script src="../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+    <script src="../demo.js" type="text/javascript"></script>
 
-<!-- Bootstrap -->
-<link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
-<link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
-<!-- NProgress -->
-<!-- Custom Theme Style -->
-<link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <!-- Custom Theme Style -->
+    <link href="../3rd_party/build/css/custom.min.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../demo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../demo.css" />
 
-<script type="text/javascript">
-var Chart1, Chart2;
+    <script type="text/javascript">
+      var Chart1, Chart2
 
-function draw() {
+      function draw() {
+        // Values and Labels:
+        Chart1 = new Tee.Chart('canvas')
+        var bar = Chart1.addSeries(new Tee.Bar())
+        bar.loadJSON(document.getElementById('json'))
 
-  // Values and Labels:
-  Chart1 = new Tee.Chart("canvas");
-  var bar = Chart1.addSeries(new Tee.Bar());
-  bar.loadJSON(document.getElementById("json"));
+        Chart1.title.text = 'JSON to Chart'
+        Chart1.footer.text = Chart1.axes.bottom.title.text
 
-  Chart1.title.text="JSON to Chart";
-  Chart1.footer.text=Chart1.axes.bottom.title.text;
+        Chart1.axes.bottom.title.text = bar.title
 
-  Chart1.axes.bottom.title.text=bar.title;
+        changeTheme(Chart1, 'minimal')
 
-  changeTheme(Chart1, "minimal");
-  
-  Chart1.draw();
+        Chart1.draw()
 
-  // XY Data, multiple series:
-  Chart2 = new Tee.Chart("canvasXY");
-  Chart2.title.text="JSON XY to Chart";
+        // XY Data, multiple series:
+        Chart2 = new Tee.Chart('canvasXY')
+        Chart2.title.text = 'JSON XY to Chart'
 
-  loadXYData(Chart2);
-}
+        loadXYData(Chart2)
+      }
 
-function loadXYData(chart) {
-  var jsonXY = document.getElementById("jsonXY").value,
-      list = JSON.parse(jsonXY).chart,
-      xyLine;
+      function loadXYData(chart) {
+        var jsonXY = document.getElementById('jsonXY').value,
+          list = JSON.parse(jsonXY).chart,
+          xyLine
 
-  chart.series.items=[];
+        chart.series.items = []
 
-  for (var t=0; t<list.length; t++) {
-     xyLine = chart.addSeries(new Tee.Line());
-     xyLine.pointer.visible=true;
-     xyLine.pointer.style=list[t].series.pointer;
+        for (var t = 0; t < list.length; t++) {
+          xyLine = chart.addSeries(new Tee.Line())
+          xyLine.pointer.visible = true
+          xyLine.pointer.style = list[t].series.pointer
 
-     xyLine.loadJSON( { value: list[t] });
-  }
+          xyLine.loadJSON({ value: list[t] })
+        }
 
-  changeTheme(chart, "minimal");
-  chart.draw();
-}
+        changeTheme(chart, 'minimal')
+        chart.draw()
+      }
+    </script>
+  </head>
+  <body onload="draw();">
+    <div class="right_col" role="main">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>TeeChart for JavaScript <span class="smallLetters">Tee Chart from JSON</span></h3>
+        </div>
+      </div>
+      <div class="clearfix"></div>
 
-</script>
-</head>
-<body onload="draw();">
-	<div class="right_col" role="main">
-		<div class="page-title">
-			<div class="title_left">
-				<h3>TeeChart for JavaScript <span class="smallLetters">Tee Chart from JSON</span></h3>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-	
-		<div class="row">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2><span class="smallLetters">JSON to Chart</span></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<div style="float:left;">
-						<b>JSON data including values and labels:</b><br/>
-						<textarea id="json" rows="20" cols="40" wrap="soft" style="width: auto">
+      <div class="row">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><span class="smallLetters">JSON to Chart</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div style="float: left">
+              <b>JSON data including values and labels:</b><br />
+              <textarea id="json" rows="20" cols="40" wrap="soft" style="width: auto">
 {
   "series":{
     "name":"Friends",
@@ -120,32 +118,32 @@ function loadXYData(chart) {
     ]
   }
 }
-						</textarea>
-						<br/>
-						<button type="BUTTON" onclick="Chart1.series.items[0].refresh();">Refresh</Button>
-					</div>
+						</textarea
+              >
+              <br />
+              <button type="BUTTON" onclick="Chart1.series.items[0].refresh();">Refresh</button>
+            </div>
 
-					<br><canvas id="canvas" height="400">
-					This browser does not seem to support HTML5 Canvas.
-					</canvas>
-				</div>
-			</div>
-		</div>
-			
-		<div class="row">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2><span class="smallLetters">JSON XY to Chart</span></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
-						</li>
-					</ul>
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<div style="float:left;">
-						<b>JSON data, multiple series including X and Y values:</b><br/>
-						<textarea id="jsonXY" rows="20" cols="40" wrap="soft" style="width: auto">
+            <br /><canvas id="canvas" height="400"> This browser does not seem to support HTML5 Canvas. </canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><span class="smallLetters">JSON XY to Chart</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div style="float: left">
+              <b>JSON data, multiple series including X and Y values:</b><br />
+              <textarea id="jsonXY" rows="20" cols="40" wrap="soft" style="width: auto">
 {
   "chart": [
     {
@@ -192,17 +190,16 @@ function loadXYData(chart) {
     }
   ]
 }
-						</textarea>
-						<br/>
-						<button type="button" onclick="loadXYData(Chart2)">Refresh</button>
-					</div>
+						</textarea
+              >
+              <br />
+              <button type="button" onclick="loadXYData(Chart2)">Refresh</button>
+            </div>
 
-					<br><canvas id="canvasXY" height="400">
-					This browser does not seem to support HTML5 Canvas.
-					</canvas>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+            <br /><canvas id="canvasXY" height="400"> This browser does not seem to support HTML5 Canvas. </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,16 +1,15 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>TeeChart JavaScript MultiDimensional Charting Tutorial</title>
 
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <!--[if lt IE 9]>
-    <script src="../../src/excanvas/excanvas_text.js"></script>
-    <script src="../../src/excanvas/canvas.text.js"></script>
+      <script src="../../src/excanvas/excanvas_text.js"></script>
+      <script src="../../src/excanvas/canvas.text.js"></script>
     <![endif]-->
 
     <script src="../../src/teechart.js" type="text/javascript"></script>
-    <script src="../../src/teechart-extras.js" type="text/javascript"></script>
 
     <script src="../../src/teechart-maps.js" type="text/javascript"></script>
     <script src="../../src/teechart-data.js" type="text/javascript"></script>
@@ -20,61 +19,59 @@
     <script src="../demo.js" type="text/javascript"></script>
 
     <!-- Bootstrap -->
-    <link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
-    <link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <!-- Custom Theme Style -->
-    <link href="../3rd_party/build/css/custom.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../demo.css">
+    <link href="../3rd_party/build/css/custom.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../demo.css" />
 
     <style>
+      .mapPart {
+        width: 70%;
+      }
 
-        .mapPart {
-            width: 70%
-        }
+      .mapTxtPart {
+        width: 30%;
+      }
 
-        .mapTxtPart {
-            width: 30%;
-        }
+      .map {
+        border-color: red;
+        border-style: hidden;
+        border-width: 2px;
+        border-radius: 10px;
+        background-color: white;
+      }
 
-        .map {
-            border-color: red;
-            border-style: hidden;
-            border-width: 2px;
-            border-radius: 10px;
-            background-color: white;
-        }
+      .map polygon:hover {
+        opacity: 0.5;
+        stroke: red;
+      }
 
-        .map polygon:hover {
-            opacity: 0.5;
-            stroke: red
-        }
+      .map polygon {
+        stroke: #c5dff8;
+        stroke-width: 0.5em;
+        cursor: pointer;
+      }
 
-        .map polygon {
-            stroke: #C5DFF8;
-            stroke-width: 0.5em;
-            cursor: pointer;
-        }
+      .teetip {
+        background-color: #c5dff8 !important;
+        border: 1px solid white;
+      }
 
-        .teetip {
-            background-color: #C5DFF8 !important;
-            border: 1px solid white;
-        }
+      #usa {
+        text-align: right;
+      }
 
-        #usa {
-            text-align: right;
-        }
-
-        #usa.map polygon {
-            stroke: #FFFFFF;
-            stroke-width: 0.5em;
-            fill: silver;
-        }
+      #usa.map polygon {
+        stroke: #ffffff;
+        stroke-width: 0.5em;
+        fill: silver;
+      }
     </style>
 
     <script type="text/javascript">
-
       var USAValues = [
         {
           year: 2000,
@@ -804,210 +801,211 @@
             WY: 14.0
           }
         }
-      ];
+      ]
 
       var Engine = new Tee.Data(),
-        Data = Engine.addDataSet("USA", USAValues),
-        Years = Data.addDimension("Years", "values", "year"),
-        States = Years.addDimension("USA States"),
-        Degree = States.addMetric("Degrees");
+        Data = Engine.addDataSet('USA', USAValues),
+        Years = Data.addDimension('Years', 'values', 'year'),
+        States = Years.addDimension('USA States'),
+        Degree = States.addMetric('Degrees')
 
-      var USAMap, Legend, Chart1, Chart2;
+      var USAMap, Legend, Chart1, Chart2
 
       // Query average of Temperatures (Degree) of a given Year, grouped by USA State:
 
       function fillMap(year) {
-        Years.selected = year;  // select a specific Year
+        Years.selected = year // select a specific Year
 
         // Query by States
-        var values = Engine.query(States, Degree), v = values[0].values;
+        var values = Engine.query(States, Degree),
+          v = values[0].values
 
         // Clear map values
         USAMap.values = {}
 
         // Set each State result value
-        for (var t = 0; t < v.length; t++)
-          USAMap.values[v[t].id] = v[t].value;
+        for (var t = 0; t < v.length; t++) USAMap.values[v[t].id] = v[t].value
 
         // Tell the map to colorize according to values:
         //var palette = USAMap.applyPalette([ "#F0F0F0", "#C0C0C0", "#A0A0A0", "#808080", "#606060", "#404040" ]);
         //var palette = USAMap.applyPalette([ "#FF9999", "#663399", "#CCFFFF", "#FFFFCC", "#660066", "#8080FF" ]);
         //var palette = USAMap.applyPalette([ "#6EC5B8","#C7BAA7","#978B7D","#DC5C05","#FFAC00","#E8D0A9" ]);
-        var palette = USAMap.applyPalette(["#313695", "#4575B4", "#74ADD1", "#ABD9EA", "#E0F3F9", "#FFFFBF", "#FEE090", "#FDAE61", "#F46D43", "#D73027", "#A50026"]);
+        var palette = USAMap.applyPalette(['#313695', '#4575B4', '#74ADD1', '#ABD9EA', '#E0F3F9', '#FFFFBF', '#FEE090', '#FDAE61', '#F46D43', '#D73027', '#A50026'])
 
         // Use the color palette to fill a <table> with mouse over:
-        Legend = new Engine.MapLegend(palette, document.getElementById("legend"));
+        Legend = new Engine.MapLegend(palette, document.getElementById('legend'))
       }
 
-      var enableCursor = false;
+      var enableCursor = false
 
       function draw() {
         // Show average of temperatures by each Year:
-        Degree.measure = "average";
+        Degree.measure = 'average'
 
-        Chart1 = Engine.Chart("canvas1", Years.title);
-        Chart1.setSeriesStyle(Tee.Line);
-        Chart1.panel.margins.right = 10;
-        Chart1.scroll.enabled = false;
-        Chart1.zoom.enabled = false;
-        Chart1.legend.visible = false;
+        Chart1 = Engine.Chart('canvas1', Years.title)
+        Chart1.setSeriesStyle(Tee.Line)
+        Chart1.panel.margins.right = 10
+        Chart1.scroll.enabled = false
+        Chart1.zoom.enabled = false
+        Chart1.legend.visible = false
 
         Chart1.onnewseries = function (chart, series) {
-          series.smooth = 0.5;
+          series.smooth = 0.5
         }
 
-        var years = Years.getIds(), old = 0;
+        var years = Years.getIds(),
+          old = 0
 
-        Chart1.title.text = States.title + " " + years[old];
-        Chart1.fill(Years, Degree);
+        Chart1.title.text = States.title + ' ' + years[old]
+        Chart1.fill(Years, Degree)
 
-        USAMap = new Tee.USAMap("usa");
+        USAMap = new Tee.USAMap('usa')
 
-        fillMap(USAValues[0].year);
+        fillMap(USAValues[0].year)
 
-        USAMap.addZoomButtons();
+        USAMap.addZoomButtons()
 
-        Chart2 = Engine.Chart("canvas2", "");
-        Chart2.setSeriesStyle(Tee.Area);
-        Chart2.animateChanges = true;
-        Chart2.scroll.enabled = false;
-        Chart2.zoom.enabled = false;
+        Chart2 = Engine.Chart('canvas2', '')
+        Chart2.setSeriesStyle(Tee.Area)
+        Chart2.animateChanges = true
+        Chart2.scroll.enabled = false
+        Chart2.zoom.enabled = false
 
         Chart2.onnewseries = function (chart, series) {
-          series.smooth = 0.5;
-          series.origin = 5;
-          series.useOrigin = true;
-          series.format.gradient.visible = true;
-          series.format.gradient.direction = "bottomtop";
-          series.format.stroke.fill = "white";
-          series.format.gradient.colors = USAMap.palette.slice(6);
+          series.smooth = 0.5
+          series.origin = 5
+          series.useOrigin = true
+          series.format.gradient.visible = true
+          series.format.gradient.direction = 'bottomtop'
+          series.format.stroke.fill = 'white'
+          series.format.gradient.colors = USAMap.palette.slice(6)
         }
 
-        Chart2.tools.items[0].autoHide = true;
+        Chart2.tools.items[0].autoHide = true
 
-        var selectedState = "";
+        var selectedState = ''
 
         USAMap.onhover = function (id) {
           if (selectedState !== id) {
-            selectedState = id;
+            selectedState = id
 
-            var old = Years.selected;
-            Years.selected = null;
-            States.selected = [id];
-            Chart2.fill(Years, Degree, true);
-            States.selected = null;
-            Years.selected = old;
-            Chart2.title.text = USAMap.labels[id];
+            var old = Years.selected
+            Years.selected = null
+            States.selected = [id]
+            Chart2.fill(Years, Degree, true)
+            States.selected = null
+            Years.selected = old
+            Chart2.title.text = USAMap.labels[id]
 
-            Chart2.zoom.reset();
-            Chart2.draw();
-            Legend.highlight(USAMap.values[id], "2px solid orange");
+            Chart2.zoom.reset()
+            Chart2.draw()
+            Legend.highlight(USAMap.values[id], '2px solid orange')
           }
         }
 
         USAMap.onhoverout = function (id) {
           if (selectedState !== id) {
-            selectedState = id;
-            Legend.highlight();
+            selectedState = id
+            Legend.highlight()
           }
         }
 
-        var t = new Tee.CursorTool(Chart1);
-        t.direction = "vertical";
+        var t = new Tee.CursorTool(Chart1)
+        t.direction = 'vertical'
 
         Chart1.mousemove = function (p) {
           if (!enableCursor) {
-            Chart1.tools.add(t);
-            enableCursor = true;
+            Chart1.tools.add(t)
+            enableCursor = true
           }
         }
 
-        var tip = Chart1.tools.items[0];
-        tip.autoHide = true;
+        var tip = Chart1.tools.items[0]
+        tip.autoHide = true
         tip.ongettext = function (tool, text, series, index) {
-          index = index | 0;
+          index = index | 0
 
           if (index !== old) {
-            old = index;
-            fillMap(years[old], true);
-            this.chart.title.text = States.title + " " + years[old];
-            this.chart.draw();
+            old = index
+            fillMap(years[old], true)
+            this.chart.title.text = States.title + ' ' + years[old]
+            this.chart.draw()
           }
 
-          return text;
+          return text
         }
       }
     </script>
-</head>
-<body onload="draw();changeThemeToDefault();">
-
-<div class="right_col" role="main">
-    <div class="page-title">
+  </head>
+  <body onload="draw();changeThemeToDefault();">
+    <div class="right_col" role="main">
+      <div class="page-title">
         <div class="title_left">
-            <h3>TeeChart Geo Mapping example: USA - Average Temperatures <span class="smallLetters">Degrees Celsius</span></h3>
+          <h3>TeeChart Geo Mapping example: USA - Average Temperatures <span class="smallLetters">Degrees Celsius</span></h3>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="row" style="margin-right: 20px">
-        <div class="x_panel" style="margin-left: 10px;">
+      </div>
+      <div class="clearfix"></div>
+      <div class="row" style="margin-right: 20px">
+        <div class="x_panel" style="margin-left: 10px">
+          <div class="x_title">
+            <h2><span class="smallLetters">Move mouse over USA map to show values for selected State</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-md-2 col-sm-2 col-xs-12">
+                Temperatures
+                <br />Based on query of average Temperatures (Degrees Celsius) of a given Year, grouped by USA State.
+              </div>
+              <div class="col-md-7 col-sm-7 col-xs-12">
+                <svg id="usa" width="100%" height="300"></svg>
+              </div>
+              <div class="col-md-3 col-sm-3 col-xs-12">
+                <table id="legend" style="position: relative; left: 0; top: 0; width: 100%; font-size: 12px; border: 2px solid white"></table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="x_panel">
             <div class="x_title">
-                <h2><span class="smallLetters">Move mouse over USA map to show values for selected State</span></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
+              <h2><span class="smallLetters">Move mouse over the chart to change the year</span></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li>
+                  <a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <div class="row">
-                    <div class="col-md-2 col-sm-2 col-xs-12">
-                        Temperatures
-                        <br>Based on query of average Temperatures (Degrees Celsius) of a given Year, grouped by USA
-                        State.
-                    </div>
-                    <div class="col-md-7 col-sm-7 col-xs-12">
-                        <svg id="usa" width="100%" height="300"></svg>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <table id="legend"
-                               style="position:relative; left:0; top:0; width:100%; font-size:12px; border: 2px solid white;"></table>
-                    </div>
-                </div>
+              <canvas id="canvas1" height="200"></canvas>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2><span class="smallLetters">Move mouse over the chart to change the year</span></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <canvas id="canvas1" height="200"></canvas>
-                </div>
-            </div>
+          </div>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2><span class="smallLetters">Move mouse over USA map to show values for selected State</span></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <canvas id="canvas2" height="200"></canvas>
-                </div>
+          <div class="x_panel">
+            <div class="x_title">
+              <h2><span class="smallLetters">Move mouse over USA map to show values for selected State</span></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li>
+                  <a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
             </div>
+            <div class="x_content">
+              <canvas id="canvas2" height="200"></canvas>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--[if lt IE 9]>
+      <script src="../../../src/excanvas/excanvas_text.js"></script>
+      <script src="../../../src/excanvas/canvas.text.js"></script>
+    <![endif]-->
+
+    <title>TeeChart JavaScript Modified Donut</title>
+    <meta charset="UTF-8" />
+
+    <script src="https://www.steema.com/files/public/teechart/html5/latest/src/teechart.js" type="text/javascript"></script>
+    <script src="https://www.steema.com/files/public/teechart/html5/latest/demos/3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+    <script src="https://www.steema.com/files/public/teechart/html5/latest/demos/demo.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <link href="https://www.steema.com/files/public/teechart/html5/latest/demos/3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://www.steema.com/files/public/teechart/html5/latest/demos/3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Custom Theme Style -->
+    <link href="https://www.steema.com/files/public/teechart/html5/latest/demos/3rd_party/build/css/custom.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://www.steema.com/files/public/teechart/html5/latest/demos/demo.css" />
+
+    <script type="text/javascript">
+      var Chart1
+      var donut
+      function draw() {
+        Chart1 = new Tee.Chart('canvas')
+
+        donut = new Tee.Donut([82, 18])
+
+        donut.angleWidth = 180
+        donut.rotation = 180
+        donut.marks.visible = false //won't position correctly
+        donut.format.gradient.visible = false
+
+        Chart1.legend.visible = false
+
+        Chart1.addSeries(donut)
+
+        Chart1.aspect.clip = false
+
+        Chart1.title.text = 'Errors'
+        Chart1.title.format.font.style = '18px Verdana'
+
+        Chart1.series.items[0].format.stroke.fill = 'darkgrey'
+        Chart1.series.items[0].marks.style = 'percentlabel'
+
+        Chart1.ondraw = function () {
+          //Custom labels
+          Chart1.ctx.textAlign = 'start'
+
+          var r = donut.getCenter(Chart1.ctx)
+
+          //Centre text part 1
+          Chart1.ctx.font = '64px Arial'
+          Chart1.ctx.fillStyle = '#000000'
+          Chart1.ctx.fillText(donut.data.values[0], Chart1.ctx.x - donut.format.textWidth(donut.data.values[0]) / 2, Chart1.ctx.y - 70)
+
+          //Centre text part 2
+          Chart1.ctx.font = '14px Verdana'
+          Chart1.ctx.fillStyle = '#888888'
+          Chart1.ctx.fillText('average', Chart1.ctx.x - donut.format.textWidth('average') / 2, Chart1.ctx.y)
+
+          //end labels
+          //y height:
+          var yPosLabel = Chart1.ctx.y + 10
+          //font:
+          Chart1.ctx.font = '12px Verdana'
+          //x-position
+          var donutWidth = r - (donut.donut / 100) * r
+          Chart1.ctx.fillText('0', Chart1.ctx.x - r + donutWidth / 2, yPosLabel)
+          Chart1.ctx.fillText('100', Chart1.ctx.x + r - donutWidth / 2, yPosLabel)
+        }
+
+        changeTheme(Chart1, 'minimal')
+        Chart1.draw()
+      }
+    </script>
+  </head>
+  <body onload="draw();">
+    <div class="right_col" role="main">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>TeeChart for JavaScript <span class="smallLetters">Donut</span></h3>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><span class="smallLetters">Donut</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this)"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <canvas id="canvas" height="500"> </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -6,11 +6,17 @@
 
 ## History
 
-TeeChartJS comes from [TeeChart JavaScript/HTML5](https://www.steema.com/product/html5), a library initially written by [David Berneda](https://github.com/davidberneda) on 2012 and maintained by the team at [Steema Software](https://www.steema.com).  
-Steema Software opensourced the library on march 2018 but still offers [paid support subscriptions](https://www.steema.com/product/html5#pricing).
+[TeeChart JavaScript/HTML5](https://www.steema.com/product/html5), is a charting library maintained by the team at [Steema Software](https://www.steema.com).  
 
-## [Live Demo](https://www.steema.com/files/public/teechart/html5/latest/demos/)
-  Find [here](https://github.com/Steema/TeeChartJS/tree/master/demos) the demo sources
+Steema Software publishes the TeeChart Javascript code for unrestricted use in non-commercial applications but continues to maintain and support the software for paid, commercial use.
+
+See [paid support subscriptions](https://www.steema.com/product/html5#pricing).
+
+## Live demos
+
+## [HTML5](https://www.steema.com/files/public/teechart/html5/latest/demos/)
+
+Find the demo sources [here](https://gitlab.com/steema/teechartjs/-/tree/main/ES5/demos).
 
 ## Resources
 * ### [Tutorials](https://github.com/Steema/TeeChartJS/wiki)

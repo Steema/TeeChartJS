@@ -1,0 +1,9 @@
+body {
+  font-family: "Segoe UI", Verdana, Arial;
+  font-size: 11pt;
+}
+
+/* Utils */
+.text-center {
+  text-align: center;
+}

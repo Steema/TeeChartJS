@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>TeeChart Charting for JavaScript Floorplan Example</title>
+
+    <link rel="stylesheet" type="text/css" href="../../demo.css" />
+    <script src="../../../src/teechart.js" type="text/javascript"></script>
+    <script src="../../demo.js" type="text/javascript"></script>
+    <script src="../../../src/teechart-3d.js" type="text/javascript"></script>
+    <script src="../../../src/teechart-maps.js" type="text/javascript"></script>
+    <script src="data_floorplan.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      'use strict'
+
+      var Chart1,
+        map,
+        three,
+        t1,
+        t2,
+        timing = false,
+        geoSeries,
+        zoneSeries
+
+      function draw() {
+        resizeCanvasToFit()
+
+        Chart1 = new Tee.Chart('canvas1')
+
+        // Set mouse-drag zoom to be "proportional":
+
+        Chart1.zoom.keepAspect = true
+
+        // Add "WorldMap" series:
+        map = new Tee.Map()
+
+        Chart1.addSeries(map)
+
+        changeMap('floorplan')
+
+        Chart1.title.text = 'TeeChart Mapping - Floorplan example'
+        Chart1.footer.text = 'Floorplan derived from dwg Autocad plan'
+        Chart1.legend.visible = false
+
+        Chart1.walls.back.size = 0.2
+        Chart1.walls.back.format.fill = 'white'
+
+        Chart1.zoom.onreset = function () {
+          //cover the entire polygon area
+          Chart1.axes.left.setMinMax(-20, 340)
+          Chart1.axes.bottom.setMinMax(-20, 440)
+        }
+
+        var tip = new Tee.ToolTip(Chart1)
+        tip.autoHide = true
+        Chart1.tools.add(tip)
+
+        Chart1.axes.left.title.text = 'metres'
+        Chart1.axes.bottom.title.text = 'metres'
+        Chart1.axes.left.increment = 50
+        Chart1.axes.bottom.increment = 50
+        Chart1.axes.left.format.stroke.fill = ''
+        Chart1.axes.bottom.format.stroke.fill = ''
+
+        changeTheme(Chart1, 'minimal')
+        /*Chart1.ondraw = function(){ Chart1.ctx.fillText("repaints: " + animationCounter,50,10); }*/
+
+        Chart1.draw()
+
+        animate()
+      }
+
+      var goUp = false
+      var pw = 20
+      var animationCounter = 0
+
+      function animate() {
+        if (animationCounter < 500) {
+          //stop animation after 500 repaints
+          if (pw == 30) goUp = false
+          else if (pw == 15) goUp = true
+
+          if (goUp) pw++
+          else pw--
+
+          animationCounter++
+          Chart1.draw()
+
+          requestAnimationFrame(animate)
+        }
+      }
+
+      function changeMap(value) {
+        if (zoneSeries) {
+          Chart1.removeSeries(zoneSeries)
+          zoneSeries = null
+        }
+
+        // Example, setting floorplan values:
+
+        if (value === 'floorplan') {
+          map.setMap(new Tee.Floorplan())
+          map.svg.values = { PN: 1 }
+        }
+
+        map.svg.values = {}
+
+        for (var t = 0; t < map.items.length; t++) map.svg.values[map.items[t].item.id] = Math.random() * 1000
+
+        // When finished adding values, colorize items according:
+        map.applyPalette()
+
+        map.title = value
+
+        createzoneSeries()
+        addZones(Zones)
+
+        Chart1.axes.left.setMinMax(-20, 340)
+        Chart1.axes.bottom.setMinMax(-20, 440)
+
+        // Benchmark again:
+        //t1=new Date();
+        //timing=false;
+      }
+
+      function resizeCanvasToFit() {
+        var width = window.innerWidth,
+          w = width, // - document.getElementById('options').clientWidth,
+          c = document.getElementById('canvas1')
+
+        if (w < c.clientWidth) {
+          w -= 60
+
+          c.setAttribute('width', '' + w + 'px')
+          c.style.width = '' + w + 'px'
+          c.width = w
+
+          var height = window.innerHeight - 60,
+            h = Math.min(height, (3 * w) / 4)
+
+          c.setAttribute('height', '' + h + 'px')
+          c.style.height = '' + h + 'px'
+          c.height = h
+        }
+      }
+
+      function createzoneSeries() {
+        zoneSeries = new Tee.PointXY(Chart1)
+        zoneSeries.title = 'Zones'
+
+        zoneSeries.visible = true //document.getElementById('cities').checked;
+
+        var data = zoneSeries.data
+
+        zoneSeries.pointer.width = 20
+        zoneSeries.pointer.height = 20
+
+        zoneSeries.pointer.style = 'sphere'
+        zoneSeries.pointer.format.gradient.visible = false
+        zoneSeries.pointer.format.stroke.fill = ''
+        zoneSeries.colorEach = 'yes'
+
+        zoneSeries.marks.style = 'label'
+
+        zoneSeries.onbeforedrawpointer = function (index, pointer) {
+          if (index == 3) {
+            pointer.width = pw
+            pointer.height = pw
+            pointer.format.fill = 'red'
+          } else {
+            pointer.width = 15
+            pointer.height = 15
+            pointer.format.fill = 'green'
+          }
+        }
+
+        Chart1.addSeries(zoneSeries)
+      }
+
+      function addZones(zones) {
+        for (var t = 0; t < zones.length; t++) map.addPoint(zoneSeries, zones[t].lon, zones[t].lat, zones[t].name)
+      }
+
+      function resize() {
+        var startWidth = 1100
+        var startHeight = 800
+        var w
+        var h
+        var canvas = document.getElementById('canvas1')
+
+        w = window.innerWidth
+        h = window.innerHeight
+        if (w <= 991) {
+          canvas.style.width = '' + w + 'px'
+          canvas.style.height = '' + (w * startHeight) / startWidth + 'px'
+        } else {
+          canvas.style.width = '' + startWidth + 'px'
+          canvas.style.height = '' + startHeight + 'px'
+        }
+      }
+    </script>
+  </head>
+
+  <body onload="draw();resize()" onresize="resize()" style="margin: 0">
+    <div id="options">
+      <b>Floorplan:</b>
+      <p>
+        Derived from an autocad dwg diagram, translated to inline SVG polygons for rendering on the TeeChart HTML5 Canvas. Overlayng a points series permits advisory information,
+        alarms and notifications for example, to be located where required.<br /><br />
+      </p>
+
+      <center>
+        <canvas id="canvas1" width="1100" height="800"></canvas>
+      </center>
+    </div>
+    <p><br /><br />Original svg format:</p>
+    <object id="id_wwplant" data="wwplant.svg" type="image/svg+xml" width="800" height="600"></object>
+
+    <embed src="siren.wav" autostart="false" width="0" height="0" id="siren" enablejavascript="true" />
+
+    <span id="time"></span>
+  </body>
+</html>

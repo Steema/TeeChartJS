@@ -1,141 +1,149 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" style="height:100%">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<!--[if lt IE 9]>
-    <script src="../../../src/excanvas/excanvas_text.js"></script>
-    <script src="../../../src/excanvas/canvas.text.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../src/teechart.js"></script>
-<script type="text/javascript" src="../../../src/teechart-maps.js"></script>
-<script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
-<script src="../../demo.js" type="text/javascript"></script>
-<!-- Bootstrap -->
-<link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
-<link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Custom Theme Style -->
-<link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="../../demo.css">
+    <!--[if lt IE 9]>
+      <script src="../../../src/excanvas/excanvas_text.js"></script>
+      <script src="../../../src/excanvas/canvas.text.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../../../src/teechart.js"></script>
+    <script type="text/javascript" src="../../../src/teechart-maps.js"></script>
+    <script src="../../3rd_party/jquery/js/jquery-1.7.1.min.js"></script>
+    <script src="../../demo.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <link href="../../3rd_party/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="../../3rd_party/font-awesome-4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- Custom Theme Style -->
+    <link href="../../3rd_party/build/css/custom.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../demo.css" />
 
-<title>TeeChart HTML5 Canvas Charting for JavaScript Geo World Map Example</title>
+    <title>TeeChart HTML5 Canvas Charting for JavaScript Geo World Map Example</title>
 
-<style>
-.map {
-  border: 0 solid;
-  border-radius:10px;
-  background-color:lightgray;
-  fill: white;
-}
+    <style>
+      .map {
+        border: 0 solid;
+        border-radius: 10px;
+        background-color: lightgray;
+        fill: white;
+      }
 
-.map polygon:hover { opacity:0.5; }
-.map polygon { stroke:orange; cursor:pointer; }
-.map .button:hover { opacity: 0.75; }
-.map .button {
-	fill: black;
-}
+      .map polygon:hover {
+        opacity: 0.5;
+      }
+      .map polygon {
+        stroke: orange;
+        cursor: pointer;
+      }
+      .map .button:hover {
+        opacity: 0.75;
+      }
+      .map .button {
+        fill: black;
+      }
 
-#usa.map polygon {
-  stroke: black;
-  stroke-width: 0.5px;
-}
+      #usa.map polygon {
+        stroke: black;
+        stroke-width: 0.5px;
+      }
 
-#world.map {
-  background-color:#97CAEF;
-}
+      #world.map {
+        background-color: #97caef;
+      }
 
-#world.map polygon {
-  stroke: orange;
-  stroke-width: 0.1px;
-}
-</style>
+      #world.map polygon {
+        stroke: orange;
+        stroke-width: 0.1px;
+      }
+    </style>
 
-<script>
-"use strict";
+    <script>
+      'use strict'
 
-function fillMap(){
-  var world=new Tee.WorldMap("world");
+      function fillMap() {
+        var world = new Tee.WorldMap('world')
 
-  world.values={ SE:1234, CL:3822, IN:2102, US:1600, ES:3000, BR:1300, TD: 2700, KZ:3300, AU:1510, HU:100 };
-  world.applyPalette(["#EEEE90", "#DDDD90", "#CCCCA0", "#BBBBA0", "#AAAAA0", "#9999A0", "#8888A0"]);
+        world.values = { SE: 1234, CL: 3822, IN: 2102, US: 1600, ES: 3000, BR: 1300, TD: 2700, KZ: 3300, AU: 1510, HU: 100 }
+        world.applyPalette(['#EEEE90', '#DDDD90', '#CCCCA0', '#BBBBA0', '#AAAAA0', '#9999A0', '#8888A0'])
 
-  world.onclick=function(id, item) {
-     showLabel(world, id);
-  }
+        world.onclick = function (id, item) {
+          showLabel(world, id)
+        }
 
-  world.addZoomButtons();
+        world.addZoomButtons()
 
-  var usa=new Tee.USAMap("usa");
+        var usa = new Tee.USAMap('usa')
 
-  usa.values={ AR: 1234, CA: 2312, NY: 4578 }
-  usa.applyPalette(["#EEEE90", "#DDDD90", "#CCCCA0", "#BBBBA0", "#AAAAA0", "#9999A0", "#8888A0"]);
+        usa.values = { AR: 1234, CA: 2312, NY: 4578 }
+        usa.applyPalette(['#EEEE90', '#DDDD90', '#CCCCA0', '#BBBBA0', '#AAAAA0', '#9999A0', '#8888A0'])
 
-  usa.addZoomButtons();
-  
-  usa.onclick=function(id, item) {
-     showLabel(usa, id);
-  }
+        usa.addZoomButtons()
 
-  // Change a State color by code:
-  usa.find("WY").style.fill="#CCFFCC";
+        usa.onclick = function (id, item) {
+          showLabel(usa, id)
+        }
 
-  //var a=<animate attributeName="fill" dur="5s" values="#ff8; #f88; #f8f; #88f; #8ff; #8f8" repeatCount="indefinite"/>
-  //var a=new Tee.Animation(function(f) { } );
+        // Change a State color by code:
+        usa.find('WY').style.fill = '#CCFFCC'
 
-  function showLabel(map, id) {
-    var label=map.labels[id]+" ("+id+")",
-        value=(typeof map.values[id] === 'undefined') ? "" : map.values[id];
+        //var a=<animate attributeName="fill" dur="5s" values="#ff8; #f88; #f8f; #88f; #8ff; #8f8" repeatCount="indefinite"/>
+        //var a=new Tee.Animation(function(f) { } );
 
-    label+=" <span style='color:white'>"+value+'</p>';
-    //document.getElementById("label").innerHTML = label;
-  }
-}
-</script>
+        function showLabel(map, id) {
+          var label = map.labels[id] + ' (' + id + ')',
+            value = typeof map.values[id] === 'undefined' ? '' : map.values[id]
 
-</head>
+          label += " <span style='color:white'>" + value + '</p>'
+          //document.getElementById("label").innerHTML = label;
+        }
+      }
+    </script>
+  </head>
 
-<body style="height:100%;" onload="fillMap();">
-	<div class="right_col" role="main">
-		<div class="page-title">
-			<div class="title_left">
-				<h3>TeeChart for JavaScript <span class="smallLetters">World Map</span></h3>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-	
-		<div class="row">
-			<div class="x_panel">
-				<div class="x_title" >
-					<h2><span class="smallLetters">World Map</span></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
-						</li>
-					</ul>
-				<div class="clearfix"></div>
-				</div>
-				<div class="x_content" id="worldMap">
-					<svg id="world" class="map" width="100%" height="75%"></svg>
-				</div>
-			</div>
-		</div>
-		<div class="clearfix"></div>
-		<div class="row">
-			<div class="x_panel">
-				<div class="x_title">
-					<h2><span class="smallLetters">USA Map</span></h2>
-					<ul class="nav navbar-right panel_toolbox">
-						<li><a class="collapse-link" onclick="showHide(this);"><i  class="fa fa-chevron-up"></i></a>
-						</li>
-					</ul>
-				<div class="clearfix"></div>
-				</div>
-				<div class="x_content" id="usaMap">
-					<svg id="usa" class="map" width="100%" height="45%"></svg>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+  <body style="height: 100%" onload="fillMap();">
+    <div class="right_col" role="main">
+      <div class="page-title">
+        <div class="title_left">
+          <h3>TeeChart for JavaScript <span class="smallLetters">World Map</span></h3>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <div class="row">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><span class="smallLetters">World Map</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content" id="worldMap">
+            <svg id="world" class="map" width="100%" height="75%"></svg>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+      <div class="row">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2><span class="smallLetters">USA Map</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li>
+                <a class="collapse-link" onclick="showHide(this);"><i class="fa fa-chevron-up"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content" id="usaMap">
+            <svg id="usa" class="map" width="100%" height="45%"></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
