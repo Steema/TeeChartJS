@@ -4,7 +4,6 @@
   "description": "<a href=\"https://www.steema.com/product/html5\">\r <img align=\"right\" src=\"https://www.steema.com/img/logos/teechart_html5.png\">\r </a>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:umd": "rollup -c"
   },
   "author": "",

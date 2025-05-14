@@ -19,12 +19,11 @@
 /**
  * @namespace TeeChart namespace, contains all classes and methods.
  */
-var Tee = Tee || {}
+let Tee = {}
 
 /*global exports, window, requestAnimFrame, Image, clearTimeout, HTMLTextAreaElement,
 clearInterval, parseText, document, parseXML, parseJSON, navigator, setInterval,
 HTMLInputElement, HTMLCanvasElement */
-
 ;(function () {
   'use strict'
 
@@ -11860,3 +11859,50 @@ Tee.LinearGauge = function (o, o2) {
 }
 
 Tee.LinearGauge.prototype = new Tee.Series()
+
+export const {
+  ActivityGauge,
+  Animation,
+  Annotation,
+  Area,
+  Bar,
+  Bubble,
+  Bullet,
+  Candle,
+  Chart,
+  ChecBox,
+  CursorTool,
+  CustomBar,
+  CustomSeries,
+  doHttpRequest,
+  DOMTip,
+  Donut,
+  DragTool,
+  drawSpline,
+  FadeAnimation,
+  Format,
+  Gantt,
+  HighLowBar,
+  HorizArea,
+  Line,
+  LinearGauge,
+  MarksAnimation,
+  Palette,
+  PaletteSeries,
+  Pie,
+  Point,
+  PointXY,
+  Polar,
+  RainbowPalette,
+  Rectangle,
+  Scroller,
+  Series,
+  SeriesAnimation,
+  Sliced,
+  Slider,
+  SliderControl,
+  Tool,
+  ToolTip,
+  Treemap,
+  Volume
+} = Tee

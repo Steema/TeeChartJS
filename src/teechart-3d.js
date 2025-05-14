@@ -21,7 +21,7 @@
 /**
  * @namespace Tee namespace, Three.js 3D Charting.
  */
-var Tee = Tee || {}
+let Tee = {}
 
 ;(function () {
   'use strict'
@@ -2113,3 +2113,5 @@ var Tee = Tee || {}
     this.needsRender = true
   }
 }).call(this)
+
+export const { ColorGrid, Surface, MyParametricGeometry, Three } = Tee
