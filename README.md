@@ -51,8 +51,11 @@ For more details, see [HOW-TO-RUN.md](HOW-TO-RUN.md).
 - Free for non-commercial use. See [License](LICENSE) for details.
 - [Commercial support and licensing](https://www.steema.com/product/html5#pricing) available.
 
-<div align="center" style="background-color: white; margin-top: 40px">
+<br />
+<br />
+
+<div align="center">
   <a href="https://www.steema.com/">
-    <img src="https://raw.githubusercontent.com/wiki/Steema/TeeChartJS/logo-steema.png" alt="Steema Software Logo">
+    <img src="demos\images\logo-steema-v3.png" alt="Steema Software Logo">
   </a>
 </div>
