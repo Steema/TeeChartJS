@@ -1,30 +1,58 @@
+# TeeChartJS
+
 <a href="https://www.steema.com/product/html5">
-<img align="right" src="https://www.steema.com/img/logos/teechart_html5.png">
+  <img align="right" src="https://www.steema.com/img/logos/teechart_html5.png" alt="TeeChart HTML5 Logo" style="padding-left: 25px; padding-bottom: 225px;">
 </a>
 
-100% JavaScript charting library using the HTML5 Canvas.
+**TeeChartJS** is a 100% JavaScript charting library for the HTML5 Canvas, developed and maintained by [Steema Software](https://www.steema.com). It provides a wide range of chart
+types, interactive features, and is suitable for both non-commercial and commercial applications. It is designed to be easy to use, with a modular ES6+ codebase and no external
+dependencies required for core charts.
 
-## History
+All charts are rendered using the HTML5 Canvas element, ensuring high performance and compatibility across modern web browsers.
 
-[TeeChart JavaScript/HTML5](https://www.steema.com/product/html5), is a charting library maintained by the team at [Steema Software](https://www.steema.com).  
+## Features
 
-Steema Software publishes the TeeChart Javascript code for unrestricted use in non-commercial applications but continues to maintain and support the software for paid, commercial use.
+- Multiple chart types: Line, Bar, Pie, Area, Gantt, Polar, Bubble, Donut, Treemap, Gauges, and more
+- Interactive tools: Zoom, Scroll, Tooltips, Annotations, Animation
+- Customizable appearance: Themes, Palettes, Gradients, Shadows
+- Modular ES6+ codebase, UMD/minified builds
+- No external dependencies required for core charts
 
-See [paid support subscriptions](https://www.steema.com/product/html5#pricing).
+## Installation & Build
 
-## Live demos
+1. **Install Node.js** ([Download here](https://nodejs.org/))
 
-## [HTML5](https://www.steema.com/files/public/teechart/html5/latest/demos/)
+2. In the project root, install dependencies:
+   ```sh
+   npm install
+   ```
+3. To generate minified builds for all source files:
+   ```sh
+   npm run build:umd
+   ```
+   Minified files will be available in the `dist/` folder.
 
-Find the demo sources [here](https://gitlab.com/steema/teechartjs/-/tree/main/ES5/demos).
+For more details, see [HOW-TO-RUN.md](HOW-TO-RUN.md).
 
-## Resources
-* ### [Tutorials](https://github.com/Steema/TeeChartJS/wiki)
-* ### [API Reference](https://www.steema.com/docs/TeeChartHTML5Reference.htm)
-* ### [Issue Tracker](http://bugs.steema.com/buglist.cgi?product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=---)
+## Live Demos
 
-<p align="center">
-<a href="https://www.steema.com/">
-<img src="https://raw.githubusercontent.com/wiki/Steema/TeeChartJS/logo-steema.png">
-</a>
-</p>
+- [HTML5 Demos](https://www.steema.com/files/public/teechart/html5/latest/demos/)
+- [Demo Sources](https://github.com/Steema/TeeChartJS/tree/master/demos)
+
+## Documentation & Resources
+
+- [Tutorials](https://github.com/Steema/TeeChartJS/wiki)
+- [API Reference](https://www.steema.com/docs/TeeChartHTML5Reference.htm)
+- [Issue Tracker](http://bugs.steema.com/buglist.cgi?product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=---)
+- [Changelog](https://www.steema.com/versioninfo/html5)
+
+## Licensing
+
+- Free for non-commercial use. See [License](LICENSE) for details.
+- [Commercial support and licensing](https://www.steema.com/product/html5#pricing) available.
+
+<div align="center" style="background-color: white; margin-top: 40px">
+  <a href="https://www.steema.com/">
+    <img src="https://raw.githubusercontent.com/wiki/Steema/TeeChartJS/logo-steema.png" alt="Steema Software Logo">
+  </a>
+</div>
