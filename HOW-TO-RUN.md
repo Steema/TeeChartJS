@@ -19,18 +19,19 @@ This will install all required dependencies for building and development.
 
 ## Generate minified files (build)
 
-To minify all JavaScript files in the `src` folder and generate `.min.js` files in the `dist` folder, run:
+To minify all JavaScript files in the `source` folder and generate files in the `src` folder, run:
 
 ```sh
 npm run build:umd
 ```
 
-This will create a minified file for each source file in `src`.
+This will create a minified file for each source file in `source`.
 
 ## Relevant folder structure
 
-- `src/` : JavaScript source code
-- `dist/` : Generated minified files
+- `demos/` : Demo applications and examples
+- `source/` : JavaScript source code
+- `src/` : Generated minified files
 - `package.json` : Dependency and script configuration
 - `rollup.config.js` : Build configuration with Rollup
 

@@ -6,7 +6,7 @@ This guide will help you migrate your projects from TeeChartJS version 3 to vers
 
 ### Dropped Legacy Browsers:
 
-IE8 and earlier are no longer supported.
+Firefox 3.5, IE8 and earlier are no longer supported.
 
 ### Only one import statement
 
