@@ -46,6 +46,10 @@ For more details, see [HOW-TO-RUN.md](HOW-TO-RUN.md).
 - [Issue Tracker](http://bugs.steema.com/buglist.cgi?product=HTML5%20JavaScript%20TeeChart&query_format=advanced&resolution=---)
 - [Changelog](https://www.steema.com/versioninfo/html5)
 
+## Migrations
+
+- [Migrate from v3 to v4](MIGRATION.md)
+
 ## Licensing
 
 - Free for non-commercial use. See [License](LICENSE) for details.
