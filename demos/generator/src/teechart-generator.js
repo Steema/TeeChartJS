@@ -46,7 +46,7 @@ function scriptify(chart) {
     d = w.document,
     se
 
-  var sc = '<script src="../../src/teechart.js" type="text/javascript"></script>\n'
+  var sc = '<script src="../../dist/umd/teechart.js" type="text/javascript"></script>\n'
 
   var code = 'var Chart1=new Tee.Chart("canvas1");\n'
   code += emitAnnotation('Chart1.title', Chart1.title)

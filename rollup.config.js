@@ -4,8 +4,8 @@ import fs from 'fs'
 import path from 'path'
 
 const UMD_DIST = 'dist/umd'
-const UMD_FILES = ['src/date.format.js', 'src/teechart-3d.js', 'src/teechart-data.js', 'src/teechart-gauges.js', 'src/teechart-maps.js', 'src/teechart.js']
-const UMD_NOT_MODIFIED = ['src/excanvas/canvas.text.js', 'src/excanvas/excanvas_text.js', 'src/teechart-editor.js', 'src/teechart-svg.js', 'src/teechart-table.js']
+const UMD_FILES = ['src/teechart.js']
+const UMD_NOT_MODIFIED = ['src/excanvas/canvas.text.js', 'src/excanvas/excanvas_text.js']
 
 function copyStatic() {
   return {
@@ -23,7 +23,7 @@ function copyStatic() {
 export default UMD_FILES.map(file => ({
   input: file,
   output: {
-    file: path.join(UMD_DIST, path.basename(file, '.js') + '.min.js'),
+    file: path.join(UMD_DIST, 'teechart.js'),
     format: 'umd',
     name: 'Tee',
     sourcemap: true
