@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/teechartjsA",
+            "outputPath": "src/teechartjsA",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -25,8 +25,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [
-	         ]
+            "scripts": []
           },
           "configurations": {
             "production": {
