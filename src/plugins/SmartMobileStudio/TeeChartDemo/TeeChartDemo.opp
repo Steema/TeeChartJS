@@ -1,0 +1,1731 @@
+<SMART>
+  <project clsid="TIDEProjectVisual">
+    <name>TeeChartDemo</name>
+    <author>david berneda</author>
+    <company>Steema Software</company>
+    <major>1</major>
+    <minor>0</minor>
+    <revision>0</revision>
+    <editor clsid="TIDEProjectSavedState">
+      <editor clsid="TIDEEditorSavedState">
+        <tab filename="TeeChartDemo" />
+        <tab filename="Form1" />
+        <tab filename="w3chart" />
+        <tab filename="W3Application" />
+        <tab filename="Form2" />
+        <tab filename="Form3" />
+        <activetab>Form2</activetab>
+      </editor>
+    </editor>
+    <options clsid="TIDEProjectOptions">
+      <use_emitdebuginfo>0</use_emitdebuginfo>
+      <use_obfuscation>1</use_obfuscation>
+      <use_codepacking>1</use_codepacking>
+      <use_rangechecking>0</use_rangechecking>
+      <use_instancechecking>0</use_instancechecking>
+      <use_conditionchecking>0</use_conditionchecking>
+      <use_loopchecking>0</use_loopchecking>
+      <use_noinlinemagics>0</use_noinlinemagics>
+      <use_nosourcelocation>0</use_nosourcelocation>
+      <use_nortti>0</use_nortti>
+      <use_smartlinking>1</use_smartlinking>
+      <use_sourcemap>0</use_sourcemap>
+      <use_assertions>1</use_assertions>
+      <use_optimize>1</use_optimize>
+      <use_closures>1</use_closures>
+      <use_devirtualize>1</use_devirtualize>
+      <use_generate_manifest>0</use_generate_manifest>
+      <use_serve_manifest>0</use_serve_manifest>
+      <use_bootstrap_except>0</use_bootstrap_except>
+      <use_css_external>1</use_css_external>
+      <use_verbosity>2</use_verbosity>
+      <use_css_theme>iOS.css</use_css_theme>
+      <use_ro_rodl></use_ro_rodl>
+      <use_hints_level>3</use_hints_level>
+      <output_type>0</output_type>
+      <output_name>index.html</output_name>
+      <execute_type>0</execute_type>
+      <executeable_name></executeable_name>
+      <executeable_params></executeable_params>
+      <use_pre-build_script>0</use_pre-build_script>
+      <pre-build_script></pre-build_script>
+      <use_pre-link_script>0</use_pre-link_script>
+      <pre-link_script></pre-link_script>
+      <use_post-build_script>0</use_post-build_script>
+      <post-build_script></post-build_script>
+    </options>
+    <globals clsid="TIDEGlobals" />
+    <files>
+      <file clsid="TIDEProjectFileProjectSource">
+        <name>TeeChartDemoApplication</name>
+        <created>2013-11-02T18:58:28.327Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[uses 
+  W3System, TeeChartDemo, w3chart, Form1, Form2, Form3;
+
+var Application: TApplication;
+  InitVendorInfo;
+  Application := TApplication.Create;
+  Application.RunApp;
+]]>
+        </source>
+      </file>
+      <file clsid="TIDEProjectFileSource">
+        <name>TeeChartDemo</name>
+        <created>2012-04-26T09:45:15.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[unit TeeChartDemo;
+
+interface
+
+uses w3system, w3ctrls, w3components, w3forms,
+     w3application, form1, form2, form3;
+
+type
+
+TApplication=class(TW3CustomApplication)
+private
+  { Private methods }
+public
+  { protected methods }
+  procedure ApplicationStarting;override;
+end;
+
+Implementation
+
+//############################################################################
+// TApplication
+//############################################################################
+
+procedure TApplication.ApplicationStarting;
+var
+  mForm,
+  lineForm,
+  pieForm: TW3CustomForm;
+Begin
+  //Add code above this line 
+  mForm:=TForm1.Create(Display.View);
+  mForm.Name:='Form1';
+
+  lineForm:=TForm2.Create(Display.View);
+  lineForm.Name:='form2';
+
+  pieForm:=TForm3.Create(Display.View);
+  pieForm.Name:='form3';
+
+  RegisterFormInstance(mForm,True);
+  RegisterFormInstance(lineForm,False);
+  RegisterFormInstance(pieForm,False);
+
+  inherited;
+End;
+
+
+end.
+]]>
+        </source>
+      </file>
+      <file clsid="TIDEProjectFileForm">
+        <name>Form1</name>
+        <created>2012-04-26T09:45:15.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[unit Form1;
+
+interface
+
+uses w3system, w3graphics, w3ctrls, w3components, w3forms, 
+     w3fonts, w3borders, w3application, w3chart, form2;
+
+type
+
+TForm1=class(TW3form)
+private
+  { Private methods }
+  {$I 'Form1:intf'}
+  FChart : TW3Chart;
+protected
+  { Protected methods }
+  Procedure InitializeObject;override;
+  Procedure FinalizeObject;override;
+  Procedure StyleTagObject;reintroduce;virtual;
+  Procedure Resize;override;
+public
+  Procedure AxesChanged(Sender:TObject);
+  Procedure BarStackedChanged(Sender:TObject);
+  Procedure ChartTransparent(Sender:TObject);
+  Procedure ColorEachChanged(Sender:TObject);
+  procedure DonutHoleChanged(Sender:TObject);
+  Procedure LegendChanged(Sender:TObject);
+  procedure LineDemo(Sender:TObject);
+  Procedure MarksChanged(Sender:TObject);
+  procedure PieDemo(Sender:TObject);
+  Procedure SeriesStyleChanged(Sender:TObject);
+  Procedure TitleChanged(Sender:TObject);
+  Procedure TitleTextChanged(Sender:TObject);
+  Procedure TitleTextKeyUp(Sender:TObject; Key:Integer);
+end;
+
+Implementation
+
+//############################################################################
+// TForm1
+//############################################################################
+
+Procedure TForm1.InitializeObject;
+Begin
+  inherited;
+  {$I 'Form1:impl'}
+
+  FChart := TW3Chart.Create(Self);
+  FChart.SetBounds(10,150,300,300);
+
+  W3ComboBox1.add('Bar');
+  W3ComboBox1.add('Pie');
+  W3ComboBox1.add('Line');
+  W3ComboBox1.add('Point XY');
+  W3ComboBox1.add('Area');
+  W3ComboBox1.add('Horiz. Bar');
+  W3ComboBox1.add('Horiz. Area');
+  W3ComboBox1.add('Donut');
+  W3ComboBox1.add('Smooth Line');
+  W3ComboBox1.add('Bubble');
+  W3ComboBox1.add('Candle');
+
+  W3ComboBox1.OnChanged:=SeriesStyleChanged;
+
+  W3ComboBox1.SelectedIndex:=0;
+  SeriesStyleChanged(W3ComboBox1);
+
+  W3ComboBox2.add('No');
+  W3ComboBox2.add('Yes');
+  W3ComboBox2.add('100%');
+  W3ComboBox2.add('Side All');
+  W3ComboBox2.add('Self');
+  W3ComboBox2.SelectedIndex:=0;
+  W3ComboBox2.OnChanged:=BarStackedChanged;
+  W3ComboBox2.Visible:=False;
+
+  W3Checkbox1.OnChanged:=LegendChanged;
+  W3Checkbox2.OnChanged:=TitleChanged;
+
+  W3EditBox1.Text:=FChart.Title.Text;
+  W3EditBox1.OnChanged:=TitleTextChanged;
+  W3EditBox1.OnKeyUp:=TitleTextKeyUp;
+
+  W3Checkbox3.OnChanged:=MarksChanged;
+  W3Checkbox4.OnChanged:=ChartTransparent;
+  W3Checkbox5.OnChanged:=ColorEachChanged;
+  Axes.OnChanged:=AxesChanged;
+
+  LabelDonutHole.Top:=W3Label1.Top;
+  DonutHole.Top:=W3ComboBox2.Top;
+
+  DonutHole.add('0');
+  DonutHole.add('25');
+  DonutHole.add('50');
+  DonutHole.add('75');
+  DonutHole.add('95');
+  DonutHole.OnChanged:=DonutHoleChanged;
+
+  W3Button1.OnClick:=LineDemo;
+  W3Button2.OnClick:=PieDemo;
+End;
+ 
+Procedure TForm1.TitleTextKeyUp(Sender:TObject; Key:Integer);
+begin
+  TitleTextChanged(Self);
+end;
+
+Procedure TForm1.DonutHoleChanged(Sender:TObject);
+begin
+  (FChart.Series[0] as TDonutSeries).Hole:=StrToFloat(DonutHole.Items[DonutHole.SelectedIndex]);
+end;
+
+Procedure TForm1.ColorEachChanged(Sender:TObject);
+begin
+  if W3Checkbox5.Checked then
+     FChart[0].ColorEach:=ceYes
+  else
+     FChart[0].ColorEach:=ceNo;
+end;
+
+Procedure TForm1.AxesChanged(Sender:TObject);
+begin
+  FChart.Axes.Visible:=Axes.Checked;
+end;
+
+Procedure TForm1.BarStackedChanged(Sender:TObject);
+begin
+  case W3ComboBox2.SelectedIndex of
+    0: (FChart.Series[0] as TCustomBarSeries).Stacked:=bsNo;
+    1: (FChart.Series[0] as TCustomBarSeries).Stacked:=bsYes;
+    2: (FChart.Series[0] as TCustomBarSeries).Stacked:=bs100;
+    3: (FChart.Series[0] as TCustomBarSeries).Stacked:=bsSideAll;
+  else
+    (FChart.Series[0] as TCustomBarSeries).Stacked:=bsSelf;
+  end;
+end;
+
+Procedure TForm1.ChartTransparent(Sender:TObject);
+begin
+  FChart.Panel.Transparent:=W3Checkbox4.Checked;
+end;
+
+procedure TForm1.LineDemo(Sender:TObject);
+begin
+  Application.GotoForm('form2');
+end;
+
+procedure TForm1.PieDemo(Sender:TObject);
+begin
+  Application.GotoForm('form3');
+end;
+
+Procedure TForm1.TitleTextChanged(Sender:TObject);
+begin
+  FChart.Title.Text:=W3EditBox1.Text;
+end;
+
+Procedure TForm1.MarksChanged(Sender:TObject);
+begin
+  FChart[0].Marks.Visible:=W3Checkbox3.Checked;
+end;
+
+Procedure TForm1.LegendChanged(Sender:TObject);
+begin
+  FChart.Legend.Visible:=W3Checkbox1.Checked;
+end;
+
+Procedure TForm1.TitleChanged(Sender:TObject);
+begin
+  FChart.Title.Visible:=W3Checkbox2.Checked;
+end;
+
+Procedure TForm1.SeriesStyleChanged(Sender:TObject);
+begin
+  FChart.Series.Clear;
+
+  case W3ComboBox1.SelectedIndex of
+    0: FChart.AddSeries(TBarSeries.Create);
+    1: FChart.AddSeries(TPieSeries.Create);
+    2: FChart.AddSeries(TLineSeries.Create);
+    3: FChart.AddSeries(TPointXYSeries.Create);
+    4: FChart.AddSeries(TAreaSeries.Create);
+    5: FChart.AddSeries(THorizBarSeries.Create);
+    6: FChart.AddSeries(THorizAreaSeries.Create);
+    7: FChart.AddSeries(TDonutSeries.Create);
+    8: FChart.AddSeries(TSmoothLineSeries.Create);
+    9: FChart.AddSeries(TBubbleSeries.Create);
+   10: FChart.AddSeries(TCandleSeries.Create);
+  end;
+
+  // Example: Set series 0 data as arrays:
+  (*
+  FChart[0].Clear;
+  FChart[0].Data.Values:=[123,456,321];
+  FChart[0].Data.Labels:=['A','B','C'];
+  *)
+
+  // Random sample values:
+  FChart[0].FillSampleValues;
+
+  W3Checkbox3.Checked:=FChart.Series[0].Marks.Visible;
+  W3Checkbox5.Checked:=(FChart.Series[0].ColorEach=ceYes) or
+                       (FChart.Series[0].ColorEach=ceAuto);
+
+  // Bar and Horiz.Bar Series:
+
+  W3ComboBox2.Visible:=FChart.Series[0] is TCustomBarSeries;
+  W3Label1.Visible:=W3ComboBox2.Visible;
+
+  Axes.Visible:=not (FChart.Series[0] is TPieSeries);  // bug:Enabled ??
+
+  // Donut Series:
+
+  LabelDonutHole.Visible:=FChart.Series[0] is TDonutSeries;
+  DonutHole.Visible:=LabelDonutHole.Visible;
+
+  FChart.Invalidate;
+end;
+
+Procedure TForm1.FinalizeObject;
+Begin
+  FChart.Free;
+  inherited;
+End;
+ 
+Procedure TForm1.Resize;
+Begin
+ inherited;
+End;
+ 
+Procedure TForm1.StyleTagObject;
+Begin
+  // Custom styling
+End;
+ 
+end.
+]]>
+        </source>
+        <design>
+          <![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<SFM>
+  <W3Form clsid="TW3Form">
+    <name>Form1</name>
+    <left>0</left>
+    <top>0</top>
+    <width>200</width>
+    <height>64</height>
+    <enabled>1</enabled>
+    <visible>1</visible>
+    <angle>0</angle>
+    <border.radius>0</border.radius>
+    <alpha.blend>0</alpha.blend>
+    <opacity>255</opacity>
+    <zoom>0</zoom>
+    <style.name>TW3Form</style.name>
+    <tag.value>0</tag.value>
+    <color>clNone</color>
+    <transparent>0</transparent>
+    <children>
+      <W3ComboBox clsid="TW3ComboBox">
+        <name>W3ComboBox1</name>
+        <left>16</left>
+        <top>17</top>
+        <width>120</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3ComboBox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+      </W3ComboBox>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>W3Checkbox1</name>
+        <left>144</left>
+        <top>16</top>
+        <width>80</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Legend</caption>
+        <checked>1</checked>
+      </W3CheckBox>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>W3Checkbox2</name>
+        <left>16</left>
+        <top>48</top>
+        <width>68</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Title</caption>
+        <checked>1</checked>
+      </W3CheckBox>
+      <W3EditBox clsid="TW3EditBox">
+        <name>W3EditBox1</name>
+        <left>104</left>
+        <top>48</top>
+        <width>188</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3EditBox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <text></text>
+      </W3EditBox>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>W3Checkbox3</name>
+        <left>232</left>
+        <top>16</top>
+        <width>72</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Marks</caption>
+        <checked>1</checked>
+      </W3CheckBox>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>W3Checkbox4</name>
+        <left>16</left>
+        <top>80</top>
+        <width>112</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Transparent</caption>
+        <checked>0</checked>
+      </W3CheckBox>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>W3Checkbox5</name>
+        <left>136</left>
+        <top>80</top>
+        <width>104</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Color Each</caption>
+        <checked>0</checked>
+      </W3CheckBox>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>Axes</name>
+        <left>248</left>
+        <top>80</top>
+        <width>54</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Axes</caption>
+        <checked>1</checked>
+      </W3CheckBox>
+      <W3ComboBox clsid="TW3ComboBox">
+        <name>W3ComboBox2</name>
+        <left>96</left>
+        <top>112</top>
+        <width>88</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3ComboBox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+      </W3ComboBox>
+      <W3Label clsid="TW3Label">
+        <name>W3Label1</name>
+        <left>24</left>
+        <top>112</top>
+        <width>77</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Label</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <text>Stacked:</text>
+      </W3Label>
+      <W3Label clsid="TW3Label">
+        <name>LabelDonutHole</name>
+        <left>24</left>
+        <top>144</top>
+        <width>79</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Label</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <text>Hole %:</text>
+      </W3Label>
+      <W3ComboBox clsid="TW3ComboBox">
+        <name>DonutHole</name>
+        <left>111</left>
+        <top>142</top>
+        <width>89</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3ComboBox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+      </W3ComboBox>
+      <W3Button clsid="TW3Button">
+        <name>W3Button1</name>
+        <left>184</left>
+        <top>112</top>
+        <width>71</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Button</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Line Demo</caption>
+      </W3Button>
+      <W3Button clsid="TW3Button">
+        <name>W3Button2</name>
+        <left>256</left>
+        <top>112</top>
+        <width>71</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Button</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Pie Demo</caption>
+      </W3Button>
+    </children>
+  </W3Form>
+</SFM>]]>
+        </design>
+      </file>
+      <file clsid="TIDEProjectFileHTML">
+        <name>index.html</name>
+        <created>2012-04-26T09:45:15.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[<!DOCTYPE html>
+<html manifest="app.manifest">
+<head>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="format-detection" content="telephone=yes"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=no"/>
+
+  <link rel="apple-touch-startup-image" href="%appbootimage%"/>
+  <link rel="apple-touch-icon" href="%appicon%"/>
+  <%stylecode%>
+  <%rescode%>
+  <title>%apptitle%</title>
+
+  <script type="text/javascript">
+  /* This prevents the window being moved by touches,
+     to give the impression of a native app */
+  document.ontouchmove = function(e)
+  { e.preventDefault(); }
+  </script>
+
+  <script type="text/javascript">
+  /* Note: If you build with the CSS as an external file,
+     the app may execute before the CSS has been properly loaded.
+     You may want to use a different bootstrap mechanism. jQuery
+     provides a good preloading mechanism for instance. */
+
+    function bootstrap() { %appcode% }
+    window.onload = function () { bootstrap(); }
+  </script>
+</head>
+
+<body></body>
+
+
+
+</html>
+]]>
+        </source>
+      </file>
+      <file clsid="TIDEProjectFileCSS">
+        <name>app.css</name>
+        <created>2012-04-26T09:45:15.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[
+html, body
+{
+  /* iOS basics */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+
+  background-color: #000000;
+  overflow: hidden;
+}
+
+* {
+  /* Define "normal" boxing */
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+
+   margin: 0px;
+  padding: 0px;
+   border: 0px;
+
+  /* Turn off font resizing */
+  -webkit-text-size-adjust: none;
+     -moz-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+
+    -webkit-font-smoothing: always;
+
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+/* =============================================
+ * TW3BlockBox:
+ *  In order to emulate modal dialogs we use
+ *  a single DIV to cover the active form.
+ *  This div prevents the user from clicking
+ *  on the underlying controls - thus forcing
+ *  the user to deal with the dialog, which is
+ *  hosted as a child of the TW3BlockBox control
+ * ============================================= */
+
+.TW3BlockBox {
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  margin: 0px;
+  padding: 0px;
+  background-color: rgba(0,0,0,.50);
+}
+
+/* =============================================
+ * TW3CheckMark
+ * ============================================= */
+
+.TW3CheckMark
+  {
+    margin: 0px;
+    padding: 0px;
+  }
+
+/* =============================================
+ * TW3ScrollContentIndicator
+ * ============================================= */
+
+.TW3ScrollContentIndicator
+  {
+    margin: 0px;
+    padding: 0px;
+    background-color: #222222;
+    border: solid 1px #9A9A9A;
+  }
+
+
+/* =============================================
+ * Page Animation: BACKSCROLL
+ * ============================================= */
+
+@-webkit-keyframes BACKSCROLL {
+  0% {
+    -webkit-transform: translateZ(0);
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -557px 0%;
+    -webkit-transform: translateZ(0);
+  }
+}
+
+@-moz-keyframes BACKSCROLL {
+  0% {
+    -webkit-transform: translateZ(0);
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -557px 0%;
+    -webkit-transform: translateZ(0);
+  }
+}
+
+
+/* =============================================
+ * Page Animation: MOVE-LEFT
+ * ============================================= */
+
+
+@-webkit-keyframes MOVE-LEFT {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(0px);
+    }
+}
+
+@-webkit-keyframes MOVE-OUT-LEFT {
+    0% {
+        -webkit-transform: translateX(0%);
+    }
+    100% {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+@-moz-keyframes MOVE-LEFT {
+    0% {
+        -moz-transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(0px);
+    }
+}
+
+
+@-moz-keyframes MOVE-OUT-LEFT {
+    0% {
+      -moz-transform: translateX(0%);
+      }
+    100% {
+      -moz-transform: translateX(-100%);
+      }
+}
+
+/* =============================================
+ * Page Animation: MOVE-Right
+ * ============================================= */
+
+@-webkit-keyframes MOVE-RIGHT {
+    0% {
+        -webkit-transform: translateX(-100%);
+    }
+    100% {
+        -webkit-transform: translateX(0%);
+        visibility: none;
+    }
+}
+
+@-webkit-keyframes MOVE-OUT-RIGHT {
+    0% {
+        -webkit-transform: translateX(0%);
+    }
+    100% {
+        -webkit-transform: translateX(100%);
+        visibility: none;
+    }
+}
+
+@-moz-keyframes MOVE-RIGHT {
+    0% {
+        -moz-transform: translateX(-100%);
+    }
+    100% {
+        -moz-transform: translateX(0%);
+    }
+}
+
+@-moz-keyframes MOVE-OUT-RIGHT {
+    0% {
+        -moz-transform: translateX(0%);
+    }
+    100% {
+        -moz-transform: translateX(100%);
+        visibility: none;
+    }
+}
+
+/* =============================================
+ * Page Animation: MOVE-Right
+ * ============================================= */
+
+@-webkit-keyframes ROTATE-FOREVER {
+  from {
+    -webkit-transform: none;
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes ROTATE-FOREVER {
+  from {
+    -moz-transform: none;
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+
+.TW3ToolButton
+{
+  margin: 0px;
+  padding: 0px;
+
+	-webkit-box-shadow: 0 1px 1px #9aa5bb, 0 -1px 1px #8e96a5;
+     -moz-box-shadow: 0 1px 1px #9aa5bb, 0 -1px 1px #8e96a5;
+      -ms-box-shadow: 0 1px 1px #9aa5bb, 0 -1px 1px #8e96a5;
+       -o-box-shadow: 0 1px 1px #9aa5bb, 0 -1px 1px #8e96a5;
+
+	-webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+       -o-border-radius: 5px;
+
+
+	-webkit-tap-highlight-color: transparent;
+
+  cursor: default;
+	color: #fff;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 12px;
+  border: solid 1px #54617d;
+	border-color: #484e59 #54617d #4c5c7a #54617d;
+
+  background: rgb(146,161,191); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(146,161,191,1) 0%, rgba(121,138,173,1) 25%, rgba(98,118,160,1) 50%, rgba(85,106,151,1) 53%, rgba(86,108,152,1) 75%, rgba(84,105,147,1) 95%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(146,161,191,1)), color-stop(25%,rgba(121,138,173,1)), color-stop(50%,rgba(98,118,160,1)), color-stop(53%,rgba(85,106,151,1)), color-stop(75%,rgba(86,108,152,1)), color-stop(95%,rgba(84,105,147,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(146,161,191,1) 0%,rgba(121,138,173,1) 25%,rgba(98,118,160,1) 50%,rgba(85,106,151,1) 53%,rgba(86,108,152,1) 75%,rgba(84,105,147,1) 95%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(146,161,191,1) 0%,rgba(121,138,173,1) 25%,rgba(98,118,160,1) 50%,rgba(85,106,151,1) 53%,rgba(86,108,152,1) 75%,rgba(84,105,147,1) 95%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(146,161,191,1) 0%,rgba(121,138,173,1) 25%,rgba(98,118,160,1) 50%,rgba(85,106,151,1) 53%,rgba(86,108,152,1) 75%,rgba(84,105,147,1) 95%); /* IE10+ */
+  background: linear-gradient(top,  rgba(146,161,191,1) 0%,rgba(121,138,173,1) 25%,rgba(98,118,160,1) 50%,rgba(85,106,151,1) 53%,rgba(86,108,152,1) 75%,rgba(84,105,147,1) 95%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#92a1bf', endColorstr='#546993',GradientType=0 ); /* IE6-9 */
+}
+
+.TW3ToolButton:active:enabled
+{
+  background: rgb(84,105,147); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(84,105,147,1) 5%, rgba(86,108,152,1) 25%, rgba(85,106,151,1) 47%, rgba(98,118,160,1) 50%, rgba(121,138,173,1) 75%, rgba(146,161,191,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(5%,rgba(84,105,147,1)), color-stop(25%,rgba(86,108,152,1)), color-stop(47%,rgba(85,106,151,1)), color-stop(50%,rgba(98,118,160,1)), color-stop(75%,rgba(121,138,173,1)), color-stop(100%,rgba(146,161,191,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(84,105,147,1) 5%,rgba(86,108,152,1) 25%,rgba(85,106,151,1) 47%,rgba(98,118,160,1) 50%,rgba(121,138,173,1) 75%,rgba(146,161,191,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(84,105,147,1) 5%,rgba(86,108,152,1) 25%,rgba(85,106,151,1) 47%,rgba(98,118,160,1) 50%,rgba(121,138,173,1) 75%,rgba(146,161,191,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(84,105,147,1) 5%,rgba(86,108,152,1) 25%,rgba(85,106,151,1) 47%,rgba(98,118,160,1) 50%,rgba(121,138,173,1) 75%,rgba(146,161,191,1) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgba(84,105,147,1) 5%,rgba(86,108,152,1) 25%,rgba(85,106,151,1) 47%,rgba(98,118,160,1) 50%,rgba(121,138,173,1) 75%,rgba(146,161,191,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#546993', endColorstr='#92a1bf',GradientType=0 ); /* IE6-9 */
+
+	-webkit-tap-highlight-color: transparent;
+}
+
+.TW3ToolButton:disabled {
+	Opacity: 0.5;
+  cursor: wait;
+}
+
+/* =============================================
+ * TW3Panel
+ * ============================================= */
+
+.TW3Panel {
+  border:   2px solid #7c7a77;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+      -ie-border-radius: 5px;
+  resize: none;
+	font-size: 12px;
+  cursor: default;
+	background-color: #FFFFFF;
+}
+
+/* =============================================
+ * TW3CustomControl
+ * ============================================= */
+
+.TW3CustomControl
+{
+  cursor: default;
+  background-color: #CECECE;
+  background-image: -webkit-gradient( linear, left top, left bottom, from(#F2F2F2), to(#7c7a77));
+}
+
+/* =============================================
+ * TW3AlertDialog
+ * ============================================= */
+.TW3AlertButton {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid rgba(19, 30, 58, 0.9);
+    background-color: #5f6981;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b0b5c0), color-stop(50%, #6a748b), color-stop(51%, #505a75), color-stop(100%, #5f6981)); /* for iOS Webkit */
+
+    -webkit-border-radius: 6px;
+    -webkit-box-shadow: 0px 1px 0px rgba(0,0,0,.8);
+    -webkit-text-shadow: 0 -1px 0 rgba(0,0,0,.8);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.TW3AlertButton:active {
+    background-image: -webkit-gradient(linear, left top, left bottom,
+    color-stop(0%, #5f6981),
+    color-stop(50%, #505a75),
+    color-stop(51%, #6a748b),
+    color-stop(100%, #b0b5c0));
+}
+
+.TW3AlertDialog {
+    z-index: 1000;
+    padding: 6px 5px;
+    border: 2px solid rgba(178, 183, 194, 0.8);
+    border-top-color: rgba(226, 227, 228, 0.8);
+
+    /* border-radius: 15px; */
+    background: rgba(11, 27, 68, 0.8) url(data:image/png;base64,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)
+    no-repeat 50% 0;
+
+    box-shadow: 0 8px 19px rgba(0,0,0,.9);
+    color: #fff;
+    font-family: Helvetica, Arial, sans-serif;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.8);
+    text-align: center;
+    -webkit-border-radius: 15px;
+    -webkit-box-shadow: 0 8px 19px rgba(0,0,0,.9);
+    -webkit-text-shadow: 0 -1px 0 rgba(0,0,0,.8);
+}
+
+/* =============================================
+ * TW3Toolbar
+ * ============================================= */
+
+.TW3ToolbarButton {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    color: #FFFFFF;
+
+    background-color: rgba(255,255,255,0.2);
+
+    -webkit-border-radius: 6px;
+    text-shadow: 0px -1px -1px rgba(0,0,0,.30);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.TW3ToolbarButton:active {
+    background-color: rgba(255,255,255,0.4);
+}
+
+.TW3ToolbarButton:disabled {
+  background-color: transparent;
+}
+
+.TW3Toolbar
+{
+  cursor: default;
+	background-image:-webkit-gradient(linear, left top, left bottom,
+		from(#b2bbca),
+		color-stop(0.25, #a7b0c3),
+		color-stop(0.5, #909cb3),
+		color-stop(0.5, #8593ac),
+		color-stop(0.75, #7c8ba5),
+		to(#73839f));
+	 border-top: 1px solid #dde5ef;
+	 border-bottom: 1px solid #2d3642;
+	-webkit-box-shadow: rgba(33, 33, 33, 0.2) 0px 1px 1px;
+}
+
+/* =============================================
+ * TW3Memo
+ * ============================================= */
+
+.TW3Memo, .TW3EditBox, .TW3ComboBox {
+  border: 1px solid #acacac;
+  resize: none;
+  -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+      -ie-border-radius: 5px;
+}
+
+
+
+/* =============================================
+ * TW3HeaderControl
+ * ============================================= */
+
+.TW3HeaderControl
+{
+  cursor: default;
+  background: rgb(178,187,202); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(178,187,202,1) 1%, rgba(167,176,195,1) 25%, rgba(144,156,179,1) 47%, rgba(133,147,172,1) 50%, rgba(124,139,165,1) 75%, rgba(115,131,159,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,rgba(178,187,202,1)), color-stop(25%,rgba(167,176,195,1)), color-stop(47%,rgba(144,156,179,1)), color-stop(50%,rgba(133,147,172,1)), color-stop(75%,rgba(124,139,165,1)), color-stop(100%,rgba(115,131,159,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(178,187,202,1) 1%,rgba(167,176,195,1) 25%,rgba(144,156,179,1) 47%,rgba(133,147,172,1) 50%,rgba(124,139,165,1) 75%,rgba(115,131,159,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(178,187,202,1) 1%,rgba(167,176,195,1) 25%,rgba(144,156,179,1) 47%,rgba(133,147,172,1) 50%,rgba(124,139,165,1) 75%,rgba(115,131,159,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(178,187,202,1) 1%,rgba(167,176,195,1) 25%,rgba(144,156,179,1) 47%,rgba(133,147,172,1) 50%,rgba(124,139,165,1) 75%,rgba(115,131,159,1) 100%); /* IE10+ */
+  background: linear-gradient(top,  rgba(178,187,202,1) 1%,rgba(167,176,195,1) 25%,rgba(144,156,179,1) 47%,rgba(133,147,172,1) 50%,rgba(124,139,165,1) 75%,rgba(115,131,159,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b2bbca', endColorstr='#73839f',GradientType=0 ); /* IE6-9 */
+
+	 border-top: 1px solid #cdd5df;
+	 border-bottom: 1px solid #2d3642;
+    -webkit-box-shadow: rgba(33, 33, 33, 0.2) 0px 1px 1px;
+       -moz-box-shadow: rgba(33, 33, 33, 0.2) 0px 1px 1px;
+        -ms-box-shadow: rgba(33, 33, 33, 0.2) 0px 1px 1px;
+         -o-box-shadow: rgba(33, 33, 33, 0.2) 0px 1px 1px;
+}
+
+.TW3HeaderControl:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+
+
+/* =============================================
+ * TW3CustomForm
+ * ============================================= */
+
+.TW3CustomForm, .TW3Form
+{
+  /* -webkit-transform: none; */
+  -webkit-transform: translateZ(0);
+	-webkit-user-select: none;
+
+	background-color: #D5DCE1;
+
+  background-image: -webkit-gradient(linear, left top, right top,
+		from(#c5ccd4),
+		color-stop(0.75, #c5ccd4),
+		color-stop(0.75, transparent),
+		to(transparent));
+
+
+	-webkit-background-size: 5px 100%;
+     -moz-background-size: 5px 100%;
+      -ms-background-size: 5px 100%;
+       -o-background-size: 5px 100%;
+}
+
+/* ##########################################################################
+   # TW3Label
+   ########################################################################## */
+
+.TW3Label, TW3LabelText {
+  opacity: 1.0;
+	cursor: default;
+	font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.TW3Label:disabled, TW3LabelText:disabled {
+  text-shadow: 0px 1px 0px #fff;
+  opacity: 0.5;
+}
+
+
+/* ##########################################################################
+   # TW3Button
+   ########################################################################## */
+
+.TW3Button {
+      margin: 0px;
+      padding: 0px;
+      border: 2px solid #282726;
+
+      background: rgb(226,226,226); /* Old browsers */
+      background: -moz-linear-gradient(top,  rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 52%, rgba(254,254,254,1) 100%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(52%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 52%,rgba(254,254,254,1) 100%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 52%,rgba(254,254,254,1) 100%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 52%,rgba(254,254,254,1) 100%); /* IE10+ */
+      background: linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 52%,rgba(254,254,254,1) 100%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
+
+      font-family: "Helvetica Neue", Verdana, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 1px 1px -1px #cecece;
+      color:  #000000;
+
+  -webkit-text-size-adjust: auto;
+     -moz-text-size-adjust: auto;
+      -ms-text-size-adjust: auto;
+
+      -webkit-border-radius: 5px;
+         -moz-border-radius: 5px;
+          -ms-border-radius: 5px;
+              border-radius: 5px;
+
+      -webkit-tap-highlight-color: transparent;
+}
+
+
+.TW3Button:active:enabled {
+      color: #FFFFFF;
+
+      background: rgb(207,231,250); /* Old browsers */
+      background: -moz-linear-gradient(top,  rgba(207,231,250,1) 0%, rgba(99,147,193,1) 52%, rgba(78,136,191,1) 66%, rgba(192,224,249,1) 96%); /* FF3.6+ */
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(207,231,250,1)), color-stop(52%,rgba(99,147,193,1)), color-stop(66%,rgba(78,136,191,1)), color-stop(96%,rgba(192,224,249,1))); /* Chrome,Safari4+ */
+      background: -webkit-linear-gradient(top,  rgba(207,231,250,1) 0%,rgba(99,147,193,1) 52%,rgba(78,136,191,1) 66%,rgba(192,224,249,1) 96%); /* Chrome10+,Safari5.1+ */
+      background: -o-linear-gradient(top,  rgba(207,231,250,1) 0%,rgba(99,147,193,1) 52%,rgba(78,136,191,1) 66%,rgba(192,224,249,1) 96%); /* Opera 11.10+ */
+      background: -ms-linear-gradient(top,  rgba(207,231,250,1) 0%,rgba(99,147,193,1) 52%,rgba(78,136,191,1) 66%,rgba(192,224,249,1) 96%); /* IE10+ */
+      background: linear-gradient(top,  rgba(207,231,250,1) 0%,rgba(99,147,193,1) 52%,rgba(78,136,191,1) 66%,rgba(192,224,249,1) 96%); /* W3C */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', endColorstr='#c0e0f9',GradientType=0 ); /* IE6-9 */
+
+      text-shadow: none;
+      -webkit-tap-highlight-color: transparent;
+}
+
+.TW3Button:disabled {
+	Opacity: 0.50;
+}
+
+
+ul {
+    cursor: default;
+    list-style: none;
+    -moz-list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+ul li {
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    background-color: #FFFFFF;
+    border: 1px solid #999999;
+    color: #222222;
+    cursor: hand;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: -1px;
+    padding: 12px 12px;
+    text-decoration: none;
+}
+
+ul li:first-child {
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    -moz-border-top-left-radius: 8px;
+    -moz-border-top-right-radius: 8px;
+    -o-border-top-left-radius: 8px;
+    -o-border-top-right-radius: 8px;
+    -ms-border-top-left-radius: 8px;
+    -ms-border-top-right-radius: 8px;
+}
+ul li:last-child {
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    -moz-border-bottom-left-radius: 8px;
+    -moz-border-bottom-right-radius: 8px;
+    -o-border-bottom-left-radius: 8px;
+    -o-border-bottom-right-radius: 8px;
+    -ms-border-bottom-left-radius: 8px;
+    -ms-border-bottom-right-radius: 8px;
+}
+
+ul li:active {
+  color: #FFFFFF;
+  background-image: url(data:image/png;base64,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);
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+}
+]]>
+        </source>
+      </file>
+      <file clsid="TIDEProjectFileSourceExternal">
+        <name>w3chart</name>
+        <created>2012-04-26T09:47:26.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[]]>
+        </source>
+        <filename>w3chart.pas</filename>
+      </file>
+      <file clsid="TIDEProjectFileForm">
+        <name>Form2</name>
+        <created>2012-05-18T10:13:26.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[unit Form2;
+
+interface
+
+uses w3system, w3graphics, w3ctrls, w3components, w3forms, 
+     w3fonts, w3borders, w3application, w3chart, W3Button;
+
+type
+
+TForm2=class(TW3form)
+private
+  { Private methods }
+  {$I 'Form2:intf'}
+  procedure GoBack(Sender: TObject);
+protected
+  { Protected methods }
+
+  Procedure InitializeObject;override;
+  Procedure FinalizeObject;override;
+  Procedure StyleTagObject;reintroduce;virtual;
+  Procedure Resize;override;
+
+  Procedure Button1Click(Sender:TObject);
+  Procedure ComboColorChanged(Sender:TObject);
+  Procedure GradientChanged(Sender:TObject);
+end;
+
+Implementation
+
+//############################################################################
+// TForm2
+//############################################################################
+
+Procedure TForm2.InitializeObject;
+var s : TSeries;
+    num, t : Integer;
+    tmp : Float;
+Begin
+  inherited;
+  {$I 'Form2:impl'}
+
+  // Set some chart properties:
+
+  W3Chart1.Title.Text:='Line Series';
+
+  W3Chart1.Panel.Format.Gradient.Colors[0]:=clRed;
+  W3Chart1.Panel.Format.Gradient.Colors[1]:=clYellow;
+
+  W3Chart1.Axes.Bottom.Title.Text:='Bottom Axis';
+  W3Chart1.Axes.Left.Labels.Format.Font.Color:=clBlue;
+
+  W3Chart1.Legend.Position:=lpLeft;
+
+  // Create 5 line series
+  for num:=0 to 4 do
+  begin
+    s:=TLineSeries.Create;
+    W3Chart1.AddSeries(s);
+
+    s.Format.Shadow.Visible:=False;
+
+    // Add random data to each series
+    tmp:=0;
+
+    for t:=0 to 999 do
+    begin
+      tmp:=tmp+(1000*Random()-500);
+      //s.Data.Add(tmp);
+      s.Data.Values.Add(tmp);
+    end;
+
+    s.RefreshData;
+  end;
+
+  // Hook button
+  W3Button1.OnClick:=Button1Click;
+
+  // Fill combo:
+  W3ComboBox1.add('Red');
+  W3ComboBox1.add('Silver');
+  W3ComboBox1.add('Black');
+  W3ComboBox1.add('White');
+  W3ComboBox1.add('Green');
+  W3ComboBox1.add('Blue');
+  W3ComboBox1.OnChanged:=ComboColorChanged;
+
+  W3Checkbox1.OnChanged:=GradientChanged;
+  W3Button2.OnClick:=GoBack;
+End;
+
+procedure TForm2.GoBack(Sender: TObject);
+begin
+  Application.GotoForm('form1');
+end;
+ 
+Procedure TForm2.ComboColorChanged(Sender:TObject);
+const Colors:Array[0..5] of TColor=[clRed, clSilver, clBlack, clWhite, clGreen, clBlue];
+var c : TColor;
+    g : TGradient;
+begin
+  c:=Colors[W3ComboBox1.SelectedIndex];
+
+  W3Chart1.Panel.Format.Color:=c;
+
+  g:=W3Chart1.Panel.Format.Gradient;
+
+  g.Colors[0]:=c;
+  g.Colors[1]:=clWhite;
+  g.Refresh(W3Chart1);
+end;
+
+Procedure TForm2.GradientChanged(Sender:TObject);
+begin
+  W3Chart1.Panel.Format.Gradient.Visible:=W3Checkbox1.Checked;
+end;
+
+Procedure TForm2.Button1Click(Sender:TObject);
+begin
+  // Remove 2nd series (index 1) from chart:
+//  W3Chart1.Series.Remove(1);
+
+  // Alternative way:
+  W3Chart1.Series.Remove(W3Chart1[1]);
+end;
+
+Procedure TForm2.FinalizeObject;
+Begin
+  inherited;
+End;
+ 
+Procedure TForm2.Resize;
+Begin
+ inherited;
+End;
+ 
+Procedure TForm2.StyleTagObject;
+Begin
+  // Custom styling
+End;
+ 
+end.
+]]>
+        </source>
+        <design>
+          <![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<SFM>
+  <W3Form clsid="TW3Form">
+    <name>Form2</name>
+    <left>0</left>
+    <top>0</top>
+    <width>200</width>
+    <height>64</height>
+    <enabled>1</enabled>
+    <visible>1</visible>
+    <angle>0</angle>
+    <border.radius>0</border.radius>
+    <alpha.blend>0</alpha.blend>
+    <opacity>255</opacity>
+    <zoom>0</zoom>
+    <style.name>TW3Form</style.name>
+    <tag.value>0</tag.value>
+    <color>clNone</color>
+    <transparent>0</transparent>
+    <children>
+      <W3Button clsid="TW3Button">
+        <name>W3Button1</name>
+        <left>8</left>
+        <top>304</top>
+        <width>200</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Button</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Remove 2nd Series</caption>
+      </W3Button>
+      <W3ComboBox clsid="TW3ComboBox">
+        <name>W3ComboBox1</name>
+        <left>104</left>
+        <top>336</top>
+        <width>108</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3ComboBox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+      </W3ComboBox>
+      <W3Label clsid="TW3Label">
+        <name>W3Label1</name>
+        <left>8</left>
+        <top>336</top>
+        <width>84</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Label</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <text>Back color:</text>
+      </W3Label>
+      <W3CheckBox clsid="TW3CheckBox">
+        <name>W3Checkbox1</name>
+        <left>12</left>
+        <top>367</top>
+        <width>200</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>0</zoom>
+        <style.name>TW3Checkbox</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Gradient Visible</caption>
+        <checked>1</checked>
+      </W3CheckBox>
+      <W3Chart clsid="TW3Chart">
+        <name>W3Chart1</name>
+        <left>0</left>
+        <top>40</top>
+        <width>328</width>
+        <height>247</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>1</zoom>
+        <style.name>TW3Chart</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+      </W3Chart>
+      <W3Button clsid="TW3Button">
+        <name>W3Button2</name>
+        <left>0</left>
+        <top>0</top>
+        <width>200</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>1</zoom>
+        <style.name>TW3Button</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Back</caption>
+      </W3Button>
+    </children>
+  </W3Form>
+</SFM>]]>
+        </design>
+      </file>
+      <file clsid="TIDEProjectFileForm">
+        <name>Form3</name>
+        <created>2012-05-18T14:18:21.000Z</created>
+        <notes></notes>
+        <source>
+          <![CDATA[unit Form3;
+
+interface
+
+uses w3system, w3graphics, w3ctrls, w3components, w3forms, 
+     w3fonts, w3borders, w3application, w3chart;
+
+type
+
+ TForm3=class(TW3form)
+ private
+   { Private methods }
+   {$I 'Form3:intf'}
+   procedure GoBack(Sender: TObject);
+ protected
+   { Protected methods }
+   Procedure InitializeObject;override;
+   Procedure FinalizeObject;override;
+   Procedure StyleTagObject;reintroduce;virtual;
+   Procedure Resize;override;
+ end;
+
+Implementation
+
+//############################################################################
+// TForm3
+//############################################################################
+
+Procedure TForm3.InitializeObject;
+var p : TPieSeries;
+Begin
+  inherited;
+  {$I 'Form3:impl'}
+
+  // Set some chart properties:
+
+  W3Chart1.Title.Text:='Pie Series';
+
+  W3Chart1.Legend.Position:=lpBottom;
+
+  p:=TPieSeries.Create;
+  W3Chart1.addSeries(p);
+
+  p.Data.Values:=[34,56,12,87];
+  p.Data.Labels:=['A','B','C','D'];
+
+  W3Button1.OnClick:=GoBack;
+End;
+ 
+procedure TForm3.GoBack(Sender: TObject);
+begin
+  Application.GotoForm('form1');
+end;
+
+Procedure TForm3.FinalizeObject;
+Begin
+  inherited;
+End;
+ 
+Procedure TForm3.Resize;
+Begin
+ inherited;
+End;
+ 
+Procedure TForm3.StyleTagObject;
+Begin
+  // Custom styling
+End;
+ 
+end.
+]]>
+        </source>
+        <design>
+          <![CDATA[<?xml version="1.0" encoding="utf-16"?>
+<SFM>
+  <W3Form clsid="TW3Form">
+    <name>Form3</name>
+    <left>0</left>
+    <top>0</top>
+    <width>200</width>
+    <height>64</height>
+    <enabled>1</enabled>
+    <visible>1</visible>
+    <angle>0</angle>
+    <border.radius>0</border.radius>
+    <alpha.blend>0</alpha.blend>
+    <opacity>255</opacity>
+    <zoom>1</zoom>
+    <style.name>TW3Form</style.name>
+    <tag.value>0</tag.value>
+    <color>clNone</color>
+    <transparent>0</transparent>
+    <children>
+      <W3Chart clsid="TW3Chart">
+        <name>W3Chart1</name>
+        <left>23</left>
+        <top>48</top>
+        <width>297</width>
+        <height>240</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>1</zoom>
+        <style.name>TW3Chart</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+      </W3Chart>
+      <W3Button clsid="TW3Button">
+        <name>W3Button1</name>
+        <left>18</left>
+        <top>5</top>
+        <width>102</width>
+        <height>24</height>
+        <enabled>1</enabled>
+        <visible>1</visible>
+        <angle>0</angle>
+        <border.radius>0</border.radius>
+        <alpha.blend>0</alpha.blend>
+        <opacity>255</opacity>
+        <zoom>1</zoom>
+        <style.name>TW3Button</style.name>
+        <tag.value>0</tag.value>
+        <color>clNone</color>
+        <transparent>0</transparent>
+        <caption>Back</caption>
+      </W3Button>
+    </children>
+  </W3Form>
+</SFM>]]>
+        </design>
+      </file>
+    </files>
+  </project>
+</SMART>

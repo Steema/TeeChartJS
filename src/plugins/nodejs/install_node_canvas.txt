@@ -1,0 +1,10 @@
+
+TeeChart for Node.js requires a library that
+implements the HTML5 <canvas> tag.
+
+The node-canvas module has been tested under Linux.
+
+To install node-canvas, please visit:
+
+http://github.com/LearnBoost/node-canvas
+

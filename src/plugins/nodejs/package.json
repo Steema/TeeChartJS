@@ -1,0 +1,50 @@
+{
+  "author": "David Berneda <david@steema.com> (http://www.steema.com)",
+  "name": "TeeChart",
+  "description": "Charting and graphing node.js module",
+  "tags" : ["html5", "canvas", "chart", "graph", "plot", "visualization"],
+  "version": "0.1.4",
+  "keywords": [
+    "canvas",
+    "w3c",
+    "html5",
+    "chart",
+    "plot",
+    "graph",
+    "charting",
+    "2d",
+    "javascript"
+  ],
+  "homepage": "http://www.steema.com/teechart/html5",
+  "repository": {
+    "url": "http://github.com/davidberneda/TeeChart.git"
+  },
+  "maintainers": [
+    {
+      "name": "david berneda",
+      "email": "david@steema.com",
+      "url": "http://steema.com"
+    }
+  ],
+  "bugs" : {
+    "email": "david@steema.com",
+    "url" : "http://github.com/davidberneda/TeeChart/issues"
+  },
+  "licenses": [
+    {
+      "type": "CC",
+      "url": "http://github.com/davidberneda/TeeChart/blob/master/LICENSE.txt"
+    }
+  ],
+  "main" : "./main",
+  "scripts": { "test": "node main.js" },
+  "dependencies": {
+    "canvas": "*"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
+

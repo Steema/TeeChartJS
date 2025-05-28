@@ -1,0 +1,6 @@
+{
+  "name": "teechart",
+  "version": "1.3.0",
+  "main": "./lib/teechart-min.js",
+  "dependencies": {}
+}

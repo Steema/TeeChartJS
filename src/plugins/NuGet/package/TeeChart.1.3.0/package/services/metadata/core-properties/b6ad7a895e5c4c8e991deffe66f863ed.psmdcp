@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?><coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties"><dc:creator>Steema Software</dc:creator><dc:description>TeeChart for Javascript is available as a standalone product and as an export format across the TeeChart product range. Both formats enable HTML5 live in-browser charts as a visualisation format for a selected range of TeeChart data series types. Other series types, not supported in the dynamic model, may be output to browsers as static HTML5 charts. See www.w3.org/TR/html5 for more details of the HTML5 specfication.
+
+TeeChart for Javascript Live charts support zoom and scroll, a variety of interactive mouse-click events and finger-touch sensitivity on mobile devices.
+
+TeeChart Series Types currently supported are:
+
+Bar, Horizbar, Line, SmoothLine, Pie, Donut, Area, HorizArea, SmoothArea, Point (Scatter XY), Bubble, Candle (OHLC), Volume, Gauges, Clocks, World / USA / Europe maps and Spark lines.</dc:description><dc:identifier>TeeChart</dc:identifier><version>1.3.0</version><keywords>chart, charting, pivot, olap, datamining, crosstab, multidimensional, plotting, plots, graphing, graphs, geographic, world, map, clock, typescript, nodejs</keywords><dc:title>TeeChart for JavaScript</dc:title><dc:subject>NuGet Package Explorer</dc:subject></coreProperties>

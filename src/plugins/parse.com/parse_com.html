@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<title>TeeChart Parse.com Example</title>
+
+<script src="http://www.parsecdn.com/js/parse-1.2.2.min.js"></script>
+
+<script src="http://www.steema.com/files/public/teechart/html5/v2012.12.14.1.4/src/teechart.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+var Chart1, Series1;
+
+function parseChart() {
+  Chart1=new Tee.Chart("chart1");
+  Chart1.title.text = "TeeChart using data from Parse.com";
+
+  Series1=Chart1.addSeries(new Tee.Bar([]));
+
+  Parse.initialize("Kloa4gfow5LxpUXNMMRkxQk0lneMbiG8ITmanYIX", "lCd60fvuxz7S1WPRuiCUXNYoWokXXasiDP4vG2qP");
+
+  var Demo = Parse.Object.extend("Demo");
+  var query = new Parse.Query(Demo);
+
+  query.limit(1000);
+
+  query.find({
+    success: function(results) {
+
+      for (var c=0; c<results.length; c++) {
+         var item = results[c];
+
+         Series1.data.values.push( item.get("Value") );
+         Series1.data.labels.push( item.get("Label") );
+      }
+
+      Chart1.draw();
+
+    },
+    error: function(error) {
+      alert("Error: " + error.code + " " + error.message);
+    }
+  });
+}
+
+</script>
+
+</head>
+<body onload="parseChart();">
+
+<canvas id="chart1" width="600" height="400">
+  This browser does not seem to support HTML5 Canvas.
+</canvas>
+
+</body>
+</html>

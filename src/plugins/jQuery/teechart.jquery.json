@@ -1,0 +1,54 @@
+{
+    "name": "teechart",
+    "version": "1.4.0",
+    "title": "jQuery TeeChart",
+    "author": {
+        "name": "Steema Software",
+        "url": "http://steema.com"
+    },
+    "licenses": [
+        {
+            "type": "CC",
+            "url": "http://www.steema.com/licensing/html5"
+        },
+    ],
+    "dependencies": {
+        "jquery": ">=1.6"
+    },
+    "description": "Charting, graphing, plotting library using HTML5 Canvas and jQuery",
+    "keywords": [
+        "charting",
+        "graphing",
+        "plotting",
+        "chart",
+        "plot",
+        "graph",
+        "candle",
+        "business",
+        "3d",
+        "webgl",
+        "pie",
+        "bar",
+        "line",
+        "scatter",
+        "bubble",
+        "area",
+        "maps",
+        "xy",
+        "clock",
+        "gauge",
+        "donut",
+        "doughnut",
+        "gantt",
+        "polar",
+        "statistics"
+    ],
+    "maintainers": [
+      {
+        "name": "david berneda",
+        "email": "david@steema.com",
+        "url": "http://steema.com"
+      }
+    ],
+    "homepage": "http://www.steema.com/teechart/html5"
+}

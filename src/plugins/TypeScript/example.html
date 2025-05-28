@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<HEAD>
+<title>TeeChart for TypeScript basic example</TITLE>
+
+<link rel="stylesheet" type="text/css" href="https://www.steema.com/files/public/teechart/html5/latest/demos/demo.css">
+
+<script src="https://www.steema.com/files/public/teechart/html5/latest/src/teechart.js" type="text/javascript"></SCRIPT>
+<script src="https://www.steema.com/files/public/teechart/html5/latest/src/teechart-extras.js" type="text/javascript"></script>
+<script src="typescript_test.js" type="text/javascript"></SCRIPT>
+
+<script language="javascript">
+
+    function loadChart()
+    {
+        //Tee.createChart('canvas1').draw();
+
+        var chart = Tee.createChart('canvas1');
+
+        changeTheme(chart, 'minimal');
+
+        chart.draw();
+    }
+
+    function changeTheme(chart, aTheme) {
+        chart.applyTheme(aTheme);
+        for (var i = 0; i < chart.series.count(); i++) {
+            if ((chart.series.items[i].pointer) && (chart.series.items[i].pointer.format))
+                chart.series.items[i].pointer.format.stroke.fill = "white";
+        }
+    }
+</script>
+
+</HEAD>
+
+<BODY onload="loadChart();" style="margin-left:10px;">
+
+<a href="http://www.steema.com/teechart/html5"><img src="img\logo-steema-v3.png">   www.steema.com</a>
+&nbsp;&nbsp;
+<br/><br/>
+<hr />
+<h2>TeeChart for Javascript Typescript Example</h2>
+<br /><br />
+<canvas id="canvas1" width="600" height="400">
+This browser does not seem to support HTML5 Canvas.
+</canvas>
+</BODY>
+</HTML>
+

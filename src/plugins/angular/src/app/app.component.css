@@ -1,0 +1,40 @@
+canvas {
+    #optional
+    ##width: 600px;
+    ##height: 350px;
+  }
+
+  body{width: 100%; margin: 10px 0px 0px 0px; font-family: 'Segoe UI', Verdana, Arial; font-size: 10pt; background-color:white;}
+
+  a:visited, a:link
+  {
+      color: #4473BB;
+      text-decoration: none;
+  }
+  
+  div {
+       margin-left: 20px;
+       margin-top: 1em;
+       margin-bottom: 1em;
+       font-family: 'Segoe UI', Verdana, Arial; 
+       font-size: 11pt;
+  }
+  
+  h1 {
+    margin-bottom: .4em;
+    margin-top: 0em;
+    font-size: 120%;
+  }
+
+  pre {
+    margin-left: 5px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-family: 'Courier New', Verdana, Arial; 
+    font-size: 12pt;
+    color: darkblue;
+    background-color:#EFEFEF;
+}
+
+  
+ 
