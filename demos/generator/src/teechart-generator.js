@@ -46,7 +46,7 @@ function scriptify(chart) {
     d = w.document,
     se
 
-  var sc = '<script src="../../src/teechart.js" type="text/javascript"></script>\n'
+  var sc = '<script src="../../dist/teechart.js" type="text/javascript"></script>\n'
 
   var code = 'var Chart1=new Tee.Chart("canvas1");\n'
   code += emitAnnotation('Chart1.title', Chart1.title)
@@ -94,7 +94,7 @@ function scriptify(chart) {
 
   code += 'Chart1.draw();'
 
-  if (anySmooth) sc += '<script src="../../../src/teechart-extras.js" type="text/javascript"></script>\n'
+  if (anySmooth) sc += '<script src="../../../dist/teechart-extras.js" type="text/javascript"></script>\n'
 
   sc += '<script type="text/javascript">\nfunction draw()\n{\n' + code + '\n}\n</script>'
 

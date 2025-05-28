@@ -72,6 +72,7 @@
       }
 
       .mdl-layout__drawer {
+        width: 260px;
         color: #73879c;
       }
 
@@ -139,7 +140,7 @@
     </script>
 
     <script>
-      var JSONmenu = [
+      const jsonMenu = [
         {
           name: 'THEMES INTRO',
           items: [
@@ -252,6 +253,10 @@
                     {
                       name: 'Sorting Area',
                       url: 'series/area/sortingArea.htm'
+                    },
+                    {
+                      name: 'Area drag points XY',
+                      url: 'series/area/areadragpointsxy.html'
                     }
                   ]
                 },
@@ -826,7 +831,7 @@
       }
 
       function createMenus() {
-        populateNavMenu(JSONmenu)
+        populateNavMenu(jsonMenu)
       }
 
       function closeNav() {
