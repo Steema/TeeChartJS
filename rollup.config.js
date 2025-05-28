@@ -6,7 +6,7 @@ import glob from 'glob'
 
 const UMD_DIST = 'dist'
 const UMD_FILES = ['src/teechart.js']
-const UMD_NOT_MODIFIED = ['src/excanvas/canvas.text.js', 'src/excanvas/excanvas_text.js', 'src/plugins/*']
+const UMD_NOT_MODIFIED = ['src/excanvas/canvas.text.js', 'src/excanvas/excanvas_text.js']
 
 function copyRecursiveSync(src, dest) {
   const stat = fs.statSync(src)
