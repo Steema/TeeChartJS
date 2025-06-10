@@ -1,7 +1,0 @@
-; $Id$
-name = TeeChart
-description = "Create charts with TeeChart JavaScript library, using HTML5 Canvas."
-core = 7.x
-files[] = teechart.module
-dependencies[] = filter
-package = User Interface
